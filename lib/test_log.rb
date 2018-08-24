@@ -182,6 +182,9 @@ class TestLog
     File.open(self.file_path, 'w') do |file|
       document.write(file, self.xml_indentation)
     end
+    File.open(self.file_path, 'a') do |file|
+      file.write("\n")
+    end
     nil
   end
 
