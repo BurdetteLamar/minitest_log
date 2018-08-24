@@ -129,7 +129,6 @@ module VerdictAssertion
   end
   alias va_includes? verdict_assert_includes?
 
-  # \Log a verdict using :refute_includes.
   def verdict_refute_includes?(verdict_id, expected, actual, message: nil, volatile: false)
     _verdict_includes?(__method__, verdict_id, expected, actual, message, volatile)
   end
@@ -249,12 +248,6 @@ module VerdictAssertion
   alias va_output? verdict_assert_output?
 
   # Minitest::Assertions does not  have :refute_output.
-  # def verdict_refute_output?(verdict_id, stdout, stderr, message: nil, volatile: false)
-  #   _verdict_output?(__method__, verdict_id, stdout, stderr, message, volatile) do
-  #     yield
-  #   end
-  # end
-  # alias vr_output? verdict_refute_output?
 
   def _verdict_output?(verdict_method, verdict_id, stdout, stderr, message, volatile)
     args_hash = {
@@ -272,7 +265,6 @@ module VerdictAssertion
   end
   alias va_predicate? verdict_assert_predicate?
 
-  # \Log a verdict using :refute_predicate.
   def verdict_refute_predicate?(verdict_id, object, operator, message: nil, volatile: false)
     _verdict_predicate?(__method__, verdict_id, object, operator, message, volatile)
   end
@@ -295,12 +287,6 @@ module VerdictAssertion
   alias va_raises? verdict_assert_raises?
 
   # Minitest::Assertions does not  have :refute_raises.
-  # def verdict_refute_raises?(verdict_id, error_class, message: nil, volatile: false)
-  #   _verdict_raises?(__method__, verdict_id, error_class, message, volatile) do
-  #     yield
-  #   end
-  # end
-  # alias vr_raises? verdict_refute_raises?
 
   def _verdict_raises?(verdict_method, verdict_id, error_class, message, volatile)
     args_hash = {
@@ -352,24 +338,8 @@ module VerdictAssertion
 
   # Method :assert_send is deprecated, and emits a message to that effect.
   # Let's omit it.
-  # def verdict_assert_send?(verdict_id, object, method, message: nil, volatile: false)
-  #   _verdict_send?(__method__, verdict_id, object, method, message, volatile)
-  # end
-  # alias va_send? verdict_assert_send?
 
   # Minitest::Assertions does not have :refute_send.
-  # def verdict_refute_send?(verdict_id, object, method, message: nil, volatile: false)
-  #   _verdict_send?(__method__, verdict_id, object, method, message, volatile)
-  # end
-  # alias vr_send? verdict_refute_send?
-
-  # def _verdict_send?(verdict_method, verdict_id, object, method, message, volatile)
-  #   args_hash = {
-  #       :send_array => [object, method],
-  #   }
-  #   _get_verdict?(verdict_method, verdict_id, volatile, message, args_hash)
-  # end
-  # private :_verdict_send?
 
   def verdict_assert_silent?(verdict_id, message: nil, volatile: false)
     _verdict_silent?(__method__, verdict_id, message, volatile) do
@@ -379,12 +349,6 @@ module VerdictAssertion
   alias va_silent? verdict_assert_silent?
 
   # Minitest::Assertions does not  have :refute_silent.
-  # def verdict_refute_silent?(verdict_id, message: nil, volatile: false)
-  #   _verdict_output?(__method__, verdict_id, message, volatile) do
-  #     yield
-  #   end
-  # end
-  # alias vr_silent? verdict_refute_silent?
 
   def _verdict_silent?(verdict_method, verdict_id, message, volatile)
     args_hash = {}
@@ -402,12 +366,6 @@ module VerdictAssertion
   alias va_throws? verdict_assert_throws?
 
   # Minitest::Assertions does not  have :refute_throws.
-  # def verdict_refute_throws?(verdict_id, error_class, message: nil, volatile: false)
-  #   _verdict_throws?(__method__, verdict_id, error_class, message, volatile) do
-  #     yield
-  #   end
-  # end
-  # alias vr_throws? verdict_refute_throws?
 
   def _verdict_throws?(verdict_method, verdict_id, error_class, message, volatile)
     args_hash = {
