@@ -2,7 +2,7 @@ require 'rexml/document'
 require 'minitest/assertions'
 require 'nokogiri'
 
-require_relative '../test/assertion_helper'
+# require_relative '../test/assertion_helper'
 
 # When adding a module here, be sure to 'include' below.
 require_relative 'verdict_assertion'
