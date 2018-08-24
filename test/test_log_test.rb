@@ -1,3 +1,4 @@
+require 'test_log/version'
 require 'test_helper'
 
 class TestLogTest < Minitest::Test
