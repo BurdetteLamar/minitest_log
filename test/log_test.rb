@@ -62,8 +62,7 @@ class LogTest < MiniTest::Test
 
     # Verify the verdict count.
     def assert_verdict_count(expected_count)
-      # The log itself gens one verdict.
-      actual_count = self.verdicts.size - 1
+      actual_count = self.verdicts.size
       self.test.assert_equal(expected_count, actual_count, 'verdict count')
     end
 

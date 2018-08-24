@@ -191,13 +191,6 @@ class TestLog
 
   def dispose
 
-    # An error may have caused some blocked verdicts, but does not itself show up as a verdict.
-    # Take a verdict here, so that an error will cause a :failed in the log.
-    # The count is volatile, so it's not an error to differ from previous.
-    section('Count of errors (unexpected exceptions)') do
-      verdict_assert_equal?(:error_count, 0, self.counts[:error], volatile: true)
-    end
-
     # Close the text log.
     log_puts("END\t#{self.root_name}")
     self.file.close
