@@ -6,10 +6,6 @@ require_relative '../test/assertion_helper'
 
 # When adding a module here, be sure to 'include' below.
 require_relative 'verdict_assertion'
-require_relative 'verdict_boolean'
-require_relative 'verdict_integer'
-require_relative 'verdict_range'
-require_relative 'verdict_string'
 
 ## Class to support XML logging.
 #
@@ -42,10 +38,6 @@ require_relative 'verdict_string'
 class Log
 
   include VerdictAssertion
-  include VerdictBoolean
-  include VerdictInteger
-  include VerdictRange
-  include VerdictString
 
   # :stopdoc:
 
@@ -171,13 +163,6 @@ class Log
 
   def comment(text, *args)
     put_element('comment', text, *args)
-    nil
-  end
-
-  def test_method(*args)
-    put_element('test_method', *args) do
-      yield
-    end
     nil
   end
 
