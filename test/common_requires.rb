@@ -1,4 +1,3 @@
-require 'contracts'
 require 'minitest/autorun'
 
 require_relative 'assertion_helper'

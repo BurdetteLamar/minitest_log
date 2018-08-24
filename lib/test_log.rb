@@ -35,11 +35,9 @@ require_relative 'verdict_assertion'
 # each such method has a shorter alias.
 # Thus method verdict_assert_in_delta? has alias va_in_delta?,
 # and method verdict_refute_in_delta? has alias vr_in_delta?.
-class Log
+class TestLog
 
   include VerdictAssertion
-
-  # :stopdoc:
 
   attr_accessor \
     :assertions,
@@ -58,7 +56,7 @@ class Log
   DEFAULT_FILE_NAME = 'log.xml'
   DEFAULT_DIR_PATH = '.'
   DEFAULT_XML_ROOT_TAG_NAME = 'log'
-  DEFAULT_XML_INDENTATION = -1
+  DEFAULT_XML_INDENTATION = 2
 
   # Message for no block error.
   NO_BLOCK_GIVEN_MSG = 'No block given'
