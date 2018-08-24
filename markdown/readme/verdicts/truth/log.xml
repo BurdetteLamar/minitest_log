@@ -1,0 +1,13 @@
+<log>
+  <summary verdicts='2' failures='0' errors='0'/>
+  <verdict method='verdict_assert?' outcome='passed' id='first_verdict_id' message='My message'>
+    <act_value>
+      true
+    </act_value>
+  </verdict>
+  <verdict method='verdict_refute?' outcome='passed' id='second_verdict_id' message='My message'>
+    <act_value>
+      false
+    </act_value>
+  </verdict>
+</log>

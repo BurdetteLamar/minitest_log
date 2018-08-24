@@ -131,7 +131,6 @@ class LogTest < MiniTest::Test
         :id => verdict_id,
         :method => method,
         :outcome => 'passed',
-        :volatile => false,
     }
     checker.assert_verdict_attributes(verdict_id, attributes)
     checker.assert_exception_count(0)
@@ -148,7 +147,6 @@ class LogTest < MiniTest::Test
         :id => verdict_id,
         :method => method,
         :outcome => 'failed',
-        :volatile => false,
     }
     checker.assert_verdict_attributes(verdict_id, attributes)
     checker.assert_exception_count(1)
@@ -167,24 +165,6 @@ class LogTest < MiniTest::Test
         :method => method,
         :outcome => 'passed',
         :message => verdict_message,
-        :volatile => false,
-    }
-    checker.assert_verdict_attributes(verdict_id, attributes)
-    checker.assert_exception_count(0)
-
-    # Test with volatile.
-    verdict_id = :message
-    file_path = create_temp_log(self) do |log|
-      assert_message = format('Method=%s; verdict_id=%s; data=%s', method, verdict_id, passing_arguments.inspect)
-      assert(log.send(method, verdict_id, *passing_arguments.values, volatile: true), assert_message)
-    end
-    checker = Checker.new(self, file_path)
-    checker.assert_verdict_count(1)
-    attributes = {
-        :id => verdict_id,
-        :method => method,
-        :outcome => 'passed',
-        :volatile => true,
     }
     checker.assert_verdict_attributes(verdict_id, attributes)
     checker.assert_exception_count(0)
@@ -334,7 +314,6 @@ class LogTest < MiniTest::Test
         :id => verdict_id,
         :method => method,
         :outcome => 'failed',
-        :volatile => false,
     }
     checker.assert_verdict_attributes(verdict_id, attributes)
     checker.assert_exception_count(1)
@@ -368,7 +347,6 @@ class LogTest < MiniTest::Test
         :id => verdict_id,
         :method => method,
         :outcome => 'failed',
-        :volatile => false,
     }
     checker.assert_verdict_attributes(verdict_id, attributes)
     checker.assert_exception_count(1)
@@ -403,7 +381,6 @@ class LogTest < MiniTest::Test
         :id => verdict_id,
         :method => method,
         :outcome => 'passed',
-        :volatile => false,
     }
     checker.assert_verdict_attributes(verdict_id, attributes)
     checker.assert_exception_count(0)
@@ -419,7 +396,6 @@ class LogTest < MiniTest::Test
         :id => verdict_id,
         :method => method,
         :outcome => 'passed',
-        :volatile => false,
     }
     checker.assert_verdict_attributes(verdict_id, attributes)
     checker.assert_exception_count(0)
@@ -437,7 +413,6 @@ class LogTest < MiniTest::Test
         :id => verdict_id,
         :method => method,
         :outcome => 'failed',
-        :volatile => false,
     }
     checker.assert_verdict_attributes(verdict_id, attributes)
     checker.assert_verdict_count(1)
@@ -458,7 +433,6 @@ class LogTest < MiniTest::Test
         :id => verdict_id,
         :method => method,
         :outcome => 'failed',
-        :volatile => false,
     }
     checker.assert_verdict_attributes(verdict_id, attributes)
     checker.assert_verdict_count(1)
@@ -476,7 +450,6 @@ class LogTest < MiniTest::Test
         :id => verdict_id,
         :method => method,
         :outcome => 'failed',
-        :volatile => false,
     }
     checker.assert_verdict_attributes(verdict_id, attributes)
     checker.assert_exception_count(1)
@@ -858,7 +831,6 @@ class LogTest < MiniTest::Test
         :id => verdict_id,
         :method => method,
         :outcome => 'passed',
-        :volatile => false,
     }
     checker.assert_verdict_attributes(verdict_id, attributes)
     checker.assert_exception_count(0)
@@ -878,7 +850,6 @@ class LogTest < MiniTest::Test
         :id => verdict_id,
         :method => method,
         :outcome => 'failed',
-        :volatile => false,
     }
     checker.assert_verdict_attributes(verdict_id, attributes)
     checker.assert_exception_count(1)
@@ -951,7 +922,6 @@ class LogTest < MiniTest::Test
         :id => verdict_id,
         :method => method,
         :outcome => 'passed',
-        :volatile => false,
     }
     checker.assert_verdict_attributes(verdict_id, attributes)
     checker.assert_exception_count(0)
@@ -970,7 +940,6 @@ class LogTest < MiniTest::Test
         :id => verdict_id,
         :method => method,
         :outcome => 'failed',
-        :volatile => false,
     }
     checker.assert_verdict_attributes(verdict_id, attributes)
     checker.assert_exception_count(1)
@@ -1080,7 +1049,6 @@ class LogTest < MiniTest::Test
         :id => verdict_id,
         :method => method,
         :outcome => 'passed',
-        :volatile => false,
     }
     checker.assert_verdict_attributes(verdict_id, attributes)
     checker.assert_exception_count(0)
@@ -1100,7 +1068,6 @@ class LogTest < MiniTest::Test
         :id => verdict_id,
         :method => method,
         :outcome => 'failed',
-        :volatile => false,
     }
     checker.assert_verdict_attributes(verdict_id, attributes)
     checker.assert_exception_count(1)
@@ -1133,7 +1100,6 @@ class LogTest < MiniTest::Test
         :id => verdict_id,
         :method => method,
         :outcome => 'passed',
-        :volatile => false,
     }
     checker.assert_verdict_attributes(verdict_id, attributes)
     checker.assert_exception_count(0)
@@ -1152,7 +1118,6 @@ class LogTest < MiniTest::Test
         :id => verdict_id,
         :method => method,
         :outcome => 'failed',
-        :volatile => false,
     }
     checker.assert_verdict_attributes(verdict_id, attributes)
     checker.assert_exception_count(1)

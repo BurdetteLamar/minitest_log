@@ -9,17 +9,6 @@ require_relative 'verdict_assertion'
 
 ## Class to support XML logging.
 #
-# === About Volatility
-#
-# For some verdicts, the actual value is expected to be different each time the \test is run.
-# For example, the GUID for an object created in an application be different each time.
-#
-# By default, such a verdict would always be evaluated as _changed_,
-# because its actual values in the previous and current \test runs will always differ.
-#
-# To control this, you can call a verdict method with argument +volatile+ as +true+,
-# in which case the successive verdicts will be evaluated an unchanged.
-#
 # === About *args
 # Method section and all verdict methods pass a final argument *+args+
 # whose content is eventually passed to method put_element.
@@ -263,28 +252,19 @@ class TestLog
     nil
   end
 
-  def flatten_verdict_id(verdict_id)
-    return verdict_id.to_s if verdict_id.instance_of?(Symbol)
-    symbols = verdict_id.flatten
-    strings = symbols.collect { |sym| sym.to_s}
-    strings.join(':')
-  end
-
-  def _get_verdict?(verdict_method, verdict_id, volatile, message, args_hash, *args)
+  def _get_verdict?(verdict_method, verdict_id, message, args_hash, *args)
     assertion_method = assertion_method_for(verdict_method)
-    flattened_verdict_id = flatten_verdict_id(verdict_id)
     if block_given?
-      outcome, exception = get_assertion_outcome(flattened_verdict_id, assertion_method, *args_hash.values) do
+      outcome, exception = get_assertion_outcome(verdict_id, assertion_method, *args_hash.values) do
         yield
       end
     else
-      outcome, exception = get_assertion_outcome(flattened_verdict_id, assertion_method, *args_hash.values)
+      outcome, exception = get_assertion_outcome(verdict_id, assertion_method, *args_hash.values)
     end
     element_attributes = {
         :method => verdict_method,
         :outcome => outcome,
-        :id => flattened_verdict_id,
-        :volatile => volatile,
+        :id => verdict_id,
     }
     element_attributes.store(:message, message) unless message.nil?
     put_element('verdict', element_attributes, *args) do
