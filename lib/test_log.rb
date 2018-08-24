@@ -93,7 +93,7 @@ class TestLog
 
   def initialize(test, options=Hash.new, im_ok_youre_not_ok = false)
     unless im_ok_youre_not_ok
-      # Caller should call Log.open, not Log.new.
+      # Caller should call TestLog.open, not TestLog.new.
       raise RuntimeError.new(NO_NEW_MSG)
     end
     self.test = test
@@ -201,7 +201,7 @@ class TestLog
         when arg.kind_of?(String)
           pcdata += arg
         when arg == :timestamp
-          attributes[:timestamp] = Log.timestamp
+          attributes[:timestamp] = TestLog.timestamp
         when arg == :duration
           duration_to_be_included = true
         when arg == :rescue

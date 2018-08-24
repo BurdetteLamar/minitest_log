@@ -1,4 +1,4 @@
-## Open a Log
+## Log Creation
 
 This example shows how to open a log.
 
