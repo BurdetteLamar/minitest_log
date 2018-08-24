@@ -216,15 +216,11 @@ class LogTest < MiniTest::Test
     file_path = File.join(dir_path, 'log.xml')
     AssertionHelper.assert_nothing_raised(self) do
       TestLog.open(self, {:file_path => file_path}) do |log|
-        log.put_element('foo')
+        log.comment('foo')
       end
     end
     FileUtils.rm_r(dir_path)
 
-  end
-
-  def test_put_element
-    # TODO.
   end
 
   def test_section
@@ -235,13 +231,13 @@ class LogTest < MiniTest::Test
     file_path = create_temp_log(self) do |log|
       log.send(method, 'outer') do
         log.send(method, 'inner') do
-          log.put_element('tag', 'text')
+          log.comment('foo')
         end
       end
     end
     checker = Checker.new(self, file_path)
-    ele_xpath = "//section[@name='outer']/section[@name='inner']/tag"
-    checker.assert_element_text(ele_xpath, 'text')
+    ele_xpath = "//section[@name='outer']/section[@name='inner']/comment"
+    checker.assert_element_text(ele_xpath, 'foo')
 
     # TODO:  Test *args for section.
 

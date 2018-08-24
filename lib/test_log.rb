@@ -77,81 +77,6 @@ class TestLog
     nil
   end
 
-  def put_element(element_name = 'element', *args)
-    attributes = {}
-    pcdata = ''
-    start_time = nil
-    duration_to_be_included = false
-    block_to_be_rescued = false
-    args.each do |arg|
-      case
-        when arg.kind_of?(Hash)
-          attributes.merge!(arg)
-        when arg.kind_of?(String)
-          pcdata += arg
-        when arg == :timestamp
-          attributes[:timestamp] = Log.timestamp
-        when arg == :duration
-          duration_to_be_included = true
-        when arg == :rescue
-          block_to_be_rescued = true
-        else
-          pcdata = pcdata + arg.inspect
-      end
-    end
-    log_puts("BEGIN\t#{element_name}")
-    put_attributes(attributes)
-    unless pcdata.empty?
-      # Guard against using a terminator that's a substring of pcdata.
-      s = 'EOT'
-      terminator = s
-      while pcdata.match(terminator) do
-        terminator += s
-      end
-      log_puts("PCDATA\t<<#{terminator}")
-      log_puts(pcdata)
-      log_puts(terminator)
-    end
-    start_time = Time.new if duration_to_be_included
-    if block_given?
-      if block_to_be_rescued
-        begin
-          yield
-        rescue Exception => x
-          # Get the verdict id (for the verdict that was attempted).
-          verdict_id = nil
-          args.each do |arg|
-            next unless arg.respond_to?(:each_pair)
-            next unless arg.include?(:name)
-            verdict_id = arg[:name]
-            break
-          end
-          put_element('uncaught_exception') do
-            put_element('verdict_id', verdict_id) if verdict_id
-            put_element('class', x.class)
-            put_element('http_code', x.http_code) if x.respond_to?(:http_code)
-            put_element('http_body', x.http_body) if x.respond_to?(:http_body)
-            put_element('message', x.message)
-            put_element('backtrace') do
-              cdata(filter_backtrace(x.backtrace))
-            end
-          end
-          self.counts[:error] += 1
-        end
-      else
-        yield
-      end
-    end
-    if start_time
-      end_time = Time.now
-      duration_f = end_time.to_f - start_time.to_f
-      duration_s = format('%.3f', duration_f)
-      put_attributes({:duration_seconds => duration_s})
-    end
-    log_puts("END\t#{element_name}")
-    nil
-  end
-
   def section(name, *args)
     put_element('section', {:name => name}, *args) do
       yield
@@ -257,6 +182,81 @@ class TestLog
     File.open(self.file_path, 'w') do |file|
       document.write(file, self.xml_indentation)
     end
+    nil
+  end
+
+  def put_element(element_name = 'element', *args)
+    attributes = {}
+    pcdata = ''
+    start_time = nil
+    duration_to_be_included = false
+    block_to_be_rescued = false
+    args.each do |arg|
+      case
+        when arg.kind_of?(Hash)
+          attributes.merge!(arg)
+        when arg.kind_of?(String)
+          pcdata += arg
+        when arg == :timestamp
+          attributes[:timestamp] = Log.timestamp
+        when arg == :duration
+          duration_to_be_included = true
+        when arg == :rescue
+          block_to_be_rescued = true
+        else
+          pcdata = pcdata + arg.inspect
+      end
+    end
+    log_puts("BEGIN\t#{element_name}")
+    put_attributes(attributes)
+    unless pcdata.empty?
+      # Guard against using a terminator that's a substring of pcdata.
+      s = 'EOT'
+      terminator = s
+      while pcdata.match(terminator) do
+        terminator += s
+      end
+      log_puts("PCDATA\t<<#{terminator}")
+      log_puts(pcdata)
+      log_puts(terminator)
+    end
+    start_time = Time.new if duration_to_be_included
+    if block_given?
+      if block_to_be_rescued
+        begin
+          yield
+        rescue Exception => x
+          # Get the verdict id (for the verdict that was attempted).
+          verdict_id = nil
+          args.each do |arg|
+            next unless arg.respond_to?(:each_pair)
+            next unless arg.include?(:name)
+            verdict_id = arg[:name]
+            break
+          end
+          put_element('uncaught_exception') do
+            put_element('verdict_id', verdict_id) if verdict_id
+            put_element('class', x.class)
+            put_element('http_code', x.http_code) if x.respond_to?(:http_code)
+            put_element('http_body', x.http_body) if x.respond_to?(:http_body)
+            put_element('message', x.message)
+            put_element('backtrace') do
+              cdata(filter_backtrace(x.backtrace))
+            end
+          end
+          self.counts[:error] += 1
+        end
+      else
+        yield
+      end
+    end
+    if start_time
+      end_time = Time.now
+      duration_f = end_time.to_f - start_time.to_f
+      duration_s = format('%.3f', duration_f)
+      put_attributes({:duration_seconds => duration_s})
+    end
+    log_puts("END\t#{element_name}")
     nil
   end
 
