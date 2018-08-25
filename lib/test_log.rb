@@ -2,23 +2,12 @@ require 'rexml/document'
 require 'minitest/assertions'
 require 'nokogiri'
 
-require_relative '../test/assertion_helper'
+# require_relative '../test/assertion_helper'
 
 # When adding a module here, be sure to 'include' below.
 require_relative 'verdict_assertion'
 
 ## Class to support XML logging.
-#
-# === About Volatility
-#
-# For some verdicts, the actual value is expected to be different each time the \test is run.
-# For example, the GUID for an object created in an application be different each time.
-#
-# By default, such a verdict would always be evaluated as _changed_,
-# because its actual values in the previous and current \test runs will always differ.
-#
-# To control this, you can call a verdict method with argument +volatile+ as +true+,
-# in which case the successive verdicts will be evaluated an unchanged.
 #
 # === About *args
 # Method section and all verdict methods pass a final argument *+args+
@@ -35,11 +24,9 @@ require_relative 'verdict_assertion'
 # each such method has a shorter alias.
 # Thus method verdict_assert_in_delta? has alias va_in_delta?,
 # and method verdict_refute_in_delta? has alias vr_in_delta?.
-class Log
+class TestLog
 
   include VerdictAssertion
-
-  # :stopdoc:
 
   attr_accessor \
     :assertions,
@@ -58,7 +45,7 @@ class Log
   DEFAULT_FILE_NAME = 'log.xml'
   DEFAULT_DIR_PATH = '.'
   DEFAULT_XML_ROOT_TAG_NAME = 'log'
-  DEFAULT_XML_INDENTATION = -1
+  DEFAULT_XML_INDENTATION = 2
 
   # Message for no block error.
   NO_BLOCK_GIVEN_MSG = 'No block given'
@@ -79,81 +66,6 @@ class Log
     nil
   end
 
-  def put_element(element_name = 'element', *args)
-    attributes = {}
-    pcdata = ''
-    start_time = nil
-    duration_to_be_included = false
-    block_to_be_rescued = false
-    args.each do |arg|
-      case
-        when arg.kind_of?(Hash)
-          attributes.merge!(arg)
-        when arg.kind_of?(String)
-          pcdata += arg
-        when arg == :timestamp
-          attributes[:timestamp] = Log.timestamp
-        when arg == :duration
-          duration_to_be_included = true
-        when arg == :rescue
-          block_to_be_rescued = true
-        else
-          pcdata = pcdata + arg.inspect
-      end
-    end
-    log_puts("BEGIN\t#{element_name}")
-    put_attributes(attributes)
-    unless pcdata.empty?
-      # Guard against using a terminator that's a substring of pcdata.
-      s = 'EOT'
-      terminator = s
-      while pcdata.match(terminator) do
-        terminator += s
-      end
-      log_puts("PCDATA\t<<#{terminator}")
-      log_puts(pcdata)
-      log_puts(terminator)
-    end
-    start_time = Time.new if duration_to_be_included
-    if block_given?
-      if block_to_be_rescued
-        begin
-          yield
-        rescue Exception => x
-          # Get the verdict id (for the verdict that was attempted).
-          verdict_id = nil
-          args.each do |arg|
-            next unless arg.respond_to?(:each_pair)
-            next unless arg.include?(:name)
-            verdict_id = arg[:name]
-            break
-          end
-          put_element('uncaught_exception') do
-            put_element('verdict_id', verdict_id) if verdict_id
-            put_element('class', x.class)
-            put_element('http_code', x.http_code) if x.respond_to?(:http_code)
-            put_element('http_body', x.http_body) if x.respond_to?(:http_body)
-            put_element('message', x.message)
-            put_element('backtrace') do
-              cdata(filter_backtrace(x.backtrace))
-            end
-          end
-          self.counts[:error] += 1
-        end
-      else
-        yield
-      end
-    end
-    if start_time
-      end_time = Time.now
-      duration_f = end_time.to_f - start_time.to_f
-      duration_s = format('%.3f', duration_f)
-      put_attributes({:duration_seconds => duration_s})
-    end
-    log_puts("END\t#{element_name}")
-    nil
-  end
-
   def section(name, *args)
     put_element('section', {:name => name}, *args) do
       yield
@@ -170,7 +82,7 @@ class Log
 
   def initialize(test, options=Hash.new, im_ok_youre_not_ok = false)
     unless im_ok_youre_not_ok
-      # Caller should call Log.open, not Log.new.
+      # Caller should call TestLog.open, not TestLog.new.
       raise RuntimeError.new(NO_NEW_MSG)
     end
     self.test = test
@@ -192,13 +104,6 @@ class Log
   end
 
   def dispose
-
-    # An error may have caused some blocked verdicts, but does not itself show up as a verdict.
-    # Take a verdict here, so that an error will cause a :failed in the log.
-    # The count is volatile, so it's not an error to differ from previous.
-    section('Count of errors (unexpected exceptions)') do
-      verdict_assert_equal?(:error_count, 0, self.counts[:error], volatile: true)
-    end
 
     # Close the text log.
     log_puts("END\t#{self.root_name}")
@@ -266,31 +171,100 @@ class Log
     File.open(self.file_path, 'w') do |file|
       document.write(file, self.xml_indentation)
     end
+    File.open(self.file_path, 'a') do |file|
+      file.write("\n")
+    end
     nil
   end
 
-  def flatten_verdict_id(verdict_id)
-    return verdict_id.to_s if verdict_id.instance_of?(Symbol)
-    symbols = verdict_id.flatten
-    strings = symbols.collect { |sym| sym.to_s}
-    strings.join(':')
+  def put_element(element_name = 'element', *args)
+    attributes = {}
+    pcdata = ''
+    start_time = nil
+    duration_to_be_included = false
+    block_to_be_rescued = false
+    args.each do |arg|
+      case
+        when arg.kind_of?(Hash)
+          attributes.merge!(arg)
+        when arg.kind_of?(String)
+          pcdata += arg
+        when arg == :timestamp
+          attributes[:timestamp] = TestLog.timestamp
+        when arg == :duration
+          duration_to_be_included = true
+        when arg == :rescue
+          block_to_be_rescued = true
+        else
+          pcdata = pcdata + arg.inspect
+      end
+    end
+    log_puts("BEGIN\t#{element_name}")
+    put_attributes(attributes)
+    unless pcdata.empty?
+      # Guard against using a terminator that's a substring of pcdata.
+      s = 'EOT'
+      terminator = s
+      while pcdata.match(terminator) do
+        terminator += s
+      end
+      log_puts("PCDATA\t<<#{terminator}")
+      log_puts(pcdata)
+      log_puts(terminator)
+    end
+    start_time = Time.new if duration_to_be_included
+    if block_given?
+      if block_to_be_rescued
+        begin
+          yield
+        rescue Exception => x
+          # Get the verdict id (for the verdict that was attempted).
+          verdict_id = nil
+          args.each do |arg|
+            next unless arg.respond_to?(:each_pair)
+            next unless arg.include?(:name)
+            verdict_id = arg[:name]
+            break
+          end
+          put_element('uncaught_exception') do
+            put_element('verdict_id', verdict_id) if verdict_id
+            put_element('class', x.class)
+            put_element('http_code', x.http_code) if x.respond_to?(:http_code)
+            put_element('http_body', x.http_body) if x.respond_to?(:http_body)
+            put_element('message', x.message)
+            put_element('backtrace') do
+              cdata(filter_backtrace(x.backtrace))
+            end
+          end
+          self.counts[:error] += 1
+        end
+      else
+        yield
+      end
+    end
+    if start_time
+      end_time = Time.now
+      duration_f = end_time.to_f - start_time.to_f
+      duration_s = format('%.3f', duration_f)
+      put_attributes({:duration_seconds => duration_s})
+    end
+    log_puts("END\t#{element_name}")
+    nil
   end
 
-  def _get_verdict?(verdict_method, verdict_id, volatile, message, args_hash, *args)
+  def _get_verdict?(verdict_method, verdict_id, message, args_hash, *args)
     assertion_method = assertion_method_for(verdict_method)
-    flattened_verdict_id = flatten_verdict_id(verdict_id)
     if block_given?
-      outcome, exception = get_assertion_outcome(flattened_verdict_id, assertion_method, *args_hash.values) do
+      outcome, exception = get_assertion_outcome(verdict_id, assertion_method, *args_hash.values) do
         yield
       end
     else
-      outcome, exception = get_assertion_outcome(flattened_verdict_id, assertion_method, *args_hash.values)
+      outcome, exception = get_assertion_outcome(verdict_id, assertion_method, *args_hash.values)
     end
     element_attributes = {
         :method => verdict_method,
         :outcome => outcome,
-        :id => flattened_verdict_id,
-        :volatile => volatile,
+        :id => verdict_id,
     }
     element_attributes.store(:message, message) unless message.nil?
     put_element('verdict', element_attributes, *args) do

@@ -14,7 +14,7 @@ class LogTest < MiniTest::Test
   def create_temp_log(test)
     dir_path = Dir.mktmpdir
     file_path = File.join(dir_path, 'log.xml')
-    Log.open(test, {:file_path => file_path}) do |log|
+    TestLog.open(test, {:file_path => file_path}) do |log|
       yield log
     end
     file_path
@@ -62,8 +62,7 @@ class LogTest < MiniTest::Test
 
     # Verify the verdict count.
     def assert_verdict_count(expected_count)
-      # The log itself gens one verdict.
-      actual_count = self.verdicts.size - 1
+      actual_count = self.verdicts.size
       self.test.assert_equal(expected_count, actual_count, 'verdict count')
     end
 
@@ -132,7 +131,6 @@ class LogTest < MiniTest::Test
         :id => verdict_id,
         :method => method,
         :outcome => 'passed',
-        :volatile => false,
     }
     checker.assert_verdict_attributes(verdict_id, attributes)
     checker.assert_exception_count(0)
@@ -149,7 +147,6 @@ class LogTest < MiniTest::Test
         :id => verdict_id,
         :method => method,
         :outcome => 'failed',
-        :volatile => false,
     }
     checker.assert_verdict_attributes(verdict_id, attributes)
     checker.assert_exception_count(1)
@@ -168,24 +165,6 @@ class LogTest < MiniTest::Test
         :method => method,
         :outcome => 'passed',
         :message => verdict_message,
-        :volatile => false,
-    }
-    checker.assert_verdict_attributes(verdict_id, attributes)
-    checker.assert_exception_count(0)
-
-    # Test with volatile.
-    verdict_id = :message
-    file_path = create_temp_log(self) do |log|
-      assert_message = format('Method=%s; verdict_id=%s; data=%s', method, verdict_id, passing_arguments.inspect)
-      assert(log.send(method, verdict_id, *passing_arguments.values, volatile: true), assert_message)
-    end
-    checker = Checker.new(self, file_path)
-    checker.assert_verdict_count(1)
-    attributes = {
-        :id => verdict_id,
-        :method => method,
-        :outcome => 'passed',
-        :volatile => true,
     }
     checker.assert_verdict_attributes(verdict_id, attributes)
     checker.assert_exception_count(0)
@@ -197,8 +176,8 @@ class LogTest < MiniTest::Test
 
     method = :new
 
-    AssertionHelper.assert_raises_with_message(self, RuntimeError, Log::NO_NEW_MSG) do
-      Log.new(self).send(method)
+    AssertionHelper.assert_raises_with_message(self, RuntimeError, TestLog::NO_NEW_MSG) do
+      TestLog.new(self).send(method)
     end
 
   end
@@ -208,24 +187,20 @@ class LogTest < MiniTest::Test
     method = :open
 
     # No block.
-    AssertionHelper.assert_raises_with_message(self, RuntimeError, Log::NO_BLOCK_GIVEN_MSG) do
-      Log.open(self).send(method)
+    AssertionHelper.assert_raises_with_message(self, RuntimeError, TestLog::NO_BLOCK_GIVEN_MSG) do
+      TestLog.open(self).send(method)
     end
 
     # Block.
     dir_path = Dir.mktmpdir
     file_path = File.join(dir_path, 'log.xml')
     AssertionHelper.assert_nothing_raised(self) do
-      Log.open(self, {:file_path => file_path}) do |log|
-        log.put_element('foo')
+      TestLog.open(self, {:file_path => file_path}) do |log|
+        log.comment('foo')
       end
     end
     FileUtils.rm_r(dir_path)
 
-  end
-
-  def test_put_element
-    # TODO.
   end
 
   def test_section
@@ -236,13 +211,13 @@ class LogTest < MiniTest::Test
     file_path = create_temp_log(self) do |log|
       log.send(method, 'outer') do
         log.send(method, 'inner') do
-          log.put_element('tag', 'text')
+          log.comment('foo')
         end
       end
     end
     checker = Checker.new(self, file_path)
-    ele_xpath = "//section[@name='outer']/section[@name='inner']/tag"
-    checker.assert_element_text(ele_xpath, 'text')
+    ele_xpath = "//section[@name='outer']/section[@name='inner']/comment"
+    checker.assert_element_text(ele_xpath, 'foo')
 
     # TODO:  Test *args for section.
 
@@ -339,7 +314,6 @@ class LogTest < MiniTest::Test
         :id => verdict_id,
         :method => method,
         :outcome => 'failed',
-        :volatile => false,
     }
     checker.assert_verdict_attributes(verdict_id, attributes)
     checker.assert_exception_count(1)
@@ -373,7 +347,6 @@ class LogTest < MiniTest::Test
         :id => verdict_id,
         :method => method,
         :outcome => 'failed',
-        :volatile => false,
     }
     checker.assert_verdict_attributes(verdict_id, attributes)
     checker.assert_exception_count(1)
@@ -408,7 +381,6 @@ class LogTest < MiniTest::Test
         :id => verdict_id,
         :method => method,
         :outcome => 'passed',
-        :volatile => false,
     }
     checker.assert_verdict_attributes(verdict_id, attributes)
     checker.assert_exception_count(0)
@@ -424,7 +396,6 @@ class LogTest < MiniTest::Test
         :id => verdict_id,
         :method => method,
         :outcome => 'passed',
-        :volatile => false,
     }
     checker.assert_verdict_attributes(verdict_id, attributes)
     checker.assert_exception_count(0)
@@ -442,7 +413,6 @@ class LogTest < MiniTest::Test
         :id => verdict_id,
         :method => method,
         :outcome => 'failed',
-        :volatile => false,
     }
     checker.assert_verdict_attributes(verdict_id, attributes)
     checker.assert_verdict_count(1)
@@ -463,7 +433,6 @@ class LogTest < MiniTest::Test
         :id => verdict_id,
         :method => method,
         :outcome => 'failed',
-        :volatile => false,
     }
     checker.assert_verdict_attributes(verdict_id, attributes)
     checker.assert_verdict_count(1)
@@ -481,14 +450,13 @@ class LogTest < MiniTest::Test
         :id => verdict_id,
         :method => method,
         :outcome => 'failed',
-        :volatile => false,
     }
     checker.assert_verdict_attributes(verdict_id, attributes)
     checker.assert_exception_count(1)
 
   end
 
-  def zzz_test_verdict_refute_equal
+  def test_verdict_refute_equal
 
     method = :verdict_refute_equal?
     passing_arguments = {
@@ -508,7 +476,7 @@ class LogTest < MiniTest::Test
 
   end
 
-  def zzz_test_verdict_assert_in_delta
+  def test_verdict_assert_in_delta
 
     method = :verdict_assert_in_delta?
     passing_arguments = {
@@ -530,7 +498,7 @@ class LogTest < MiniTest::Test
 
   end
 
-  def zzz_test_verdict_refute_in_delta
+  def test_verdict_refute_in_delta
 
     method = :verdict_refute_in_delta?
     passing_arguments = {
@@ -552,7 +520,7 @@ class LogTest < MiniTest::Test
 
   end
 
-  def zzz_test_verdict_assert_in_epsilon
+  def test_verdict_assert_in_epsilon
 
     method = :verdict_assert_in_epsilon?
     passing_arguments = {
@@ -574,7 +542,7 @@ class LogTest < MiniTest::Test
 
   end
 
-  def zzz_test_verdict_refute_in_epsilon
+  def test_verdict_refute_in_epsilon
 
     method = :verdict_refute_in_epsilon?
     passing_arguments = {
@@ -596,7 +564,7 @@ class LogTest < MiniTest::Test
 
   end
 
-  def zzz_test_verdict_assert_includes
+  def test_verdict_assert_includes
 
     method = :verdict_assert_includes?
     passing_arguments = {
@@ -616,7 +584,7 @@ class LogTest < MiniTest::Test
 
   end
 
-  def zzz_test_verdict_refute_includes
+  def test_verdict_refute_includes
 
     method = :verdict_refute_includes?
     passing_arguments = {
@@ -636,7 +604,7 @@ class LogTest < MiniTest::Test
 
   end
 
-  def zzz_test_verdict_assert_instance_of
+  def test_verdict_assert_instance_of
 
     method = :verdict_assert_instance_of?
     passing_arguments = {
@@ -656,7 +624,7 @@ class LogTest < MiniTest::Test
 
   end
 
-  def zzz_test_verdict_refute_instance_of
+  def test_verdict_refute_instance_of
 
     method = :verdict_refute_instance_of?
     passing_arguments = {
@@ -676,7 +644,7 @@ class LogTest < MiniTest::Test
 
   end
 
-  def zzz_test_verdict_assert_kind_of
+  def test_verdict_assert_kind_of
 
     method = :verdict_assert_kind_of?
     passing_arguments = {
@@ -696,7 +664,7 @@ class LogTest < MiniTest::Test
 
   end
 
-  def zzz_test_verdict_refute_kind_of
+  def test_verdict_refute_kind_of
 
     method = :verdict_refute_kind_of?
     passing_arguments = {
@@ -716,7 +684,7 @@ class LogTest < MiniTest::Test
 
   end
 
-  def zzz_test_verdict_assert_match
+  def test_verdict_assert_match
 
     method = :verdict_assert_match?
     passing_arguments = {
@@ -736,7 +704,7 @@ class LogTest < MiniTest::Test
 
   end
 
-  def zzz_test_verdict_refute_match
+  def test_verdict_refute_match
 
     method = :verdict_refute_match?
     passing_arguments = {
@@ -756,7 +724,7 @@ class LogTest < MiniTest::Test
 
   end
 
-  def zzz_test_verdict_assert_nil
+  def test_verdict_assert_nil
 
     method = :verdict_assert_nil?
     passing_arguments = {
@@ -774,7 +742,7 @@ class LogTest < MiniTest::Test
 
   end
 
-  def zzz_test_verdict_refute_nil
+  def test_verdict_refute_nil
 
     method = :verdict_refute_nil?
     passing_arguments = {
@@ -792,7 +760,7 @@ class LogTest < MiniTest::Test
 
   end
 
-  def zzz_test_verdict_assert_operator
+  def test_verdict_assert_operator
 
     method = :verdict_assert_operator?
     passing_arguments = {
@@ -814,7 +782,7 @@ class LogTest < MiniTest::Test
 
   end
 
-  def zzz_test_verdict_refute_operator
+  def test_verdict_refute_operator
 
     method = :verdict_refute_operator?
     passing_arguments = {
@@ -836,7 +804,7 @@ class LogTest < MiniTest::Test
 
   end
 
-  def zzz_test_verdict_output
+  def test_verdict_output
 
     method = :verdict_assert_output?
     passing_arguments = {
@@ -863,7 +831,6 @@ class LogTest < MiniTest::Test
         :id => verdict_id,
         :method => method,
         :outcome => 'passed',
-        :volatile => false,
     }
     checker.assert_verdict_attributes(verdict_id, attributes)
     checker.assert_exception_count(0)
@@ -883,7 +850,6 @@ class LogTest < MiniTest::Test
         :id => verdict_id,
         :method => method,
         :outcome => 'failed',
-        :volatile => false,
     }
     checker.assert_verdict_attributes(verdict_id, attributes)
     checker.assert_exception_count(1)
@@ -892,7 +858,7 @@ class LogTest < MiniTest::Test
 
   # Minitest::Assertion does not have :refute_output, so we don't have :verdict_refute_output?.
 
-  def zzz_test_verdict_assert_predicate
+  def test_verdict_assert_predicate
 
     method = :verdict_assert_predicate?
     passing_arguments = {
@@ -912,7 +878,7 @@ class LogTest < MiniTest::Test
 
   end
 
-  def zzz_test_verdict_refute_predicate
+  def test_verdict_refute_predicate
 
     method = :verdict_refute_predicate?
     passing_arguments = {
@@ -932,7 +898,7 @@ class LogTest < MiniTest::Test
 
   end
 
-  def zzz_test_verdict_raises
+  def test_verdict_raises
 
     method = :verdict_assert_raises?
     passing_arguments = {
@@ -956,7 +922,6 @@ class LogTest < MiniTest::Test
         :id => verdict_id,
         :method => method,
         :outcome => 'passed',
-        :volatile => false,
     }
     checker.assert_verdict_attributes(verdict_id, attributes)
     checker.assert_exception_count(0)
@@ -975,7 +940,6 @@ class LogTest < MiniTest::Test
         :id => verdict_id,
         :method => method,
         :outcome => 'failed',
-        :volatile => false,
     }
     checker.assert_verdict_attributes(verdict_id, attributes)
     checker.assert_exception_count(1)
@@ -984,7 +948,7 @@ class LogTest < MiniTest::Test
 
   # Minitest::Assertion does not have :refute_raises, so we don't have :verdict_refute_raises?.
 
-  def zzz_test_verdict_assert_respond_to
+  def test_verdict_assert_respond_to
 
     method = :verdict_assert_respond_to?
     passing_arguments = {
@@ -1004,7 +968,7 @@ class LogTest < MiniTest::Test
 
   end
 
-  def zzz_test_verdict_refute_respond_to
+  def test_verdict_refute_respond_to
 
     method = :verdict_refute_respond_to?
     passing_arguments = {
@@ -1024,7 +988,7 @@ class LogTest < MiniTest::Test
 
   end
 
-  def zzz_test_verdict_assert_same
+  def test_verdict_assert_same
 
     method = :verdict_assert_same?
     passing_arguments = {
@@ -1044,7 +1008,7 @@ class LogTest < MiniTest::Test
 
   end
 
-  def zzz_test_verdict_refute_same
+  def test_verdict_refute_same
 
     method = :verdict_refute_same?
     passing_arguments = {
@@ -1068,7 +1032,7 @@ class LogTest < MiniTest::Test
 
   # Minitest::Assertion does not have :refute_send, so we don't have :verdict_refute_send?.
 
-  def zzz_test_verdict_silent
+  def test_verdict_silent
 
     method = :verdict_assert_silent?
     # Test with passing arguments.
@@ -1085,7 +1049,6 @@ class LogTest < MiniTest::Test
         :id => verdict_id,
         :method => method,
         :outcome => 'passed',
-        :volatile => false,
     }
     checker.assert_verdict_attributes(verdict_id, attributes)
     checker.assert_exception_count(0)
@@ -1105,7 +1068,6 @@ class LogTest < MiniTest::Test
         :id => verdict_id,
         :method => method,
         :outcome => 'failed',
-        :volatile => false,
     }
     checker.assert_verdict_attributes(verdict_id, attributes)
     checker.assert_exception_count(1)
@@ -1114,7 +1076,7 @@ class LogTest < MiniTest::Test
 
   # Minitest::Assertion does not have :refute_silent, so we don't have :verdict_refute_silent?.
 
-  def zzz_test_verdict_throws
+  def test_verdict_throws
 
     method = :verdict_assert_throws?
     passing_arguments = {
@@ -1138,7 +1100,6 @@ class LogTest < MiniTest::Test
         :id => verdict_id,
         :method => method,
         :outcome => 'passed',
-        :volatile => false,
     }
     checker.assert_verdict_attributes(verdict_id, attributes)
     checker.assert_exception_count(0)
@@ -1157,7 +1118,6 @@ class LogTest < MiniTest::Test
         :id => verdict_id,
         :method => method,
         :outcome => 'failed',
-        :volatile => false,
     }
     checker.assert_verdict_attributes(verdict_id, attributes)
     checker.assert_exception_count(1)
