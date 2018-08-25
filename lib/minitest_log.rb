@@ -1,4 +1,5 @@
 require 'rexml/document'
+require 'minitest/autorun'
 require 'minitest/assertions'
 require 'nokogiri'
 
