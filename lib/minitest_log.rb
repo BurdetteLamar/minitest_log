@@ -270,8 +270,7 @@ class MinitestLog
       end
       if exception
         self.counts[:failure] += 1
-        put_element('exception') do
-          put_element('class', exception.class)
+        put_element('exception', {:class => exception.class}) do
           put_element('message', exception.message)
           put_element('backtrace') do
             cdata(filter_backtrace(exception.backtrace))
