@@ -1,5 +1,5 @@
 require 'minitest/autorun'
-require 'test_log'
+require 'minitest_log'
 
 class Example < MiniTest::Test
 
@@ -9,7 +9,7 @@ class Example < MiniTest::Test
         :root_name => 'my_root_name',
         :xml_indentation => 4,
     }
-    TestLog.open(self, options) do |log|
+    MinitestLog.open(self, options) do |log|
       # Test stuff goes here.
     end
   end

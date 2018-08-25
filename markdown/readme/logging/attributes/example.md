@@ -5,12 +5,12 @@ This example shows how to put an atttributes onto a section.
 ```example.rb```:
 ```ruby
 require 'minitest/autorun'
-require 'test_log'
+require 'minitest_log'
 
 class Example < MiniTest::Test
 
   def test_example
-    TestLog.open(self) do |log|
+    MinitestLog.open(self) do |log|
       attrs = {:first_attr => 'first', :second_attr => 'second'}
       log.section('My section', attrs) do
       end

@@ -1,16 +1,16 @@
 
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'test_log/version'
+require 'minitest_log/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = 'test_log'
-  spec.version       = TestLog::VERSION
+  spec.name          = 'minitest_log'
+  spec.version       = MinitestLog::VERSION
   spec.authors       = ['burdettelamar']
   spec.email         = ['burdettelamar@yahoo.com']
 
   spec.summary       = %q{Logging for Ruby-coded testing}
-  spec.homepage      = "https://github.com/BurdetteLamar/test_log"
+  spec.homepage      = "https://github.com/BurdetteLamar/minitest_log"
   spec.license       = 'MIT'
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'

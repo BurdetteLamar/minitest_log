@@ -5,12 +5,12 @@ This example shows how nest sections in Ruby code.
 ```nested_sections.rb```:
 ```ruby
 require 'minitest/autorun'
-require 'test_log'
+require 'minitest_log'
 
 class Example < MiniTest::Test
 
   def test_example
-    TestLog.open(self) do |log|
+    MinitestLog.open(self) do |log|
       log.section('First outer') do
         log.section('First inner') do
         end

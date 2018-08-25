@@ -1,3 +1,3 @@
-class TestLog
+class MinitestLog
   VERSION = '0.1.0'
 end

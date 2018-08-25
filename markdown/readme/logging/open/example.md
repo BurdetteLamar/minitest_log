@@ -5,12 +5,12 @@ This example shows how to open a log.
 ```open.rb```:
 ```ruby
 require 'minitest/autorun'
-require 'test_log'
+require 'minitest_log'
 
 class Example < MiniTest::Test
 
   def test_example
-    TestLog.open(self) do |log|
+    MinitestLog.open(self) do |log|
       # Test stuff goes here.
     end
   end
@@ -32,7 +32,7 @@ This example shows how to use options in opening a log.
 ```options.rb```:
 ```ruby
 require 'minitest/autorun'
-require 'test_log'
+require 'minitest_log'
 
 class Example < MiniTest::Test
 
@@ -42,7 +42,7 @@ class Example < MiniTest::Test
         :root_name => 'my_root_name',
         :xml_indentation => 4,
     }
-    TestLog.open(self, options) do |log|
+    MinitestLog.open(self, options) do |log|
       # Test stuff goes here.
     end
   end

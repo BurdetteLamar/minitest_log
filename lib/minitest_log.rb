@@ -24,7 +24,7 @@ require_relative 'verdict_assertion'
 # each such method has a shorter alias.
 # Thus method verdict_assert_in_delta? has alias va_in_delta?,
 # and method verdict_refute_in_delta? has alias vr_in_delta?.
-class TestLog
+class MinitestLog
 
   include VerdictAssertion
 
@@ -82,7 +82,7 @@ class TestLog
 
   def initialize(test, options=Hash.new, im_ok_youre_not_ok = false)
     unless im_ok_youre_not_ok
-      # Caller should call TestLog.open, not TestLog.new.
+      # Caller should call MinitestLog.open, not MinitestLog.new.
       raise RuntimeError.new(NO_NEW_MSG)
     end
     self.test = test
@@ -190,7 +190,7 @@ class TestLog
         when arg.kind_of?(String)
           pcdata += arg
         when arg == :timestamp
-          attributes[:timestamp] = TestLog.timestamp
+          attributes[:timestamp] = MinitestLog.timestamp
         when arg == :duration
           duration_to_be_included = true
         when arg == :rescue

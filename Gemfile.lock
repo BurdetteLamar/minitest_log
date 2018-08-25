@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    test_log (0.1.0)
+    minitest_log (0.1.0)
 
 GEM
   remote: https://rubygems.org/
@@ -16,7 +16,7 @@ DEPENDENCIES
   bundler (~> 1.16)
   minitest (~> 5.0)
   rake (~> 10.0)
-  test_log!
+  minitest_log!
 
 BUNDLED WITH
    1.16.2
