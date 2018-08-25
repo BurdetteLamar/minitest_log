@@ -14,7 +14,7 @@ class LogTest < MiniTest::Test
   def create_temp_log(test)
     dir_path = Dir.mktmpdir
     file_path = File.join(dir_path, 'log.xml')
-    MinitestLog.open(test, {:file_path => file_path}) do |log|
+    MinitestLog.open({:file_path => file_path}) do |log|
       yield log
     end
     file_path
@@ -188,14 +188,14 @@ class LogTest < MiniTest::Test
 
     # No block.
     AssertionHelper.assert_raises_with_message(self, RuntimeError, MinitestLog::NO_BLOCK_GIVEN_MSG) do
-      MinitestLog.open(self).send(method)
+      MinitestLog.open.send(method)
     end
 
     # Block.
     dir_path = Dir.mktmpdir
     file_path = File.join(dir_path, 'log.xml')
     AssertionHelper.assert_nothing_raised(self) do
-      MinitestLog.open(self, {:file_path => file_path}) do |log|
+      MinitestLog.open({:file_path => file_path}) do |log|
         log.comment('foo')
       end
     end

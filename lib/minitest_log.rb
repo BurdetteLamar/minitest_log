@@ -2,8 +2,6 @@ require 'rexml/document'
 require 'minitest/assertions'
 require 'nokogiri'
 
-# require_relative '../test/assertion_helper'
-
 # When adding a module here, be sure to 'include' below.
 require_relative 'verdict_assertion'
 
@@ -20,7 +18,7 @@ require_relative 'verdict_assertion'
 # Method verdict_assert_in_delta?, for example,
 # corresponds to assertion method assert_in_delta.
 #
-# To aid both the \test developer and the IDE's code-completion efforts,
+# To aid both the test developer and the IDE's code-completion efforts,
 # each such method has a shorter alias.
 # Thus method verdict_assert_in_delta? has alias va_in_delta?,
 # and method verdict_refute_in_delta? has alias vr_in_delta?.
@@ -35,7 +33,6 @@ class MinitestLog
     :file_path,
     :backtrace_filter,
     :root_name,
-    :test,
     :verdict_ids,
     :xml_indentation
 
@@ -52,7 +49,7 @@ class MinitestLog
   # Message for calling-new error.
   NO_NEW_MSG = format('Please use %s.open, not %s.new.', self.class.name, self.class.name)
 
-  def self.open(test, options=Hash.new)
+  def self.open(options=Hash.new)
     raise NO_BLOCK_GIVEN_MSG unless (block_given?)
     default_options = Hash[
         :file_path => File.join(DEFAULT_DIR_PATH, DEFAULT_FILE_NAME),
@@ -60,7 +57,7 @@ class MinitestLog
         :xml_indentation => DEFAULT_XML_INDENTATION
     ]
     options = default_options.merge(options)
-    log = self.new(test, options, im_ok_youre_not_ok = true)
+    log = self.new(options, im_ok_youre_not_ok = true)
     yield log
     log.send(:dispose)
     nil
@@ -80,12 +77,11 @@ class MinitestLog
 
   private
 
-  def initialize(test, options=Hash.new, im_ok_youre_not_ok = false)
+  def initialize(options=Hash.new, im_ok_youre_not_ok = false)
     unless im_ok_youre_not_ok
       # Caller should call MinitestLog.open, not MinitestLog.new.
       raise RuntimeError.new(NO_NEW_MSG)
     end
-    self.test = test
     self.assertions = 0
     self.file_path = options[:file_path]
     self.root_name = options[:root_name]
