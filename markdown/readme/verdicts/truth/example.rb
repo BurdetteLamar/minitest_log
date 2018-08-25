@@ -1,7 +1,7 @@
 require 'minitest/autorun'
 require 'minitest_log'
 
-class Example < MiniTest::Test
+class Example < Minitest::Test
 
   def test_example
     MinitestLog.open(self) do |log|
