@@ -5,8 +5,6 @@ require_relative 'common_requires'
 # Class to test class +Log+.
 class LogTest < MiniTest::Test
 
-  attr_accessor :test
-
   def test_version_number
     refute_nil ::MinitestLog::VERSION
   end
@@ -24,7 +22,6 @@ class LogTest < MiniTest::Test
 
   # Helper class for checking logged output.
   class Checker
-
 
     attr_accessor \
       :exceptions,
@@ -192,7 +189,7 @@ class LogTest < MiniTest::Test
 
   end
 
-  def yest_open
+  def test_open
 
     method = :open
 
@@ -518,7 +515,7 @@ class LogTest < MiniTest::Test
 
   end
 
-  def zzz_test_verdict_refute_in_delta
+  def test_verdict_refute_in_delta
 
     method = :verdict_refute_in_delta?
     passing_arguments = {
@@ -536,6 +533,7 @@ class LogTest < MiniTest::Test
         :method => method,
         :passing_arguments => passing_arguments,
         :failing_arguments => failing_arguments,
+        :exception_message => 'Expected |0 - 1| (1) to not be &lt;= 1.',
     )
 
   end
