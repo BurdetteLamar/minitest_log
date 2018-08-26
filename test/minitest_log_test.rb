@@ -695,7 +695,7 @@ class LogTest < MiniTest::Test
 
   end
 
-  def zzz_test_verdict_refute_kind_of
+  def test_verdict_refute_kind_of
 
     method = :verdict_refute_kind_of?
     passing_arguments = {
@@ -711,11 +711,12 @@ class LogTest < MiniTest::Test
         :method => method,
         :passing_arguments => passing_arguments,
         :failing_arguments => failing_arguments,
+        :exception_message => 'Expected String to not be a kind of Object.'
     )
 
   end
 
-  def zzz_test_verdict_assert_match
+  def test_verdict_assert_match
 
     method = :verdict_assert_match?
     passing_arguments = {
@@ -731,11 +732,12 @@ class LogTest < MiniTest::Test
         :method => method,
         :passing_arguments => passing_arguments,
         :failing_arguments => failing_arguments,
+        :exception_message => 'Expected /x/ to match # encoding: UTF-8 &quot;y&quot;.'
     )
 
   end
 
-  def zzz_test_verdict_refute_match
+  def test_verdict_refute_match
 
     method = :verdict_refute_match?
     passing_arguments = {
@@ -751,11 +753,12 @@ class LogTest < MiniTest::Test
         :method => method,
         :passing_arguments => passing_arguments,
         :failing_arguments => failing_arguments,
+        :exception_message => 'Expected /x/ to not match # encoding: UTF-8 &quot;x&quot;.'
     )
 
   end
 
-  def zzz_test_verdict_assert_nil
+  def test_verdict_assert_nil
 
     method = :verdict_assert_nil?
     passing_arguments = {
@@ -769,11 +772,12 @@ class LogTest < MiniTest::Test
         :method => method,
         :passing_arguments => passing_arguments,
         :failing_arguments => failing_arguments,
+        :exception_message => 'Expected true to be nil.'
     )
 
   end
 
-  def zzz_test_verdict_refute_nil
+  def test_verdict_refute_nil
 
     method = :verdict_refute_nil?
     passing_arguments = {
@@ -787,11 +791,12 @@ class LogTest < MiniTest::Test
         :method => method,
         :passing_arguments => passing_arguments,
         :failing_arguments => failing_arguments,
+        :exception_message => 'Expected nil to not be nil.'
     )
 
   end
 
-  def zzz_test_verdict_assert_operator
+  def test_verdict_assert_operator
 
     method = :verdict_assert_operator?
     passing_arguments = {
@@ -809,11 +814,12 @@ class LogTest < MiniTest::Test
         :method => method,
         :passing_arguments => passing_arguments,
         :failing_arguments => failing_arguments,
+        :exception_message => 'Expected 1 to be &gt; 2.'
     )
 
   end
 
-  def zzz_test_verdict_refute_operator
+  def test_verdict_refute_operator
 
     method = :verdict_refute_operator?
     passing_arguments = {
@@ -831,11 +837,12 @@ class LogTest < MiniTest::Test
         :method => method,
         :passing_arguments => passing_arguments,
         :failing_arguments => failing_arguments,
+        :exception_message => 'Expected 1 to not be &lt; 2.'
     )
 
   end
 
-  def zzz_test_verdict_output
+  def test_verdict_output
 
     method = :verdict_assert_output?
     passing_arguments = {
@@ -889,7 +896,7 @@ class LogTest < MiniTest::Test
 
   # Minitest::Assertion does not have :refute_output, so we don't have :verdict_refute_output?.
 
-  def zzz_test_verdict_assert_predicate
+  def test_verdict_assert_predicate
 
     method = :verdict_assert_predicate?
     passing_arguments = {
@@ -905,11 +912,12 @@ class LogTest < MiniTest::Test
         :method => method,
         :passing_arguments => passing_arguments,
         :failing_arguments => failing_arguments,
+        :exception_message => 'Expected # encoding: UTF-8 &quot;foo&quot; to be empty?.'
     )
 
   end
 
-  def zzz_test_verdict_refute_predicate
+  def test_verdict_refute_predicate
 
     method = :verdict_refute_predicate?
     passing_arguments = {
@@ -925,11 +933,12 @@ class LogTest < MiniTest::Test
         :method => method,
         :passing_arguments => passing_arguments,
         :failing_arguments => failing_arguments,
+        :exception_message => 'Expected # encoding: UTF-8 &quot;&quot; to not be empty?.'
     )
 
   end
 
-  def zzz_test_verdict_raises
+  def test_verdict_raises
 
     method = :verdict_assert_raises?
     passing_arguments = {
@@ -979,7 +988,7 @@ class LogTest < MiniTest::Test
 
   # Minitest::Assertion does not have :refute_raises, so we don't have :verdict_refute_raises?.
 
-  def zzz_test_verdict_assert_respond_to
+  def test_verdict_assert_respond_to
 
     method = :verdict_assert_respond_to?
     passing_arguments = {
@@ -995,11 +1004,12 @@ class LogTest < MiniTest::Test
         :method => method,
         :passing_arguments => passing_arguments,
         :failing_arguments => failing_arguments,
+        :exception_message => 'Expected 0 (Fixnum) to respond to #empty?.'
     )
 
   end
 
-  def zzz_test_verdict_refute_respond_to
+  def test_verdict_refute_respond_to
 
     method = :verdict_refute_respond_to?
     passing_arguments = {
@@ -1015,11 +1025,12 @@ class LogTest < MiniTest::Test
         :method => method,
         :passing_arguments => passing_arguments,
         :failing_arguments => failing_arguments,
+        :exception_message => 'Expected # encoding: UTF-8 &quot;&quot; to not respond to empty?.'
     )
 
   end
 
-  def zzz_test_verdict_assert_same
+  def test_verdict_assert_same
 
     method = :verdict_assert_same?
     passing_arguments = {
@@ -1035,11 +1046,12 @@ class LogTest < MiniTest::Test
         :method => method,
         :passing_arguments => passing_arguments,
         :failing_arguments => failing_arguments,
+        :exception_message => 'Expected :different (oid=1162588) to be the same as :same (oid=1162268).'
     )
 
   end
 
-  def zzz_test_verdict_refute_same
+  def test_verdict_refute_same
 
     method = :verdict_refute_same?
     passing_arguments = {
@@ -1055,6 +1067,7 @@ class LogTest < MiniTest::Test
         :method => method,
         :passing_arguments => passing_arguments,
         :failing_arguments => failing_arguments,
+        :exception_message => 'Expected :same (oid=1162268) to not be the same as :same (oid=1162268).'
     )
 
   end
@@ -1063,7 +1076,7 @@ class LogTest < MiniTest::Test
 
   # Minitest::Assertion does not have :refute_send, so we don't have :verdict_refute_send?.
 
-  def zzz_test_verdict_silent
+  def test_verdict_silent
 
     method = :verdict_assert_silent?
     # Test with passing arguments.
@@ -1107,7 +1120,7 @@ class LogTest < MiniTest::Test
 
   # Minitest::Assertion does not have :refute_silent, so we don't have :verdict_refute_silent?.
 
-  def zzz_test_verdict_throws
+  def test_verdict_throws
 
     method = :verdict_assert_throws?
     passing_arguments = {
