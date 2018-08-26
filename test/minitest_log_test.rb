@@ -131,7 +131,7 @@ class LogTest < MiniTest::Test
     method = hash[:method]
     passing_arguments = hash[:passing_arguments]
     failing_arguments = hash[:failing_arguments]
-    exception_message_regexp = hash[:exception_message_regexp]
+    exception_message = hash[:exception_message]
 
     # Test with passing arguments.
     verdict_id = :passes
@@ -164,7 +164,7 @@ class LogTest < MiniTest::Test
     }
     checker.assert_verdict_attributes(verdict_id, attributes)
     exception = Minitest::Assertion.new
-    checker.assert_exception(exception_message_regexp)
+    checker.assert_exception(exception_message)
 
     # Test with message.
     verdict_id = :message
@@ -253,7 +253,7 @@ class LogTest < MiniTest::Test
         :method => method,
         :passing_arguments => passing_arguments,
         :failing_arguments => failing_arguments,
-        :exception_message_regexp => 'Expected false to be truthy.'
+        :exception_message => 'Expected false to be truthy.'
     )
 
     # Use object/nil.
@@ -267,7 +267,7 @@ class LogTest < MiniTest::Test
         :method => method,
         :passing_arguments => passing_arguments,
         :failing_arguments => failing_arguments,
-        :exception_message_regexp => 'Expected nil to be truthy.'
+        :exception_message => 'Expected nil to be truthy.'
     )
 
   end
@@ -287,7 +287,7 @@ class LogTest < MiniTest::Test
         :method => method,
         :passing_arguments => passing_arguments,
         :failing_arguments => failing_arguments,
-        :exception_message_regexp => 'Expected true to not be truthy.'
+        :exception_message => 'Expected true to not be truthy.'
     )
 
     # Use nil/1.
@@ -301,12 +301,12 @@ class LogTest < MiniTest::Test
         :method => method,
         :passing_arguments => passing_arguments,
         :failing_arguments => failing_arguments,
-        :exception_message_regexp => 'Expected 1 to not be truthy.'
+        :exception_message => 'Expected 1 to not be truthy.'
     )
 
   end
 
-  def zzz_test_verdict_assert_empty
+  def test_verdict_assert_empty
 
     method = :verdict_assert_empty?
     passing_arguments = {
@@ -320,7 +320,7 @@ class LogTest < MiniTest::Test
         :method => method,
         :passing_arguments => passing_arguments,
         :failing_arguments => failing_arguments,
-        :exception_message_regexp => /Expected \[1\] to be empty\./
+        :exception_message => 'Expected [1] to be empty.'
     )
 
     verdict_id = :no_empty_method_fails
@@ -354,7 +354,7 @@ class LogTest < MiniTest::Test
         :method => method,
         :passing_arguments => passing_arguments,
         :failing_arguments => failing_arguments,
-        :exception_message_regexp => 'Expected [] to not be empty.'
+        :exception_message => 'Expected [] to not be empty.'
     )
 
     verdict_id = :no_empty_method_fails
@@ -390,7 +390,7 @@ class LogTest < MiniTest::Test
         :method => method,
         :passing_arguments => passing_arguments,
         :failing_arguments => failing_arguments,
-        :exception_message_regexp => 'Expected: 0 Actual: 1'
+        :exception_message => 'Expected: 0 Actual: 1'
     )
 
     verdict_id = :hash_passes
@@ -494,7 +494,7 @@ class LogTest < MiniTest::Test
         :method => method,
         :passing_arguments => passing_arguments,
         :failing_arguments => failing_arguments,
-        :exception_message_regexp => 'Expected 0 to not be equal to 0.'
+        :exception_message => 'Expected 0 to not be equal to 0.'
     )
 
   end
@@ -517,7 +517,7 @@ class LogTest < MiniTest::Test
         :method => method,
         :passing_arguments => passing_arguments,
         :failing_arguments => failing_arguments,
-        :exception_message_regexp => 'Expected |0 - 1| (1) to be &lt;= 0.1.'
+        :exception_message => 'Expected |0 - 1| (1) to be &lt;= 0.1.'
     )
 
   end
@@ -544,7 +544,7 @@ class LogTest < MiniTest::Test
 
   end
 
-  def zzz_test_verdict_assert_in_epsilon
+  def test_verdict_assert_in_epsilon
 
     method = :verdict_assert_in_epsilon?
     passing_arguments = {
@@ -562,11 +562,12 @@ class LogTest < MiniTest::Test
         :method => method,
         :passing_arguments => passing_arguments,
         :failing_arguments => failing_arguments,
+        :exception_message => 'Expected |0 - 4| (4) to be &lt;= 0.'
     )
 
   end
 
-  def zzz_test_verdict_refute_in_epsilon
+  def test_verdict_refute_in_epsilon
 
     method = :verdict_refute_in_epsilon?
     passing_arguments = {
@@ -584,11 +585,12 @@ class LogTest < MiniTest::Test
         :method => method,
         :passing_arguments => passing_arguments,
         :failing_arguments => failing_arguments,
+        :exception_message => 'Expected |0 - 0| (0) to not be &lt;= 0.'
     )
 
   end
 
-  def zzz_test_verdict_assert_includes
+  def test_verdict_assert_includes
 
     method = :verdict_assert_includes?
     passing_arguments = {
@@ -604,11 +606,12 @@ class LogTest < MiniTest::Test
         :method => method,
         :passing_arguments => passing_arguments,
         :failing_arguments => failing_arguments,
+        :exception_message => 'Expected [0] to include 1.'
     )
 
   end
 
-  def zzz_test_verdict_refute_includes
+  def test_verdict_refute_includes
 
     method = :verdict_refute_includes?
     passing_arguments = {
@@ -624,11 +627,12 @@ class LogTest < MiniTest::Test
         :method => method,
         :passing_arguments => passing_arguments,
         :failing_arguments => failing_arguments,
+        :exception_message => 'Expected [0] to not include 0.'
     )
 
   end
 
-  def zzz_test_verdict_assert_instance_of
+  def test_verdict_assert_instance_of
 
     method = :verdict_assert_instance_of?
     passing_arguments = {
@@ -644,11 +648,12 @@ class LogTest < MiniTest::Test
         :method => method,
         :passing_arguments => passing_arguments,
         :failing_arguments => failing_arguments,
+        :exception_message => 'Expected 0 to be an instance of String, not Fixnum.'
     )
 
   end
 
-  def zzz_test_verdict_refute_instance_of
+  def test_verdict_refute_instance_of
 
     method = :verdict_refute_instance_of?
     passing_arguments = {
@@ -664,11 +669,12 @@ class LogTest < MiniTest::Test
         :method => method,
         :passing_arguments => passing_arguments,
         :failing_arguments => failing_arguments,
+        :exception_message => 'Expected # encoding: UTF-8 &quot;&quot; to not be an instance of String.'
     )
 
   end
 
-  def zzz_test_verdict_assert_kind_of
+  def test_verdict_assert_kind_of
 
     method = :verdict_assert_kind_of?
     passing_arguments = {
@@ -684,6 +690,7 @@ class LogTest < MiniTest::Test
         :method => method,
         :passing_arguments => passing_arguments,
         :failing_arguments => failing_arguments,
+        :exception_message => 'Expected 0 to be a kind of String, not Fixnum.'
     )
 
   end
