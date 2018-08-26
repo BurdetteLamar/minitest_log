@@ -230,6 +230,33 @@ class LogTest < MiniTest::Test
 
   end
 
+  def test_comment
+
+    method = :comment
+
+    comment = 'foo'
+    file_path = create_temp_log(self) do |log|
+      log.comment(comment)
+    end
+    checker = Checker.new(self, file_path)
+    ele_xpath = "//comment"
+    checker.assert_element_text(ele_xpath, comment)
+
+    comment = <<EOT
+First line
+Second line
+Third line
+EOT
+    file_path = create_temp_log(self) do |log|
+      log.comment(comment)
+    end
+    actual_log = File.read(file_path)
+    assert_match(/^First line$/, actual_log)
+    assert_match(/^Second line$/, actual_log)
+    assert_match(/^Third line$/, actual_log)
+
+  end
+
   def test_verdict_assert
 
     method = :verdict_assert?

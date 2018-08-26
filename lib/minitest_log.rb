@@ -72,7 +72,14 @@ class MinitestLog
   end
 
   def comment(text, *args)
-    put_element('comment', text, *args)
+    if text.match("\n")
+      # Separate text from containing punctuation.
+      put_element('comment') do
+        cdata("\n#{text}\n")
+      end
+    else
+      put_element('comment', text, *args)
+    end
     nil
   end
 
