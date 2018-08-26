@@ -87,11 +87,6 @@ class LogTest < MiniTest::Test
       true
     end
 
-    # verify exception count.
-    def assert_exception_count(expected_count)
-      self.test.assert_equal(expected_count, self.exceptions.size, 'exception count')
-    end
-
     def assert_exception(expected_message)
       expected_assertion_count = expected_message.nil? ? 0 : 1
       self.test.assert_equal(expected_assertion_count, self.exceptions.size)
@@ -336,7 +331,7 @@ class LogTest < MiniTest::Test
         :outcome => 'failed',
     }
     checker.assert_verdict_attributes(verdict_id, attributes)
-    checker.assert_exception_count(1)
+    checker.assert_exception('Expected 0 (Fixnum) to respond to #empty?.')
 
   end
 
@@ -370,7 +365,7 @@ class LogTest < MiniTest::Test
         :outcome => 'failed',
     }
     checker.assert_verdict_attributes(verdict_id, attributes)
-    checker.assert_exception_count(1)
+    checker.assert_exception('Expected 0 (Fixnum) to respond to #empty?.')
 
   end
 
@@ -474,7 +469,8 @@ class LogTest < MiniTest::Test
         :outcome => 'failed',
     }
     checker.assert_verdict_attributes(verdict_id, attributes)
-    checker.assert_exception_count(1)
+    checker.assert_exception('--- expected +++ actual @@ -1 +1,2 @@ -0 +# encoding: UTF-8
+        +&quot;a&quot;')
 
   end
 
@@ -890,7 +886,7 @@ class LogTest < MiniTest::Test
         :outcome => 'failed',
     }
     checker.assert_verdict_attributes(verdict_id, attributes)
-    checker.assert_exception_count(1)
+    checker.assert_exception('not stderr')
 
   end
 
@@ -982,7 +978,7 @@ class LogTest < MiniTest::Test
         :outcome => 'failed',
     }
     checker.assert_verdict_attributes(verdict_id, attributes)
-    checker.assert_exception_count(1)
+    checker.assert_exception('[RuntimeError] exception expected')
 
   end
 
@@ -1046,7 +1042,7 @@ class LogTest < MiniTest::Test
         :method => method,
         :passing_arguments => passing_arguments,
         :failing_arguments => failing_arguments,
-        :exception_message => 'Expected :different (oid=1162588) to be the same as :same (oid=1162268).'
+        :exception_message => 'Expected :different'
     )
 
   end
@@ -1067,7 +1063,7 @@ class LogTest < MiniTest::Test
         :method => method,
         :passing_arguments => passing_arguments,
         :failing_arguments => failing_arguments,
-        :exception_message => 'Expected :same (oid=1162268) to not be the same as :same (oid=1162268).'
+        :exception_message => 'Expected :same'
     )
 
   end
@@ -1114,7 +1110,7 @@ class LogTest < MiniTest::Test
         :outcome => 'failed',
     }
     checker.assert_verdict_attributes(verdict_id, attributes)
-    checker.assert_exception_count(1)
+    checker.assert_exception('&quot;&quot; +&quot;Boo!&quot;')
 
   end
 
@@ -1164,7 +1160,7 @@ class LogTest < MiniTest::Test
         :outcome => 'failed',
     }
     checker.assert_verdict_attributes(verdict_id, attributes)
-    checker.assert_exception_count(1)
+    checker.assert_exception('Expected Exception to have been thrown')
 
   end
 
