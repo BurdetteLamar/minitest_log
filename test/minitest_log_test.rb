@@ -182,7 +182,7 @@ class LogTest < MiniTest::Test
         :message => verdict_message,
     }
     checker.assert_verdict_attributes(verdict_id, attributes)
-    checker.assert_exception_count(0)
+    checker.assert_exception(nil)
 
     nil
   end
@@ -405,7 +405,7 @@ class LogTest < MiniTest::Test
         :outcome => 'passed',
     }
     checker.assert_verdict_attributes(verdict_id, attributes)
-    checker.assert_exception_count(0)
+    checker.assert_exception(nil)
 
     verdict_id = :set_passes
     file_path = create_temp_log(self) do |log|
@@ -420,7 +420,7 @@ class LogTest < MiniTest::Test
         :outcome => 'passed',
     }
     checker.assert_verdict_attributes(verdict_id, attributes)
-    checker.assert_exception_count(0)
+    checker.assert_exception(nil)
 
     verdict_id = :hash_fails
     file_path = create_temp_log(self) do |log|
@@ -871,7 +871,7 @@ class LogTest < MiniTest::Test
         :outcome => 'passed',
     }
     checker.assert_verdict_attributes(verdict_id, attributes)
-    checker.assert_exception_count(0)
+    checker.assert_exception(nil)
     # Test with failing arguments.
     verdict_id = :fails
     file_path = create_temp_log(self) do |log|
@@ -964,7 +964,7 @@ class LogTest < MiniTest::Test
         :outcome => 'passed',
     }
     checker.assert_verdict_attributes(verdict_id, attributes)
-    checker.assert_exception_count(0)
+    checker.assert_exception(nil)
     # Test with failing arguments.
     verdict_id = :fails
     file_path = create_temp_log(self) do |log|
@@ -1095,7 +1095,7 @@ class LogTest < MiniTest::Test
         :outcome => 'passed',
     }
     checker.assert_verdict_attributes(verdict_id, attributes)
-    checker.assert_exception_count(0)
+    checker.assert_exception(nil)
     # Test with failing arguments.
     verdict_id = :fails
     file_path = create_temp_log(self) do |log|
@@ -1146,7 +1146,7 @@ class LogTest < MiniTest::Test
         :outcome => 'passed',
     }
     checker.assert_verdict_attributes(verdict_id, attributes)
-    checker.assert_exception_count(0)
+    checker.assert_exception(nil)
     # Test with failing arguments.
     verdict_id = :fails
     file_path = create_temp_log(self) do |log|
