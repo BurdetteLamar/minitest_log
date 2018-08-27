@@ -233,8 +233,6 @@ class MinitestLog
           put_element('uncaught_exception') do
             put_element('verdict_id', verdict_id) if verdict_id
             put_element('class', x.class)
-            put_element('http_code', x.http_code) if x.respond_to?(:http_code)
-            put_element('http_body', x.http_body) if x.respond_to?(:http_body)
             put_element('message', x.message)
             put_element('backtrace') do
               cdata(filter_backtrace(x.backtrace))
