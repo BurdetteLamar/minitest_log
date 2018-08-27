@@ -59,28 +59,7 @@ module VerdictAssertion
         :exp_value => expected,
         :act_value => actual,
     }
-    verdict = _get_verdict?(verdict_method, verdict_id, message, args_hash)
-    # Done if passed or refute.
-    return verdict if verdict || verdict_method == :verdict_refute_equal?
-    # Log analysis of failed complex type.
-    case
-      when expected.kind_of?(Set) && actual.kind_of?(Set)
-        put_element('analysis') do
-          SetHelper.compare(expected, actual).each_pair do |key, value|
-            put_element(key.to_s, value) unless value.empty?
-          end
-        end
-      when expected.kind_of?(Hash) && actual.kind_of?(Hash)
-        put_element('analysis') do
-          HashHelper.compare(expected, actual).each_pair do |key, value|
-            put_element(key.to_s, value) unless value.empty?
-          end
-
-        end
-      else
-        # TODO:  Implement more here as needed;  Array, etc.
-    end
-    verdict
+    _get_verdict?(verdict_method, verdict_id, message, args_hash)
   end
   private :_verdict_equal?
 

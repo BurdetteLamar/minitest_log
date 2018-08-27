@@ -254,7 +254,7 @@ class MinitestLog
     nil
   end
 
-  def _get_verdict?(verdict_method, verdict_id, message, args_hash, *args)
+  def _get_verdict?(verdict_method, verdict_id, message, args_hash, analysis = nil)
     assertion_method = assertion_method_for(verdict_method)
     if block_given?
       outcome, exception = get_assertion_outcome(verdict_id, assertion_method, *args_hash.values) do
@@ -269,12 +269,13 @@ class MinitestLog
         :id => verdict_id,
     }
     element_attributes.store(:message, message) unless message.nil?
-    put_element('verdict', element_attributes, *args) do
+    put_element('verdict', element_attributes) do
       args_hash.each_pair do |k, v|
         put_element(k.to_s, v)
       end
       if exception
         self.counts[:failure] += 1
+        put_analysis(verdict_method, args_hash)
         put_element('exception', {:class => exception.class}) do
           put_element('message', exception.message)
           put_element('backtrace') do
@@ -284,6 +285,31 @@ class MinitestLog
       end
     end
     outcome == :passed
+  end
+
+  def put_analysis(method, args_hash)
+    # Log analysis of failed complex type.
+    return unless method == :verdict_assert_equal?
+    expected = args_hash[:exp_value]
+    actual = args_hash[:act_value]
+    return unless expected.class == actual.class
+    case
+      when expected.kind_of?(Set)
+        put_element('analysis') do
+          SetHelper.compare(expected, actual).each_pair do |key, value|
+            put_element(key.to_s, value) unless value.empty?
+          end
+        end
+      when expected.kind_of?(Hash)
+        put_element('analysis') do
+          HashHelper.compare(expected, actual).each_pair do |key, value|
+            put_element(key.to_s, value) unless value.empty?
+          end
+        end
+      else
+        # TODO:  Implement more here as needed;  Array, etc.
+    end
+
   end
 
   def put_attributes(attributes)
