@@ -254,7 +254,7 @@ class MinitestLog
     nil
   end
 
-  def _get_verdict?(verdict_method, verdict_id, message, args_hash, analysis = nil)
+  def _get_verdict?(verdict_method, verdict_id, message, args_hash)
     assertion_method = assertion_method_for(verdict_method)
     if block_given?
       outcome, exception = get_assertion_outcome(verdict_id, assertion_method, *args_hash.values) do
