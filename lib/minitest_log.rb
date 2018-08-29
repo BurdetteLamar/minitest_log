@@ -235,8 +235,8 @@ class MinitestLog
             put_element('class', x.class)
             put_element('message', x.message)
             put_element('backtrace') do
-              filter_backtrace(x.backtrace).each_with_index do |level, i|
-                put_element("level_#{i}", level)
+              filter_backtrace(x.backtrace).each_with_index do |location, i|
+                put_element("level_#{i}", {:location => location})
               end
             end
           end
@@ -281,7 +281,9 @@ class MinitestLog
         put_element('exception', {:class => exception.class}) do
           put_element('message', exception.message)
           put_element('backtrace') do
-            cdata(filter_backtrace(exception.backtrace))
+            filter_backtrace(exception.backtrace).each_with_index do |location, i|
+              put_element("level_#{i}", {:location => location})
+            end
           end
         end
       end
@@ -377,13 +379,13 @@ class MinitestLog
 
   # Filters lines that are from ruby or log, to make the backtrace more readable.
   def filter_backtrace(lines)
-    filtered = ['']
+    filtered = []
     lines.each do |line|
       unless line.match(self.backtrace_filter)
         filtered.push(line)
       end
     end
-    filtered.join("\n")
+    filtered
   end
 
   # Return a timestamp string.
