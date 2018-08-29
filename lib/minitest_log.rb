@@ -1,4 +1,5 @@
 require 'rexml/document'
+require 'minitest/autorun'
 require 'minitest/assertions'
 require 'nokogiri'
 
@@ -71,7 +72,14 @@ class MinitestLog
   end
 
   def comment(text, *args)
-    put_element('comment', text, *args)
+    if text.match("\n")
+      # Separate text from containing punctuation.
+      put_element('comment') do
+        cdata("\n#{text}\n")
+      end
+    else
+      put_element('comment', text, *args)
+    end
     nil
   end
 
@@ -225,11 +233,11 @@ class MinitestLog
           put_element('uncaught_exception') do
             put_element('verdict_id', verdict_id) if verdict_id
             put_element('class', x.class)
-            put_element('http_code', x.http_code) if x.respond_to?(:http_code)
-            put_element('http_body', x.http_body) if x.respond_to?(:http_body)
             put_element('message', x.message)
             put_element('backtrace') do
-              cdata(filter_backtrace(x.backtrace))
+              filter_backtrace(x.backtrace).each_with_index do |location, i|
+                put_element("level_#{i}", {:location => location})
+              end
             end
           end
           self.counts[:error] += 1
@@ -248,7 +256,7 @@ class MinitestLog
     nil
   end
 
-  def _get_verdict?(verdict_method, verdict_id, message, args_hash, *args)
+  def _get_verdict?(verdict_method, verdict_id, message, args_hash)
     assertion_method = assertion_method_for(verdict_method)
     if block_given?
       outcome, exception = get_assertion_outcome(verdict_id, assertion_method, *args_hash.values) do
@@ -263,22 +271,49 @@ class MinitestLog
         :id => verdict_id,
     }
     element_attributes.store(:message, message) unless message.nil?
-    put_element('verdict', element_attributes, *args) do
+    put_element('verdict', element_attributes) do
       args_hash.each_pair do |k, v|
         put_element(k.to_s, v)
       end
       if exception
         self.counts[:failure] += 1
-        put_element('exception') do
-          put_element('class', exception.class)
+        put_analysis(verdict_method, args_hash)
+        put_element('exception', {:class => exception.class}) do
           put_element('message', exception.message)
           put_element('backtrace') do
-            cdata(filter_backtrace(exception.backtrace))
+            filter_backtrace(exception.backtrace).each_with_index do |location, i|
+              put_element("level_#{i}", {:location => location})
+            end
           end
         end
       end
     end
     outcome == :passed
+  end
+
+  def put_analysis(method, args_hash)
+    # Log analysis of failed complex type.
+    return unless method == :verdict_assert_equal?
+    expected = args_hash[:exp_value]
+    actual = args_hash[:act_value]
+    return unless expected.class == actual.class
+    case
+      when expected.kind_of?(Set)
+        put_element('analysis') do
+          SetHelper.compare(expected, actual).each_pair do |key, value|
+            put_element(key.to_s, value) unless value.empty?
+          end
+        end
+      when expected.kind_of?(Hash)
+        put_element('analysis') do
+          HashHelper.compare(expected, actual).each_pair do |key, value|
+            put_element(key.to_s, value) unless value.empty?
+          end
+        end
+      else
+        # TODO:  Implement more here as needed;  Array, etc.
+    end
+
   end
 
   def put_attributes(attributes)
@@ -344,13 +379,13 @@ class MinitestLog
 
   # Filters lines that are from ruby or log, to make the backtrace more readable.
   def filter_backtrace(lines)
-    filtered = ['']
+    filtered = []
     lines.each do |line|
       unless line.match(self.backtrace_filter)
         filtered.push(line)
       end
     end
-    filtered.join("\n")
+    filtered
   end
 
   # Return a timestamp string.
