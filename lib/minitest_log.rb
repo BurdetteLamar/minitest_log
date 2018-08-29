@@ -235,7 +235,9 @@ class MinitestLog
             put_element('class', x.class)
             put_element('message', x.message)
             put_element('backtrace') do
-              cdata(filter_backtrace(x.backtrace))
+              filter_backtrace(x.backtrace).each_with_index do |level, i|
+                put_element("level_#{i}", level)
+              end
             end
           end
           self.counts[:error] += 1
