@@ -493,8 +493,7 @@ EOT
         :outcome => 'failed',
     }
     checker.assert_verdict_attributes(verdict_id, attributes)
-    checker.assert_exception('--- expected +++ actual @@ -1 +1,2 @@ -0 +# encoding: UTF-8
-        +&quot;a&quot;')
+    checker.assert_exception('--- expected +++ actual @@ -1 +1,2 @@ -0 +# encoding: UTF-8 +&quot;a&quot;')
 
   end
 
