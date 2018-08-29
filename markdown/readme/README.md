@@ -24,7 +24,7 @@ class Example < Minitest::Test
 end
 ```
 
-[xml](verdicts/assert/log.xml)
+[xml](https://raw.githubusercontent.com/BurdetteLamar/minitest_log/master/markdown/readme/verdicts/assert/log.xml)
 
 ## Logging
 
