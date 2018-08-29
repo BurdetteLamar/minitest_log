@@ -10,7 +10,7 @@ With ```minitest_log```:
 
 @[ruby](verdicts/assert/example.rb)
 
-@[xml](verdicts/assert/log.xml)
+[xml](verdicts/assert/log.xml)
 
 ## Logging
 
