@@ -1,7 +1,14 @@
-# Test Log
+# MinitestLog
 
-Project ```minitest_log``` provides:
+This ```minitest_log``` project provides logging for use with gem ```minitest```.
 
-- **Structured logging**:  Nested sections in Ruby test code become neste sections in the XML log.
-- **Logged verdicts**:  Each verdict-method call performs a verification and logs the result.
+With ```minitest_log```:
+ 
+- Each assertion is fully logged:  expected and actual values, along with an optional message.
+- A failed assertion does not terminate the test.  (That's why I call it a *verdict*, and not an *assertion*.)
+- You can structure the test code into *nested sections* that are carried forward into the log.
+
+## Logged Assertions
+
+
 

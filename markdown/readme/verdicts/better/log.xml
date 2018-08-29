@@ -16,9 +16,8 @@
         :b=&gt;1, :a=&gt;0}
       </message>
       <backtrace>
-        <![CDATA[
-example.rb:9:in `block in test_example'
-example.rb:6:in `test_example']]>
+        <level_0 location='example.rb:9:in `block in test_example&apos;'/>
+        <level_1 location='example.rb:6:in `test_example&apos;'/>
       </backtrace>
     </exception>
   </verdict>

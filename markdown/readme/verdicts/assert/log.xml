@@ -1,6 +1,11 @@
 <log>
   <summary verdicts='2' failures='1' errors='0'/>
-  <verdict method='verdict_assert?' outcome='failed' id='first_verdict_id' message='My message'>
+  <verdict method='verdict_assert?' outcome='passed' id='assert_true'>
+    <act_value>
+      true
+    </act_value>
+  </verdict>
+  <verdict method='verdict_assert?' outcome='failed' id='assert_false'>
     <act_value>
       false
     </act_value>
@@ -10,14 +15,9 @@
       </message>
       <backtrace>
         <![CDATA[
-example.rb:7:in `block in test_example'
+example.rb:8:in `block in test_example'
 example.rb:6:in `test_example']]>
       </backtrace>
     </exception>
-  </verdict>
-  <verdict method='verdict_refute?' outcome='passed' id='second_verdict_id' message='My message'>
-    <act_value>
-      false
-    </act_value>
   </verdict>
 </log>
