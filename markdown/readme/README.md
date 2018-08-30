@@ -16,15 +16,23 @@ class Example < Minitest::Test
 
   def test_example
     MinitestLog.open do |log|
-      log.verdict_assert?(:assert_true, true)
-      log.verdict_assert?(:assert_false, false)
+      log.verdict_assert_equal?(:my_verdict_id, 'Lorem ipsum', 'Lorem ipsum')
     end
   end
 
 end
 ```
 
-[xml](https://raw.githubusercontent.com/BurdetteLamar/minitest_log/master/markdown/readme/verdicts/assert/log.xml)
+```log.xml```:
+```xml
+<log>
+  <summary verdicts='1' failures='0' errors='0'/>
+  <verdict method='verdict_assert_equal?' outcome='passed' id='my_verdict_id'>
+    <exp_value>Lorem ipsum</exp_value>
+    <act_value>Lorem ipsum</act_value>
+  </verdict>
+</log>
+```
 
 ## Logging
 

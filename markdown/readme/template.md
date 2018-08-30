@@ -8,9 +8,9 @@ With ```minitest_log```:
 
 ## Verdicts
 
-@[ruby](verdicts/assert/example.rb)
+@[ruby](verdicts/assert_equal/example.rb)
 
-[xml](https://raw.githubusercontent.com/BurdetteLamar/minitest_log/master/markdown/readme/verdicts/assert/log.xml)
+@[xml](verdicts/assert_equal/log.xml)
 
 ## Logging
 
