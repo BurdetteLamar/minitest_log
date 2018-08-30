@@ -4,7 +4,7 @@ require 'minitest_log'
 class Example < MiniTest::Test
 
   def test_example
-    MinitestLog.open(self) do |log|
+    MinitestLog.open do |log|
       attrs = {:first_attr => 'first', :second_attr => 'second'}
       log.section('My section', attrs) do
       end

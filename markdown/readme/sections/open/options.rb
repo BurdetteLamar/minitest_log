@@ -9,7 +9,7 @@ class Example < MiniTest::Test
         :root_name => 'my_root_name',
         :xml_indentation => 4,
     }
-    MinitestLog.open(self, options) do |log|
+    MinitestLog.open(options) do |log|
       # Test stuff goes here.
     end
   end

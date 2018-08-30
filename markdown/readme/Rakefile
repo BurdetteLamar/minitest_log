@@ -1,0 +1,27 @@
+require 'find'
+
+namespace :build do
+
+  desc 'Build README file'
+  task :readme do
+    dir_path = File.dirname(__FILE__)
+    Dir.chdir(dir_path) do
+      # Run all Ruby programs.
+      Find.find('.') do |path|
+        next if File.directory?(path)
+        next unless path.end_with?('.rb')
+        Dir.chdir(File.dirname(path)) do
+          command = "ruby #{File.basename(path)}"
+          unless system(command)
+            message = "Ruby execution failed for #{path}"
+            raise RuntimeError.new(message)
+          end
+        end
+      end
+      # Make the README file.
+      command = 'markdown_helper include --pristine template.md README.md'
+      system(command)
+    end
+  end
+
+end

@@ -299,16 +299,15 @@ class MinitestLog
     return unless method == :verdict_assert_equal?
     expected = args_hash[:exp_value]
     actual = args_hash[:act_value]
-    return unless expected.class == actual.class
     case
-      when expected.kind_of?(Set)
-        put_element('analysis') do
+      when expected.kind_of?(Set) && actual.kind_of?(Set)
+        put_element('analysis', {:classes => [expected.class, actual.class]}) do
           SetHelper.compare(expected, actual).each_pair do |key, value|
             put_element(key.to_s, value) unless value.empty?
           end
         end
-      when expected.kind_of?(Hash)
-        put_element('analysis') do
+      when expected.kind_of?(Hash) && actual.kind_of?(Hash)
+        put_element('analysis', {:classes => [expected.class, actual.class]}) do
           HashHelper.compare(expected, actual).each_pair do |key, value|
             put_element(key.to_s, value) unless value.empty?
           end

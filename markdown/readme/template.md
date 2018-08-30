@@ -1,10 +1,20 @@
 # MinitestLog
 
+Use class ```MinitestLog``` to simplify and organize the testing you're doing with class ```Minitest::Test```.
 
-With ```minitest_log```:
+With ```MinitestLog```, you get two things:
  
-- All verdicts are automatically logged.
-- Nested sections in the test code are carried forward into the log, giving structure to both.
+- **Verdicts**:
+  - All verdicts are automatically logged.
+  - Verdicts for certain collections are closely analyzed (e.g., ```Hash```, ```Sets```).
+- **Sections** that can have:
+  - Nested subsections
+  - Verdicts
+  - Text
+  - Attributes
+  - Duration
+  - Timestamp
+  - Rescue
 
 ## Verdicts
 
