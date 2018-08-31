@@ -241,7 +241,7 @@ The log:
 ```xml
 <log>
   <summary verdicts='0' failures='0' errors='0'/>
-  <section name='My section' timestamp='2018-08-30-Thu-16.30.59.745'/>
+  <section name='My section' timestamp='2018-08-31-Fri-10.55.48.052'/>
 </log>
 ```
 
@@ -274,7 +274,7 @@ The log:
 ```xml
 <log>
   <summary verdicts='0' failures='0' errors='0'/>
-  <section name='My section' duration_seconds='3.016'/>
+  <section name='My section' duration_seconds='3.013'/>
 </log>
 ```
 

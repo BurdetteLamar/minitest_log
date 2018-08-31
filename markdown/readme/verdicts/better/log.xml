@@ -3,7 +3,7 @@
   <verdict method='verdict_assert_equal?' outcome='failed' id='analyzed'>
     <exp_value a='0' b='1' c='2' d='3' e='4' f='5'/>
     <act_value h='5' g='4' d='1' c='0' b='1' a='0'/>
-    <analysis classes='[Hash, Hash]'>
+    <analysis expected_class='Hash' actual_class='Hash' methods='[:each_pair]'>
       <missing e='4' f='5'/>
       <unexpected h='5' g='4'/>
       <changed c='{:expected=&gt;2, :actual=&gt;0}' d='{:expected=&gt;3, :actual=&gt;1}'/>
