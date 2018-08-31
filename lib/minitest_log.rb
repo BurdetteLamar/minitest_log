@@ -290,12 +290,18 @@ class MinitestLog
     return unless method == :verdict_assert_equal?
     expected = args_hash[:exp_value]
     actual = args_hash[:act_value]
+    [
+        String,
+        Integer,
+    ].each do |class_to_exclude|
+      return if expected.kind_of?(class_to_exclude)
+      return if actual.kind_of?(class_to_exclude)
+    end
     # Select helper class to perform comparison.
     helper_class = nil
     methods_for_helper_class = {
         HashHelper => [:each_pair],
         SetHelper => [:intersection, :difference],
-        # ArrayHelper => [:each]
     }
     methods_for_helper_class.each_pair do |klass, methods|
       methods.each do |helper_method|
