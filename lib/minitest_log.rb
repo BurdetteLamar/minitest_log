@@ -3,6 +3,10 @@ require 'minitest/autorun'
 require 'minitest/assertions'
 require 'nokogiri'
 
+require_relative 'helpers/array_helper'
+require_relative 'helpers/hash_helper'
+require_relative 'helpers/set_helper'
+
 # When adding a module here, be sure to 'include' below.
 require_relative 'verdict_assertion'
 
@@ -302,13 +306,16 @@ class MinitestLog
     methods_for_helper_class = {
         HashHelper => [:each_pair],
         SetHelper => [:intersection, :difference],
+        ArrayHelper => [:each],
     }
     methods_for_helper_class.each_pair do |klass, methods|
       methods.each do |helper_method|
         next unless expected.respond_to?(helper_method)
         next unless actual.respond_to?(helper_method)
         helper_class = klass
+        break
       end
+      break if helper_class
     end
     return unless helper_class
     # Get and log the analysis.

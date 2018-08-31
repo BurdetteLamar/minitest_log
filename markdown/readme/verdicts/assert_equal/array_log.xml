@@ -1,0 +1,17 @@
+REMARK	This text log is the precursor for an XML log.
+REMARK	If the logged process completes, this text will be converted to XML.
+BEGIN	log
+BEGIN	verdict
+ATTRIBUTE	method	verdict_assert_equal?
+ATTRIBUTE	outcome	failed
+ATTRIBUTE	id	analyzed
+BEGIN	exp_value
+PCDATA	<<EOT
+[:a, :b, :c, :d, :e, :f]
+EOT
+END	exp_value
+BEGIN	act_value
+PCDATA	<<EOT
+[:a, :b, :g, :h, :c, :d, :i, :j]
+EOT
+END	act_value
