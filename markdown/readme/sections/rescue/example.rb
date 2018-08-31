@@ -1,4 +1,3 @@
-require 'minitest/autorun'
 require 'minitest_log'
 
 class Example < MiniTest::Test

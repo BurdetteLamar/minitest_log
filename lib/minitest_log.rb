@@ -173,7 +173,7 @@ class MinitestLog
     end
 
     File.open(self.file_path, 'w') do |file|
-      formatter = REXML::Formatters::Pretty.new(2)
+      formatter = REXML::Formatters::Pretty.new(self.xml_indentation)
       formatter.compact = true
       formatter.write(document, file)
     end
@@ -225,16 +225,7 @@ class MinitestLog
         begin
           yield
         rescue Exception => x
-          # Get the verdict id (for the verdict that was attempted).
-          verdict_id = nil
-          args.each do |arg|
-            next unless arg.respond_to?(:each_pair)
-            next unless arg.include?(:name)
-            verdict_id = arg[:name]
-            break
-          end
-          put_element('uncaught_exception') do
-            put_element('verdict_id', verdict_id) if verdict_id
+          put_element('rescued_exception') do
             put_element('class', x.class)
             put_element('message', x.message)
             put_element('backtrace') do

@@ -1,8 +1,13 @@
 # MinitestLog
 
-Use class ```MinitestLog``` to simplify and organize the testing you're doing with class ```Minitest::Test```.
+Class ```MinitestLog``` is a wrapper for class ```Minitest::Assertions``` that:
 
-With ```MinitestLog```, you get two things:
+- Automatically and fully logs each assertion, whether passing or failingg.
+- Allows a test to be structured as nested sections.
+
+Here, we say *verdict*, not *assertion*, to emphasize that a failure does not terminate the test.
+
+Se, we have:
  
 - **Verdicts**:
   - All verdicts are automatically logged.
@@ -14,15 +19,12 @@ With ```MinitestLog```, you get two things:
   - Attributes
   - Duration
   - Timestamp
-  - Rescue
+  - Rescuing
+  - Comments
 
-## Verdicts
+@[:markdown](verdicts/template.md)
 
-@[ruby](verdicts/assert_equal/example.rb)
-
-@[xml](verdicts/assert_equal/log.xml)
-
-## Logging
+@[:markdown](sections/template.md)
 
 
 

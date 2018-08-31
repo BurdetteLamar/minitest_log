@@ -1,6 +1,8 @@
-## Nested Sections
+### Nested Sections
 
-This example shows how nest sections in Ruby code.
+Nest sections in a log by nesting calls to ```MinitestLog#section```.
+
+The nesting gives structure to both the test and the log.
 
 @[ruby](nested_sections.rb)
 

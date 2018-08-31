@@ -1,6 +1,6 @@
-## Log Creation
+### Opening the Log
 
-This example shows how to open a log.
+Open a log by calling ```MinitestLog#open```.
 
 @[ruby](open.rb)
 
@@ -8,7 +8,7 @@ The log:
 
 @[xml](log.xml)
 
-This example shows how to use options in opening a log.
+Customize a log by calling ```MinitestLog#open``` with options.
 
 @[ruby](options.rb)
 
