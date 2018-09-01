@@ -301,35 +301,108 @@ class MinitestLog
       return if expected.kind_of?(class_to_exclude)
       return if actual.kind_of?(class_to_exclude)
     end
-    # Select helper class to perform comparison.
-    helper_class = nil
-    methods_for_helper_class = {
-        HashHelper => [:each_pair],
-        SetHelper => [:intersection, :difference],
-        ArrayHelper => [:each],
-    }
-    methods_for_helper_class.each_pair do |klass, methods|
-      methods.each do |helper_method|
-        next unless expected.respond_to?(helper_method)
-        next unless actual.respond_to?(helper_method)
-        helper_class = klass
-        break
+    put_hash_analysis(expected, actual) ||
+    put_set_analysis(expected, actual) ||
+    put_array_analysis(expected, actual)
+    # # Select helper class to perform comparison.
+    # helper_class = nil
+    # methods_for_helper_class = {
+    #     HashHelper => [:each_pair],
+    #     SetHelper => [:intersection, :difference],
+    #     ArrayHelper => [:each],
+    # }
+    # methods_for_helper_class.each_pair do |klass, methods|
+    #   methods.each do |helper_method|
+    #     next unless expected.respond_to?(helper_method)
+    #     next unless actual.respond_to?(helper_method)
+    #     helper_class = klass
+    #     break
+    #   end
+    #   break if helper_class
+    # end
+    # return unless helper_class
+    # # Get and log the analysis.
+    # attrs = {
+    #     :expected_class => expected.class,
+    #     :actual_class => actual.class,
+    #     :methods => methods_for_helper_class[helper_class],
+    # }
+    # put_element('analysis', attrs) do
+    #   helper_class.send(:compare, expected, actual).each_pair do |key, value|
+    #     put_element(key.to_s, value) unless value.empty?
+    #   end
+    # end
+
+  end
+
+  def objects_can_handle(methods, expected, actual)
+    [expected, actual].each do |obj|
+      methods.each do |method|
+        return false unless obj.respond_to?(method)
       end
-      break if helper_class
     end
-    return unless helper_class
-    # Get and log the analysis.
+    true
+  end
+
+  def put_hash_analysis(expected, actual)
+    return unless objects_can_handle([:each_pair], expected, actual)
+    result = {
+        :missing => {},
+        :unexpected => {},
+        :changed => {},
+        :ok => {},
+    }
+    expected.each_pair do |key_expected, value_expected|
+      if actual.include?(key_expected)
+        value_actual = actual[key_expected]
+        if value_actual == value_expected
+          result[:ok][key_expected] = value_expected
+        else
+          result[:changed][key_expected] = {:expected => value_expected, :actual => value_actual}
+        end
+      else
+        result[:missing][key_expected] = value_expected
+      end
+    end
+    actual.each_pair do |key_actual, value_actual|
+      next if expected.include?(key_actual)
+      result[:unexpected][key_actual] = value_actual
+    end
     attrs = {
         :expected_class => expected.class,
         :actual_class => actual.class,
-        :methods => methods_for_helper_class[helper_class],
+        :methods => [:each_pair],
     }
     put_element('analysis', attrs) do
-      helper_class.send(:compare, expected, actual).each_pair do |key, value|
-        put_element(key.to_s, value) unless value.empty?
+      result.each_pair do |key, value|
+        put_element(key.to_s, value)
       end
     end
+    true
+  end
 
+  def put_set_analysis(expected, actual)
+    return unless objects_can_handle([:intersection, :difference], expected, actual)
+    result = {
+        :missing => expected.difference(actual),
+        :unexpected => actual.difference(expected),
+        :ok => expected.intersection(actual),
+    }
+    attrs = {
+        :expected_class => expected.class,
+        :actual_class => actual.class,
+        :methods => [:each_pair],
+    }
+    put_element('analysis', attrs) do
+      result.each_pair do |key, value|
+        put_element(key.to_s, value)
+      end
+    end
+    true
+  end
+
+  def put_array_analysis(expected, actual)
+    false
   end
 
   def put_attributes(attributes)

@@ -50,6 +50,11 @@ class LogTest < MiniTest::Test
       nil
     end
 
+    # For debugging.
+    def puts_file
+      puts File.read(self.file_path)
+    end
+
     # To clean up the temporary directory.
     # - +object_id+:  Id of temp directory.
     def finalize(object_id)
