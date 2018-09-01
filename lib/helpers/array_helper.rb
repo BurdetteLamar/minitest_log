@@ -22,8 +22,6 @@ class ArrayHelper
           "new_pos=#{change.old_position}",
           "new_ele=#{change.old_element}",
       ]
-
-
       value = attrs.join(' ')
       changes.store(key, value)
     end

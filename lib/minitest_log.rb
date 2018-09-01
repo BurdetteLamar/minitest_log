@@ -2,6 +2,7 @@ require 'rexml/document'
 require 'minitest/autorun'
 require 'minitest/assertions'
 require 'nokogiri'
+require 'diff/lcs'
 
 require_relative 'helpers/array_helper'
 require_relative 'helpers/hash_helper'
@@ -402,7 +403,43 @@ class MinitestLog
   end
 
   def put_array_analysis(expected, actual)
-    false
+    return unless objects_can_handle([:each], expected, actual)
+    sdiff = Diff::LCS.sdiff(expected, actual)
+    changes = {}
+    statuses = {
+        '!' => 'changed',
+        '+' => 'unexpected',
+        '-' => 'missing',
+        '=' => 'unchanged'
+    }
+    sdiff.each_with_index do |change, i|
+      status = statuses.fetch(change.action)
+      key = "change_#{i}"
+      change_data = {
+          :status => status,
+          :old => "pos=#{change.old_position} ele=#{change.old_element}",
+          :new => "pos=#{change.new_position} ele=#{change.new_element}",
+      }
+      changes.store(key, change_data)
+    end
+    attrs = {
+        :expected_class => expected.class,
+        :actual_class => actual.class,
+        :methods => [:each_pair],
+    }
+    put_element('analysis', attrs) do
+      changes.each_pair do |key, change_data|
+        status = change_data.delete(:status)
+        change_data.delete(:old) if status == 'unexpected'
+        change_data.delete(:new) if status == 'missing'
+        put_element(status) do
+          change_data.each_pair do |k, v|
+            put_element(k.to_s, v)
+          end
+        end
+      end
+    end
+    true
   end
 
   def put_attributes(attributes)

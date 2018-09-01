@@ -241,7 +241,7 @@ The log:
 ```xml
 <log>
   <summary verdicts='0' failures='0' errors='0'/>
-  <section name='My section' timestamp='2018-09-01-Sat-09.49.01.892'/>
+  <section name='My section' timestamp='2018-09-01-Sat-11.06.21.688'/>
 </log>
 ```
 
