@@ -1,6 +1,3 @@
-require_relative 'helpers/hash_helper'
-require_relative 'helpers/set_helper'
-
 module VerdictAssertion
 
   def verdict_assert?(verdict_id, actual, message = nil)

@@ -50,6 +50,11 @@ class LogTest < MiniTest::Test
       nil
     end
 
+    # For debugging.
+    def puts_file
+      puts File.read(self.file_path)
+    end
+
     # To clean up the temporary directory.
     # - +object_id+:  Id of temp directory.
     def finalize(object_id)
@@ -493,8 +498,7 @@ EOT
         :outcome => 'failed',
     }
     checker.assert_verdict_attributes(verdict_id, attributes)
-    checker.assert_exception('--- expected +++ actual @@ -1 +1,2 @@ -0 +# encoding: UTF-8
-        +&quot;a&quot;')
+    checker.assert_exception('--- expected +++ actual @@ -1 +1,2 @@ -0 +# encoding: UTF-8 +&quot;a&quot;')
 
   end
 

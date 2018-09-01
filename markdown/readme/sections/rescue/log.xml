@@ -1,0 +1,14 @@
+<log>
+  <summary verdicts='0' failures='0' errors='1'/>
+  <section name='My section'>
+    <rescued_exception>
+      <class>RuntimeError</class>
+      <message>Boo!</message>
+      <backtrace>
+        <level_0 location='example.rb:8:in `block (2 levels) in test_example&apos;'/>
+        <level_1 location='example.rb:7:in `block in test_example&apos;'/>
+        <level_2 location='example.rb:6:in `test_example&apos;'/>
+      </backtrace>
+    </rescued_exception>
+  </section>
+</log>

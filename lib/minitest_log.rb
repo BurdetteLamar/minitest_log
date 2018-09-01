@@ -2,6 +2,11 @@ require 'rexml/document'
 require 'minitest/autorun'
 require 'minitest/assertions'
 require 'nokogiri'
+require 'diff/lcs'
+
+require_relative 'helpers/array_helper'
+require_relative 'helpers/hash_helper'
+require_relative 'helpers/set_helper'
 
 # When adding a module here, be sure to 'include' below.
 require_relative 'verdict_assertion'
@@ -173,8 +178,11 @@ class MinitestLog
     end
 
     File.open(self.file_path, 'w') do |file|
-      document.write(file, self.xml_indentation)
+      formatter = REXML::Formatters::Pretty.new(self.xml_indentation)
+      formatter.compact = true
+      formatter.write(document, file)
     end
+    # Trailing newline.
     File.open(self.file_path, 'a') do |file|
       file.write("\n")
     end
@@ -222,16 +230,7 @@ class MinitestLog
         begin
           yield
         rescue Exception => x
-          # Get the verdict id (for the verdict that was attempted).
-          verdict_id = nil
-          args.each do |arg|
-            next unless arg.respond_to?(:each_pair)
-            next unless arg.include?(:name)
-            verdict_id = arg[:name]
-            break
-          end
-          put_element('uncaught_exception') do
-            put_element('verdict_id', verdict_id) if verdict_id
+          put_element('rescued_exception') do
             put_element('class', x.class)
             put_element('message', x.message)
             put_element('backtrace') do
@@ -296,24 +295,151 @@ class MinitestLog
     return unless method == :verdict_assert_equal?
     expected = args_hash[:exp_value]
     actual = args_hash[:act_value]
-    return unless expected.class == actual.class
-    case
-      when expected.kind_of?(Set)
-        put_element('analysis') do
-          SetHelper.compare(expected, actual).each_pair do |key, value|
-            put_element(key.to_s, value) unless value.empty?
-          end
-        end
-      when expected.kind_of?(Hash)
-        put_element('analysis') do
-          HashHelper.compare(expected, actual).each_pair do |key, value|
-            put_element(key.to_s, value) unless value.empty?
-          end
+    [
+        String,
+        Integer,
+    ].each do |class_to_exclude|
+      return if expected.kind_of?(class_to_exclude)
+      return if actual.kind_of?(class_to_exclude)
+    end
+    put_hash_analysis(expected, actual) ||
+    put_set_analysis(expected, actual) ||
+    put_array_analysis(expected, actual)
+    # # Select helper class to perform comparison.
+    # helper_class = nil
+    # methods_for_helper_class = {
+    #     HashHelper => [:each_pair],
+    #     SetHelper => [:intersection, :difference],
+    #     ArrayHelper => [:each],
+    # }
+    # methods_for_helper_class.each_pair do |klass, methods|
+    #   methods.each do |helper_method|
+    #     next unless expected.respond_to?(helper_method)
+    #     next unless actual.respond_to?(helper_method)
+    #     helper_class = klass
+    #     break
+    #   end
+    #   break if helper_class
+    # end
+    # return unless helper_class
+    # # Get and log the analysis.
+    # attrs = {
+    #     :expected_class => expected.class,
+    #     :actual_class => actual.class,
+    #     :methods => methods_for_helper_class[helper_class],
+    # }
+    # put_element('analysis', attrs) do
+    #   helper_class.send(:compare, expected, actual).each_pair do |key, value|
+    #     put_element(key.to_s, value) unless value.empty?
+    #   end
+    # end
+
+  end
+
+  def objects_can_handle(methods, expected, actual)
+    [expected, actual].each do |obj|
+      methods.each do |method|
+        return false unless obj.respond_to?(method)
+      end
+    end
+    true
+  end
+
+  def put_hash_analysis(expected, actual)
+    return unless objects_can_handle([:each_pair], expected, actual)
+    result = {
+        :missing => {},
+        :unexpected => {},
+        :changed => {},
+        :ok => {},
+    }
+    expected.each_pair do |key_expected, value_expected|
+      if actual.include?(key_expected)
+        value_actual = actual[key_expected]
+        if value_actual == value_expected
+          result[:ok][key_expected] = value_expected
+        else
+          result[:changed][key_expected] = {:expected => value_expected, :actual => value_actual}
         end
       else
-        # TODO:  Implement more here as needed;  Array, etc.
+        result[:missing][key_expected] = value_expected
+      end
     end
+    actual.each_pair do |key_actual, value_actual|
+      next if expected.include?(key_actual)
+      result[:unexpected][key_actual] = value_actual
+    end
+    attrs = {
+        :expected_class => expected.class,
+        :actual_class => actual.class,
+        :methods => [:each_pair],
+    }
+    put_element('analysis', attrs) do
+      result.each_pair do |key, value|
+        put_element(key.to_s, value)
+      end
+    end
+    true
+  end
 
+  def put_set_analysis(expected, actual)
+    return unless objects_can_handle([:intersection, :difference], expected, actual)
+    result = {
+        :missing => expected.difference(actual),
+        :unexpected => actual.difference(expected),
+        :ok => expected.intersection(actual),
+    }
+    attrs = {
+        :expected_class => expected.class,
+        :actual_class => actual.class,
+        :methods => [:each_pair],
+    }
+    put_element('analysis', attrs) do
+      result.each_pair do |key, value|
+        put_element(key.to_s, value)
+      end
+    end
+    true
+  end
+
+  def put_array_analysis(expected, actual)
+    return unless objects_can_handle([:each], expected, actual)
+    sdiff = Diff::LCS.sdiff(expected, actual)
+    changes = {}
+    statuses = {
+        '!' => 'changed',
+        '+' => 'unexpected',
+        '-' => 'missing',
+        '=' => 'unchanged'
+    }
+    sdiff.each_with_index do |change, i|
+      status = statuses.fetch(change.action)
+      key = "change_#{i}"
+      change_data = {
+          :status => status,
+          :old => "pos=#{change.old_position} ele=#{change.old_element}",
+          :new => "pos=#{change.new_position} ele=#{change.new_element}",
+      }
+      changes.store(key, change_data)
+    end
+    attrs = {
+        :expected_class => expected.class,
+        :actual_class => actual.class,
+        :methods => [:each_pair],
+    }
+    put_element('analysis', attrs) do
+      changes.each_pair do |key, change_data|
+        status = change_data.delete(:status)
+        change_data.delete(:old) if status == 'unexpected'
+        change_data.delete(:new) if status == 'missing'
+        put_element(status) do
+          change_data.each_pair do |k, v|
+            put_element(k.to_s, v)
+          end
+        end
+      end
+    end
+    true
   end
 
   def put_attributes(attributes)
