@@ -417,6 +417,21 @@ EOT
         :exception_message => 'Expected: 0 Actual: 1'
     )
 
+    verdict_id = :array_passes
+    file_path = create_temp_log(self) do |log|
+      array = [:a, :b, :c]
+      assert(log.send(method, verdict_id, array, array), verdict_id)
+    end
+    checker = Checker.new(self, file_path)
+    checker.assert_verdict_count(1)
+    attributes = {
+        :id => verdict_id,
+        :method => method,
+        :outcome => 'passed',
+    }
+    checker.assert_verdict_attributes(verdict_id, attributes)
+    checker.assert_exception(nil)
+
     verdict_id = :hash_passes
     file_path = create_temp_log(self) do |log|
       assert(log.send(method, verdict_id, {:a => 0}, {:a => 0}), verdict_id)
@@ -446,12 +461,33 @@ EOT
     checker.assert_verdict_attributes(verdict_id, attributes)
     checker.assert_exception(nil)
 
+    verdict_id = :array_fails
+    file_path = create_temp_log(self) do |log|
+      expected = [:a, :b, :c, :d, :e, :f, :k, :l, :m, :n]
+      actual = [:a, :b, :g, :h, :c, :d, :i, :j, :k, :l]
+      assert(!log.send(method, verdict_id, expected, actual), verdict_id)
+    end
+    checker = Checker.new(self, file_path)
+    checker.assert_verdict_count(1)
+    attributes = {
+        :id => verdict_id,
+        :method => method,
+        :outcome => 'failed',
+    }
+    checker.puts_file
+    checker.assert_verdict_attributes(verdict_id, attributes)
+    checker.assert_verdict_count(1)
+    # checker.assert_attribute_value('//analysis/missing', 'a', '0')
+    # checker.assert_attribute_value('//analysis/unexpected', 'b', '1')
+    # checker.assert_attribute_value('//analysis/changed', 'c', '{:expected=>2, :actual=>3}')
+    # checker.assert_attribute_value('//analysis/ok', 'd', '3')
+
     verdict_id = :hash_fails
     file_path = create_temp_log(self) do |log|
       assert(!log.send(method, verdict_id,
                        {:a => 0, :c => 2, :d => 3},
                        {:b => 1, :c => 3, :d => 3},
-             ), verdict_id)
+      ), verdict_id)
     end
     checker = Checker.new(self, file_path)
     checker.assert_verdict_count(1)
