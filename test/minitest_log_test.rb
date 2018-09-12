@@ -109,6 +109,7 @@ class LogTest < MiniTest::Test
     # Verify attribute value.
     def assert_attribute_value(ele_xpath, attr_name, expected_value)
       attr_xpath = format('%s/@%s', ele_xpath, attr_name)
+      p attr_xpath
       actual_value = match(attr_xpath).first.value
       self.test.assert_equal(expected_value, actual_value, attr_name)
     end
@@ -417,6 +418,21 @@ EOT
         :exception_message => 'Expected: 0 Actual: 1'
     )
 
+    verdict_id = :array_passes
+    file_path = create_temp_log(self) do |log|
+      array = [:a, :b, :c]
+      assert(log.send(method, verdict_id, array, array), verdict_id)
+    end
+    checker = Checker.new(self, file_path)
+    checker.assert_verdict_count(1)
+    attributes = {
+        :id => verdict_id,
+        :method => method,
+        :outcome => 'passed',
+    }
+    checker.assert_verdict_attributes(verdict_id, attributes)
+    checker.assert_exception(nil)
+
     verdict_id = :hash_passes
     file_path = create_temp_log(self) do |log|
       assert(log.send(method, verdict_id, {:a => 0}, {:a => 0}), verdict_id)
@@ -446,12 +462,53 @@ EOT
     checker.assert_verdict_attributes(verdict_id, attributes)
     checker.assert_exception(nil)
 
+    verdict_id = :array_fails
+    file_path = create_temp_log(self) do |log|
+      expected = [:a, :b, :c, :d, :e, :f, :k, :l, :m, :n]
+      actual = [:a, :b, :g, :h, :c, :d, :i, :j, :k, :l]
+      assert(!log.send(method, verdict_id, expected, actual), verdict_id)
+    end
+    checker = Checker.new(self, file_path)
+    checker.assert_verdict_count(1)
+    attributes = {
+        :id => verdict_id,
+        :method => method,
+        :outcome => 'failed',
+    }
+    # checker.puts_file
+    checker.assert_verdict_attributes(verdict_id, attributes)
+    checker.assert_verdict_count(1)
+    analysis = checker.match('//analysis').first
+    expected_attributes = {
+        'expected_class' => 'Array',
+        'actual_class' => 'Array',
+        'methods' => '[:each_pair]',
+    }
+    analysis.attributes.each_pair do |_, actual_attribute|
+      expected_value = expected_attributes.delete(actual_attribute.name)
+      assert_equal(expected_value, actual_attribute.value)
+    end
+    assert_empty(expected_attributes)
+    children = analysis.children
+    child = children.shift
+    child = children.shift
+    p child
+    # <unchanged>
+    # <old>pos=0 ele=a</old>
+    #     <new>pos=0 ele=a</new>
+    # </unchanged>
+
+    # checker.assert_attribute_value("//analysis/unchanged/old[@pos='0']", 'ele', 'a')
+    # checker.assert_attribute_value('//analysis/unexpected', 'b', '1')
+    # checker.assert_attribute_value('//analysis/changed', 'c', '{:expected=>2, :actual=>3}')
+    # checker.assert_attribute_value('//analysis/ok', 'd', '3')
+
     verdict_id = :hash_fails
     file_path = create_temp_log(self) do |log|
       assert(!log.send(method, verdict_id,
                        {:a => 0, :c => 2, :d => 3},
                        {:b => 1, :c => 3, :d => 3},
-             ), verdict_id)
+      ), verdict_id)
     end
     checker = Checker.new(self, file_path)
     checker.assert_verdict_count(1)

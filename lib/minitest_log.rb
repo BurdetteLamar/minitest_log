@@ -2,6 +2,7 @@ require 'rexml/document'
 require 'minitest/autorun'
 require 'minitest/assertions'
 require 'nokogiri'
+
 require 'diff/lcs'
 
 require_relative 'helpers/array_helper'
