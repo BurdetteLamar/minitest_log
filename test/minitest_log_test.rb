@@ -109,6 +109,7 @@ class LogTest < MiniTest::Test
     # Verify attribute value.
     def assert_attribute_value(ele_xpath, attr_name, expected_value)
       attr_xpath = format('%s/@%s', ele_xpath, attr_name)
+      p attr_xpath
       actual_value = match(attr_xpath).first.value
       self.test.assert_equal(expected_value, actual_value, attr_name)
     end
@@ -474,10 +475,30 @@ EOT
         :method => method,
         :outcome => 'failed',
     }
-    checker.puts_file
+    # checker.puts_file
     checker.assert_verdict_attributes(verdict_id, attributes)
     checker.assert_verdict_count(1)
-    # checker.assert_attribute_value('//analysis/missing', 'a', '0')
+    analysis = checker.match('//analysis').first
+    expected_attributes = {
+        'expected_class' => 'Array',
+        'actual_class' => 'Array',
+        'methods' => '[:each_pair]',
+    }
+    analysis.attributes.each_pair do |_, actual_attribute|
+      expected_value = expected_attributes.delete(actual_attribute.name)
+      assert_equal(expected_value, actual_attribute.value)
+    end
+    assert_empty(expected_attributes)
+    children = analysis.children
+    child = children.shift
+    child = children.shift
+    p child
+    # <unchanged>
+    # <old>pos=0 ele=a</old>
+    #     <new>pos=0 ele=a</new>
+    # </unchanged>
+
+    # checker.assert_attribute_value("//analysis/unchanged/old[@pos='0']", 'ele', 'a')
     # checker.assert_attribute_value('//analysis/unexpected', 'b', '1')
     # checker.assert_attribute_value('//analysis/changed', 'c', '{:expected=>2, :actual=>3}')
     # checker.assert_attribute_value('//analysis/ok', 'd', '3')
