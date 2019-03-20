@@ -380,20 +380,15 @@ class MinitestLogTest < Minitest::Test
     assert_file(file_name)
   end
 
-  def zzz_test_put_element
-    method = :put_element
-    element_name = 'my_element'
-    file_path = create_temp_log do |log|
-      log.send(method, element_name)
+  def test_put_element
+    file_name = 'put_element.xml'
+    file_path = actual_file_path(file_name)
+    MinitestLog.open(file_path) do |log|
+      log.put_element('my_section') do
+        log.put_element('my_element', 'my text')
+      end
     end
-    checker = Checker.new(self, file_path)
-    ele_xpath = "//#{element_name}"
-    counts = {
-        :get_elements => 1,
-    }
-    checker.assert_counts(ele_xpath, counts)
-    checker.assert_element_exist(ele_xpath)
-    args_common_test(method, element_name)
+    assert_file(file_name)
   end
 
   def _test_put_each_with_index(method, arg)
