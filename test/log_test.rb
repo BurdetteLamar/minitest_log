@@ -392,42 +392,28 @@ class MinitestLogTest < Minitest::Test
   end
 
   def _test_put_each_with_index(method, arg)
-    element_name = 'each_with_index'
-    file_path = create_temp_log do |log|
+    file_name = "#{method}.xml"
+    file_path = actual_file_path(file_name)
+    element_name = method.to_s
+    MinitestLog.open(file_path) do |log|
       log.send(method, element_name, arg)
     end
-    checker = Checker.new(self, file_path)
-    ele_xpath = "//#{element_name}"
-    counts = {
-        :attributes => 2,
-        :cdatas => 1,
-        :get_elements => 1,
-        :texts => 1,
-    }
-    checker.assert_counts(ele_xpath, counts)
-    regexps = []
-    arg.each_with_index do |item, i|
-      regexps.push(Regexp.new("#{i} #{item}"))
-    end
-    checker.assert_cdata_matches(ele_xpath, regexps)
+    assert_file(file_name)
   end
 
-  def zzz_test_put_each_with_index
-    method = :put_each_with_index
+  def test_put_each_with_index
     arg = [:a, :aa, :aaa]
-    _test_put_each_with_index(method, arg)
+    _test_put_each_with_index(:put_each_with_index, arg)
   end
 
-  def zzz_test_put_array
-    method = :put_array
+  def test_put_array
     arg = [:a, :aa, :aaa]
-    _test_put_each_with_index(method, arg)
+    _test_put_each_with_index(:put_array, arg)
   end
 
-  def zzz_test_put_set
-    method = :put_set
+  def test_put_set
     arg = Set.new([:a, :aa, :aaa])
-    _test_put_each_with_index(method, arg)
+    _test_put_each_with_index(:put_set, arg)
   end
 
   def _test_put_each_pair(method, arg)

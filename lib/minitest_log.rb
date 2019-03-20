@@ -177,6 +177,21 @@ class MinitestLog
     nil
   end
 
+  def put_each_with_index(name, obj)
+    lines = ['']
+    obj.each_with_index do |item, i|
+      lines.push(format('%6d %s', i, item.to_s))
+    end
+    lines.push('')
+    lines.push('')
+    put_element('each_with_index', :name => name, :class => obj.class, :size => obj.size) do
+      put_cdata(lines.join("\n"))
+    end
+    nil
+  end
+  alias put_array put_each_with_index
+  alias put_set put_each_with_index
+
   private
 
   def initialize(file_path, options=Hash.new, im_ok_youre_not_ok = false)
