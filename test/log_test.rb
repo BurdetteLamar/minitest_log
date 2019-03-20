@@ -309,22 +309,24 @@ class MinitestLogTest < Minitest::Test
   end
 
   def test_open_file_path
-    file_path = './foo.xml'
+    file_name = 'open_file_path.xml'
+    file_path = actual_file_path(file_name)
     MinitestLog.open(file_path) do |log|
       file_path = log.file_path
       log.put_data('file_path', file_path)
     end
-    actual = File.read(file_path)
-    File.delete(file_path)
-    store_and_assert('open_file_path.xml', actual)
+    assert_file(file_name)
   end
 
-  def zzz_test_open_root_name
+  def test_open_root_name
     root_name = 'foo'
-    file_path = MinitestLog.open('foo.xml', :root_name => root_name) do |_|
+    file_name = 'open_root_name.xml'
+    file_path = actual_file_path(file_name)
+    MinitestLog.open(file_path, :root_name => root_name) do |log|
+      file_path = log.file_path
+      log.put_data('file_path', file_path)
     end
-    checker = Checker.new(self, file_path)
-    checker.assert_root_name(root_name)
+    assert_file(file_name)
   end
 
   def zzz_test_open_xml_indentation

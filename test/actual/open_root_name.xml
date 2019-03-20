@@ -1,0 +1,4 @@
+<foo>
+  <summary verdicts='0' failures='0' errors='0'/>
+  <data name='file_path' class='String'>test/actual/open_root_name.xml</data>
+</foo>
