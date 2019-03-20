@@ -338,31 +338,46 @@ class MinitestLogTest < Minitest::Test
           log.put_data('indentation', indentation)
         end
       end
+      assert_file(file_name)
     end
 
   end
 
-  def zzz_test_section
-    method = :section
-    # Section names.
-    file_path = create_temp_log do |log|
-      log.send(method, 'outer') do
-        log.send(method, 'inner') do
-          log.put_element('tag', 'text')
+  def test_nested_sections
+    file_name = 'nested_sections.xml'
+    file_path = actual_file_path(file_name)
+    MinitestLog.open(file_path) do |log|
+      log.section('Outer') do
+        log.put_data('outer_tag', 'Outer text.')
+        log.section('Mid') do
+          log.put_data('mid_tag', 'Mid text.')
+          log.section('Inner') do
+            log.put_data('inner_tag', 'Inner text.')
+          end
         end
       end
     end
-    checker = Checker.new(self, file_path)
-    ele_xpath = "//section[@name='outer']/section[@name='inner']/tag"
-    counts = {
-        :get_elements => 1,
-        :texts => 1,
-    }
-    checker.assert_counts(ele_xpath, counts)
-    checker.assert_element_text(ele_xpath, 'text')
-    args_common_test(method, 'section') do
-      # Will need a block for calling :section.
-    end
+    assert_file(file_name)
+    # method = :section
+    # # Section names.
+    # file_path = create_temp_log do |log|
+    #   log.send(method, 'outer') do
+    #     log.send(method, 'inner') do
+    #       log.put_element('tag', 'text')
+    #     end
+    #   end
+    # end
+    # checker = Checker.new(self, file_path)
+    # ele_xpath = "//section[@name='outer']/section[@name='inner']/tag"
+    # counts = {
+    #     :get_elements => 1,
+    #     :texts => 1,
+    # }
+    # checker.assert_counts(ele_xpath, counts)
+    # checker.assert_element_text(ele_xpath, 'text')
+    # args_common_test(method, 'section') do
+    #   # Will need a block for calling :section.
+    # end
   end
 
   def zzz_test_comment

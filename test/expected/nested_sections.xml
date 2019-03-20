@@ -1,0 +1,18 @@
+<log>
+  <summary verdicts='0' failures='0' errors='0'/>
+  <section name='Outer'>
+    <data name='outer_tag' class='String'>
+      Outer text.
+    </data>
+    <section name='Mid'>
+      <data name='mid_tag' class='String'>
+        Mid text.
+      </data>
+      <section name='Inner'>
+        <data name='inner_tag' class='String'>
+          Inner text.
+        </data>
+      </section>
+    </section>
+  </section>
+</log>
