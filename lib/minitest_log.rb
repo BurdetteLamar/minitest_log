@@ -52,7 +52,7 @@ class MinitestLog
   DEFAULT_XML_INDENTATION = 2
 
   def self.open(file_path = File.join(DEFAULT_DIR_PATH, DEFAULT_FILE_NAME), options=Hash.new)
-    raise 'No block given.' unless (block_given?)
+    raise "No block given.\n" unless (block_given?)
     default_options = Hash[
         :root_name => DEFAULT_XML_ROOT_TAG_NAME,
         :xml_indentation => DEFAULT_XML_INDENTATION
@@ -93,7 +93,7 @@ class MinitestLog
   def initialize(file_path, options=Hash.new, im_ok_youre_not_ok = false)
     unless im_ok_youre_not_ok
       # Caller should call MinitestLog.open, not MinitestLog.new.
-      message = format('Please use %s.open, not %s.new.', self.class, self.class)
+      message = "Please use #{self.class}.open, not #{self.class}.new.\n"
       raise RuntimeError.new(message)
     end
     self.assertions = 0

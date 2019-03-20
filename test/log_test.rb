@@ -361,20 +361,13 @@ class MinitestLogTest < Minitest::Test
     assert_file(file_name)
   end
 
-  def zzz_test_comment
-    method = :comment
-    comment = 'My comment'
-    file_path = create_temp_log do |log|
-      log.send(method, comment)
+  def test_comment
+    file_name = 'comment.xml'
+    file_path = actual_file_path(file_name)
+    MinitestLog.open(file_path) do |log|
+      log.comment('My comment.')
     end
-    checker = Checker.new(self, file_path)
-    ele_xpath = '//comment'
-    counts = {
-        :get_elements => 1,
-        :texts => 1,
-    }
-    checker.assert_counts(ele_xpath, counts)
-    checker.assert_element_text(ele_xpath, comment)
+    assert_file(file_name)
   end
 
   def zzz_test_uncaught_exception
