@@ -417,32 +417,23 @@ class MinitestLogTest < Minitest::Test
   end
 
   def _test_put_each_pair(method, arg)
-    element_name = 'each_pair'
-    file_path = create_temp_log do |log|
+    file_name = "#{method}.xml"
+    file_path = actual_file_path(file_name)
+    element_name = method.to_s
+    MinitestLog.open(file_path) do |log|
       log.send(method, element_name, arg)
     end
-    checker = Checker.new(self, file_path)
-    ele_xpath = "//#{element_name}"
-    counts = {
-        :attributes => 2,
-        :cdatas => 1,
-        :get_elements => 1,
-        :texts => 1,
-    }
-    checker.assert_counts(ele_xpath, counts)
-    checker.assert_element_exist(ele_xpath)
+    assert_file(file_name)
   end
 
-  def zzz_test_put_each_pair
-    method = :put_each_pair
+  def test_put_each_pair
     arg = {:a => 0, :b => 1}
-    _test_put_each_pair(method, arg)
+    _test_put_each_pair(:put_each_pair, arg)
   end
 
-  def zzz_test_put_hash
-    method = :put_each_pair
+  def test_put_hash
     arg = {:a => 0, :b => 1}
-    _test_put_each_pair(method, arg)
+    _test_put_each_pair(:put_hash, arg)
   end
 
   def zzz_test_put_data

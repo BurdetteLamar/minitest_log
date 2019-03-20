@@ -192,6 +192,20 @@ class MinitestLog
   alias put_array put_each_with_index
   alias put_set put_each_with_index
 
+  def put_each_pair(name, obj)
+    lines = ['']
+    obj.each_pair do |key, value|
+      lines.push(format('%s => %s', key, value))
+    end
+    lines.push('')
+    lines.push('')
+    put_element('each_pair', :name => name, :class => obj.class) do
+      put_cdata(lines.join("\n"))
+    end
+    nil
+  end
+  alias put_hash put_each_pair
+
   private
 
   def initialize(file_path, options=Hash.new, im_ok_youre_not_ok = false)

@@ -1,0 +1,9 @@
+<log>
+  <summary verdicts='0' failures='0' errors='0'/>
+  <each_pair name='put_hash' class='Hash'>
+    <![CDATA[
+a => 0
+b => 1
+]]>
+  </each_pair>
+</log>
