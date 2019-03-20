@@ -179,9 +179,7 @@ class MinitestLog
     end
 
     File.open(self.file_path, 'w') do |file|
-      formatter = REXML::Formatters::Pretty.new(self.xml_indentation)
-      formatter.compact = true
-      formatter.write(document, file)
+      document.write(file, self.xml_indentation)
     end
     # Trailing newline.
     File.open(self.file_path, 'a') do |file|

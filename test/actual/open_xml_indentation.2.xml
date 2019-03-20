@@ -1,0 +1,8 @@
+<log>
+  <summary verdicts='0' failures='0' errors='0'/>
+  <section name='Section'>
+    <data name='indentation' class='Integer'>
+      2
+    </data>
+  </section>
+</log>

@@ -329,14 +329,15 @@ class MinitestLogTest < Minitest::Test
     assert_file(file_name)
   end
 
-  def zzz_test_open_xml_indentation
+  def test_open_xml_indentation
     [-1, 0, 2].each do |indentation|
-      file_path = MinitestLog.open('foo.xml', :xml_indentation => indentation) do |log|
+      file_name = "open_xml_indentation.#{indentation}.xml"
+      file_path = actual_file_path(file_name)
+      MinitestLog.open(file_path, :xml_indentation => indentation) do |log|
         log.section('Section') do
+          log.put_data('indentation', indentation)
         end
       end
-      checker = Checker.new(self, file_path)
-      checker.assert_xml_indentation(indentation)
     end
 
   end

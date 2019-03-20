@@ -1,4 +1,6 @@
 <log>
   <summary verdicts='0' failures='0' errors='0'/>
-  <data name='file_path' class='String'>./log.xml</data>
+  <data name='file_path' class='String'>
+    ./log.xml
+  </data>
 </log>
