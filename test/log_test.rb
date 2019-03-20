@@ -2,6 +2,7 @@ require 'test_helper'
 
 # noinspection RubyBlockToMethodReference
 class MinitestLogTest < Minitest::Test
+
   def test_version_exist
     refute_nil ::MinitestLog::VERSION
   end
@@ -358,26 +359,6 @@ class MinitestLogTest < Minitest::Test
       end
     end
     assert_file(file_name)
-    # method = :section
-    # # Section names.
-    # file_path = create_temp_log do |log|
-    #   log.send(method, 'outer') do
-    #     log.send(method, 'inner') do
-    #       log.put_element('tag', 'text')
-    #     end
-    #   end
-    # end
-    # checker = Checker.new(self, file_path)
-    # ele_xpath = "//section[@name='outer']/section[@name='inner']/tag"
-    # counts = {
-    #     :get_elements => 1,
-    #     :texts => 1,
-    # }
-    # checker.assert_counts(ele_xpath, counts)
-    # checker.assert_element_text(ele_xpath, 'text')
-    # args_common_test(method, 'section') do
-    #   # Will need a block for calling :section.
-    # end
   end
 
   def zzz_test_comment

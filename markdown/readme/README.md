@@ -66,11 +66,10 @@ class Example < MiniTest::Test
 
   def test_example
     options = {
-        :file_path => 'my_log.xml',
         :root_name => 'my_root_name',
         :xml_indentation => 4,
     }
-    MinitestLog.open(options) do |log|
+    MinitestLog.open('my_log.xml', options) do |log|
       # Test stuff goes here.
     end
   end
@@ -169,8 +168,12 @@ The log:
 ```xml
 <log>
   <summary verdicts='0' failures='0' errors='0'/>
-  <section name='My section'>Text</section>
-  <section name='Another section'>Text and more text</section>
+  <section name='My section'>
+    Text
+  </section>
+  <section name='Another section'>
+    Text and more text
+  </section>
 </log>
 ```
 
@@ -241,7 +244,7 @@ The log:
 ```xml
 <log>
   <summary verdicts='0' failures='0' errors='0'/>
-  <section name='My section' timestamp='2018-09-04-Tue-10.05.43.268'/>
+  <section name='My section' timestamp='2019-03-20-Wed-13.21.02.976'/>
 </log>
 ```
 
@@ -274,7 +277,7 @@ The log:
 ```xml
 <log>
   <summary verdicts='0' failures='0' errors='0'/>
-  <section name='My section' duration_seconds='3.016'/>
+  <section name='My section' duration_seconds='3.001'/>
 </log>
 ```
 
@@ -311,8 +314,12 @@ The log:
   <summary verdicts='0' failures='0' errors='1'/>
   <section name='My section'>
     <rescued_exception>
-      <class>RuntimeError</class>
-      <message>Boo!</message>
+      <class>
+        RuntimeError
+      </class>
+      <message>
+        Boo!
+      </message>
       <backtrace>
         <level_0 location='example.rb:8:in `block (2 levels) in test_example&apos;'/>
         <level_1 location='example.rb:7:in `block in test_example&apos;'/>
