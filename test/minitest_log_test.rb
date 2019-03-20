@@ -1,3 +1,4 @@
+require 'diff/lcs'
 require 'set'
 
 require_relative 'common_requires'
@@ -9,193 +10,190 @@ class LogTest < MiniTest::Test
     refute_nil ::MinitestLog::VERSION
   end
 
-  # Caller should provide a block to be executed using the log.
-  # Returns the file path to the closed log.
-  def create_temp_log(test)
-    dir_path = Dir.mktmpdir
-    file_path = File.join(dir_path, 'log.xml')
-    MinitestLog.open({:file_path => file_path}) do |log|
-      yield log
-    end
-    file_path
-  end
-
-  # Helper class for checking logged output.
-  class Checker
-
-    attr_accessor \
-      :exceptions,
-      :file_path,
-      :root,
-      :test,
-      :verdicts
-
-    # - +test+:  +MiniTest::Test+ object, to make assertions available.
-    # - +file_path+:  Path to log file.
-    def initialize(test, file_path)
-      # Needs the test object for accessing assertions.
-      self.test = test
-      self.file_path = file_path
-      # Clean up after.
-      ObjectSpace.define_finalizer(self, method(:finalize))
-      File.open(file_path, 'r') do |file|
-        self.root = REXML::Document.new(file).root
-        self.verdicts = {}
-        REXML::XPath.match(root, '//verdict').each do |verdict|
-          id = verdict.attributes.get_attribute('id').value.to_sym
-          self.verdicts.store(id, verdict)
-        end
-        self.exceptions = match('//exception')
-      end
-      nil
-    end
-
-    # For debugging.
-    def puts_file
-      puts File.read(self.file_path)
-    end
-
-    # To clean up the temporary directory.
-    # - +object_id+:  Id of temp directory.
-    def finalize(object_id)
-      file_path = ObjectSpace._id2ref(object_id).file_path
-      File.delete(file_path)
-      Dir.delete(File.dirname(file_path))
-      nil
-    end
-
-    # Verify the verdict count.
-    def assert_verdict_count(expected_count)
-      actual_count = self.verdicts.size
-      self.test.assert_equal(expected_count, actual_count, 'verdict count')
-    end
-
-    # Verify verdict attributes.
-    def assert_verdict_attributes(verdict_id, expected_attributes)
-      verdict = verdicts.fetch(verdict_id)
-      actual_attributes = {}
-      verdict.attributes.each do |attribute|
-        name, value = *attribute
-        actual_attributes[name.to_sym] = value.to_s
-      end
-      expected_attributes.each_pair do |name, value|
-        expected_attributes[name] = value.to_s unless value.kind_of?(Regexp)
-      end
-      self.test.assert_equal(Set.new(expected_attributes.keys), Set.new(actual_attributes.keys), 'keys')
-      expected_attributes.each_pair do |key, expected_value|
-        actual_value = actual_attributes[key]
-        self.test.assert_match(expected_value, actual_value, key.to_s)
-      end
-      true
-    end
-
-    def assert_exception(expected_message)
-      expected_assertion_count = expected_message.nil? ? 0 : 1
-      self.test.assert_equal(expected_assertion_count, self.exceptions.size)
-      if expected_message
-        actual_exception_xml = self.exceptions.first.to_s
-        self.test.assert_match(/Minitest::Assertion/, actual_exception_xml)
-        expected_message_regexp = Regexp.new(Regexp.quote(expected_message))
-        self.test.assert_match(expected_message_regexp, actual_exception_xml)
-      end
-    end
-
-    # Verify text in element.
-    def assert_element_text(ele_xpath, expected_value)
-      actual_value = match(ele_xpath).first.text
-      self.test.assert_match(expected_value, actual_value)
-    end
-
-    # Verify attribute value.
-    def assert_attribute_value(ele_xpath, attr_name, expected_value)
-      attr_xpath = format('%s/@%s', ele_xpath, attr_name)
-      p attr_xpath
-      actual_value = match(attr_xpath).first.value
-      self.test.assert_equal(expected_value, actual_value, attr_name)
-    end
-
-    def match(xpath)
-      REXML::XPath.match(root, xpath)
-    end
-
-  end
-
-  # Tests for (most) all verdict methods.
-  def verdict_common_test(hash)
-
-    # Hash arg has these three items.
-    # The last two values are name/value pairs representing arguments
-    # that should pass or fail.
-    method = hash[:method]
-    passing_arguments = hash[:passing_arguments]
-    failing_arguments = hash[:failing_arguments]
-    exception_message = hash[:exception_message]
-
-    # Test with passing arguments.
-    verdict_id = :passes
-    file_path = create_temp_log(self) do |log|
-      message = format('Method=%s; verdict_id=%s; data=%s', method, verdict_id, passing_arguments.inspect)
-      assert(log.send(method, verdict_id, *passing_arguments.values), message)
-    end
-    checker = Checker.new(self, file_path)
-    checker.assert_verdict_count(1)
-    attributes = {
-        :id => verdict_id,
-        :method => method,
-        :outcome => 'passed',
-    }
-    checker.assert_verdict_attributes(verdict_id, attributes)
-    checker.assert_exception(nil)
-
-    # Test with failing arguments.
-    verdict_id = :fails
-    file_path = create_temp_log(self) do |log|
-      message = format('Method=%s; verdict_id=%s; data=s', method, verdict_id, passing_arguments.inspect)
-      assert(!log.send(method, verdict_id, *failing_arguments.values), message)
-    end
-    checker = Checker.new(self, file_path)
-    checker.assert_verdict_count(1)
-    attributes = {
-        :id => verdict_id,
-        :method => method,
-        :outcome => 'failed',
-    }
-    checker.assert_verdict_attributes(verdict_id, attributes)
-    exception = Minitest::Assertion.new
-    checker.assert_exception(exception_message)
-
-    # Test with message.
-    verdict_id = :message
-    verdict_message = format('Message for method=%s; verdict_id=%s', method, verdict_id)
-    file_path = create_temp_log(self) do |log|
-      assert_message = format('Method=%s; verdict_id=%s; data=%s', method, verdict_id, passing_arguments.inspect)
-      assert(log.send(method, verdict_id, *passing_arguments.values, message: verdict_message), assert_message)
-    end
-    checker = Checker.new(self, file_path)
-    checker.assert_verdict_count(1)
-    attributes = {
-        :id => verdict_id,
-        :method => method,
-        :outcome => 'passed',
-        :message => verdict_message,
-    }
-    checker.assert_verdict_attributes(verdict_id, attributes)
-    checker.assert_exception(nil)
-
-    nil
-  end
+  # # Caller should provide a block to be executed using the log.
+  # # Returns the file path to the closed log.
+  # def create_temp_log(test)
+  #   dir_path = Dir.mktmpdir
+  #   file_path = File.join(dir_path, 'log.xml')
+  #   MinitestLog.open({:file_path => file_path}) do |log|
+  #     yield log
+  #   end
+  #   file_path
+  # end
+  #
+  # # Helper class for checking logged output.
+  # class Checker
+  #
+  #   attr_accessor \
+  #     :exceptions,
+  #     :file_path,
+  #     :root,
+  #     :test,
+  #     :verdicts
+  #
+  #   # - +test+:  +MiniTest::Test+ object, to make assertions available.
+  #   # - +file_path+:  Path to log file.
+  #   def initialize(test, file_path)
+  #     # Needs the test object for accessing assertions.
+  #     self.test = test
+  #     self.file_path = file_path
+  #     # Clean up after.
+  #     ObjectSpace.define_finalizer(self, method(:finalize))
+  #     File.open(file_path, 'r') do |file|
+  #       self.root = REXML::Document.new(file).root
+  #       self.verdicts = {}
+  #       REXML::XPath.match(root, '//verdict').each do |verdict|
+  #         id = verdict.attributes.get_attribute('id').value.to_sym
+  #         self.verdicts.store(id, verdict)
+  #       end
+  #       self.exceptions = match('//exception')
+  #     end
+  #     nil
+  #   end
+  #
+  #   # For debugging.
+  #   def puts_file
+  #     puts File.read(self.file_path)
+  #   end
+  #
+  #   # To clean up the temporary directory.
+  #   # - +object_id+:  Id of temp directory.
+  #   def finalize(object_id)
+  #     file_path = ObjectSpace._id2ref(object_id).file_path
+  #     File.delete(file_path)
+  #     Dir.delete(File.dirname(file_path))
+  #     nil
+  #   end
+  #
+  #   # Verify the verdict count.
+  #   def assert_verdict_count(expected_count)
+  #     actual_count = self.verdicts.size
+  #     self.test.assert_equal(expected_count, actual_count, 'verdict count')
+  #   end
+  #
+  #   # Verify verdict attributes.
+  #   def assert_verdict_attributes(verdict_id, expected_attributes)
+  #     verdict = verdicts.fetch(verdict_id)
+  #     actual_attributes = {}
+  #     verdict.attributes.each do |attribute|
+  #       name, value = *attribute
+  #       actual_attributes[name.to_sym] = value.to_s
+  #     end
+  #     expected_attributes.each_pair do |name, value|
+  #       expected_attributes[name] = value.to_s unless value.kind_of?(Regexp)
+  #     end
+  #     self.test.assert_equal(Set.new(expected_attributes.keys), Set.new(actual_attributes.keys), 'keys')
+  #     expected_attributes.each_pair do |key, expected_value|
+  #       actual_value = actual_attributes[key]
+  #       self.test.assert_match(expected_value, actual_value, key.to_s)
+  #     end
+  #     true
+  #   end
+  #
+  #   def assert_exception(expected_message)
+  #     expected_assertion_count = expected_message.nil? ? 0 : 1
+  #     self.test.assert_equal(expected_assertion_count, self.exceptions.size)
+  #     if expected_message
+  #       actual_exception_xml = self.exceptions.first.to_s
+  #       self.test.assert_match(/Minitest::Assertion/, actual_exception_xml)
+  #       expected_message_regexp = Regexp.new(Regexp.quote(expected_message))
+  #       self.test.assert_match(expected_message_regexp, actual_exception_xml)
+  #     end
+  #   end
+  #
+  #   # Verify text in element.
+  #   def assert_element_text(ele_xpath, expected_value)
+  #     actual_value = match(ele_xpath).first.text
+  #     self.test.assert_match(expected_value, actual_value)
+  #   end
+  #
+  #   # Verify attribute value.
+  #   def assert_attribute_value(ele_xpath, attr_name, expected_value)
+  #     attr_xpath = format('%s/@%s', ele_xpath, attr_name)
+  #     p attr_xpath
+  #     actual_value = match(attr_xpath).first.value
+  #     self.test.assert_equal(expected_value, actual_value, attr_name)
+  #   end
+  #
+  #   def match(xpath)
+  #     REXML::XPath.match(root, xpath)
+  #   end
+  #
+  # end
+  #
+  # # Tests for (most) all verdict methods.
+  # def verdict_common_test(hash)
+  #
+  #   # Hash arg has these three items.
+  #   # The last two values are name/value pairs representing arguments
+  #   # that should pass or fail.
+  #   method = hash[:method]
+  #   passing_arguments = hash[:passing_arguments]
+  #   failing_arguments = hash[:failing_arguments]
+  #   exception_message = hash[:exception_message]
+  #
+  #   # Test with passing arguments.
+  #   verdict_id = :passes
+  #   file_path = create_temp_log(self) do |log|
+  #     message = format('Method=%s; verdict_id=%s; data=%s', method, verdict_id, passing_arguments.inspect)
+  #     assert(log.send(method, verdict_id, *passing_arguments.values), message)
+  #   end
+  #   checker = Checker.new(self, file_path)
+  #   checker.assert_verdict_count(1)
+  #   attributes = {
+  #       :id => verdict_id,
+  #       :method => method,
+  #       :outcome => 'passed',
+  #   }
+  #   checker.assert_verdict_attributes(verdict_id, attributes)
+  #   checker.assert_exception(nil)
+  #
+  #   # Test with failing arguments.
+  #   verdict_id = :fails
+  #   file_path = create_temp_log(self) do |log|
+  #     message = format('Method=%s; verdict_id=%s; data=s', method, verdict_id, passing_arguments.inspect)
+  #     assert(!log.send(method, verdict_id, *failing_arguments.values), message)
+  #   end
+  #   checker = Checker.new(self, file_path)
+  #   checker.assert_verdict_count(1)
+  #   attributes = {
+  #       :id => verdict_id,
+  #       :method => method,
+  #       :outcome => 'failed',
+  #   }
+  #   checker.assert_verdict_attributes(verdict_id, attributes)
+  #   exception = Minitest::Assertion.new
+  #   checker.assert_exception(exception_message)
+  #
+  #   # Test with message.
+  #   verdict_id = :message
+  #   verdict_message = format('Message for method=%s; verdict_id=%s', method, verdict_id)
+  #   file_path = create_temp_log(self) do |log|
+  #     assert_message = format('Method=%s; verdict_id=%s; data=%s', method, verdict_id, passing_arguments.inspect)
+  #     assert(log.send(method, verdict_id, *passing_arguments.values, message: verdict_message), assert_message)
+  #   end
+  #   checker = Checker.new(self, file_path)
+  #   checker.assert_verdict_count(1)
+  #   attributes = {
+  #       :id => verdict_id,
+  #       :method => method,
+  #       :outcome => 'passed',
+  #       :message => verdict_message,
+  #   }
+  #   checker.assert_verdict_attributes(verdict_id, attributes)
+  #   checker.assert_exception(nil)
+  #
+  #   nil
+  # end
 
   def test_new
-
-    method = :new
-
-    AssertionHelper.assert_raises_with_message(self, RuntimeError, MinitestLog::NO_NEW_MSG) do
-      MinitestLog.new(self).send(method)
+    e = assert_raises(RuntimeError) do
+      MinitestLog.new('log.xml')
     end
-
+    File.write('test/actual/new.txt', e.message + "\n")
   end
 
-  def test_open
+  def zzz_test_open
 
     method = :open
 
@@ -216,7 +214,7 @@ class LogTest < MiniTest::Test
 
   end
 
-  def test_section
+  def zzz_test_section
 
     method = :section
 
@@ -236,7 +234,7 @@ class LogTest < MiniTest::Test
 
   end
 
-  def test_comment
+  def zzz_test_comment
 
     method = :comment
 
@@ -263,7 +261,7 @@ EOT
 
   end
 
-  def test_verdict_assert
+  def zzz_test_verdict_assert
 
     method = :verdict_assert?
 
@@ -297,7 +295,7 @@ EOT
 
   end
 
-  def test_verdict_refute
+  def zzz_test_verdict_refute
 
     method = :verdict_refute?
 
@@ -331,7 +329,7 @@ EOT
 
   end
 
-  def test_verdict_assert_empty
+  def zzz_test_verdict_assert_empty
 
     method = :verdict_assert_empty?
     passing_arguments = {
@@ -365,7 +363,7 @@ EOT
 
   end
 
-  def test_verdict_refute_empty
+  def zzz_test_verdict_refute_empty
 
     method = :verdict_refute_empty?
     passing_arguments = {
@@ -399,7 +397,7 @@ EOT
 
   end
 
-  def test_verdict_assert_equal
+  def zzz_test_verdict_assert_equal
 
     method = :verdict_assert_equal?
     passing_arguments = {
@@ -559,7 +557,7 @@ EOT
 
   end
 
-  def test_verdict_refute_equal
+  def zzz_test_verdict_refute_equal
 
     method = :verdict_refute_equal?
     passing_arguments = {
@@ -580,7 +578,7 @@ EOT
 
   end
 
-  def test_verdict_assert_in_delta
+  def zzz_test_verdict_assert_in_delta
 
     method = :verdict_assert_in_delta?
     passing_arguments = {
@@ -603,7 +601,7 @@ EOT
 
   end
 
-  def test_verdict_refute_in_delta
+  def zzz_test_verdict_refute_in_delta
 
     method = :verdict_refute_in_delta?
     passing_arguments = {
@@ -626,7 +624,7 @@ EOT
 
   end
 
-  def test_verdict_assert_in_epsilon
+  def zzz_test_verdict_assert_in_epsilon
 
     method = :verdict_assert_in_epsilon?
     passing_arguments = {
@@ -649,7 +647,7 @@ EOT
 
   end
 
-  def test_verdict_refute_in_epsilon
+  def zzz_test_verdict_refute_in_epsilon
 
     method = :verdict_refute_in_epsilon?
     passing_arguments = {
@@ -672,7 +670,7 @@ EOT
 
   end
 
-  def test_verdict_assert_includes
+  def zzz_test_verdict_assert_includes
 
     method = :verdict_assert_includes?
     passing_arguments = {
@@ -693,7 +691,7 @@ EOT
 
   end
 
-  def test_verdict_refute_includes
+  def zzz_test_verdict_refute_includes
 
     method = :verdict_refute_includes?
     passing_arguments = {
@@ -714,7 +712,7 @@ EOT
 
   end
 
-  def test_verdict_assert_instance_of
+  def zzz_test_verdict_assert_instance_of
 
     method = :verdict_assert_instance_of?
     passing_arguments = {
@@ -735,7 +733,7 @@ EOT
 
   end
 
-  def test_verdict_refute_instance_of
+  def zzz_test_verdict_refute_instance_of
 
     method = :verdict_refute_instance_of?
     passing_arguments = {
@@ -756,7 +754,7 @@ EOT
 
   end
 
-  def test_verdict_assert_kind_of
+  def zzz_test_verdict_assert_kind_of
 
     method = :verdict_assert_kind_of?
     passing_arguments = {
@@ -777,7 +775,7 @@ EOT
 
   end
 
-  def test_verdict_refute_kind_of
+  def zzz_test_verdict_refute_kind_of
 
     method = :verdict_refute_kind_of?
     passing_arguments = {
@@ -798,7 +796,7 @@ EOT
 
   end
 
-  def test_verdict_assert_match
+  def zzz_test_verdict_assert_match
 
     method = :verdict_assert_match?
     passing_arguments = {
@@ -819,7 +817,7 @@ EOT
 
   end
 
-  def test_verdict_refute_match
+  def zzz_test_verdict_refute_match
 
     method = :verdict_refute_match?
     passing_arguments = {
@@ -840,7 +838,7 @@ EOT
 
   end
 
-  def test_verdict_assert_nil
+  def zzz_test_verdict_assert_nil
 
     method = :verdict_assert_nil?
     passing_arguments = {
@@ -859,7 +857,7 @@ EOT
 
   end
 
-  def test_verdict_refute_nil
+  def zzz_test_verdict_refute_nil
 
     method = :verdict_refute_nil?
     passing_arguments = {
@@ -878,7 +876,7 @@ EOT
 
   end
 
-  def test_verdict_assert_operator
+  def zzz_test_verdict_assert_operator
 
     method = :verdict_assert_operator?
     passing_arguments = {
@@ -901,7 +899,7 @@ EOT
 
   end
 
-  def test_verdict_refute_operator
+  def zzz_test_verdict_refute_operator
 
     method = :verdict_refute_operator?
     passing_arguments = {
@@ -924,7 +922,7 @@ EOT
 
   end
 
-  def test_verdict_output
+  def zzz_test_verdict_output
 
     method = :verdict_assert_output?
     passing_arguments = {
@@ -978,7 +976,7 @@ EOT
 
   # Minitest::Assertion does not have :refute_output, so we don't have :verdict_refute_output?.
 
-  def test_verdict_assert_predicate
+  def zzz_test_verdict_assert_predicate
 
     method = :verdict_assert_predicate?
     passing_arguments = {
@@ -999,7 +997,7 @@ EOT
 
   end
 
-  def test_verdict_refute_predicate
+  def zzz_test_verdict_refute_predicate
 
     method = :verdict_refute_predicate?
     passing_arguments = {
@@ -1020,7 +1018,7 @@ EOT
 
   end
 
-  def test_verdict_raises
+  def zzz_test_verdict_raises
 
     method = :verdict_assert_raises?
     passing_arguments = {
@@ -1070,7 +1068,7 @@ EOT
 
   # Minitest::Assertion does not have :refute_raises, so we don't have :verdict_refute_raises?.
 
-  def test_verdict_assert_respond_to
+  def zzz_test_verdict_assert_respond_to
 
     method = :verdict_assert_respond_to?
     passing_arguments = {
@@ -1091,7 +1089,7 @@ EOT
 
   end
 
-  def test_verdict_refute_respond_to
+  def zzz_test_verdict_refute_respond_to
 
     method = :verdict_refute_respond_to?
     passing_arguments = {
@@ -1112,7 +1110,7 @@ EOT
 
   end
 
-  def test_verdict_assert_same
+  def zzz_test_verdict_assert_same
 
     method = :verdict_assert_same?
     passing_arguments = {
@@ -1133,7 +1131,7 @@ EOT
 
   end
 
-  def test_verdict_refute_same
+  def zzz_test_verdict_refute_same
 
     method = :verdict_refute_same?
     passing_arguments = {
@@ -1158,7 +1156,7 @@ EOT
 
   # Minitest::Assertion does not have :refute_send, so we don't have :verdict_refute_send?.
 
-  def test_verdict_silent
+  def zzz_test_verdict_silent
 
     method = :verdict_assert_silent?
     # Test with passing arguments.
@@ -1202,7 +1200,7 @@ EOT
 
   # Minitest::Assertion does not have :refute_silent, so we don't have :verdict_refute_silent?.
 
-  def test_verdict_throws
+  def zzz_test_verdict_throws
 
     method = :verdict_assert_throws?
     passing_arguments = {
