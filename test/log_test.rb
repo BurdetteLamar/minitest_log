@@ -305,15 +305,18 @@ class MinitestLogTest < Minitest::Test
     end
     actual = File.read(file_path)
     File.delete(file_path)
-    store_and_assert('open_default_file_path', actual)
+    store_and_assert('open_default_file_path.xml', actual)
   end
 
-  def zzz_test_open_file_path
-    file_name = 'foo.xml'
-    file_path = MinitestLog.open(file_name) do |log|
-      assert_equal(file_name, log.file_path)
+  def test_open_file_path
+    file_path = './foo.xml'
+    MinitestLog.open(file_path) do |log|
+      file_path = log.file_path
+      log.put_data('file_path', file_path)
     end
-    Checker.new(self, file_path)
+    actual = File.read(file_path)
+    File.delete(file_path)
+    store_and_assert('open_file_path.xml', actual)
   end
 
   def zzz_test_open_root_name
