@@ -59,8 +59,31 @@ class MinitestLog
     ]
     options = default_options.merge(options)
     log = self.new(file_path, options, im_ok_youre_not_ok = true)
-    yield log
+    begin
+      yield log
+    rescue => x
+      log.put_element('uncaught_exception', :timestamp, :class => x.class) do
+        log.put_element('message', x.message)
+        log.put_element('backtrace') do
+          backtrace = log.send(:filter_backtrace, x.backtrace)
+          log.put_cdata(backtrace.join("\n"))
+        end
+      end
+    end
     log.send(:dispose)
+    nil
+  end
+
+  def put_cdata(text)
+    # Guard against using a terminator that's a substring of the cdata.
+    s = 'EOT'
+    terminator = s
+    while text.match(terminator) do
+      terminator += s
+    end
+    log_puts("CDATA\t<<#{terminator}")
+    log_puts(text)
+    log_puts(terminator)
     nil
   end
 
@@ -86,6 +109,72 @@ class MinitestLog
   def put_data(name, obj)
     value = obj.respond_to?(:to_s) ? obj.to_s : obj.inspect
     put_element('data',  value, :name => name, :class => obj.class)
+  end
+
+  def put_element(element_name = 'element', *args)
+    attributes = {}
+    pcdata = ''
+    start_time = nil
+    duration_to_be_included = false
+    block_to_be_rescued = false
+    args.each do |arg|
+      case
+      when arg.kind_of?(Hash)
+        attributes.merge!(arg)
+      when arg.kind_of?(String)
+        pcdata += arg
+      when arg == :timestamp
+        attributes[:timestamp] = MinitestLog.timestamp
+      when arg == :duration
+        duration_to_be_included = true
+      when arg == :rescue
+        block_to_be_rescued = true
+      else
+        pcdata = pcdata + arg.inspect
+      end
+    end
+    log_puts("BEGIN\t#{element_name}")
+    put_attributes(attributes)
+    unless pcdata.empty?
+      # Guard against using a terminator that's a substring of pcdata.
+      s = 'EOT'
+      terminator = s
+      while pcdata.match(terminator) do
+        terminator += s
+      end
+      log_puts("PCDATA\t<<#{terminator}")
+      log_puts(pcdata)
+      log_puts(terminator)
+    end
+    start_time = Time.new if duration_to_be_included
+    if block_given?
+      if block_to_be_rescued
+        begin
+          yield
+        rescue Exception => x
+          put_element('rescued_exception') do
+            put_element('class', x.class)
+            put_element('message', x.message)
+            put_element('backtrace') do
+              filter_backtrace(x.backtrace).each_with_index do |location, i|
+                put_element("level_#{i}", {:location => location})
+              end
+            end
+          end
+          self.counts[:error] += 1
+        end
+      else
+        yield
+      end
+    end
+    if start_time
+      end_time = Time.now
+      duration_f = end_time.to_f - start_time.to_f
+      duration_s = format('%.3f', duration_f)
+      put_attributes({:duration_seconds => duration_s})
+    end
+    log_puts("END\t#{element_name}")
+    nil
   end
 
   private
@@ -185,72 +274,6 @@ class MinitestLog
     File.open(self.file_path, 'a') do |file|
       file.write("\n")
     end
-    nil
-  end
-
-  def put_element(element_name = 'element', *args)
-    attributes = {}
-    pcdata = ''
-    start_time = nil
-    duration_to_be_included = false
-    block_to_be_rescued = false
-    args.each do |arg|
-      case
-        when arg.kind_of?(Hash)
-          attributes.merge!(arg)
-        when arg.kind_of?(String)
-          pcdata += arg
-        when arg == :timestamp
-          attributes[:timestamp] = MinitestLog.timestamp
-        when arg == :duration
-          duration_to_be_included = true
-        when arg == :rescue
-          block_to_be_rescued = true
-        else
-          pcdata = pcdata + arg.inspect
-      end
-    end
-    log_puts("BEGIN\t#{element_name}")
-    put_attributes(attributes)
-    unless pcdata.empty?
-      # Guard against using a terminator that's a substring of pcdata.
-      s = 'EOT'
-      terminator = s
-      while pcdata.match(terminator) do
-        terminator += s
-      end
-      log_puts("PCDATA\t<<#{terminator}")
-      log_puts(pcdata)
-      log_puts(terminator)
-    end
-    start_time = Time.new if duration_to_be_included
-    if block_given?
-      if block_to_be_rescued
-        begin
-          yield
-        rescue Exception => x
-          put_element('rescued_exception') do
-            put_element('class', x.class)
-            put_element('message', x.message)
-            put_element('backtrace') do
-              filter_backtrace(x.backtrace).each_with_index do |location, i|
-                put_element("level_#{i}", {:location => location})
-              end
-            end
-          end
-          self.counts[:error] += 1
-        end
-      else
-        yield
-      end
-    end
-    if start_time
-      end_time = Time.now
-      duration_f = end_time.to_f - start_time.to_f
-      duration_s = format('%.3f', duration_f)
-      put_attributes({:duration_seconds => duration_s})
-    end
-    log_puts("END\t#{element_name}")
     nil
   end
 

@@ -370,23 +370,14 @@ class MinitestLogTest < Minitest::Test
     assert_file(file_name)
   end
 
-  def zzz_test_uncaught_exception
-    exception_message = 'Wrong'
-    file_path = MinitestLog.open('foo.xml', :xml_indentation => -1) do |_|
-      raise RuntimeError.new(exception_message)
+  def test_uncaught_exception
+    file_name = 'uncaught_exception.xml'
+    file_path = actual_file_path(file_name)
+    MinitestLog.open(file_path) do |log|
+      raise RuntimeError.new('Wrong!')
     end
-    checker = Checker.new(self, file_path)
-    ele_xpath = '//uncaught_exception'
-    counts = {
-        :attributes => 2,
-        :get_elements => 1,
-    }
-    checker.assert_counts(ele_xpath, counts)
-    checker.assert_attribute_value(ele_xpath, 'class', RuntimeError.name)
-    ele_xpath = '//uncaught_exception/message'
-    checker.assert_element_text(ele_xpath, exception_message)
-    ele_xpath = '//uncaught_exception/backtrace'
-    checker.assert_element_match(ele_xpath, __method__.to_s)
+    condition_file(file_path)
+    assert_file(file_name)
   end
 
   def zzz_test_put_element
@@ -525,6 +516,13 @@ class MinitestLogTest < Minitest::Test
     actual_content = File.readlines(actual_file_path(file_name))
     diff = Diff::LCS.diff(expected_content, actual_content)
     assert_empty(diff)
+  end
+
+  def condition_file(file_path)
+    content = File.read(file_path)
+    timestamp_regexp = /timestamp='\d{4}-\d{2}-\d{2}-\w{3}-\d{2}\.\d{2}\.\d{2}\.\d{3}'/
+    conditioned_content = content.gsub(timestamp_regexp, "timestamp=''")
+    File.write(file_path, conditioned_content)
   end
 
 end

@@ -1,0 +1,10 @@
+<log>
+  <summary verdicts='0' failures='0' errors='0'/>
+  <uncaught_exception timestamp='' class='RuntimeError'>
+    <message>
+      Wrong!
+    </message>
+    <backtrace>
+    </backtrace>
+  </uncaught_exception>
+</log>
