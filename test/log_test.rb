@@ -94,8 +94,19 @@ class MinitestLogTest < Minitest::Test
     _test('section_duration') do |log|
       log.section('no_duration') do
         log.section('duration', :duration) do
-          sleep(3)
+          sleep(1)
         end
+      end
+    end
+  end
+
+  def test_section_rescue
+    _test('section_rescue') do |log|
+      log.section('rescue', :rescue) do
+        fail 'Rescue me!'
+      end
+      log.section('no_rescue') do |log|
+        fail 'Not rescued!'
       end
     end
   end
@@ -135,10 +146,21 @@ class MinitestLogTest < Minitest::Test
 
   def test_put_element_duration
     _test('put_element_duration') do |log|
-      log.section('no_duration') do
-        log.section('duration', :duration) do
-          sleep(3)
+      log.put_element('element') do
+        log.put_element('element', :duration) do
+          sleep(1)
         end
+      end
+    end
+  end
+
+  def test_put_element_rescue
+    _test('put_element_rescue') do |log|
+      log.put_element('element', :rescue) do
+        fail 'Rescue me!'
+      end
+      log.put_element('element') do |log|
+        fail 'Not rescued!'
       end
     end
   end
