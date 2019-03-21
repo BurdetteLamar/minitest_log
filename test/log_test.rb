@@ -111,6 +111,15 @@ class MinitestLogTest < Minitest::Test
     end
   end
 
+  def test_section_attributes
+    _test('section_attributes') do |log|
+      log.section('no_attributes') do
+      end
+      log.section('attributes', {:a => 0, :b => 1}, {:c => 2, :d => 3}) do
+      end
+    end
+  end
+
   def test_comment
     _test('comment') do |log|
       log.comment('My comment.')
