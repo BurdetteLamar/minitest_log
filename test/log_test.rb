@@ -81,8 +81,8 @@ class MinitestLogTest < Minitest::Test
     end
   end
 
-  def test_timestamp
-    _test('timestamp') do |log|
+  def test_section_timestamp
+    _test('section_timestamp') do |log|
       log.section('no_timestamp') do
         log.section('timestamp', :timestamp) do
         end
