@@ -25,7 +25,7 @@ class MinitestLogTest < Minitest::Test
     file_name = "#{name}.xml"
     file_path = actual_file_path(file_name)
     MinitestLog.open(file_path, open_options) do |log|
-      yield
+      yield log
     end
     assert_file(file_name)
   end
@@ -58,16 +58,12 @@ class MinitestLogTest < Minitest::Test
 
   def test_open_xml_indentation
     [-1, 0, 2].each do |indentation|
-      file_name = "open_xml_indentation.#{indentation}.xml"
-      file_path = actual_file_path(file_name)
-      MinitestLog.open(file_path, :xml_indentation => indentation) do |log|
+      _test("open_xml_indentation.#{indentation}", :xml_indentation => indentation) do |log|
         log.section('Section') do
           log.put_data('indentation', indentation)
         end
       end
-      assert_file(file_name)
     end
-
   end
 
   def test_section_nested
