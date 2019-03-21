@@ -84,12 +84,9 @@ class MinitestLogTest < Minitest::Test
   end
 
   def test_comment
-    file_name = 'comment.xml'
-    file_path = actual_file_path(file_name)
-    MinitestLog.open(file_path) do |log|
+    _test('comment') do |log|
       log.comment('My comment.')
     end
-    assert_file(file_name)
   end
 
   def test_uncaught_exception
