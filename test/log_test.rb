@@ -391,14 +391,19 @@ class MinitestLogTest < Minitest::Test
     assert_file(file_name)
   end
 
-  def _test_put_each_with_index(method, arg)
+  def _test_put(method)
     file_name = "#{method}.xml"
     file_path = actual_file_path(file_name)
-    element_name = method.to_s
     MinitestLog.open(file_path) do |log|
-      log.send(method, element_name, arg)
+      yield log
     end
     assert_file(file_name)
+  end
+
+  def _test_put_each_with_index(method, arg)
+    _test_put(method) do |log|
+      log.send(method, method.to_s, arg)
+    end
   end
 
   def test_put_each_with_index
@@ -417,13 +422,9 @@ class MinitestLogTest < Minitest::Test
   end
 
   def _test_put_each_pair(method, arg)
-    file_name = "#{method}.xml"
-    file_path = actual_file_path(file_name)
-    element_name = method.to_s
-    MinitestLog.open(file_path) do |log|
-      log.send(method, element_name, arg)
+    _test_put(method) do |log|
+      log.send(method, method.to_s, arg)
     end
-    assert_file(file_name)
   end
 
   def test_put_each_pair
@@ -432,14 +433,11 @@ class MinitestLogTest < Minitest::Test
   end
 
   def test_put_each
-    file_name = 'put_each.xml'
-    file_path = actual_file_path(file_name)
-    MinitestLog.open(file_path) do |log|
+    _test_put('put_each') do |log|
       each = %w/first second third/
       each.instance_eval('undef :each_with_index')
       log.put_each('each', each)
     end
-    assert_file(file_name)
   end
 
   def test_put_hash
@@ -448,32 +446,23 @@ class MinitestLogTest < Minitest::Test
   end
 
   def test_put_to_s
-    file_name = 'put_to_s.xml'
-    file_path = actual_file_path(file_name)
-    MinitestLog.open(file_path) do |log|
+    _test_put('put_to_s') do |log|
       log.put_to_s('to_s', 3.14159)
     end
-    assert_file(file_name)
   end
 
   def test_put_string
-    file_name = 'put_string.xml'
-    file_path = actual_file_path(file_name)
-    MinitestLog.open(file_path) do |log|
+    _test_put('put_string') do |log|
       log.put_string('string', 'Foo')
     end
-    assert_file(file_name)
   end
 
   def test_put_inspect
-    file_name = 'put_inspect.xml'
-    file_path = actual_file_path(file_name)
-    inspect = (0..3)
-    inspect.instance_eval('undef :to_s')
-    MinitestLog.open(file_path) do |log|
+    _test_put('put_inspect') do |log|
+      inspect = (0..3)
+      inspect.instance_eval('undef :to_s')
       log.put_inspect('inspect', inspect)
     end
-    assert_file(file_name)
   end
 
   def test_put_data
