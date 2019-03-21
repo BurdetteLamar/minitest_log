@@ -81,20 +81,25 @@ class MinitestLogTest < Minitest::Test
     end
   end
 
-  def test_section_timestamp
-    _test('section_timestamp') do |log|
-      log.section('no_timestamp') do
-        log.section('timestamp', :timestamp) do
+  def test_timestamp
+    [:section, :put_element].each do |method|
+      name = "#{method}_timestamp"
+      _test(name) do |log|
+        log.send(method, 'no_timestamp') do
+        end
+        log.send(method, 'timestamp', :timestamp) do
         end
       end
     end
   end
 
-  def test_section_duration
-    _test('section_duration') do |log|
-      log.section('no_duration') do
-        log.section('duration', :duration) do
-          sleep(1)
+  def test_duration
+    [:section, :put_element].each do |method|
+      name = "#{method}_duration"
+      _test(name) do |log|
+        log.send(method, 'no_duration') do
+        end
+        log.send(method, 'duration', :duration) do
         end
       end
     end
@@ -140,25 +145,6 @@ class MinitestLogTest < Minitest::Test
     _test('put_element') do |log|
       log.put_element('my_section') do
         log.put_element('my_element', 'my text')
-      end
-    end
-  end
-
-  def test_put_element_timestamp
-    _test('put_element_timestamp') do |log|
-      log.put_element('element', 'no_timestamp') do
-        log.put_element('element', 'timestamp', :timestamp) do
-        end
-      end
-    end
-  end
-
-  def test_put_element_duration
-    _test('put_element_duration') do |log|
-      log.put_element('element') do
-        log.put_element('element', :duration) do
-          sleep(1)
-        end
       end
     end
   end

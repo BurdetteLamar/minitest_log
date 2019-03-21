@@ -1,6 +1,5 @@
 <log>
   <summary verdicts='0' failures='0' errors='0'/>
-  <element>
-    <element duration_seconds='0.000'/>
-  </element>
+  <no_duration/>
+  <duration duration_seconds='0.000'/>
 </log>
