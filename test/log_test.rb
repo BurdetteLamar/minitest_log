@@ -7,154 +7,6 @@ class MinitestLogTest < Minitest::Test
     refute_nil ::MinitestLog::VERSION
   end
 
-  # Create a temporary logfile.
-  # Caller should provide a block to be executed using the log.
-  # Returns the file path to the closed log.
-  def create_temp_log
-    dir_path = Dir.mktmpdir
-    file_path = File.join(dir_path, 'log.xml')
-    # Suppress all added whitespace, even newline, to facilitate text comparison.
-    MinitestLog.open(file_path, {:xml_indentation => -1}) do |log|
-      yield log
-    end
-    file_path
-  end
-
-  # Helper class for checking logged output.
-  class Checker
-
-    attr_accessor \
-      :exceptions,
-      :file_path,
-      :root,
-      :test
-
-    # - +test+:  +MiniTest::Test+ object, to make assertions available.
-    # - +file_path+:  Path to log file.
-    def initialize(test, file_path)
-      # Needs the test object for accessing assertions.
-      self.test = test
-      self.file_path = file_path
-      # Clean up after.
-      ObjectSpace.define_finalizer(self, method(:finalize))
-      File.open(file_path, 'r') do |file|
-        self.root = REXML::Document.new(file).root
-      end
-      nil
-    end
-
-    # To clean up the temporary directory.
-    # - +object_id+:  Id of temp directory.
-    def finalize(object_id)
-      file_path = ObjectSpace._id2ref(object_id).file_path
-      File.delete(file_path)
-      Dir.delete(File.dirname(file_path))
-      nil
-    end
-
-    def assert_root_name(name)
-      test.assert_equal(name, self.root.name)
-    end
-
-    def assert_xml_indentation(indentation)
-      File.open(file_path) do |file|
-        lines = file.readlines
-        case indentation
-          when -1
-            # Should all be on one line; no whitespace.
-            test.assert_equal(1, lines.size)
-          when 0
-            # Should be multiple lines, but no indentation.
-            test.assert_operator(1, :<, lines.size)
-            test.refute_match(/^ /, lines[1])
-          when 2
-            # Should be multiple lines, with 2-space indentation.
-            test.assert_operator(1, :<, lines.size)
-            test.assert_match(/^ {2}\S/, lines[1])
-          else
-            raise NotImplementedError(indentation)
-        end
-      end
-    end
-
-    # Verify text in element.
-    def assert_element_match(ele_xpath, expected_value)
-      actual_value = assert_element_exist(ele_xpath).first.text
-      self.test.assert_match(expected_value, actual_value)
-    end
-
-    # Verify text in element.
-    def assert_element_text(ele_xpath, expected_value)
-      actual_value = assert_element_exist(ele_xpath).first.text
-      self.test.assert_equal(expected_value, actual_value)
-    end
-
-    # Verify attribute match.
-    def assert_attribute_match(ele_xpath, attr_name, expected_value)
-      attr_xpath = format('%s/@%s', ele_xpath, attr_name)
-      actual_value = assert_element_exist(attr_xpath).first.value
-      self.test.assert_match(expected_value, actual_value, attr_name)
-    end
-
-    # Verify attribute value.
-    def assert_attribute_value(ele_xpath, attr_name, expected_value)
-      attr_xpath = format('%s/@%s', ele_xpath, attr_name)
-      actual_value = assert_element_exist(attr_xpath).first.value
-      self.test.assert_equal(expected_value, actual_value, attr_name)
-    end
-
-    # Verify attribute values.
-    def assert_attribute_values(ele_xpath, attributes)
-      attributes.each_pair do |name, value|
-        assert_attribute_value(ele_xpath, name, value)
-      end
-    end
-
-    # Verify element existence.
-    def assert_element_exist(ele_xpath)
-      elements = match(ele_xpath)
-      self.test.assert_operator(elements.size, :>, 0, "No elements at xpath #{ele_xpath}")
-      elements
-    end
-
-    def assert_cdata_matches(ele_xpath, regexps)
-      element = assert_element_exist(ele_xpath).first
-      cdatas = element.cdatas
-      self.test.assert_equal(1, cdatas.size)
-      cdata_value = cdatas.first.value
-      regexps.each do |regexp|
-        self.test.assert_match(regexp, cdata_value)
-        cdata_value.sub!(regexp, '')
-      end
-      self.test.refute_match(/\S/, cdata_value)
-    end
-
-    def assert_counts(ele_xpath, counts)
-      element = assert_element_exist(ele_xpath).first
-      [
-          :attributes,
-          :cdatas,
-          :comments,
-          :texts,
-      ].each do |method|
-        value = counts[method]
-        expected_count = value.nil? ? 0 : value
-        actual_count = element.send(method).size
-        self.test.assert_equal(expected_count, actual_count, method.to_s)
-      end
-      method = :get_elements
-      value = counts[method]
-      expected_count = value.nil? ? 0 : value
-      actual_count = element.send(method, ele_xpath).size
-      self.test.assert_equal(expected_count, actual_count, method.to_s)
-    end
-
-    def match(xpath)
-      REXML::XPath.match(root, xpath)
-    end
-
-  end
-
   def args_common_test(log_method, element_name, &block)
 
     # When log_method is :section we need a block.
@@ -394,10 +246,12 @@ class MinitestLogTest < Minitest::Test
   def _test_put(method, obj)
     file_name = "#{method}.xml"
     file_path = actual_file_path(file_name)
+    # Test using the given method.
     MinitestLog.open(file_path) do |log|
       log.send(method, method.to_s, obj)
     end
     assert_file(file_name)
+    # Test using method :put_data.
     MinitestLog.open(file_path) do |log|
       log.send(:put_data, method.to_s, obj)
     end
