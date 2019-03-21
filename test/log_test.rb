@@ -27,6 +27,7 @@ class MinitestLogTest < Minitest::Test
     MinitestLog.open(file_path, open_options) do |log|
       yield log
     end
+    condition_file(file_path)
     assert_file(file_name)
   end
 
@@ -75,6 +76,15 @@ class MinitestLogTest < Minitest::Test
           log.section('Inner') do
             log.put_data('inner_tag', 'Inner text.')
           end
+        end
+      end
+    end
+  end
+
+  def test_timestamp
+    _test('timestamp') do |log|
+      log.section('no_timestamp') do
+        log.section('timestamp', :timestamp) do
         end
       end
     end
@@ -202,9 +212,10 @@ class MinitestLogTest < Minitest::Test
   end
 
   def condition_file(file_path)
+    dummy = '0000-00-00-xxx-00.00.00.000'
     content = File.read(file_path)
     timestamp_regexp = /timestamp='\d{4}-\d{2}-\d{2}-\w{3}-\d{2}\.\d{2}\.\d{2}\.\d{3}'/
-    conditioned_content = content.gsub(timestamp_regexp, "timestamp=''")
+    conditioned_content = content.gsub(timestamp_regexp, "timestamp='#{dummy}'")
     File.write(file_path, conditioned_content)
   end
 
