@@ -1,0 +1,10 @@
+<log>
+  <summary verdicts='0' failures='0' errors='0'/>
+  <data name='each' class='Array' size='3' method=':each'>
+    <![CDATA[
+first
+second
+third
+]]>
+  </data>
+</log>

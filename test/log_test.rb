@@ -431,9 +431,37 @@ class MinitestLogTest < Minitest::Test
     _test_put_each_pair(:put_each_pair, arg)
   end
 
+  def test_put_each
+    file_name = 'put_each.xml'
+    file_path = actual_file_path(file_name)
+    MinitestLog.open(file_path) do |log|
+      each = %w/first second third/
+      each.instance_eval('undef :each_with_index')
+      log.put_each('each', each)
+    end
+    assert_file(file_name)
+  end
+
   def test_put_hash
     arg = {:a => 0, :b => 1}
     _test_put_each_pair(:put_hash, arg)
+  end
+
+  def test_put_to_s
+    file_name = 'put_to_s.xml'
+    file_path = actual_file_path(file_name)
+    MinitestLog.open(file_path) do |log|
+      log.put_to_s('to_s', 3.14159)
+    end
+    assert_file(file_name)
+  end
+
+  def test_put_string
+
+  end
+
+  def test_put_inspect
+
   end
 
   def test_put_data
