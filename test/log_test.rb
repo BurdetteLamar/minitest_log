@@ -391,19 +391,17 @@ class MinitestLogTest < Minitest::Test
     assert_file(file_name)
   end
 
-  def _test_put(method)
+  def _test_put(method, obj)
     file_name = "#{method}.xml"
     file_path = actual_file_path(file_name)
-    MinitestLog.open(file_path) do |log|
-      yield log
+    MinitestLog.open(file_path, :backtrace_filter => /ruby/) do |log|
+      log.send(method, method.to_s, obj)
     end
     assert_file(file_name)
   end
 
-  def _test_put_each_with_index(method, arg)
-    _test_put(method) do |log|
-      log.send(method, method.to_s, arg)
-    end
+  def _test_put_each_with_index(method, obj)
+    _test_put(method, obj)
   end
 
   def test_put_each_with_index
@@ -422,9 +420,7 @@ class MinitestLogTest < Minitest::Test
   end
 
   def _test_put_each_pair(method, arg)
-    _test_put(method) do |log|
-      log.send(method, method.to_s, arg)
-    end
+    _test_put(method, arg)
   end
 
   def test_put_each_pair
@@ -433,11 +429,9 @@ class MinitestLogTest < Minitest::Test
   end
 
   def test_put_each
-    _test_put('put_each') do |log|
-      each = %w/first second third/
-      each.instance_eval('undef :each_with_index')
-      log.put_each('each', each)
-    end
+    each = %w/first second third/
+    each.instance_eval('undef :each_with_index')
+    _test_put(:put_each, each)
   end
 
   def test_put_hash
@@ -446,23 +440,17 @@ class MinitestLogTest < Minitest::Test
   end
 
   def test_put_to_s
-    _test_put('put_to_s') do |log|
-      log.put_to_s('to_s', 3.14159)
-    end
+    _test_put(:put_to_s, 3.14159)
   end
 
   def test_put_string
-    _test_put('put_string') do |log|
-      log.put_string('string', 'Foo')
-    end
+    _test_put(:put_string, 'Foo')
   end
 
   def test_put_inspect
-    _test_put('put_inspect') do |log|
-      inspect = (0..3)
-      inspect.instance_eval('undef :to_s')
-      log.put_inspect('inspect', inspect)
-    end
+    inspect = (0..3)
+    inspect.instance_eval('undef :to_s')
+    _test_put(:put_inspect, inspect)
   end
 
   def test_put_data

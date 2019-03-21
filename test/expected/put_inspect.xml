@@ -1,6 +1,6 @@
 <log>
   <summary verdicts='0' failures='0' errors='0'/>
-  <data name='inspect' class='Range' method=':inspect'>
+  <data name='put_inspect' class='Range' method=':inspect'>
     0..3
   </data>
 </log>
