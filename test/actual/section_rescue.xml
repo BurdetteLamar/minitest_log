@@ -6,7 +6,7 @@
         RuntimeError
       </class>
       <message>
-        Rescue me!
+        Rescued!
       </message>
       <backtrace/>
     </rescued_exception>

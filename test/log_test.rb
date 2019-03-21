@@ -105,13 +105,16 @@ class MinitestLogTest < Minitest::Test
     end
   end
 
-  def test_section_rescue
-    _test('section_rescue') do |log|
-      log.section('rescue', :rescue) do
-        fail 'Rescue me!'
-      end
-      log.section('no_rescue') do |log|
-        fail 'Not rescued!'
+  def test_rescue
+    [:section, :put_element].each do |method|
+      name = "#{method}_rescue"
+      _test(name) do |log|
+        log.send(method, 'rescue', :rescue) do
+          fail 'Rescued!'
+        end
+        log.send(method, 'no_rescue') do
+          fail 'Not rescued!'
+        end
       end
     end
   end
@@ -145,17 +148,6 @@ class MinitestLogTest < Minitest::Test
     _test('put_element') do |log|
       log.put_element('my_section') do
         log.put_element('my_element', 'my text')
-      end
-    end
-  end
-
-  def test_put_element_rescue
-    _test('put_element_rescue') do |log|
-      log.put_element('element', :rescue) do
-        fail 'Rescue me!'
-      end
-      log.put_element('element') do |log|
-        fail 'Not rescued!'
       end
     end
   end
