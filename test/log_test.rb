@@ -153,8 +153,30 @@ class MinitestLogTest < Minitest::Test
         end
       end
     end
-
   end
+
+  def test_inspected
+    [:section, :put_element].each do |method|
+      name = "#{method}_inspected"
+      _test(name) do |log|
+        log.send(method, 'no_inspected') do
+        end
+        log.send(method, 'one_inspected', :one) do
+        end
+        log.send(method, 'more_inspected', :one, 2, 3.14, (0..2)) do
+        end
+      end
+    end
+  end
+
+  # def test_cdata
+  #   [:section, :put_element].each do |method|
+  #     name = "#{method}_cdata"
+  #     _test(name) do |log|
+  #       l
+  #     end
+  #   end
+  # end
 
   def test_comment
     _test('comment') do |log|

@@ -1,0 +1,10 @@
+<log>
+  <summary verdicts='0' failures='0' errors='0'/>
+  <section name='no_inspected'/>
+  <section name='one_inspected'>
+    :one
+  </section>
+  <section name='more_inspected'>
+    :one23.140..2
+  </section>
+</log>
