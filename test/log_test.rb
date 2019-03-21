@@ -21,10 +21,10 @@ class MinitestLogTest < Minitest::Test
     store_and_assert('open_no_block.txt', exception.message)
   end
 
-  def _test(name)
+  def _test(name, open_options = {})
     file_name = "#{name}.xml"
     file_path = actual_file_path(file_name)
-    MinitestLog.open(file_path) do |log|
+    MinitestLog.open(file_path, open_options) do |log|
       yield
     end
     assert_file(file_name)
@@ -52,14 +52,8 @@ class MinitestLogTest < Minitest::Test
   end
 
   def test_open_root_name
-    root_name = 'foo'
-    file_name = 'open_root_name.xml'
-    file_path = actual_file_path(file_name)
-    MinitestLog.open(file_path, :root_name => root_name) do |log|
-      file_path = log.file_path
-      log.put_data('file_path', file_path)
+    _test('open_root_name', :root_name => 'foo') do |log|
     end
-    assert_file(file_name)
   end
 
   def test_open_xml_indentation
