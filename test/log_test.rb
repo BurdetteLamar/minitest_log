@@ -75,7 +75,7 @@ class MinitestLogTest < Minitest::Test
   end
 
   def test_nested_sections
-    file_name = 'nested_sections.xml'
+    file_name = 'section_nested.xml'
     file_path = actual_file_path(file_name)
     MinitestLog.open(file_path) do |log|
       log.section('Outer') do
