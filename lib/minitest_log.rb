@@ -12,23 +12,6 @@ require_relative 'helpers/set_helper'
 # When adding a module here, be sure to 'include' below.
 require_relative 'verdict_assertion'
 
-## Class to support XML logging.
-#
-# === About *args
-# Method section and all verdict methods pass a final argument *+args+
-# whose content is eventually passed to method put_element.
-# See how that content is handled by viewing the documentation at put_element.
-#
-# === About Aliases
-# For clarity, the verdict methods that correspond to methods in Minitest::Assertions
-# have longish names that clearly indicate the correspondence.
-# Method verdict_assert_in_delta?, for example,
-# corresponds to assertion method assert_in_delta.
-#
-# To aid both the test developer and the IDE's code-completion efforts,
-# each such method has a shorter alias.
-# Thus method verdict_assert_in_delta? has alias va_in_delta?,
-# and method verdict_refute_in_delta? has alias vr_in_delta?.
 class MinitestLog
 
   include VerdictAssertion
@@ -94,14 +77,14 @@ class MinitestLog
     nil
   end
 
-  def comment(text, *args)
+  def comment(text)
     if text.match("\n")
       # Separate text from containing punctuation.
       put_element('comment') do
         cdata("\n#{text}\n")
       end
     else
-      put_element('comment', text, *args)
+      put_element('comment', text)
     end
     nil
   end

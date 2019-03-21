@@ -7,128 +7,6 @@ class MinitestLogTest < Minitest::Test
     refute_nil ::MinitestLog::VERSION
   end
 
-  def args_common_test(log_method, element_name, &block)
-
-    # When log_method is :section we need a block.
-
-    # Hashes.
-    h0 = {:a => '0', :b => '1'}
-    h1 = {:c => '2', :b => '3'}
-    h = h0.merge(h1)
-    file_path = create_temp_log do |log|
-      log.send(log_method, element_name, h0, h1) do
-        block
-      end
-    end
-    checker = Checker.new(self, file_path)
-    ele_xpath = "//#{element_name}"
-    counts = {
-        :attributes => element_name == 'section' ? 4 : 3,
-        :get_elements => 1,
-    }
-    checker.assert_counts(ele_xpath, counts)
-    checker.assert_attribute_values(ele_xpath, h)
-
-    # Strings.
-    s0 = 'foo'
-    s1 = 'bar'
-    s = format('%s%s',s0, s1)
-    file_path = create_temp_log do |log|
-      log.send(log_method, element_name, s0, s1) do
-        block
-      end
-    end
-    checker = Checker.new(self, file_path)
-    ele_xpath = "//#{element_name}"
-    counts = {
-        :attributes => element_name == 'section' ? 1 : 0,
-        :get_elements => 1,
-        :texts => 1,
-    }
-    checker.assert_counts(ele_xpath, counts)
-    checker.assert_element_text(ele_xpath, s)
-
-    # Timestamp.
-    file_path = create_temp_log do |log|
-      log.send(log_method, element_name, :timestamp) do
-        block
-      end
-    end
-    checker = Checker.new(self, file_path)
-    ele_xpath = "//#{element_name}"
-    counts = {
-        :attributes => element_name == 'section' ? 2 : 1,
-        :get_elements => 1,
-    }
-    checker.assert_counts(ele_xpath, counts)
-    checker.assert_attribute_match(ele_xpath, :timestamp, /\d{4}-\d{2}-\d{2}-\w{3}-\d{2}\.\d{2}\.\d{2}\.\d{3}/)
-
-    # Duration.
-    file_path = create_temp_log do |log|
-      log.send(log_method, element_name, :duration) do
-        block
-      end
-    end
-    checker = Checker.new(self, file_path)
-    ele_xpath = "//#{element_name}"
-    counts = {
-        :attributes => element_name == 'section' ? 2 : 1,
-        :get_elements => 1,
-    }
-    checker.assert_counts(ele_xpath, counts)
-    checker.assert_attribute_match(ele_xpath, :duration_seconds, /\d+\.\d{3}/)
-
-    # Rescue.
-    exception_message = 'Wrong'
-    file_path = create_temp_log do |log|
-      log.send(log_method, element_name, :rescue) do
-        raise RuntimeError.new(exception_message)
-      end
-    end
-    checker = Checker.new(self, file_path)
-    ele_xpath = "//#{element_name}/rescued_exception"
-    counts = {
-        :attributes => 2,
-        :get_elements => 1,
-    }
-    checker.assert_counts(ele_xpath, counts)
-    attributes = {
-        :class => RuntimeError.name,
-    }
-    checker.assert_attribute_values(ele_xpath, attributes)
-    checker.assert_attribute_match(ele_xpath, :timestamp, /\d{4}-\d{2}-\d{2}-\w{3}-\d{2}\.\d{2}\.\d{2}\.\d{3}/)
-    ele_xpath = "//#{element_name}/rescued_exception/message"
-    checker.assert_element_text(ele_xpath, exception_message)
-    ele_xpath = "//#{element_name}/rescued_exception/backtrace"
-    checker.assert_element_match(ele_xpath, __method__.to_s)
-
-    # Others.
-    [
-        0,
-        0.0,
-        :symbol,
-        true,
-        Array,
-        [0, 1],
-    ].each do |other|
-      file_path = create_temp_log do |log|
-        log.send(log_method, element_name, other) do
-          block
-        end
-      end
-      checker = Checker.new(self, file_path)
-      ele_xpath = "//#{element_name}"
-      counts = {
-          :attributes => element_name == 'section' ? 1 : 0,
-          :get_elements => 1,
-          :texts => 1,
-      }
-      checker.assert_counts(ele_xpath, counts)
-      checker.assert_element_text(ele_xpath, other.inspect)
-    end
-
-  end
-
   def test_new
     exception = assert_raises(RuntimeError) do
       MinitestLog.new('foo.xml')
@@ -251,7 +129,7 @@ class MinitestLogTest < Minitest::Test
       log.send(method, method.to_s, obj)
     end
     assert_file(file_name)
-    # Test using method :put_data.
+    # Test using method :put_
     MinitestLog.open(file_path) do |log|
       log.send(:put_data, method.to_s, obj)
     end
