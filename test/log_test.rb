@@ -97,14 +97,11 @@ class MinitestLogTest < Minitest::Test
   end
 
   def test_put_element
-    file_name = 'put_element.xml'
-    file_path = actual_file_path(file_name)
-    MinitestLog.open(file_path) do |log|
+    _test('put_element') do |log|
       log.put_element('my_section') do
         log.put_element('my_element', 'my text')
       end
     end
-    assert_file(file_name)
   end
 
   def _test_put(method, obj)
