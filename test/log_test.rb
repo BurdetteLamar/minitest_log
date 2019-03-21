@@ -21,11 +21,18 @@ class MinitestLogTest < Minitest::Test
     store_and_assert('open_no_block.txt', exception.message)
   end
 
-  def test_open_block
-    file_name = 'open_block.xml'
-    MinitestLog.open(actual_file_path(file_name)) do |log|
+  def _test(name)
+    file_name = "#{name}.xml"
+    file_path = actual_file_path(file_name)
+    MinitestLog.open(file_path) do |log|
+      yield
     end
     assert_file(file_name)
+  end
+
+  def test_open_block
+    _test('open_block') do |log|
+    end
   end
 
   def test_open_default_file_path
@@ -40,13 +47,8 @@ class MinitestLogTest < Minitest::Test
   end
 
   def test_open_file_path
-    file_name = 'open_file_path.xml'
-    file_path = actual_file_path(file_name)
-    MinitestLog.open(file_path) do |log|
-      file_path = log.file_path
-      log.put_data('file_path', file_path)
+    _test('open_file_path') do |log|
     end
-    assert_file(file_name)
   end
 
   def test_open_root_name
@@ -74,7 +76,7 @@ class MinitestLogTest < Minitest::Test
 
   end
 
-  def test_nested_sections
+  def test_section_nested
     file_name = 'section_nested.xml'
     file_path = actual_file_path(file_name)
     MinitestLog.open(file_path) do |log|
