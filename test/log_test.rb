@@ -394,8 +394,12 @@ class MinitestLogTest < Minitest::Test
   def _test_put(method, obj)
     file_name = "#{method}.xml"
     file_path = actual_file_path(file_name)
-    MinitestLog.open(file_path, :backtrace_filter => /ruby/) do |log|
+    MinitestLog.open(file_path) do |log|
       log.send(method, method.to_s, obj)
+    end
+    assert_file(file_name)
+    MinitestLog.open(file_path) do |log|
+      log.send(:put_data, method.to_s, obj)
     end
     assert_file(file_name)
   end
@@ -449,31 +453,10 @@ class MinitestLogTest < Minitest::Test
 
   def test_put_inspect
     inspect = (0..3)
+    inspect.instance_eval('undef :each_with_index')
+    inspect.instance_eval('undef :each')
     inspect.instance_eval('undef :to_s')
     _test_put(:put_inspect, inspect)
-  end
-
-  def test_put_data
-    file_name = 'put_data.xml'
-    file_path = actual_file_path(file_name)
-    MinitestLog.open(file_path) do |log|
-      [
-          true,
-          nil,
-          1066,
-          3.14,
-          'foo',
-          %w/first second third/,
-          {:a => 0, :b => 1, :c => 2},
-      ].each do |value|
-        log.put_data(value.class.name.downcase, value)
-      end
-      # Now make an instance of a class that lacks method :each_with_index.
-      each = %w/first second third/
-      each.instance_eval('undef :each_with_index')
-      log.put_data('each', each)
-    end
-    assert_file(file_name)
   end
 
   def actual_file_path(file_name)
