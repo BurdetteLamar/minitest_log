@@ -90,6 +90,16 @@ class MinitestLogTest < Minitest::Test
     end
   end
 
+  def test_section_duration
+    _test('section_duration') do |log|
+      log.section('no_duration') do
+        log.section('duration', :duration) do
+          sleep(3)
+        end
+      end
+    end
+  end
+
   def test_comment
     _test('comment') do |log|
       log.comment('My comment.')
@@ -118,6 +128,16 @@ class MinitestLogTest < Minitest::Test
     _test('put_element_timestamp') do |log|
       log.put_element('element', 'no_timestamp') do
         log.put_element('element', 'timestamp', :timestamp) do
+        end
+      end
+    end
+  end
+
+  def test_put_element_duration
+    _test('put_element_duration') do |log|
+      log.section('no_duration') do
+        log.section('duration', :duration) do
+          sleep(3)
         end
       end
     end
@@ -221,11 +241,14 @@ class MinitestLogTest < Minitest::Test
   end
 
   def condition_file(file_path)
-    dummy = '0000-00-00-xxx-00.00.00.000'
     content = File.read(file_path)
     timestamp_regexp = /timestamp='\d{4}-\d{2}-\d{2}-\w{3}-\d{2}\.\d{2}\.\d{2}\.\d{3}'/
-    conditioned_content = content.gsub(timestamp_regexp, "timestamp='#{dummy}'")
-    File.write(file_path, conditioned_content)
+    timestamp_dummy = '0000-00-00-xxx-00.00.00.000'
+    content.gsub!(timestamp_regexp, "timestamp='#{timestamp_dummy}'")
+    duration_regexp = /duration_seconds='\d.\d{3}'/
+    duration_dummy = '0.000'
+    content.gsub!(duration_regexp, "duration_seconds='#{duration_dummy}'")
+    File.write(file_path, content)
   end
 
 end

@@ -1,0 +1,6 @@
+<log>
+  <summary verdicts='0' failures='0' errors='0'/>
+  <section name='no_duration'>
+    <section name='duration' duration_seconds='0.000'/>
+  </section>
+</log>
