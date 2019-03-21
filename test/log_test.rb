@@ -119,11 +119,16 @@ class MinitestLogTest < Minitest::Test
     end
   end
 
-  def test_section_attributes
-    _test('section_attributes') do |log|
-      log.section('no_attributes') do
-      end
-      log.section('attributes', {:a => 0, :b => 1}, {:c => 2, :d => 3}) do
+  def test_attributes
+    [:section, :put_element].each do |method|
+      name = "#{method}_attributes"
+      _test(name) do |log|
+        log.send(method, 'no_attributes') do
+        end
+        log.send(method, 'attributes_hash', {:a => 0, :b => 1}) do
+        end
+        log.send(method, 'attributes_hashes', {:a => 0, :b => 1}, {:c => 2, :d => 3}) do
+        end
       end
     end
   end
@@ -132,16 +137,6 @@ class MinitestLogTest < Minitest::Test
     _test('comment') do |log|
       log.comment('My comment.')
     end
-  end
-
-  def test_uncaught_exception
-    file_name = 'uncaught_exception.xml'
-    file_path = actual_file_path(file_name)
-    MinitestLog.open(file_path) do |log|
-      raise RuntimeError.new('Wrong!')
-    end
-    condition_file(file_path)
-    assert_file(file_name)
   end
 
   def test_put_element
