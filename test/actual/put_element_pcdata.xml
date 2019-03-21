@@ -1,0 +1,10 @@
+<log>
+  <summary verdicts='0' failures='0' errors='0'/>
+  <no_pcdata/>
+  <one_string>
+    One
+  </one_string>
+  <two_strings>
+    OneTwo
+  </two_strings>
+</log>

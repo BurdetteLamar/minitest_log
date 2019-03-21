@@ -81,6 +81,14 @@ class MinitestLogTest < Minitest::Test
     end
   end
 
+  def test_put_element
+    _test('put_element') do |log|
+      log.put_element('my_section') do
+        log.put_element('my_element', 'my text')
+      end
+    end
+  end
+
   def test_timestamp
     [:section, :put_element].each do |method|
       name = "#{method}_timestamp"
@@ -133,17 +141,24 @@ class MinitestLogTest < Minitest::Test
     end
   end
 
+  def test_pcdata
+    [:section, :put_element].each do |method|
+      name = "#{method}_pcdata"
+      _test(name) do |log|
+        log.send(method, 'no_pcdata') do
+        end
+        log.send(method, 'one_string', 'One') do
+        end
+        log.send(method, 'two_strings', 'One', 'Two') do
+        end
+      end
+    end
+
+  end
+
   def test_comment
     _test('comment') do |log|
       log.comment('My comment.')
-    end
-  end
-
-  def test_put_element
-    _test('put_element') do |log|
-      log.put_element('my_section') do
-        log.put_element('my_element', 'my text')
-      end
     end
   end
 
