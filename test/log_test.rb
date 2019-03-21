@@ -105,14 +105,13 @@ class MinitestLogTest < Minitest::Test
   end
 
   def _test_put(method, obj)
-    file_name = "#{method}.xml"
-    file_path = actual_file_path(file_name)
-    # Test using the given method.
-    MinitestLog.open(file_path) do |log|
+    # Test using method.
+    _test(method) do |log|
       log.send(method, method.to_s, obj)
     end
-    assert_file(file_name)
-    # Test using method :put_
+    # Test using method :put_data.
+    file_name = "#{method}.xml"
+    file_path = actual_file_path(file_name)
     MinitestLog.open(file_path) do |log|
       log.send(:put_data, method.to_s, obj)
     end
