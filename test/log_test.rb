@@ -457,11 +457,23 @@ class MinitestLogTest < Minitest::Test
   end
 
   def test_put_string
-
+    file_name = 'put_string.xml'
+    file_path = actual_file_path(file_name)
+    MinitestLog.open(file_path) do |log|
+      log.put_string('string', 'Foo')
+    end
+    assert_file(file_name)
   end
 
   def test_put_inspect
-
+    file_name = 'put_inspect.xml'
+    file_path = actual_file_path(file_name)
+    inspect = (0..3)
+    inspect.instance_eval('undef :to_s')
+    MinitestLog.open(file_path) do |log|
+      log.put_inspect('inspect', inspect)
+    end
+    assert_file(file_name)
   end
 
   def test_put_data
