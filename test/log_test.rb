@@ -114,6 +114,15 @@ class MinitestLogTest < Minitest::Test
     end
   end
 
+  def test_put_element_timestamp
+    _test('put_element_timestamp') do |log|
+      log.put_element('element', 'no_timestamp') do
+        log.put_element('element', 'timestamp', :timestamp) do
+        end
+      end
+    end
+  end
+
   def _test_put(method, obj)
     # Test using method.
     _test(method) do |log|
