@@ -1,9 +1,9 @@
 <log>
   <summary verdicts='0' failures='0' errors='0'/>
-  <each_pair name='put_each_pair' class='Hash'>
+  <data name='put_each_pair' class='Hash' size='2' method=':each_pair'>
     <![CDATA[
 a => 0
 b => 1
 ]]>
-  </each_pair>
+  </data>
 </log>

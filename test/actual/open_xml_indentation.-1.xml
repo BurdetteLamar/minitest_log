@@ -1,1 +1,1 @@
-<log><summary errors='0' failures='0' verdicts='0'/><section name='Section'><data class='Integer' name='indentation'>-1</data></section></log>
+<log><summary errors='0' failures='0' verdicts='0'/><section name='Section'><data class='Integer' method=':to_s' name='indentation'>-1</data></section></log>

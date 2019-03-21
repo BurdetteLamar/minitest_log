@@ -1,0 +1,30 @@
+<log>
+  <summary verdicts='0' failures='0' errors='0'/>
+  <data name='trueclass' class='TrueClass' method=':to_s'>
+    true
+  </data>
+  <data name='nilclass' class='NilClass' method=':to_s'/>
+  <data name='integer' class='Integer' method=':to_s'>
+    1066
+  </data>
+  <data name='float' class='Float' method=':to_s'>
+    3.14
+  </data>
+  <data name='string' class='String' size='3'>
+    foo
+  </data>
+  <each_with_index name='array' class='Array' size='3'>
+    <![CDATA[
+     0 0
+     1 1
+     2 2
+]]>
+  </each_with_index>
+  <data name='hash' class='Hash' size='3' method=':each_pair'>
+    <![CDATA[
+a => 0
+b => 1
+c => 2
+]]>
+  </data>
+</log>

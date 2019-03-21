@@ -192,6 +192,21 @@ class MinitestLog
   alias put_array put_each_with_index
   alias put_set put_each_with_index
 
+  def put_each(name, obj)
+    lines = ['']
+    i = 0
+    obj.each do |item|
+      lines.push(format('%6d %s', i, item.to_s))
+      i += 1
+    end
+    lines.push('')
+    lines.push('')
+    put_element('data', :name => name, :class => obj.class, :size => obj.size, :method => ':each') do
+      put_cdata(lines.join("\n"))
+    end
+    nil
+  end
+
   def put_each_pair(name, obj)
     lines = ['']
     obj.each_pair do |key, value|
@@ -199,12 +214,41 @@ class MinitestLog
     end
     lines.push('')
     lines.push('')
-    put_element('each_pair', :name => name, :class => obj.class) do
+    put_element('data', :name => name, :class => obj.class, :size => obj.size, :method => ':each_pair') do
       put_cdata(lines.join("\n"))
     end
     nil
   end
   alias put_hash put_each_pair
+
+  def put_to_s(name, obj)
+    put_element('data',  obj.to_s, :name => name, :class => obj.class, :method => ':to_s')
+  end
+
+  def put_string(name, obj)
+    put_element('data',  obj.to_s, :name => name, :class => obj.class, :size => obj.size)
+  end
+
+  def put_inspect(name, obj)
+    put_element('data',  obj.inspect, :name => name, :class => obj.class, :method => ':inspect')
+  end
+
+  def put_data(name, obj)
+    case
+    when obj.kind_of?(String)
+      put_string(name, obj)
+    when obj.respond_to?(:each_pair)
+      put_each_pair(name, obj)
+    when obj.respond_to?(:each_with_index)
+      put_each_with_index(name, obj)
+    when obj.respond_to?(:each)
+      put_each(name, obj)
+    when obj.respond_to?(:to_s)
+      put_to_s(name, obj)
+    else
+      put_inspect(name, obj)
+    end
+  end
 
   private
 

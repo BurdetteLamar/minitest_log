@@ -436,30 +436,23 @@ class MinitestLogTest < Minitest::Test
     _test_put_each_pair(:put_hash, arg)
   end
 
-  def zzz_test_put_data
-    method = :put_data
-    element_name = 'data'
-    arg = [:a, :aa, :aaa]
-    file_path = create_temp_log do |log|
-      log.send(method, element_name, arg)
+  def test_put_data
+    file_name = 'put_data.xml'
+    file_path = actual_file_path(file_name)
+    MinitestLog.open(file_path) do |log|
+      [
+          true,
+          nil,
+          1066,
+          3.14,
+          'foo',
+          [0, 1, 2],
+          {:a => 0, :b => 1, :c => 2},
+      ].each do |value|
+        log.put_data(value.class.name.downcase, value)
+      end
     end
-    checker = Checker.new(self, file_path)
-    ele_xpath = "//#{element_name}"
-    checker.assert_element_exist(ele_xpath)
-    arg = {:a => 0, :aa => 1, :aaa => 2}
-    file_path = create_temp_log do |log|
-      log.send(method, element_name, arg)
-    end
-    checker = Checker.new(self, file_path)
-    ele_xpath = "//#{element_name}"
-    counts = {
-        :attributes => 2,
-        :cdatas => 0,
-        :get_elements => 1,
-        :texts => 1,
-    }
-    checker.assert_counts(ele_xpath, counts)
-    checker.assert_element_exist(ele_xpath)
+    assert_file(file_name)
   end
 
   def actual_file_path(file_name)
