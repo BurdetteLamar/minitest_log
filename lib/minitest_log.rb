@@ -106,11 +106,6 @@ class MinitestLog
     nil
   end
 
-  def put_data(name, obj)
-    value = obj.respond_to?(:to_s) ? obj.to_s : obj.inspect
-    put_element('data',  value, :name => name, :class => obj.class)
-  end
-
   def put_element(element_name = 'element', *args)
     attributes = {}
     pcdata = ''
