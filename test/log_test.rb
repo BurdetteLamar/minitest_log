@@ -67,9 +67,7 @@ class MinitestLogTest < Minitest::Test
   end
 
   def test_section_nested
-    file_name = 'section_nested.xml'
-    file_path = actual_file_path(file_name)
-    MinitestLog.open(file_path) do |log|
+    _test('section_nested') do |log|
       log.section('Outer') do
         log.put_data('outer_tag', 'Outer text.')
         log.section('Mid') do
@@ -80,7 +78,6 @@ class MinitestLogTest < Minitest::Test
         end
       end
     end
-    assert_file(file_name)
   end
 
   def test_comment
