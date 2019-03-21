@@ -175,7 +175,7 @@ class MinitestLog
   def put_each_with_index(name, obj)
     lines = ['']
     obj.each_with_index do |item, i|
-      lines.push(format('%6d %s', i, item.to_s))
+      lines.push(format('%d: %s', i, item.to_s))
     end
     lines.push('')
     lines.push('')
@@ -189,10 +189,8 @@ class MinitestLog
 
   def put_each(name, obj)
     lines = ['']
-    i = 0
     obj.each do |item|
-      lines.push(format('%6d %s', i, item.to_s))
-      i += 1
+      lines.push(item)
     end
     lines.push('')
     lines.push('')

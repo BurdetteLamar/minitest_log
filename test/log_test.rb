@@ -446,11 +446,15 @@ class MinitestLogTest < Minitest::Test
           1066,
           3.14,
           'foo',
-          [0, 1, 2],
+          %w/first second third/,
           {:a => 0, :b => 1, :c => 2},
       ].each do |value|
         log.put_data(value.class.name.downcase, value)
       end
+      # Now make an instance of a class that lacks method :each_with_index.
+      each = %w/first second third/
+      each.instance_eval('undef :each_with_index')
+      log.put_data('each', each)
     end
     assert_file(file_name)
   end
