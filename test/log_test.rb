@@ -163,7 +163,24 @@ class MinitestLogTest < Minitest::Test
     end
   end
 
-# TODO:  test_cdata, test_pot_pourri; also, test analyses.
+  def test_put_cdata
+    _test('cdata') do |log|
+      data = <<EOT
+
+Log
+some
+multi-line
+data.
+Include
+  leading and trailing spaces.  
+
+EOT
+      log.put_cdata(data)
+    end
+
+  end
+
+# TODO:  test_pot_pourri, test_backtrace_filter; also, test analyses.
 
   def test_comment
     _test('comment') do |log|
