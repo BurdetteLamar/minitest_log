@@ -262,7 +262,7 @@ class MinitestLog
     File.open(self.file_path, 'r') do |file|
       element = document
       stack = Array.new
-      data_a = nil
+      data_a = Array.new
       terminator = nil
       file.each_line do |line|
         line.chomp!
@@ -296,7 +296,7 @@ class MinitestLog
             terminator = text.split('<<', 2).last
           when terminator
             data_s = data_a.join("\n")
-            data_a = []
+            data_a = Array.new
             terminator = nil
             data_type = stack.last
             case data_type

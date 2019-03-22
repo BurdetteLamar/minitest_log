@@ -1,1 +1,2 @@
 Please use MinitestLog.open, not MinitestLog.new.
+

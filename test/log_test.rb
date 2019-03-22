@@ -163,7 +163,7 @@ class MinitestLogTest < Minitest::Test
     end
   end
 
-# TODO:  test_cdata, test_pot_pourri.
+# TODO:  test_cdata, test_pot_pourri, analyses.
 
   def test_comment
     _test('comment') do |log|
