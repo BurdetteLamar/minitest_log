@@ -6,15 +6,23 @@ class VerdictTest < MiniTest::Test
 
   include TestHelper
 
-  def test_verdict_assert
-    _test('verdict_assert') do |log|
-      [true, 'not_nil'].each do |value|
-        log.verdict_assert?(value, value)
-      end
-      [false, nil].each do |value|
-        log.verdict_assert?(value, value)
+  def _test_verdict(method, pass_args, fail_args, error_args = [])
+    name = "#{method.to_s.sub('?', '')}_pass"
+    file_path = nil
+    _test(name) do |log|
+      file_path = File.absolute_path(log.file_path)
+      pass_args.each_with_index do |args, i|
+        verdict_id = i.to_s
+        log.send(method, verdict_id, *args)
       end
     end
+    verify_summary(file_path, pass_count: pass_args.count)
+  end
+
+  def test_verdict_assert
+    pass_args = [true, :not_nil]
+    fail_args = [false, nil]
+    _test_verdict(:verdict_assert?, pass_args, fail_args)
   end
 
   def zzz_test_verdict_refute
