@@ -2,40 +2,19 @@ require 'set'
 
 require_relative 'common_requires'
 
-class LogTest < MiniTest::Test
+class VerdictTest < MiniTest::Test
 
-  def zzz_test_verdict_assert
+  include TestHelper
 
-    method = :verdict_assert?
-
-    # Use true/false.
-    passing_arguments = {
-        :actual => true,
-    }
-    failing_arguments = {
-        :actual => false,
-    }
-    verdict_common_test(
-        :method => method,
-        :passing_arguments => passing_arguments,
-        :failing_arguments => failing_arguments,
-        :exception_message => 'Expected false to be truthy.'
-    )
-
-    # Use object/nil.
-    passing_arguments = {
-        :actual => Object.new,
-    }
-    failing_arguments = {
-        :actual => nil,
-    }
-    verdict_common_test(
-        :method => method,
-        :passing_arguments => passing_arguments,
-        :failing_arguments => failing_arguments,
-        :exception_message => 'Expected nil to be truthy.'
-    )
-
+  def test_verdict_assert
+    _test('verdict_assert') do |log|
+      [true, 'not_nil'].each do |value|
+        log.verdict_assert?(value, value)
+      end
+      [false, nil].each do |value|
+        log.verdict_assert?(value, value)
+      end
+    end
   end
 
   def zzz_test_verdict_refute

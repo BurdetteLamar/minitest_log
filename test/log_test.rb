@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class MinitestLogTest < Minitest::Test
+class LogTest < Minitest::Test
 
   include TestHelper
 

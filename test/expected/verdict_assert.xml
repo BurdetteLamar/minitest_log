@@ -1,0 +1,35 @@
+<log>
+  <summary verdicts='4' failures='2' errors='0'/>
+  <verdict method='verdict_assert?' outcome='passed' id='true'>
+    <act_value>
+      true
+    </act_value>
+  </verdict>
+  <verdict method='verdict_assert?' outcome='passed' id='not_nil'>
+    <act_value>
+      not_nil
+    </act_value>
+  </verdict>
+  <verdict method='verdict_assert?' outcome='failed' id='false'>
+    <act_value>
+      false
+    </act_value>
+    <exception class='Minitest::Assertion'>
+      <message>
+        Expected false to be truthy.
+      </message>
+      <backtrace/>
+    </exception>
+  </verdict>
+  <verdict method='verdict_assert?' outcome='failed' id='nil'>
+    <act_value>
+      nil
+    </act_value>
+    <exception class='Minitest::Assertion'>
+      <message>
+        Expected nil to be truthy.
+      </message>
+      <backtrace/>
+    </exception>
+  </verdict>
+</log>
