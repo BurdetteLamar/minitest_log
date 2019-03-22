@@ -216,7 +216,7 @@ EOT
 
   end
 
-# TODO:  test_pot_pourri, test_backtrace_filter; also, test analyses.
+# TODO:  test_pot_pourri; also, test analyses.
 
   def test_comment
     _test('comment') do |log|
