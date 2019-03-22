@@ -1,0 +1,6 @@
+<log>
+  <summary verdicts='0' failures='0' errors='0'/>
+  <section name='no_attributes'/>
+  <section name='attributes_hash' a='0' b='1'/>
+  <section name='attributes_hashes' a='0' b='1' c='2' d='3'/>
+</log>

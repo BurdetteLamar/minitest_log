@@ -1,0 +1,10 @@
+<log>
+  <summary verdicts='0' failures='0' errors='0'/>
+  <no_inspected/>
+  <one_inspected>
+    :one
+  </one_inspected>
+  <more_inspected>
+    :one23.140..2
+  </more_inspected>
+</log>

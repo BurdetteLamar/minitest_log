@@ -1,7 +1,11 @@
 <log>
   <summary verdicts='1' failures='0' errors='0'/>
   <verdict method='verdict_assert_equal?' outcome='passed' id='my_verdict_id'>
-    <exp_value>Lorem ipsum</exp_value>
-    <act_value>Lorem ipsum</act_value>
+    <exp_value>
+      Lorem ipsum
+    </exp_value>
+    <act_value>
+      Lorem ipsum
+    </act_value>
   </verdict>
 </log>

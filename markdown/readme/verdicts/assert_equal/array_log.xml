@@ -1,52 +1,96 @@
 <log>
   <summary verdicts='1' failures='1' errors='0'/>
   <verdict method='verdict_assert_equal?' outcome='failed' id='analyzed'>
-    <exp_value>[:a, :b, :c, :d, :e, :f, :k, :l, :m, :n]</exp_value>
-    <act_value>[:a, :b, :g, :h, :c, :d, :i, :j, :k, :l]</act_value>
+    <exp_value>
+      [:a, :b, :c, :d, :e, :f, :k, :l, :m, :n]
+    </exp_value>
+    <act_value>
+      [:a, :b, :g, :h, :c, :d, :i, :j, :k, :l]
+    </act_value>
     <analysis expected_class='Array' actual_class='Array' methods='[:each_pair]'>
       <unchanged>
-        <old>pos=0 ele=a</old>
-        <new>pos=0 ele=a</new>
+        <old>
+          pos=0 ele=a
+        </old>
+        <new>
+          pos=0 ele=a
+        </new>
       </unchanged>
       <unchanged>
-        <old>pos=1 ele=b</old>
-        <new>pos=1 ele=b</new>
+        <old>
+          pos=1 ele=b
+        </old>
+        <new>
+          pos=1 ele=b
+        </new>
       </unchanged>
       <unexpected>
-        <new>pos=2 ele=g</new>
+        <new>
+          pos=2 ele=g
+        </new>
       </unexpected>
       <unexpected>
-        <new>pos=3 ele=h</new>
+        <new>
+          pos=3 ele=h
+        </new>
       </unexpected>
       <unchanged>
-        <old>pos=2 ele=c</old>
-        <new>pos=4 ele=c</new>
+        <old>
+          pos=2 ele=c
+        </old>
+        <new>
+          pos=4 ele=c
+        </new>
       </unchanged>
       <unchanged>
-        <old>pos=3 ele=d</old>
-        <new>pos=5 ele=d</new>
+        <old>
+          pos=3 ele=d
+        </old>
+        <new>
+          pos=5 ele=d
+        </new>
       </unchanged>
       <changed>
-        <old>pos=4 ele=e</old>
-        <new>pos=6 ele=i</new>
+        <old>
+          pos=4 ele=e
+        </old>
+        <new>
+          pos=6 ele=i
+        </new>
       </changed>
       <changed>
-        <old>pos=5 ele=f</old>
-        <new>pos=7 ele=j</new>
+        <old>
+          pos=5 ele=f
+        </old>
+        <new>
+          pos=7 ele=j
+        </new>
       </changed>
       <unchanged>
-        <old>pos=6 ele=k</old>
-        <new>pos=8 ele=k</new>
+        <old>
+          pos=6 ele=k
+        </old>
+        <new>
+          pos=8 ele=k
+        </new>
       </unchanged>
       <unchanged>
-        <old>pos=7 ele=l</old>
-        <new>pos=9 ele=l</new>
+        <old>
+          pos=7 ele=l
+        </old>
+        <new>
+          pos=9 ele=l
+        </new>
       </unchanged>
       <missing>
-        <old>pos=8 ele=m</old>
+        <old>
+          pos=8 ele=m
+        </old>
       </missing>
       <missing>
-        <old>pos=9 ele=n</old>
+        <old>
+          pos=9 ele=n
+        </old>
       </missing>
     </analysis>
     <exception class='Minitest::Assertion'>

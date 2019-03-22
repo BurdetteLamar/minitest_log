@@ -1,0 +1,33 @@
+<log>
+  <summary verdicts='6' failures='0' errors='0'/>
+  <verdict method='verdict_assert?' outcome='passed' id='default_log'>
+    <act_value>
+      true
+    </act_value>
+  </verdict>
+  <verdict method='verdict_assert?' outcome='passed' id='default_ruby'>
+    <act_value>
+      true
+    </act_value>
+  </verdict>
+  <verdict method='verdict_assert?' outcome='passed' id='log_log'>
+    <act_value>
+      true
+    </act_value>
+  </verdict>
+  <verdict method='verdict_assert?' outcome='passed' id='log_ruby'>
+    <act_value>
+      true
+    </act_value>
+  </verdict>
+  <verdict method='verdict_assert?' outcome='passed' id='ruby_log'>
+    <act_value>
+      true
+    </act_value>
+  </verdict>
+  <verdict method='verdict_assert?' outcome='passed' id='ruby_ruby'>
+    <act_value>
+      true
+    </act_value>
+  </verdict>
+</log>

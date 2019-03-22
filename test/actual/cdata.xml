@@ -1,0 +1,11 @@
+<log>
+  <summary verdicts='0' failures='0' errors='0'/>
+  <![CDATA[
+Log
+some
+multi-line
+data.
+Include
+  leading and trailing spaces.  
+]]>
+</log>

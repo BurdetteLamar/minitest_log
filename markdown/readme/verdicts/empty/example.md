@@ -24,7 +24,7 @@ In the call to method ```log.verdict_assert?```, the three arguments are:
 - An truth value ```Object``` to be verified.
 - An optional ```String``` message.
 
-The method tests whether the valus is truthy, logs the verdict, and  returns a boolean, in this case ```true```.
+The method tests whether the value is truthy, logs the verdict, and  returns a boolean, in this case ```true```.
 
 The call to method ```log.verdict_assert?```, is similar, but tests whether the value is not truthy.
 

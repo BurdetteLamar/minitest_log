@@ -1,0 +1,6 @@
+<log>
+  <summary verdicts='0' failures='0' errors='0'/>
+  <data name='put_string' class='String' size='3'>
+    Foo
+  </data>
+</log>

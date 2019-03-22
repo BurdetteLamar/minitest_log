@@ -19,7 +19,7 @@ namespace :build do
         end
       end
       # Make the README file.
-      command = 'markdown_helper include --pristine template.md README.md'
+      command = 'markdown_helper include --pristine template.md ../../README.md'
       system(command)
     end
   end

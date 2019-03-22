@@ -1,12 +1,18 @@
 <log>
   <summary verdicts='2' failures='1' errors='0'/>
   <verdict method='verdict_refute?' outcome='passed' id='refute_false'>
-    <act_value>false</act_value>
+    <act_value>
+      false
+    </act_value>
   </verdict>
   <verdict method='verdict_refute?' outcome='failed' id='refute_true'>
-    <act_value>true</act_value>
+    <act_value>
+      true
+    </act_value>
     <exception class='Minitest::Assertion'>
-      <message>Expected true to not be truthy.</message>
+      <message>
+        Expected true to not be truthy.
+      </message>
       <backtrace>
         <level_0 location='example.rb:8:in `block in test_example&apos;'/>
         <level_1 location='example.rb:6:in `test_example&apos;'/>

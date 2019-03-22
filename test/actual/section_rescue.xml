@@ -1,0 +1,23 @@
+<log>
+  <summary verdicts='0' failures='0' errors='1'/>
+  <section name='rescue'>
+    <rescued_exception>
+      <class>
+        RuntimeError
+      </class>
+      <message>
+        Rescued!
+      </message>
+      <backtrace/>
+    </rescued_exception>
+  </section>
+  <section name='no_rescue'>
+    <uncaught_exception timestamp='0000-00-00-xxx-00.00.00.000' class='RuntimeError'>
+      <message>
+        Not rescued!
+      </message>
+      <backtrace>
+      </backtrace>
+    </uncaught_exception>
+  </section>
+</log>

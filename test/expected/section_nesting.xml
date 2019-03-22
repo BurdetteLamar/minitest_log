@@ -1,0 +1,12 @@
+<log>
+  <summary verdicts='0' failures='0' errors='0'/>
+  <section name='no_nesting'/>
+  <section name='outer'>
+    <section name='inner'/>
+  </section>
+  <section name='outer'>
+    <section name='mid'>
+      <section name='inner'/>
+    </section>
+  </section>
+</log>
