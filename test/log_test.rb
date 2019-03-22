@@ -163,7 +163,7 @@ class MinitestLogTest < Minitest::Test
     end
   end
 
-# TODO:  test_cdata, test_pot_pourri, analyses.
+# TODO:  test_cdata, test_pot_pourri; also, test analyses.
 
   def test_comment
     _test('comment') do |log|
@@ -234,6 +234,8 @@ class MinitestLogTest < Minitest::Test
 
   def test_put_inspect
     inspect = (0..3)
+    # Don't allow the logger to recognize as having any of these.
+    # This forces the 'else' case, so that the object gets logged via obj#inspect.
     inspect.instance_eval('undef :each_with_index')
     inspect.instance_eval('undef :each')
     inspect.instance_eval('undef :to_s')
