@@ -31,7 +31,7 @@ class MinitestLogTest < Minitest::Test
   end
 
   def test_open_block
-    _test('open_block') do |log|
+    _test('open_block') do |_|
     end
   end
 
@@ -47,12 +47,12 @@ class MinitestLogTest < Minitest::Test
   end
 
   def test_open_file_path
-    _test('open_file_path') do |log|
+    _test('open_file_path') do |_|
     end
   end
 
   def test_open_root_name
-    _test('open_root_name', :root_name => 'foo') do |log|
+    _test('open_root_name', :root_name => 'foo') do |_|
     end
   end
 
