@@ -1,7 +1,6 @@
 require 'rexml/document'
 require 'minitest/autorun'
 require 'minitest/assertions'
-require 'nokogiri'
 
 require 'diff/lcs'
 
@@ -499,7 +498,7 @@ class MinitestLog
         :methods => [:each_pair],
     }
     put_element('analysis', attrs) do
-      changes.each_pair do |key, change_data|
+      changes.each_pair do |_, change_data|
         status = change_data.delete(:status)
         change_data.delete(:old) if status == 'unexpected'
         change_data.delete(:new) if status == 'missing'

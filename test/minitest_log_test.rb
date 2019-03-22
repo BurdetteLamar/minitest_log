@@ -486,7 +486,7 @@ EOT
     end
     assert_empty(expected_attributes)
     children = analysis.children
-    child = children.shift
+    _ = children.shift
     child = children.shift
     p child
     # <unchanged>
