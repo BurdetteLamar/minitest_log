@@ -1,0 +1,12 @@
+<log>
+  <summary verdicts='0' failures='0' errors='0'/>
+  <no_nesting/>
+  <outer>
+    <inner/>
+  </outer>
+  <outer>
+    <mid>
+      <inner/>
+    </mid>
+  </outer>
+</log>

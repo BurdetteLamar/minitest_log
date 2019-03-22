@@ -67,24 +67,19 @@ class MinitestLogTest < Minitest::Test
     end
   end
 
-  def test_section_nested
-    _test('section_nested') do |log|
-      log.section('Outer') do
-        log.put_data('outer_tag', 'Outer text.')
-        log.section('Mid') do
-          log.put_data('mid_tag', 'Mid text.')
-          log.section('Inner') do
-            log.put_data('inner_tag', 'Inner text.')
+  def test_nesting
+    [:section, :put_element].each do |method|
+      name = "#{method}_nesting"
+      _test(name) do |log|
+        log.send(method, 'no_nesting')
+        log.send(method, 'outer') do
+          log.send(method, 'inner')
+        end
+        log.send(method, 'outer') do
+          log.send(method, 'mid') do
+            log.send(method, 'inner')
           end
         end
-      end
-    end
-  end
-
-  def test_put_element
-    _test('put_element') do |log|
-      log.put_element('my_section') do
-        log.put_element('my_element', 'my text')
       end
     end
   end
@@ -169,14 +164,7 @@ class MinitestLogTest < Minitest::Test
     end
   end
 
-  # def test_cdata
-  #   [:section, :put_element].each do |method|
-  #     name = "#{method}_cdata"
-  #     _test(name) do |log|
-  #       l
-  #     end
-  #   end
-  # end
+# TODO:  test_cdata, test_pot_pourri.
 
   def test_comment
     _test('comment') do |log|

@@ -72,7 +72,7 @@ class MinitestLog
 
   def section(name, *args)
     put_element('section', {:name => name}, *args) do
-      yield
+      yield if block_given?
     end
     nil
   end

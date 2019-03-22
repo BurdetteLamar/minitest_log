@@ -1,8 +1,0 @@
-<log>
-  <summary verdicts='0' failures='0' errors='0'/>
-  <my_section>
-    <my_element>
-      my text
-    </my_element>
-  </my_section>
-</log>
