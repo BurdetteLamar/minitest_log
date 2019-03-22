@@ -296,7 +296,7 @@ class MinitestLog
             terminator = text.split('<<', 2).last
           when terminator
             data_s = data_a.join("\n")
-            data_a = nil
+            data_a = []
             terminator = nil
             data_type = stack.last
             case data_type

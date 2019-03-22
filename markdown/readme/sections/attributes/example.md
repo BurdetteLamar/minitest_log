@@ -1,6 +1,6 @@
 ## Duration
 
-This example shows how to put an atttributes onto a section.
+This example shows how to put an attributes onto a section.
 
 ```example.rb```:
 ```ruby

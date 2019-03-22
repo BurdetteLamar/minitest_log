@@ -1,6 +1,5 @@
 require 'test_helper'
 
-# noinspection RubyBlockToMethodReference
 class MinitestLogTest < Minitest::Test
 
   def test_version_exist

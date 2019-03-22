@@ -2,7 +2,7 @@
 
 Class ```MinitestLog``` is a wrapper for class ```Minitest::Assertions``` that:
 
-- Automatically and fully logs each assertion, whether passing or failingg.
+- Automatically and fully logs each assertion, whether passing or failing.
 - Allows a test to be structured as nested sections.
 
 Here, we say *verdict*, not *assertion*, to emphasize that a failure does not terminate the test.
@@ -244,7 +244,7 @@ The log:
 ```xml
 <log>
   <summary verdicts='0' failures='0' errors='0'/>
-  <section name='My section' timestamp='2019-03-22-Fri-11.39.48.064'/>
+  <section name='My section' timestamp='2019-03-22-Fri-11.58.45.549'/>
 </log>
 ```
 
@@ -277,7 +277,7 @@ The log:
 ```xml
 <log>
   <summary verdicts='0' failures='0' errors='0'/>
-  <section name='My section' duration_seconds='3.013'/>
+  <section name='My section' duration_seconds='3.000'/>
 </log>
 ```
 

@@ -2,7 +2,7 @@
 
 Class ```MinitestLog``` is a wrapper for class ```Minitest::Assertions``` that:
 
-- Automatically and fully logs each assertion, whether passing or failingg.
+- Automatically and fully logs each assertion, whether passing or failing.
 - Allows a test to be structured as nested sections.
 
 Here, we say *verdict*, not *assertion*, to emphasize that a failure does not terminate the test.
