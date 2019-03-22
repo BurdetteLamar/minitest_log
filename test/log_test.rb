@@ -185,6 +185,25 @@ class MinitestLogTest < Minitest::Test
     end
   end
 
+  def test_pot_pourri
+    pot_pourri = [
+        'one',
+        {:a => 0, :b => 1},
+        :timestamp,
+        :duration,
+        {:c => 2, :d => 3},
+        'two',
+        File,
+        'three',
+    ]
+    [:section, :put_element].each do |method|
+      name = "#{method}_pot_pourri"
+      _test(name) do |log|
+        log.send(method, 'pot_pourri', *pot_pourri)
+      end
+    end
+  end
+
   def test_inspected
     [:section, :put_element].each do |method|
       name = "#{method}_inspected"
@@ -215,8 +234,6 @@ EOT
     end
 
   end
-
-# TODO:  test_pot_pourri; also, test analyses.
 
   def test_comment
     _test('comment') do |log|
