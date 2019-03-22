@@ -66,6 +66,42 @@ class MinitestLogTest < Minitest::Test
     end
   end
 
+  def test_open_backtrace_filter
+    _test('open_backtrace_filter') do |log|
+      Dir.mktmpdir do |dir_path|
+        Dir.chdir(dir_path) do
+          file_path = nil
+          # Default backtrace filter is /log|ruby/.
+          MinitestLog.open('./log.xml') do |temp_log|
+            file_path = temp_log.file_path
+            raise 'Boo!'
+          end
+          content = File.read(file_path)
+          # Default root name is 'log', so 2 of these.
+          log.verdict_assert?('default_log', content.scan(/log/).size == 2)
+          # All 'ruby' filtered out.
+          log.verdict_assert?('default_ruby', content.scan(/ruby/).size == 0)
+
+          MinitestLog.open('./log.xml', :backtrace_filter => /log/) do |temp_log|
+            file_path = temp_log.file_path
+            raise 'Boo!'
+          end
+          content = File.read(file_path)
+          log.verdict_assert?('log_log', content.scan(/log/).size == 2)
+          log.verdict_assert?('log_ruby', content.scan(/ruby/).size > 0)
+
+          MinitestLog.open('./log.xml', :backtrace_filter => /ruby/) do |temp_log|
+            file_path = temp_log.file_path
+            raise 'Boo!'
+          end
+          content = File.read(file_path)
+          log.verdict_assert?('ruby_log', content.scan(/log/).size > 2)
+          log.verdict_assert?('ruby_ruby', content.scan(/ruby/).size == 0)
+        end
+      end
+    end
+  end
+
   def test_nesting
     [:section, :put_element].each do |method|
       name = "#{method}_nesting"
