@@ -8,7 +8,7 @@ class Example < MiniTest::Test
         :xml_indentation => 4,
     }
     MinitestLog.open('my_log.xml', options) do |log|
-      # Test stuff goes here.
+      log.comment('Test code goes here.')
     end
   end
 

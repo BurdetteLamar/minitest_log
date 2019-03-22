@@ -236,8 +236,6 @@ class LogTest < MiniTest::Test
 
   def zzz_test_comment
 
-    method = :comment
-
     comment = 'foo'
     file_path = create_temp_log(self) do |log|
       log.comment(comment)

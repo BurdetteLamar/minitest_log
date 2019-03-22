@@ -1,3 +1,6 @@
 <my_root_name>
     <summary verdicts='0' failures='0' errors='0'/>
+    <comment>
+        Test code goes here.
+    </comment>
 </my_root_name>

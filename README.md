@@ -40,7 +40,7 @@ class Example < MiniTest::Test
 
   def test_example
     MinitestLog.open do |log|
-      # Test stuff goes here.
+      log.comment('Test stuff goes here.')
     end
   end
 
@@ -53,6 +53,9 @@ The log:
 ```xml
 <log>
   <summary verdicts='0' failures='0' errors='0'/>
+  <comment>
+    Test stuff goes here.
+  </comment>
 </log>
 ```
 
@@ -70,7 +73,7 @@ class Example < MiniTest::Test
         :xml_indentation => 4,
     }
     MinitestLog.open('my_log.xml', options) do |log|
-      # Test stuff goes here.
+      log.comment('Test code goes here.')
     end
   end
 
@@ -83,6 +86,9 @@ The log:
 ```xml
 <my_root_name>
     <summary verdicts='0' failures='0' errors='0'/>
+    <comment>
+        Test code goes here.
+    </comment>
 </my_root_name>
 ```
 
@@ -244,7 +250,7 @@ The log:
 ```xml
 <log>
   <summary verdicts='0' failures='0' errors='0'/>
-  <section name='My section' timestamp='2019-03-22-Fri-12.12.16.119'/>
+  <section name='My section' timestamp='2019-03-22-Fri-12.18.26.674'/>
 </log>
 ```
 
