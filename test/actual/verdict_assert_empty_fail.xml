@@ -1,0 +1,29 @@
+<log>
+  <summary verdicts='2' failures='2' errors='0'/>
+  <section name='Test' method='verdict_assert_empty?' type='fail'>
+    <section name='Arg: not empty (String)'>
+      <verdict method='verdict_assert_empty?' outcome='failed' id='0' message='Message 0'>
+        <act_value>
+          not empty
+        </act_value>
+        <exception class='Minitest::Assertion'>
+          <message>
+            Expected # encoding: UTF-8 &quot;not empty&quot; to be empty.
+          </message>
+          <backtrace/>
+        </exception>
+      </verdict>
+    </section>
+    <section name='Arg: {:a=&gt;0} (Hash)'>
+      <verdict method='verdict_assert_empty?' outcome='failed' id='1' message='Message 1'>
+        <act_value a='0'/>
+        <exception class='Minitest::Assertion'>
+          <message>
+            Expected {:a=&gt;0} to be empty.
+          </message>
+          <backtrace/>
+        </exception>
+      </verdict>
+    </section>
+  </section>
+</log>

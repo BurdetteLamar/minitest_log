@@ -54,45 +54,13 @@ class VerdictTest < MiniTest::Test
     )
   end
 
-  def zzz_test_verdict_assert_empty
+  def test_verdict_assert_empty
     _test_verdict(
-        method: :verdict_refute?,
-        pass_args: ['', [], {}],
-        fail_args: [true, :not_nil],
+        method: :verdict_assert_empty?,
+        pass_args: ['', {}],
+        fail_args: ['not empty', {:a => 0}],
+        error_args: [[], [false, false]]
         )
-
-    return
-
-    method = :verdict_assert_empty?
-    passing_arguments = {
-        :actual => [],
-    }
-    failing_arguments = {
-        :actual => [1],
-    }
-
-    verdict_common_test(
-        :method => method,
-        :passing_arguments => passing_arguments,
-        :failing_arguments => failing_arguments,
-        :exception_message => 'Expected [1] to be empty.'
-    )
-
-    verdict_id = :no_empty_method_fails
-    file_path = create_temp_log(self) do |log|
-      verdict = log.send(method, verdict_id, 0)
-      assert(!verdict, verdict_id)
-    end
-    checker = Checker.new(self, file_path)
-    checker.assert_verdict_count(1)
-    attributes = {
-        :id => verdict_id,
-        :method => method,
-        :outcome => 'failed',
-    }
-    checker.assert_verdict_attributes(verdict_id, attributes)
-    checker.assert_exception('Expected 0 (Fixnum) to respond to #empty?.')
-
   end
 
   def zzz_test_verdict_refute_empty

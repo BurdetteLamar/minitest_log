@@ -1,0 +1,15 @@
+<log>
+  <summary verdicts='2' failures='0' errors='0'/>
+  <section name='Test' method='verdict_assert_empty?' type='pass'>
+    <section name='Arg:  (String)'>
+      <verdict method='verdict_assert_empty?' outcome='passed' id='0' message='Message 0'>
+        <act_value/>
+      </verdict>
+    </section>
+    <section name='Arg: {} (Hash)'>
+      <verdict method='verdict_assert_empty?' outcome='passed' id='1' message='Message 1'>
+        <act_value/>
+      </verdict>
+    </section>
+  </section>
+</log>
