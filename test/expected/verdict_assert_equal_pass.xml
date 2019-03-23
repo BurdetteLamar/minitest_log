@@ -1,0 +1,25 @@
+<log>
+  <summary verdicts='2' failures='0' errors='0'/>
+  <section name='Test' method='verdict_assert_equal?' type='pass'>
+    <section name='Args=[0, 0]'>
+      <verdict method='verdict_assert_equal?' outcome='passed' id='0' message='Message 0'>
+        <exp_value>
+          0
+        </exp_value>
+        <act_value>
+          0
+        </act_value>
+      </verdict>
+    </section>
+    <section name='Args=[:a, :a]'>
+      <verdict method='verdict_assert_equal?' outcome='passed' id='1' message='Message 1'>
+        <exp_value>
+          :a
+        </exp_value>
+        <act_value>
+          :a
+        </act_value>
+      </verdict>
+    </section>
+  </section>
+</log>

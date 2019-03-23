@@ -1,0 +1,27 @@
+<log>
+  <summary verdicts='0' failures='0' errors='2'/>
+  <section name='Test' method='verdict_assert_equal?' type='error'>
+    <section name='Args=[]'>
+      <rescued_exception>
+        <class>
+          ArgumentError
+        </class>
+        <message>
+          wrong number of arguments (given 1, expected 3..4)
+        </message>
+        <backtrace/>
+      </rescued_exception>
+    </section>
+    <section name='Args=[0, 0, 0]'>
+      <rescued_exception>
+        <class>
+          ArgumentError
+        </class>
+        <message>
+          wrong number of arguments (given 5, expected 3..4)
+        </message>
+        <backtrace/>
+      </rescued_exception>
+    </section>
+  </section>
+</log>
