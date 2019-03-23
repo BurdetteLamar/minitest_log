@@ -81,6 +81,15 @@ class VerdictTest < MiniTest::Test
     )
   end
 
+  def test_verdict_refute_equal
+    _test_verdict(
+        method: :verdict_refute_equal?,
+        pass_args: [[0, 1], [:a, :b]],
+        fail_args: [[0, 0], [:a, :a]],
+        error_args: [[], [0, 0, 0]]
+    )
+  end
+
   def zzz_test_verdict_refute_equal
 
     method = :verdict_refute_equal?
