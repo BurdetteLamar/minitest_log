@@ -60,8 +60,18 @@ class VerdictTest < MiniTest::Test
         pass_args: ['', {}],
         fail_args: ['not empty', {:a => 0}],
         error_args: [[], [false, false]]
-        )
+    )
   end
+
+  def test_verdict_refute_empty
+    _test_verdict(
+        method: :verdict_refute_empty?,
+        pass_args: ['not empty', {:a => 0}],
+        fail_args: ['', {}],
+        error_args: [[], [false, false]]
+    )
+  end
+
 
   def zzz_test_verdict_refute_empty
 

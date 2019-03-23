@@ -1,0 +1,17 @@
+<log>
+  <summary verdicts='2' failures='0' errors='0'/>
+  <section name='Test' method='verdict_refute_empty?' type='pass'>
+    <section name='Arg: not empty (String)'>
+      <verdict method='verdict_refute_empty?' outcome='passed' id='0' message='Message 0'>
+        <act_value>
+          not empty
+        </act_value>
+      </verdict>
+    </section>
+    <section name='Arg: {:a=&gt;0} (Hash)'>
+      <verdict method='verdict_refute_empty?' outcome='passed' id='1' message='Message 1'>
+        <act_value a='0'/>
+      </verdict>
+    </section>
+  </section>
+</log>

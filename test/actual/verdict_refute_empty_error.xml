@@ -1,0 +1,27 @@
+<log>
+  <summary verdicts='0' failures='0' errors='2'/>
+  <section name='Test' method='verdict_refute_empty?' type='error'>
+    <section name='Args=[]'>
+      <rescued_exception>
+        <class>
+          ArgumentError
+        </class>
+        <message>
+          wrong number of arguments (given 1, expected 2..3)
+        </message>
+        <backtrace/>
+      </rescued_exception>
+    </section>
+    <section name='Args=[false, false]'>
+      <rescued_exception>
+        <class>
+          ArgumentError
+        </class>
+        <message>
+          wrong number of arguments (given 4, expected 2..3)
+        </message>
+        <backtrace/>
+      </rescued_exception>
+    </section>
+  </section>
+</log>
