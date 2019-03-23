@@ -7,35 +7,49 @@ class VerdictTest < MiniTest::Test
   include TestHelper
 
   def _test_verdict(method:, pass_args: [], fail_args: [], error_args: [])
-    name = "#{method.to_s.sub('?', '')}_pass"
-    file_path = nil
-    _test(name) do |log|
-      file_path = File.absolute_path(log.file_path)
-      pass_args.each_with_index do |args, i|
-        verdict_id = i.to_s
-        args =  [args] unless args.kind_of?(Array)
-        log.send(method, verdict_id, *args)
+    {
+        :pass => pass_args,
+        :fail => fail_args,
+        :error => error_args,
+    }.each_pair do |type, args|
+      name = "#{method.to_s.sub('?', '')}_#{type}"
+      file_path = nil
+      _test(name) do |log|
+        log.section('Test', {:method => method, :type => type}) do
+          file_path = File.absolute_path(log.file_path)
+          args.each_with_index do |arg, i|
+            verdict_id = i.to_s
+            if arg.kind_of?(Array)
+              args_to_pass = arg
+              title = "Args=#{arg.inspect}"
+            else
+              args_to_pass = [arg]
+              title = "Arg: #{arg} (#{arg.class})"
+            end
+            arg =  [arg] unless arg.kind_of?(Array)
+            log.section(title, :rescue) do
+              log.send(method, verdict_id, *args_to_pass)
+            end
+          end
+        end
       end
     end
-    verify_summary(file_path, pass_count: pass_args.count)
-    name = "#{method.to_s.sub('?', '')}_fail"
-    file_path = nil
-    _test(name) do |log|
-      file_path = File.absolute_path(log.file_path)
-      fail_args.each_with_index do |args, i|
-        verdict_id = i.to_s
-        args =  [args] unless args.kind_of?(Array)
-        log.send(method, verdict_id, *args)
-      end
-    end
-    verify_summary(file_path, fail_count: fail_args.count)
   end
 
   def test_verdict_assert
      _test_verdict(
         method: :verdict_assert?,
-        pass_args: [true, :not_nil],
-        fail_args: [false, nil]
+        pass_args: [true, 'not_nil'],
+        fail_args: [false, nil],
+        error_args: [[], [true, true]]
+    )
+  end
+
+  def test_verdict_refute
+    _test_verdict(
+      method: :verdict_refute?,
+      pass_args: [false, nil],
+      fail_args: [true, :not_nil],
     )
   end
 

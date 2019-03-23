@@ -57,19 +57,4 @@ module TestHelper
     File.write(file_path, content)
   end
 
-  def verify_summary(file_path, pass_count: 0, fail_count: 0, error_count: 0)
-    expected_counts = {
-        :verdicts => pass_count + fail_count,
-        :failures => fail_count,
-        :errors => error_count,
-    }
-    document = Document.new(File.read(file_path))
-    document.elements.each('*/summary') do |summary_ele|
-      expected_counts.each_pair do |key, expected_value|
-        actual_value = summary_ele.attributes.get_attribute(key.to_s).value.to_i
-        assert_equal(expected_value, actual_value, key)
-      end
-    end
-  end
-
 end

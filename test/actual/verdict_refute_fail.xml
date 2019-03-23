@@ -1,27 +1,27 @@
 <log>
   <summary verdicts='2' failures='2' errors='0'/>
-  <section name='Test' method='verdict_assert?' type='fail'>
-    <section name='Arg: false (FalseClass)'>
-      <verdict method='verdict_assert?' outcome='failed' id='0'>
+  <section name='Test' method='verdict_refute?' type='fail'>
+    <section name='Arg: true (TrueClass)'>
+      <verdict method='verdict_refute?' outcome='failed' id='0'>
         <act_value>
-          false
+          true
         </act_value>
         <exception class='Minitest::Assertion'>
           <message>
-            Expected false to be truthy.
+            Expected true to not be truthy.
           </message>
           <backtrace/>
         </exception>
       </verdict>
     </section>
-    <section name='Arg:  (NilClass)'>
-      <verdict method='verdict_assert?' outcome='failed' id='1'>
+    <section name='Arg: not_nil (Symbol)'>
+      <verdict method='verdict_refute?' outcome='failed' id='1'>
         <act_value>
-          nil
+          :not_nil
         </act_value>
         <exception class='Minitest::Assertion'>
           <message>
-            Expected nil to be truthy.
+            Expected :not_nil to not be truthy.
           </message>
           <backtrace/>
         </exception>

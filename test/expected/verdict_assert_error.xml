@@ -1,0 +1,23 @@
+<log>
+  <summary verdicts='1' failures='0' errors='1'/>
+  <section name='Test' method='verdict_assert?' type='error'>
+    <section name='Args=[]'>
+      <rescued_exception>
+        <class>
+          ArgumentError
+        </class>
+        <message>
+          wrong number of arguments (given 1, expected 2..3)
+        </message>
+        <backtrace/>
+      </rescued_exception>
+    </section>
+    <section name='Args=[true, true]'>
+      <verdict method='verdict_assert?' outcome='passed' id='1' message='true'>
+        <act_value>
+          true
+        </act_value>
+      </verdict>
+    </section>
+  </section>
+</log>
