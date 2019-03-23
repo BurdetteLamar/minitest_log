@@ -2,14 +2,14 @@
   <summary verdicts='2' failures='0' errors='0'/>
   <section name='Test' method='verdict_refute?' type='pass'>
     <section name='Arg: false (FalseClass)'>
-      <verdict method='verdict_refute?' outcome='passed' id='0'>
+      <verdict method='verdict_refute?' outcome='passed' id='0' message='Message 0'>
         <act_value>
           false
         </act_value>
       </verdict>
     </section>
     <section name='Arg:  (NilClass)'>
-      <verdict method='verdict_refute?' outcome='passed' id='1'>
+      <verdict method='verdict_refute?' outcome='passed' id='1' message='Message 1'>
         <act_value>
           nil
         </act_value>

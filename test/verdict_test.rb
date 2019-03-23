@@ -26,7 +26,7 @@ class VerdictTest < MiniTest::Test
               args_to_pass = [arg]
               title = "Arg: #{arg} (#{arg.class})"
             end
-            arg =  [arg] unless arg.kind_of?(Array)
+            args_to_pass.push("Message #{i}") unless args_to_pass.empty?
             log.section(title, :rescue) do
               log.send(method, verdict_id, *args_to_pass)
             end
@@ -50,44 +50,18 @@ class VerdictTest < MiniTest::Test
       method: :verdict_refute?,
       pass_args: [false, nil],
       fail_args: [true, :not_nil],
+      error_args: [[], [false, false]]
     )
-  end
-
-  def zzz_test_verdict_refute
-
-    method = :verdict_refute?
-
-    # Use false/true.
-    passing_arguments = {
-        :actual => false,
-    }
-    failing_arguments = {
-        :actual => true,
-    }
-    verdict_common_test(
-        :method => method,
-        :passing_arguments => passing_arguments,
-        :failing_arguments => failing_arguments,
-        :exception_message => 'Expected true to not be truthy.'
-    )
-
-    # Use nil/1.
-    passing_arguments = {
-        :actual => nil,
-    }
-    failing_arguments = {
-        :actual => 1,
-    }
-    verdict_common_test(
-        :method => method,
-        :passing_arguments => passing_arguments,
-        :failing_arguments => failing_arguments,
-        :exception_message => 'Expected 1 to not be truthy.'
-    )
-
   end
 
   def zzz_test_verdict_assert_empty
+    _test_verdict(
+        method: :verdict_refute?,
+        pass_args: ['', [], {}],
+        fail_args: [true, :not_nil],
+        )
+
+    return
 
     method = :verdict_assert_empty?
     passing_arguments = {

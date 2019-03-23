@@ -2,7 +2,7 @@
   <summary verdicts='2' failures='2' errors='0'/>
   <section name='Test' method='verdict_refute?' type='fail'>
     <section name='Arg: true (TrueClass)'>
-      <verdict method='verdict_refute?' outcome='failed' id='0'>
+      <verdict method='verdict_refute?' outcome='failed' id='0' message='Message 0'>
         <act_value>
           true
         </act_value>
@@ -15,7 +15,7 @@
       </verdict>
     </section>
     <section name='Arg: not_nil (Symbol)'>
-      <verdict method='verdict_refute?' outcome='failed' id='1'>
+      <verdict method='verdict_refute?' outcome='failed' id='1' message='Message 1'>
         <act_value>
           :not_nil
         </act_value>

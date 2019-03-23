@@ -2,14 +2,14 @@
   <summary verdicts='2' failures='0' errors='0'/>
   <section name='Test' method='verdict_assert?' type='pass'>
     <section name='Arg: true (TrueClass)'>
-      <verdict method='verdict_assert?' outcome='passed' id='0'>
+      <verdict method='verdict_assert?' outcome='passed' id='0' message='Message 0'>
         <act_value>
           true
         </act_value>
       </verdict>
     </section>
     <section name='Arg: not_nil (String)'>
-      <verdict method='verdict_assert?' outcome='passed' id='1'>
+      <verdict method='verdict_assert?' outcome='passed' id='1' message='Message 1'>
         <act_value>
           not_nil
         </act_value>
