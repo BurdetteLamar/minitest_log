@@ -1,0 +1,4 @@
+<log>
+  <summary verdicts='0' failures='0' errors='0'/>
+  <section name='Test' method='verdict_assert_in_delta?' type='error'/>
+</log>
