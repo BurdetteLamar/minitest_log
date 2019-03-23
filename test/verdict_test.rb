@@ -6,23 +6,37 @@ class VerdictTest < MiniTest::Test
 
   include TestHelper
 
-  def _test_verdict(method, pass_args, fail_args, error_args = [])
+  def _test_verdict(method:, pass_args: [], fail_args: [], error_args: [])
     name = "#{method.to_s.sub('?', '')}_pass"
     file_path = nil
     _test(name) do |log|
       file_path = File.absolute_path(log.file_path)
       pass_args.each_with_index do |args, i|
         verdict_id = i.to_s
+        args =  [args] unless args.kind_of?(Array)
         log.send(method, verdict_id, *args)
       end
     end
     verify_summary(file_path, pass_count: pass_args.count)
+    name = "#{method.to_s.sub('?', '')}_fail"
+    file_path = nil
+    _test(name) do |log|
+      file_path = File.absolute_path(log.file_path)
+      fail_args.each_with_index do |args, i|
+        verdict_id = i.to_s
+        args =  [args] unless args.kind_of?(Array)
+        log.send(method, verdict_id, *args)
+      end
+    end
+    verify_summary(file_path, fail_count: fail_args.count)
   end
 
   def test_verdict_assert
-    pass_args = [true, :not_nil]
-    fail_args = [false, nil]
-    _test_verdict(:verdict_assert?, pass_args, fail_args)
+     _test_verdict(
+        method: :verdict_assert?,
+        pass_args: [true, :not_nil],
+        fail_args: [false, nil]
+    )
   end
 
   def zzz_test_verdict_refute
