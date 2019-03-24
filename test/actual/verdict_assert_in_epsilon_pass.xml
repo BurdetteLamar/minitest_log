@@ -1,0 +1,39 @@
+<log>
+  <summary verdicts='3' failures='0' errors='0'/>
+  <section name='Test' method='verdict_assert_in_epsilon?' type='pass'>
+    <section name='Args=[0, 0, 1]'>
+      <verdict method='verdict_assert_in_epsilon?' outcome='passed' id='0' message='Message 0'>
+        <exp_value>
+          0
+        </exp_value>
+        <act_value>
+          0
+        </act_value>
+        <epsilon>
+          1
+        </epsilon>
+      </verdict>
+    </section>
+    <section name='Args=[1, 1, 1]'>
+      <verdict method='verdict_assert_in_epsilon?' outcome='passed' id='1' message='Message 1'>
+        <exp_value>
+          1
+        </exp_value>
+        <act_value>
+          1
+        </act_value>
+        <epsilon>
+          1
+        </epsilon>
+      </verdict>
+    </section>
+  </section>
+  <verdict method='verdict_assert_equal?' outcome='passed' id='__error_count__'>
+    <exp_value>
+      0
+    </exp_value>
+    <act_value>
+      0
+    </act_value>
+  </verdict>
+</log>

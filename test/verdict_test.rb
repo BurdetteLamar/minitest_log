@@ -102,11 +102,11 @@ class VerdictTest < MiniTest::Test
     )
   end
 
-  def test_verdict_assert_in_delta
+  def test_verdict_assert_in_epsilon
     _test_verdict(
         test_method: __method__,
         arg_count_range: (2..3),
-        pass_cases: [Args.new(0, 1, 1), Args.new(1, 0, 1)],
+        pass_cases: [Args.new(0, 0, 1), Args.new(1, 1, 1)],
         fail_cases: [Args.new(0, 2, 1), Args.new(2, 0, 1)],
         )
   end
