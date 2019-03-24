@@ -147,25 +147,13 @@ class VerdictTest < MiniTest::Test
         )
   end
 
-  def zzz_test_verdict_refute_instance_of
-
-    method = :verdict_refute_instance_of?
-    passing_arguments = {
-        :expected => String,
-        :actual => 0,
-    }
-    failing_arguments = {
-        :expected => String,
-        :actual => '',
-    }
-
-    verdict_common_test(
-        :method => method,
-        :passing_arguments => passing_arguments,
-        :failing_arguments => failing_arguments,
-        :exception_message => 'Expected # encoding: UTF-8 &quot;&quot; to not be an instance of String.'
-    )
-
+  def test_verdict_refute_instance_of
+    _test_verdict(
+        test_method: __method__,
+        arg_count_range: (2..2),
+        pass_cases: [Args.new(Integer, :a), Args.new(Symbol, 0)],
+        fail_cases: [Args.new(Integer, 0), Args.new(Symbol, :a)],
+        )
   end
 
   def zzz_test_verdict_assert_kind_of
