@@ -33,6 +33,8 @@ class MinitestLog
   DEFAULT_XML_ROOT_TAG_NAME = 'log'
   DEFAULT_XML_INDENTATION = 2
 
+  # TODO:  Add exception classes.
+
   def self.open(file_path = File.join(DEFAULT_DIR_PATH, DEFAULT_FILE_NAME), options=Hash.new)
     raise "No block given.\n" unless (block_given?)
     default_options = Hash[
@@ -89,6 +91,7 @@ class MinitestLog
   end
 
   def put_element(element_name = 'element', *args)
+    # TODO:  Reserve some elemenent names.
     attributes = {}
     pcdata = ''
     start_time = nil
@@ -228,6 +231,7 @@ class MinitestLog
   private
 
   def initialize(file_path, options=Hash.new, im_ok_youre_not_ok = false)
+    # TODO:  Use caller, instead of flag.f
     unless im_ok_youre_not_ok
       # Caller should call MinitestLog.open, not MinitestLog.new.
       message = "Please use #{self.class}.open, not #{self.class}.new.\n"
