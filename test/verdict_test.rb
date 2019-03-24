@@ -120,71 +120,13 @@ class VerdictTest < MiniTest::Test
         )
   end
 
-  def zzz_test_verdict_assert_in_epsilon
-
-    method = :verdict_assert_in_epsilon?
-    passing_arguments = {
-        :expected => 0,
-        :actual => 0,
-        :delta => 1,
-    }
-    failing_arguments = {
-        :expected => 0,
-        :actual => 4,
-        :delta => 1,
-    }
-
-    verdict_common_test(
-        :method => method,
-        :passing_arguments => passing_arguments,
-        :failing_arguments => failing_arguments,
-        :exception_message => 'Expected |0 - 4| (4) to be &lt;= 0.'
-    )
-
-  end
-
-  def zzz_test_verdict_refute_in_epsilon
-
-    method = :verdict_refute_in_epsilon?
-    passing_arguments = {
-        :expected => 0,
-        :actual => 1,
-        :delta => 0.1,
-    }
-    failing_arguments = {
-        :expected => 0,
-        :actual => 0,
-        :delta => 1,
-    }
-
-    verdict_common_test(
-        :method => method,
-        :passing_arguments => passing_arguments,
-        :failing_arguments => failing_arguments,
-        :exception_message => 'Expected |0 - 0| (0) to not be &lt;= 0.'
-    )
-
-  end
-
-  def zzz_test_verdict_assert_includes
-
-    method = :verdict_assert_includes?
-    passing_arguments = {
-        :expected => [0],
-        :actual => 0,
-    }
-    failing_arguments = {
-        :expected => [0],
-        :actual => 1,
-    }
-
-    verdict_common_test(
-        :method => method,
-        :passing_arguments => passing_arguments,
-        :failing_arguments => failing_arguments,
-        :exception_message => 'Expected [0] to include 1.'
-    )
-
+  def test_verdict_assert_includes
+    _test_verdict(
+        test_method: __method__,
+        arg_count_range: (2..2),
+        pass_cases: [Args.new([0], 0), Args.new([:a], :a)],
+        fail_cases: [Args.new([0], 1), Args.new([:a], :b)],
+        )
   end
 
   def zzz_test_verdict_refute_includes
