@@ -43,7 +43,7 @@ module TestHelper
     expected_content = File.readlines(expected_file_path(file_name))
     actual_content = File.readlines(actual_file_path(file_name))
     diff = Diff::LCS.diff(expected_content, actual_content)
-    assert_empty(diff)
+    assert_empty(diff, "File name: #{file_name}")
   end
 
   def condition_file(file_path)

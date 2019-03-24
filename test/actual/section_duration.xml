@@ -1,5 +1,13 @@
 <log>
-  <summary verdicts='0' failures='0' errors='0'/>
+  <summary verdicts='1' failures='0' errors='0'/>
   <section name='no_duration'/>
   <section name='duration' duration_seconds='0.000'/>
+  <verdict method='verdict_assert_equal?' outcome='passed' id='__error_count__'>
+    <exp_value>
+      0
+    </exp_value>
+    <act_value>
+      0
+    </act_value>
+  </verdict>
 </log>

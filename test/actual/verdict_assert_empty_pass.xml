@@ -1,15 +1,25 @@
 <log>
-  <summary verdicts='2' failures='0' errors='0'/>
+  <summary verdicts='3' failures='0' errors='0'/>
   <section name='Test' method='verdict_assert_empty?' type='pass'>
-    <section name='Arg:  (String)'>
+    <section name='Args=[[]]'>
       <verdict method='verdict_assert_empty?' outcome='passed' id='0' message='Message 0'>
-        <act_value/>
+        <act_value>
+          []
+        </act_value>
       </verdict>
     </section>
-    <section name='Arg: {} (Hash)'>
+    <section name='Args=[&quot;&quot;]'>
       <verdict method='verdict_assert_empty?' outcome='passed' id='1' message='Message 1'>
         <act_value/>
       </verdict>
     </section>
   </section>
+  <verdict method='verdict_assert_equal?' outcome='passed' id='__error_count__'>
+    <exp_value>
+      0
+    </exp_value>
+    <act_value>
+      0
+    </act_value>
+  </verdict>
 </log>

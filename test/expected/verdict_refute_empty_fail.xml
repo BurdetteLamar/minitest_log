@@ -1,8 +1,21 @@
 <log>
-  <summary verdicts='2' failures='2' errors='0'/>
+  <summary verdicts='3' failures='2' errors='0'/>
   <section name='Test' method='verdict_refute_empty?' type='fail'>
-    <section name='Arg:  (String)'>
+    <section name='Args=[[]]'>
       <verdict method='verdict_refute_empty?' outcome='failed' id='0' message='Message 0'>
+        <act_value>
+          []
+        </act_value>
+        <exception class='Minitest::Assertion'>
+          <message>
+            Expected [] to not be empty.
+          </message>
+          <backtrace/>
+        </exception>
+      </verdict>
+    </section>
+    <section name='Args=[&quot;&quot;]'>
+      <verdict method='verdict_refute_empty?' outcome='failed' id='1' message='Message 1'>
         <act_value/>
         <exception class='Minitest::Assertion'>
           <message>
@@ -12,16 +25,13 @@
         </exception>
       </verdict>
     </section>
-    <section name='Arg: {} (Hash)'>
-      <verdict method='verdict_refute_empty?' outcome='failed' id='1' message='Message 1'>
-        <act_value/>
-        <exception class='Minitest::Assertion'>
-          <message>
-            Expected {} to not be empty.
-          </message>
-          <backtrace/>
-        </exception>
-      </verdict>
-    </section>
   </section>
+  <verdict method='verdict_assert_equal?' outcome='passed' id='__error_count__'>
+    <exp_value>
+      0
+    </exp_value>
+    <act_value>
+      0
+    </act_value>
+  </verdict>
 </log>

@@ -13,7 +13,14 @@ class VerdictTest < MiniTest::Test
     end
   end
   
-  def _test_verdict(method:, arg_count_range:, pass_cases: [], fail_cases: [], error_cases: [])
+  def _test_verdict(test_method:, arg_count_range:, pass_cases: [], fail_cases: [])
+    method = "#{test_method.to_s.sub('test_', '')}?".to_sym
+    error_cases = [
+        # Too few arguments.
+        Args.new(),
+        # Too many arguments.
+        Args.new(*Array.new(arg_count_range.max + 1))
+    ]
     {
         :pass => pass_cases,
         :fail => fail_cases,
@@ -28,6 +35,7 @@ class VerdictTest < MiniTest::Test
             verdict_id = i.to_s
             args = _case.args
             title = "Args=#{args}"
+            # Add message, unless it would make a too-short arg list long enough after all.
             unless args.size < arg_count_range.min
               args.push("Message #{i}")
             end
@@ -42,81 +50,56 @@ class VerdictTest < MiniTest::Test
 
   def test_verdict_assert
      _test_verdict(
-        method: :verdict_assert?,
+        test_method: __method__,
         arg_count_range: (1..1),
         pass_cases: [Args.new(true), Args.new('not_nil')],
         fail_cases: [Args.new(false), Args.new(nil)],
-        error_cases: [Args.new(), Args.new(nil, nil)]
-        # pass_cases: Cases.new(true, 'not_nil'),
-        # fail_cases: Cases.new(false, nil),
-        # error_cases: Cases.new([], [true, true])
     )
   end
 
-  def zzz_test_verdict_refute
+  def test_verdict_refute
     _test_verdict(
-      method: :verdict_refute?,
-      pass_cases: [false, nil],
-      fail_cases: [true, :not_nil],
-      error_cases: [[], [false, false]]
+      test_method: __method__,
+      arg_count_range: (1..1),
+      pass_cases: [Args.new(false), Args.new(nil)],
+      fail_cases: [Args.new(true), Args.new('not_nil')],
     )
   end
 
-  def zzz_test_verdict_assert_empty
+  def test_verdict_assert_empty
     _test_verdict(
-        method: :verdict_assert_empty?,
-        pass_cases: ['', {}],
-        fail_cases: ['not empty', {:a => 0}],
-        error_cases: [[], [false, false]]
+        test_method: __method__,
+        arg_count_range: (1..1),
+        pass_cases: [Args.new([]), Args.new('')],
+        fail_cases: [Args.new([0]), Args.new('not_empty')],
     )
   end
 
-  def zzz_test_verdict_refute_empty
+  def test_verdict_refute_empty
     _test_verdict(
-        method: :verdict_refute_empty?,
-        pass_cases: ['not empty', {:a => 0}],
-        fail_cases: ['', {}],
-        error_cases: [[], [false, false]]
+        test_method: __method__,
+        arg_count_range: (1..1),
+        pass_cases: [Args.new([0]), Args.new('not_empty')],
+        fail_cases: [Args.new([]), Args.new('')],
     )
   end
 
-  def zzz_test_verdict_assert_equal
+  def test_verdict_assert_equal
     _test_verdict(
-        method: :verdict_assert_equal?,
-        pass_cases: [[0, 0], [:a, :a]],
-        fail_cases: [[0, 1], [:a, :b]],
-        error_cases: [[], [0, 0, 0]]
+        arg_count_range: (2..2),
+        test_method: __method__,
+        pass_cases: [Args.new(0, 0), Args.new(:a, :a)],
+        fail_cases: [Args.new(0, 1), Args.new(:a, :b)],
     )
   end
 
-  def zzz_test_verdict_refute_equal
+  def test_verdict_refute_equal
     _test_verdict(
-        method: :verdict_refute_equal?,
-        pass_cases: [[0, 1], [:a, :b]],
-        fail_cases: [[0, 0], [:a, :a]],
-        error_cases: [[], [0, 0, 0]]
+        arg_count_range: (2..2),
+        test_method: __method__,
+        pass_cases: [Args.new(0, 1), Args.new(:a, :b)],
+        fail_cases: [Args.new(0, 0), Args.new(:a, :a)],
     )
-  end
-
-  def zzz_test_verdict_refute_equal
-
-    method = :verdict_refute_equal?
-    passing_arguments = {
-        :expected => 0,
-        :actual => 1,
-    }
-    failing_arguments = {
-        :expected => 0,
-        :actual => 0,
-    }
-
-    verdict_common_test(
-        :method => method,
-        :passing_arguments => passing_arguments,
-        :failing_arguments => failing_arguments,
-        :exception_message => 'Expected 0 to not be equal to 0.'
-    )
-
   end
 
   def zzz_test_verdict_assert_in_delta
