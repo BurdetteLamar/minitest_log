@@ -129,25 +129,13 @@ class VerdictTest < MiniTest::Test
         )
   end
 
-  def zzz_test_verdict_refute_includes
-
-    method = :verdict_refute_includes?
-    passing_arguments = {
-        :expected => [0],
-        :actual => 1,
-    }
-    failing_arguments = {
-        :expected => [0],
-        :actual => 0,
-    }
-
-    verdict_common_test(
-        :method => method,
-        :passing_arguments => passing_arguments,
-        :failing_arguments => failing_arguments,
-        :exception_message => 'Expected [0] to not include 0.'
-    )
-
+  def test_verdict_refute_includes
+    _test_verdict(
+        test_method: __method__,
+        arg_count_range: (2..2),
+        pass_cases: [Args.new([0], 1), Args.new([:a], :b)],
+        fail_cases: [Args.new([0], 0), Args.new([:a], :a)],
+        )
   end
 
   def zzz_test_verdict_assert_instance_of
