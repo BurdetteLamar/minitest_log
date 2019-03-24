@@ -256,6 +256,9 @@ class MinitestLog
 
   def dispose
 
+    # Add a verdict for the error count.
+    verdict_assert_equal?('__error_count__', 0, self.counts[:error])
+
     # Close the text log.
     log_puts("END\t#{self.root_name}")
     self.file.close
