@@ -6,29 +6,33 @@ class VerdictTest < MiniTest::Test
 
   include TestHelper
 
-  def _test_verdict(method:, pass_args: [], fail_args: [], error_args: [])
+  class Args
+    attr_accessor :args
+    def initialize(*args)
+      self.args = args
+    end
+  end
+  
+  def _test_verdict(method:, arg_count_range:, pass_cases: [], fail_cases: [], error_cases: [])
     {
-        :pass => pass_args,
-        :fail => fail_args,
-        :error => error_args,
-    }.each_pair do |type, args|
+        :pass => pass_cases,
+        :fail => fail_cases,
+        :error => error_cases,
+    }.each_pair do |type, cases|
       name = "#{method.to_s.sub('?', '')}_#{type}"
       file_path = nil
       _test(name) do |log|
         log.section('Test', {:method => method, :type => type}) do
           file_path = File.absolute_path(log.file_path)
-          args.each_with_index do |arg, i|
+          cases.each_with_index do |_case, i|
             verdict_id = i.to_s
-            if arg.kind_of?(Array)
-              args_to_pass = arg
-              title = "Args=#{arg.inspect}"
-            else
-              args_to_pass = [arg]
-              title = "Arg: #{arg} (#{arg.class})"
+            args = _case.args
+            title = "Args=#{args}"
+            unless args.size < arg_count_range.min
+              args.push("Message #{i}")
             end
-            args_to_pass.push("Message #{i}") unless args_to_pass.empty?
             log.section(title, :rescue) do
-              log.send(method, verdict_id, *args_to_pass)
+              log.send(method, verdict_id, *args)
             end
           end
         end
@@ -39,54 +43,58 @@ class VerdictTest < MiniTest::Test
   def test_verdict_assert
      _test_verdict(
         method: :verdict_assert?,
-        pass_args: [true, 'not_nil'],
-        fail_args: [false, nil],
-        error_args: [[], [true, true]]
+        arg_count_range: (1..1),
+        pass_cases: [Args.new(true), Args.new('not_nil')],
+        fail_cases: [Args.new(false), Args.new(nil)],
+        error_cases: [Args.new(), Args.new(nil, nil)]
+        # pass_cases: Cases.new(true, 'not_nil'),
+        # fail_cases: Cases.new(false, nil),
+        # error_cases: Cases.new([], [true, true])
     )
   end
 
-  def test_verdict_refute
+  def zzz_test_verdict_refute
     _test_verdict(
       method: :verdict_refute?,
-      pass_args: [false, nil],
-      fail_args: [true, :not_nil],
-      error_args: [[], [false, false]]
+      pass_cases: [false, nil],
+      fail_cases: [true, :not_nil],
+      error_cases: [[], [false, false]]
     )
   end
 
-  def test_verdict_assert_empty
+  def zzz_test_verdict_assert_empty
     _test_verdict(
         method: :verdict_assert_empty?,
-        pass_args: ['', {}],
-        fail_args: ['not empty', {:a => 0}],
-        error_args: [[], [false, false]]
+        pass_cases: ['', {}],
+        fail_cases: ['not empty', {:a => 0}],
+        error_cases: [[], [false, false]]
     )
   end
 
-  def test_verdict_refute_empty
+  def zzz_test_verdict_refute_empty
     _test_verdict(
         method: :verdict_refute_empty?,
-        pass_args: ['not empty', {:a => 0}],
-        fail_args: ['', {}],
-        error_args: [[], [false, false]]
+        pass_cases: ['not empty', {:a => 0}],
+        fail_cases: ['', {}],
+        error_cases: [[], [false, false]]
     )
   end
 
-  def test_verdict_assert_equal
+  def zzz_test_verdict_assert_equal
     _test_verdict(
         method: :verdict_assert_equal?,
-        pass_args: [[0, 0], [:a, :a]],
-        fail_args: [[0, 1], [:a, :b]],
-        error_args: [[], [0, 0, 0]]
+        pass_cases: [[0, 0], [:a, :a]],
+        fail_cases: [[0, 1], [:a, :b]],
+        error_cases: [[], [0, 0, 0]]
     )
   end
 
-  def test_verdict_refute_equal
+  def zzz_test_verdict_refute_equal
     _test_verdict(
         method: :verdict_refute_equal?,
-        pass_args: [[0, 1], [:a, :b]],
-        fail_args: [[0, 0], [:a, :a]],
-        error_args: [[], [0, 0, 0]]
+        pass_cases: [[0, 1], [:a, :b]],
+        fail_cases: [[0, 0], [:a, :a]],
+        error_cases: [[], [0, 0, 0]]
     )
   end
 
