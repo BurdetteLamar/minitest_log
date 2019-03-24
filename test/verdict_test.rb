@@ -86,8 +86,8 @@ class VerdictTest < MiniTest::Test
 
   def test_verdict_assert_equal
     _test_verdict(
-        arg_count_range: (2..2),
         test_method: __method__,
+        arg_count_range: (2..2),
         pass_cases: [Args.new(0, 0), Args.new(:a, :a)],
         fail_cases: [Args.new(0, 1), Args.new(:a, :b)],
     )
@@ -95,8 +95,8 @@ class VerdictTest < MiniTest::Test
 
   def test_verdict_refute_equal
     _test_verdict(
-        arg_count_range: (2..2),
         test_method: __method__,
+        arg_count_range: (2..2),
         pass_cases: [Args.new(0, 1), Args.new(:a, :b)],
         fail_cases: [Args.new(0, 0), Args.new(:a, :a)],
     )
@@ -104,34 +104,20 @@ class VerdictTest < MiniTest::Test
 
   def test_verdict_assert_in_delta
     _test_verdict(
-        arg_count_range: (2..3),
         test_method: __method__,
+        arg_count_range: (2..3),
         pass_cases: [Args.new(0, 1, 1), Args.new(1, 0, 1)],
         fail_cases: [Args.new(0, 2, 1), Args.new(2, 0, 1)],
         )
   end
 
-  def zzz_test_verdict_refute_in_delta
-
-    method = :verdict_refute_in_delta?
-    passing_arguments = {
-        :expected => 0,
-        :actual => 1,
-        :delta => 0.11,
-    }
-    failing_arguments = {
-        :expected => 0,
-        :actual => 1,
-        :delta => 1,
-    }
-
-    verdict_common_test(
-        :method => method,
-        :passing_arguments => passing_arguments,
-        :failing_arguments => failing_arguments,
-        :exception_message => 'Expected |0 - 1| (1) to not be &lt;= 1.',
-    )
-
+  def test_verdict_refute_in_delta
+    _test_verdict(
+        test_method: __method__,
+        arg_count_range: (2..3),
+        pass_cases: [Args.new(0, 2, 1), Args.new(2, 0, 1)],
+        fail_cases: [Args.new(0, 1, 1), Args.new(1, 0, 1)],
+        )
   end
 
   def zzz_test_verdict_assert_in_epsilon
