@@ -300,45 +300,15 @@ class VerdictTest < MiniTest::Test
         pass_cases: [Args.new('', :empty?), Args.new(nil, :nil?)],
         fail_cases: [Args.new('x', :empty?), Args.new(false, :nil?)],
         )
-    return
-    method = :verdict_assert_predicate?
-    passing_arguments = {
-        :object => '',
-        :predicate => :empty?
-    }
-    failing_arguments = {
-        :object => 'foo',
-        :predicate => :empty?
-    }
-
-    verdict_common_test(
-        :method => method,
-        :passing_arguments => passing_arguments,
-        :failing_arguments => failing_arguments,
-        :exception_message => 'Expected # encoding: UTF-8 &quot;foo&quot; to be empty?.'
-    )
-
   end
 
-  def zzz_test_verdict_refute_predicate
-
-    method = :verdict_refute_predicate?
-    passing_arguments = {
-        :object => 'foo',
-        :predicate => :empty?
-    }
-    failing_arguments = {
-        :object => '',
-        :predicate => :empty?
-    }
-
-    verdict_common_test(
-        :method => method,
-        :passing_arguments => passing_arguments,
-        :failing_arguments => failing_arguments,
-        :exception_message => 'Expected # encoding: UTF-8 &quot;&quot; to not be empty?.'
-    )
-
+  def test_verdict_refute_predicate
+    _test_verdict(
+        test_method: __method__,
+        arg_count_range: (3..3),
+        pass_cases: [Args.new('x', :empty?), Args.new(false, :nil?)],
+        fail_cases: [Args.new('', :empty?), Args.new(nil, :nil?)],
+        )
   end
 
   def zzz_test_verdict_raises
