@@ -156,46 +156,34 @@ class VerdictTest < MiniTest::Test
         )
   end
 
-  def zzz_test_verdict_assert_kind_of
-
-    method = :verdict_assert_kind_of?
-    passing_arguments = {
-        :expected => Object,
-        :actual => String,
-    }
-    failing_arguments = {
-        :expected => String,
-        :actual => 0,
-    }
-
-    verdict_common_test(
-        :method => method,
-        :passing_arguments => passing_arguments,
-        :failing_arguments => failing_arguments,
-        :exception_message => 'Expected 0 to be a kind of String, not Fixnum.'
-    )
-
+  def test_verdict_assert_kind_of
+    _test_verdict(
+        test_method: __method__,
+        arg_count_range: (2..2),
+        pass_cases: [
+            Args.new(Exception, ArgumentError.new),
+            Args.new(Numeric, 0),
+        ],
+        fail_cases: [
+            Args.new(Array, {}),
+            Args.new(Hash, [])
+        ],
+        )
   end
 
-  def zzz_test_verdict_refute_kind_of
-
-    method = :verdict_refute_kind_of?
-    passing_arguments = {
-        :expected => String,
-        :actual => 0,
-    }
-    failing_arguments = {
-        :expected => Object,
-        :actual => String,
-    }
-
-    verdict_common_test(
-        :method => method,
-        :passing_arguments => passing_arguments,
-        :failing_arguments => failing_arguments,
-        :exception_message => 'Expected String to not be a kind of Object.'
-    )
-
+  def test_verdict_refute_kind_of
+    _test_verdict(
+        test_method: __method__,
+        arg_count_range: (2..2),
+        pass_cases: [
+            Args.new(Array, {}),
+            Args.new(Hash, [])
+        ],
+        fail_cases: [
+            Args.new(Exception, ArgumentError.new),
+            Args.new(Numeric, 0),
+        ],
+        )
   end
 
   def zzz_test_verdict_assert_match
