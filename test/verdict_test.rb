@@ -252,27 +252,13 @@ class VerdictTest < MiniTest::Test
         )
   end
 
-  def zzz_test_verdict_refute_operator
-
-    method = :verdict_refute_operator?
-    passing_arguments = {
-        :object_0 => 1,
-        :operator => :>,
-        :object_1 => 2,
-    }
-    failing_arguments = {
-        :object_0 => 1,
-        :operator => :<,
-        :object_1 => 2,
-    }
-
-    verdict_common_test(
-        :method => method,
-        :passing_arguments => passing_arguments,
-        :failing_arguments => failing_arguments,
-        :exception_message => 'Expected 1 to not be &lt; 2.'
-    )
-
+  def test_verdict_refute_operator
+    _test_verdict(
+        test_method: __method__,
+        arg_count_range: (3..3),
+        pass_cases: [Args.new(0, :==, 1), Args.new(false, :==, true)],
+        fail_cases: [Args.new(0, :<, 1), Args.new(true, :==, true)],
+        )
   end
 
   def zzz_test_verdict_output
