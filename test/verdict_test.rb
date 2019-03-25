@@ -186,46 +186,22 @@ class VerdictTest < MiniTest::Test
         )
   end
 
-  def zzz_test_verdict_assert_match
-
-    method = :verdict_assert_match?
-    passing_arguments = {
-        :expected => %r/x/,
-        :actual => 'x',
-    }
-    failing_arguments = {
-        :expected => %r/x/,
-        :actual => 'y',
-    }
-
-    verdict_common_test(
-        :method => method,
-        :passing_arguments => passing_arguments,
-        :failing_arguments => failing_arguments,
-        :exception_message => 'Expected /x/ to match # encoding: UTF-8 &quot;y&quot;.'
-    )
-
+  def test_verdict_assert_match
+    _test_verdict(
+        test_method: __method__,
+        arg_count_range: (2..2),
+        pass_cases: [Args.new(/b/, 'abc'), Args.new(/./, 'a')],
+        fail_cases: [Args.new(/b/, 'xyz'), Args.new(/./, '')],
+        )
   end
 
-  def zzz_test_verdict_refute_match
-
-    method = :verdict_refute_match?
-    passing_arguments = {
-        :expected => %r/x/,
-        :actual => 'y',
-    }
-    failing_arguments = {
-        :expected => %r/x/,
-        :actual => 'x',
-    }
-
-    verdict_common_test(
-        :method => method,
-        :passing_arguments => passing_arguments,
-        :failing_arguments => failing_arguments,
-        :exception_message => 'Expected /x/ to not match # encoding: UTF-8 &quot;x&quot;.'
-    )
-
+  def test_verdict_refute_match
+    _test_verdict(
+        test_method: __method__,
+        arg_count_range: (2..2),
+        pass_cases: [Args.new(/b/, 'xyz'), Args.new(/./, '')],
+        fail_cases: [Args.new(/b/, 'abc'), Args.new(/./, 'a')],
+        )
   end
 
   def zzz_test_verdict_assert_nil
