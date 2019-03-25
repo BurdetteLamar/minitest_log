@@ -215,23 +215,14 @@ class VerdictTest < MiniTest::Test
         )
   end
 
-  def zzz_test_verdict_refute_nil
-
-    method = :verdict_refute_nil?
-    passing_arguments = {
-        :actual => true,
-    }
-    failing_arguments = {
-        :actual => nil,
-    }
-
-    verdict_common_test(
-        :method => method,
-        :passing_arguments => passing_arguments,
-        :failing_arguments => failing_arguments,
-        :exception_message => 'Expected nil to not be nil.'
-    )
-
+  def test_verdict_refute_nil
+    x = nil
+    _test_verdict(
+        test_method: __method__,
+        arg_count_range: (1..1),
+        pass_cases: [Args.new(0), Args.new(false)],
+        fail_cases: [Args.new(nil), Args.new(x)],
+        )
   end
 
   def zzz_test_verdict_assert_operator
