@@ -311,8 +311,24 @@ class VerdictTest < MiniTest::Test
         )
   end
 
-  def zzz_test_verdict_raises
-
+  def test_verdict_raises
+    method = method_for_test(__method__)
+    name = _test_name(method, 'pass')
+    _test(name) do |log|
+      log.verdict_assert_raises?('0', RuntimeError) do
+        raise RuntimeError.new('Boo!')
+      end
+    end
+    name = _test_name(method, 'fail')
+    _test(name) do |log|
+      log.verdict_assert_raises?('1', RuntimeError) do
+      end
+    end
+    name = _test_name(method, 'error')
+    _test(name) do |log|
+      log.verdict_assert_raises?('2')
+    end
+    return
     method = :verdict_assert_raises?
     passing_arguments = {
         :passes => RuntimeError,
