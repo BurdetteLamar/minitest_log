@@ -1,0 +1,39 @@
+<log>
+  <summary verdicts='3' failures='0' errors='0'/>
+  <section name='Test' method='verdict_assert_operator?' type='pass'>
+    <section name='Args=[0, :&lt;, 1]'>
+      <verdict method='verdict_assert_operator?' outcome='passed' id='0' message='Message 0'>
+        <object_1>
+          0
+        </object_1>
+        <operator>
+          :&lt;
+        </operator>
+        <object_2>
+          1
+        </object_2>
+      </verdict>
+    </section>
+    <section name='Args=[true, :==, true]'>
+      <verdict method='verdict_assert_operator?' outcome='passed' id='1' message='Message 1'>
+        <object_1>
+          true
+        </object_1>
+        <operator>
+          :==
+        </operator>
+        <object_2>
+          true
+        </object_2>
+      </verdict>
+    </section>
+  </section>
+  <verdict method='verdict_assert_equal?' outcome='passed' id='__error_count__'>
+    <exp_value>
+      0
+    </exp_value>
+    <act_value>
+      0
+    </act_value>
+  </verdict>
+</log>

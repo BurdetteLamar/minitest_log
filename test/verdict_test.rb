@@ -243,12 +243,12 @@ class VerdictTest < MiniTest::Test
         )
   end
 
-  def zzz_test_verdict_assert_operator
+  def test_verdict_assert_operator
     _test_verdict(
         test_method: __method__,
         arg_count_range: (3..3),
-        pass_cases: [Args.new(0), Args.new(false)],
-        fail_cases: [Args.new(nil), Args.new(x)],
+        pass_cases: [Args.new(0, :<, 1), Args.new(true, :==, true)],
+        fail_cases: [Args.new(0, :==, 1), Args.new(false, :==, true)],
         )
   end
 
