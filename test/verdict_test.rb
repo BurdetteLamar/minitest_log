@@ -12,9 +12,17 @@ class VerdictTest < MiniTest::Test
       self.args = args
     end
   end
-  
+
+  def method_for_test(test_method)
+    "#{test_method.to_s.sub('test_', '')}?".to_sym
+  end
+
+  def _test_name(method, type)
+    "#{method.to_s.sub('?', '')}_#{type}"
+  end
+
   def _test_verdict(test_method:, arg_count_range:, pass_cases: [], fail_cases: [])
-    method = "#{test_method.to_s.sub('test_', '')}?".to_sym
+    method = method_for_test(test_method)
     error_cases = [
         # Too few arguments.
         Args.new(),
@@ -26,7 +34,7 @@ class VerdictTest < MiniTest::Test
         :fail => fail_cases,
         :error => error_cases,
     }.each_pair do |type, cases|
-      name = "#{method.to_s.sub('?', '')}_#{type}"
+      name = _test_name(method, type)
       file_path = nil
       _test(name) do |log|
         log.section('Test', {:method => method, :type => type}) do
@@ -261,56 +269,26 @@ class VerdictTest < MiniTest::Test
         )
   end
 
-  def zzz_test_verdict_output
-
-    method = :verdict_assert_output?
-    passing_arguments = {
-        :stdout => 'stdout',
-        :stderr => 'stderr',
-    }
-    failing_arguments = {
-        :stdout => 'not stdout',
-        :stderr => 'not stderr',
-    }
-    # Test with passing arguments.
-    verdict_id = :passes
-    file_path = create_temp_log(self) do |log|
-      message = format('Method=%s; verdict_id=%s; data=%s', method, verdict_id, passing_arguments.inspect)
-      verdict = log.send(method, verdict_id, *passing_arguments.values) do
-        $stdout.print(passing_arguments[:stdout])
-        $stderr.print(passing_arguments[:stderr])
+  def test_verdict_output
+    method = method_for_test(__method__)
+    name = _test_name(method, 'pass')
+    _test(name) do |log|
+      log.verdict_assert_output?('0', 'foo', 'bar') do
+        $stdout.write 'foo'
+        $stderr.write 'bar'
       end
-      assert(verdict, message)
     end
-    checker = Checker.new(self, file_path)
-    checker.assert_verdict_count(1)
-    attributes = {
-        :id => verdict_id,
-        :method => method,
-        :outcome => 'passed',
-    }
-    checker.assert_verdict_attributes(verdict_id, attributes)
-    checker.assert_exception(nil)
-    # Test with failing arguments.
-    verdict_id = :fails
-    file_path = create_temp_log(self) do |log|
-      message = format('Method=%s; verdict_id=%s; data=%s', method, verdict_id, passing_arguments.inspect)
-      verdict = log.send(method, verdict_id, *passing_arguments.values) do
-        $stdout.print(failing_arguments[:stdout])
-        $stderr.print(failing_arguments[:stderr])
+    name = _test_name(method, 'fail')
+    _test(name) do |log|
+      log.verdict_assert_output?('1', 'foo', 'bar') do
+        $stdout.write 'bar'
+        $stderr.write 'foo'
       end
-      assert(!verdict, message)
     end
-    checker = Checker.new(self, file_path)
-    checker.assert_verdict_count(1)
-    attributes = {
-        :id => verdict_id,
-        :method => method,
-        :outcome => 'failed',
-    }
-    checker.assert_verdict_attributes(verdict_id, attributes)
-    checker.assert_exception('not stderr')
-
+    name = _test_name(method, 'error')
+    _test(name) do |log|
+      log.verdict_assert_output?('2', 'foo')
+    end
   end
 
   # Minitest::Assertion does not have :refute_output, so we don't have :verdict_refute_output?.
