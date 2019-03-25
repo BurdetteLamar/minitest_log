@@ -1,26 +1,26 @@
 <log>
   <summary verdicts='3' failures='0' errors='0'/>
   <section name='Test' method='verdict_assert_in_delta?' type='pass'>
-    <section name='Args=[0, 1, 1]'>
+    <section name='Args=[0, 0, 1]'>
       <verdict method='verdict_assert_in_delta?' outcome='passed' id='0' message='Message 0'>
         <exp_value>
           0
         </exp_value>
         <act_value>
-          1
+          0
         </act_value>
         <delta>
           1
         </delta>
       </verdict>
     </section>
-    <section name='Args=[1, 0, 1]'>
+    <section name='Args=[1, 1, 1]'>
       <verdict method='verdict_assert_in_delta?' outcome='passed' id='1' message='Message 1'>
         <exp_value>
           1
         </exp_value>
         <act_value>
-          0
+          1
         </act_value>
         <delta>
           1

@@ -102,7 +102,7 @@ class VerdictTest < MiniTest::Test
     )
   end
 
-  def test_verdict_assert_in_epsilon
+  def test_verdict_assert_in_delta
     _test_verdict(
         test_method: __method__,
         arg_count_range: (2..3),
@@ -115,8 +115,26 @@ class VerdictTest < MiniTest::Test
     _test_verdict(
         test_method: __method__,
         arg_count_range: (2..3),
+        fail_cases: [Args.new(0, 0, 1), Args.new(1, 1, 1)],
         pass_cases: [Args.new(0, 2, 1), Args.new(2, 0, 1)],
-        fail_cases: [Args.new(0, 1, 1), Args.new(1, 0, 1)],
+        )
+  end
+
+  def test_verdict_assert_in_epsilon
+    _test_verdict(
+        test_method: __method__,
+        arg_count_range: (2..3),
+        pass_cases: [Args.new(3, 2, 1), Args.new(4, 3, 1)],
+        fail_cases: [Args.new(3, 2, 0), Args.new(4, 3, 0)],
+        )
+  end
+
+  def test_verdict_refute_in_epsilon
+    _test_verdict(
+        test_method: __method__,
+        arg_count_range: (2..3),
+        pass_cases: [Args.new(3, 2, 0), Args.new(4, 3, 0)],
+        fail_cases: [Args.new(3, 2, 1), Args.new(4, 3, 1)],
         )
   end
 
@@ -226,26 +244,12 @@ class VerdictTest < MiniTest::Test
   end
 
   def zzz_test_verdict_assert_operator
-
-    method = :verdict_assert_operator?
-    passing_arguments = {
-        :object_0 => 1,
-        :operator => :<,
-        :object_1 => 2,
-    }
-    failing_arguments = {
-        :object_0 => 1,
-        :operator => :>,
-        :object_1 => 2,
-    }
-
-    verdict_common_test(
-        :method => method,
-        :passing_arguments => passing_arguments,
-        :failing_arguments => failing_arguments,
-        :exception_message => 'Expected 1 to be &gt; 2.'
-    )
-
+    _test_verdict(
+        test_method: __method__,
+        arg_count_range: (3..3),
+        pass_cases: [Args.new(0), Args.new(false)],
+        fail_cases: [Args.new(nil), Args.new(x)],
+        )
   end
 
   def zzz_test_verdict_refute_operator
