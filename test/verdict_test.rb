@@ -293,8 +293,14 @@ class VerdictTest < MiniTest::Test
 
   # Minitest::Assertion does not have :refute_output, so we don't have :verdict_refute_output?.
 
-  def zzz_test_verdict_assert_predicate
-
+  def test_verdict_assert_predicate
+    _test_verdict(
+        test_method: __method__,
+        arg_count_range: (3..3),
+        pass_cases: [Args.new('', :empty?), Args.new(nil, :nil?)],
+        fail_cases: [Args.new('x', :empty?), Args.new(false, :nil?)],
+        )
+    return
     method = :verdict_assert_predicate?
     passing_arguments = {
         :object => '',

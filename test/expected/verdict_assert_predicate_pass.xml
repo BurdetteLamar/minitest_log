@@ -1,0 +1,31 @@
+<log>
+  <summary verdicts='3' failures='0' errors='0'/>
+  <section name='Test' method='verdict_assert_predicate?' type='pass'>
+    <section name='Args=[&quot;&quot;, :empty?]'>
+      <verdict method='verdict_assert_predicate?' outcome='passed' id='0'>
+        <object/>
+        <operator>
+          :empty?
+        </operator>
+      </verdict>
+    </section>
+    <section name='Args=[nil, :nil?]'>
+      <verdict method='verdict_assert_predicate?' outcome='passed' id='1'>
+        <object>
+          nil
+        </object>
+        <operator>
+          :nil?
+        </operator>
+      </verdict>
+    </section>
+  </section>
+  <verdict method='verdict_assert_equal?' outcome='passed' id='__error_count__'>
+    <exp_value>
+      0
+    </exp_value>
+    <act_value>
+      0
+    </act_value>
+  </verdict>
+</log>
