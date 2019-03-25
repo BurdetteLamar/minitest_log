@@ -196,6 +196,7 @@ class VerdictTest < MiniTest::Test
   end
 
   def test_verdict_refute_match
+    x = nil
     _test_verdict(
         test_method: __method__,
         arg_count_range: (2..2),
@@ -204,23 +205,14 @@ class VerdictTest < MiniTest::Test
         )
   end
 
-  def zzz_test_verdict_assert_nil
-
-    method = :verdict_assert_nil?
-    passing_arguments = {
-        :actual => nil,
-    }
-    failing_arguments = {
-        :actual => true,
-    }
-
-    verdict_common_test(
-        :method => method,
-        :passing_arguments => passing_arguments,
-        :failing_arguments => failing_arguments,
-        :exception_message => 'Expected true to be nil.'
-    )
-
+  def test_verdict_assert_nil
+    x = nil
+    _test_verdict(
+        test_method: __method__,
+        arg_count_range: (1..1),
+        pass_cases: [Args.new(nil), Args.new(x)],
+        fail_cases: [Args.new(0), Args.new(false)],
+        )
   end
 
   def zzz_test_verdict_refute_nil
