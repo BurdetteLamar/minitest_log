@@ -1,14 +1,10 @@
 <log>
-  <summary verdicts='2' failures='1' errors='0'/>
+  <summary verdicts='1' failures='1' errors='0'/>
   <verdict method='verdict_assert_output?' outcome='failed' id='1'>
     <stdout class='String' value='&quot;foo&quot;'/>
     <stderr class='String' value='&quot;bar&quot;'/>
     <exception class='Minitest::Assertion' message='In stderr.'>
       <backtrace/>
     </exception>
-  </verdict>
-  <verdict method='verdict_assert_equal?' outcome='passed' id='__error_count__'>
-    <expected class='Integer' value='0'/>
-    <actual class='Integer' value='0'/>
   </verdict>
 </log>

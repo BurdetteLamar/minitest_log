@@ -23,26 +23,23 @@ class MinitestLog
     :backtrace_filter,
     :root_name,
     :verdict_ids,
-    :xml_indentation
+    :xml_indentation,
+    :error_verdict
 
   include REXML
   include Minitest::Assertions
-
-  DEFAULT_FILE_NAME = 'log.xml'
-  DEFAULT_DIR_PATH = '.'
-  DEFAULT_XML_ROOT_TAG_NAME = 'log'
-  DEFAULT_XML_INDENTATION = 2
 
   class MinitestLogError < Exception; end
 
   class NoBlockError < MinitestLogError
   end
 
-  def self.open(file_path = File.join(DEFAULT_DIR_PATH, DEFAULT_FILE_NAME), options=Hash.new)
+  def self.open(file_path = File.join('.', 'log.xml'), options=Hash.new)
     raise NoBlockError.new('No block given for MinitestLog#open.') unless (block_given?)
     default_options = Hash[
-        :root_name => DEFAULT_XML_ROOT_TAG_NAME,
-        :xml_indentation => DEFAULT_XML_INDENTATION
+        :root_name => 'log',
+        :xml_indentation => 2,
+        :error_verdict => false,
     ]
     options = default_options.merge(options)
     log = self.new(file_path, options)
@@ -241,6 +238,7 @@ class MinitestLog
     self.file_path = file_path
     self.root_name = options[:root_name]
     self.xml_indentation = options[:xml_indentation]
+    self.error_verdict = options[:error_verdict] || false
     self.backtrace_filter = options[:backtrace_filter] || /log|ruby/
     self.file = File.open(self.file_path, 'w')
     log_puts("REMARK\tThis text log is the precursor for an XML log.")
@@ -256,8 +254,10 @@ class MinitestLog
 
   def dispose
 
-    # Add a verdict for the error count.
-    verdict_assert_equal?('__error_count__', 0, self.counts[:error])
+    # Add a verdict for the error count, if needed.
+    if self.error_verdict
+      verdict_assert_equal?('error_count', 0, self.counts[:error])
+    end
 
     # Close the text log.
     log_puts("END\t#{self.root_name}")

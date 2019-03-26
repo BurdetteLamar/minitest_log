@@ -48,6 +48,11 @@ class LogTest < Minitest::Test
     end
   end
 
+  def test_open_error_verdict
+    _test('open_error_verdict', :error_verdict => true) do |_|
+    end
+  end
+
   def test_open_xml_indentation
     [-1, 0, 2].each do |indentation|
       _test("open_xml_indentation.#{indentation}", :xml_indentation => indentation) do |log|
