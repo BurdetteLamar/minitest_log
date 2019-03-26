@@ -2,7 +2,7 @@
   <summary verdicts='3' failures='0' errors='0'/>
   <section name='Test' method='verdict_assert_same?' type='pass'>
     <section name='Args=[:foo, :foo]'>
-      <verdict method='verdict_assert_same?' outcome='passed' id='0'>
+      <verdict method='verdict_assert_same?' outcome='passed' id='0' message='Message 0'>
         <exp_value>
           :foo
         </exp_value>
@@ -12,7 +12,7 @@
       </verdict>
     </section>
     <section name='Args=[0, 0]'>
-      <verdict method='verdict_assert_same?' outcome='passed' id='1'>
+      <verdict method='verdict_assert_same?' outcome='passed' id='1' message='Message 1'>
         <exp_value>
           0
         </exp_value>

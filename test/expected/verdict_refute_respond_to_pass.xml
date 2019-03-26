@@ -2,7 +2,7 @@
   <summary verdicts='3' failures='0' errors='0'/>
   <section name='Test' method='verdict_refute_respond_to?' type='pass'>
     <section name='Args=[&quot;&quot;, :foo]'>
-      <verdict method='verdict_refute_respond_to?' outcome='passed' id='0'>
+      <verdict method='verdict_refute_respond_to?' outcome='passed' id='0' message='Message 0'>
         <object/>
         <method>
           :foo
@@ -10,7 +10,7 @@
       </verdict>
     </section>
     <section name='Args=[false, :bar]'>
-      <verdict method='verdict_refute_respond_to?' outcome='passed' id='1'>
+      <verdict method='verdict_refute_respond_to?' outcome='passed' id='1' message='Message 1'>
         <object>
           false
         </object>

@@ -296,7 +296,7 @@ class VerdictTest < MiniTest::Test
   def test_verdict_assert_predicate
     _test_verdict(
         test_method: __method__,
-        arg_count_range: (3..3),
+        arg_count_range: (2..2),
         pass_cases: [Args.new('', :empty?), Args.new(nil, :nil?)],
         fail_cases: [Args.new('x', :empty?), Args.new(false, :nil?)],
         )
@@ -305,7 +305,7 @@ class VerdictTest < MiniTest::Test
   def test_verdict_refute_predicate
     _test_verdict(
         test_method: __method__,
-        arg_count_range: (3..3),
+        arg_count_range: (2..2),
         pass_cases: [Args.new('x', :empty?), Args.new(false, :nil?)],
         fail_cases: [Args.new('', :empty?), Args.new(nil, :nil?)],
         )
@@ -335,7 +335,7 @@ class VerdictTest < MiniTest::Test
   def test_verdict_assert_respond_to
     _test_verdict(
         test_method: __method__,
-        arg_count_range: (3..3),
+        arg_count_range: (2..2),
         pass_cases: [Args.new('', :size), Args.new(nil, :class)],
         fail_cases: [Args.new('', :foo), Args.new(false, :bar)],
         )
@@ -344,7 +344,7 @@ class VerdictTest < MiniTest::Test
   def test_verdict_refute_respond_to
     _test_verdict(
         test_method: __method__,
-        arg_count_range: (3..3),
+        arg_count_range: (2..2),
         pass_cases: [Args.new('', :foo), Args.new(false, :bar)],
         fail_cases: [Args.new('', :size), Args.new(nil, :class)],
         )
@@ -353,31 +353,19 @@ class VerdictTest < MiniTest::Test
   def test_verdict_assert_same
     _test_verdict(
         test_method: __method__,
-        arg_count_range: (3..3),
+        arg_count_range: (2..2),
         pass_cases: [Args.new(:foo, :foo), Args.new(0, 0)],
         fail_cases: [Args.new('foo', 'foo'), Args.new([], [])],
         )
   end
 
   def zzz_test_verdict_refute_same
-
-    method = :verdict_refute_same?
-    passing_arguments = {
-        :expected => :same,
-        :actual => :different,
-    }
-    failing_arguments = {
-        :expected => :same,
-        :actual => :same,
-    }
-
-    verdict_common_test(
-        :method => method,
-        :passing_arguments => passing_arguments,
-        :failing_arguments => failing_arguments,
-        :exception_message => 'Expected :same'
-    )
-
+    _test_verdict(
+        test_method: __method__,
+        arg_count_range: (2..2),
+        pass_cases: [Args.new(:foo, :foo), Args.new(0, 0)],
+        fail_cases: [Args.new('foo', 'foo'), Args.new([], [])],
+        )
   end
 
   # Minitest::Assertion treats method :assert_send as deprecated, so we don't have :verdict_assert_send.

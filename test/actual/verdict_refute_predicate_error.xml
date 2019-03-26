@@ -12,13 +12,13 @@
         <backtrace/>
       </rescued_exception>
     </section>
-    <section name='Args=[nil, nil, nil, nil]'>
+    <section name='Args=[nil, nil, nil]'>
       <rescued_exception>
         <class>
           ArgumentError
         </class>
         <message>
-          wrong number of arguments (given 6, expected 3..4)
+          wrong number of arguments (given 5, expected 3..4)
         </message>
         <backtrace/>
       </rescued_exception>

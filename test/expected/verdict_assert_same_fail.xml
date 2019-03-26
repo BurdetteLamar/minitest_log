@@ -2,7 +2,7 @@
   <summary verdicts='3' failures='2' errors='0'/>
   <section name='Test' method='verdict_assert_same?' type='fail'>
     <section name='Args=[&quot;foo&quot;, &quot;foo&quot;]'>
-      <verdict method='verdict_assert_same?' outcome='failed' id='0'>
+      <verdict method='verdict_assert_same?' outcome='failed' id='0' message='Message 0'>
         <exp_value>
           foo
         </exp_value>
@@ -19,7 +19,7 @@
       </verdict>
     </section>
     <section name='Args=[[], []]'>
-      <verdict method='verdict_assert_same?' outcome='failed' id='1'>
+      <verdict method='verdict_assert_same?' outcome='failed' id='1' message='Message 1'>
         <exp_value>
           []
         </exp_value>

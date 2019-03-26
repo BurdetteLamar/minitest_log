@@ -2,7 +2,7 @@
   <summary verdicts='3' failures='2' errors='0'/>
   <section name='Test' method='verdict_assert_predicate?' type='fail'>
     <section name='Args=[&quot;x&quot;, :empty?]'>
-      <verdict method='verdict_assert_predicate?' outcome='failed' id='0'>
+      <verdict method='verdict_assert_predicate?' outcome='failed' id='0' message='Message 0'>
         <object>
           x
         </object>
@@ -18,7 +18,7 @@
       </verdict>
     </section>
     <section name='Args=[false, :nil?]'>
-      <verdict method='verdict_assert_predicate?' outcome='failed' id='1'>
+      <verdict method='verdict_assert_predicate?' outcome='failed' id='1' message='Message 1'>
         <object>
           false
         </object>
