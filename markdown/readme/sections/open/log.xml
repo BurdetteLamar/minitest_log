@@ -1,6 +1,10 @@
 <log>
-  <summary verdicts='0' failures='0' errors='0'/>
+  <summary verdicts='1' failures='0' errors='0'/>
   <comment>
     Test stuff goes here.
   </comment>
+  <verdict method='verdict_assert_equal?' outcome='passed' id='__error_count__'>
+    <expected class='Integer' value='0'/>
+    <actual class='Integer' value='0'/>
+  </verdict>
 </log>

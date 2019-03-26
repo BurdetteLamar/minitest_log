@@ -1,22 +1,19 @@
 <log>
-  <summary verdicts='2' failures='1' errors='0'/>
+  <summary verdicts='3' failures='1' errors='0'/>
   <verdict method='verdict_assert?' outcome='passed' id='assert_true'>
-    <act_value>
-      true
-    </act_value>
+    <actual class='TrueClass' value='true'/>
   </verdict>
   <verdict method='verdict_assert?' outcome='failed' id='assert_false'>
-    <act_value>
-      false
-    </act_value>
-    <exception class='Minitest::Assertion'>
-      <message>
-        Expected false to be truthy.
-      </message>
+    <actual class='FalseClass' value='false'/>
+    <exception class='Minitest::Assertion' message='Expected false to be truthy.'>
       <backtrace>
         <level_0 location='example.rb:8:in `block in test_example&apos;'/>
         <level_1 location='example.rb:6:in `test_example&apos;'/>
       </backtrace>
     </exception>
+  </verdict>
+  <verdict method='verdict_assert_equal?' outcome='passed' id='__error_count__'>
+    <expected class='Integer' value='0'/>
+    <actual class='Integer' value='0'/>
   </verdict>
 </log>

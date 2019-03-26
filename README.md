@@ -52,10 +52,14 @@ The log:
 ```log.xml```:
 ```xml
 <log>
-  <summary verdicts='0' failures='0' errors='0'/>
+  <summary verdicts='1' failures='0' errors='0'/>
   <comment>
     Test stuff goes here.
   </comment>
+  <verdict method='verdict_assert_equal?' outcome='passed' id='__error_count__'>
+    <expected class='Integer' value='0'/>
+    <actual class='Integer' value='0'/>
+  </verdict>
 </log>
 ```
 
@@ -85,10 +89,14 @@ The log:
 ```my_log.xml```:
 ```xml
 <my_root_name>
-    <summary verdicts='0' failures='0' errors='0'/>
+    <summary verdicts='1' failures='0' errors='0'/>
     <comment>
         Test code goes here.
     </comment>
+    <verdict method='verdict_assert_equal?' outcome='passed' id='__error_count__'>
+        <expected class='Integer' value='0'/>
+        <actual class='Integer' value='0'/>
+    </verdict>
 </my_root_name>
 ```
 
@@ -130,7 +138,7 @@ The log:
 ```log.xml```:
 ```xml
 <log>
-  <summary verdicts='0' failures='0' errors='0'/>
+  <summary verdicts='1' failures='0' errors='0'/>
   <section name='First outer'>
     <section name='First inner'/>
     <section name='Second inner'/>
@@ -139,6 +147,10 @@ The log:
     <section name='First inner'/>
     <section name='Second inner'/>
   </section>
+  <verdict method='verdict_assert_equal?' outcome='passed' id='__error_count__'>
+    <expected class='Integer' value='0'/>
+    <actual class='Integer' value='0'/>
+  </verdict>
 </log>
 ```
 
@@ -173,13 +185,17 @@ The log:
 ```log.xml```:
 ```xml
 <log>
-  <summary verdicts='0' failures='0' errors='0'/>
+  <summary verdicts='1' failures='0' errors='0'/>
   <section name='My section'>
     Text
   </section>
   <section name='Another section'>
     Text and more text
   </section>
+  <verdict method='verdict_assert_equal?' outcome='passed' id='__error_count__'>
+    <expected class='Integer' value='0'/>
+    <actual class='Integer' value='0'/>
+  </verdict>
 </log>
 ```
 
@@ -216,9 +232,13 @@ The log:
 ```log.xml```:
 ```xml
 <log>
-  <summary verdicts='0' failures='0' errors='0'/>
+  <summary verdicts='1' failures='0' errors='0'/>
   <section name='My section' first_attr='first' second_attr='second'/>
   <section name='Another section' first_attr='first' second_attr='second' third_attr='third'/>
+  <verdict method='verdict_assert_equal?' outcome='passed' id='__error_count__'>
+    <expected class='Integer' value='0'/>
+    <actual class='Integer' value='0'/>
+  </verdict>
 </log>
 ```
 
@@ -249,8 +269,12 @@ The log:
 ```log.xml```:
 ```xml
 <log>
-  <summary verdicts='0' failures='0' errors='0'/>
-  <section name='My section' timestamp='2019-03-22-Fri-12.43.52.105'/>
+  <summary verdicts='1' failures='0' errors='0'/>
+  <section name='My section' timestamp='2019-03-26-Tue-10.27.41.373'/>
+  <verdict method='verdict_assert_equal?' outcome='passed' id='__error_count__'>
+    <expected class='Integer' value='0'/>
+    <actual class='Integer' value='0'/>
+  </verdict>
 </log>
 ```
 
@@ -282,8 +306,12 @@ The log:
 ```log.xml```:
 ```xml
 <log>
-  <summary verdicts='0' failures='0' errors='0'/>
-  <section name='My section' duration_seconds='3.001'/>
+  <summary verdicts='1' failures='0' errors='0'/>
+  <section name='My section' duration_seconds='3.000'/>
+  <verdict method='verdict_assert_equal?' outcome='passed' id='__error_count__'>
+    <expected class='Integer' value='0'/>
+    <actual class='Integer' value='0'/>
+  </verdict>
 </log>
 ```
 
@@ -317,15 +345,9 @@ The log:
 ```log.xml```:
 ```xml
 <log>
-  <summary verdicts='0' failures='0' errors='1'/>
+  <summary verdicts='1' failures='1' errors='1'/>
   <section name='My section'>
-    <rescued_exception>
-      <class>
-        RuntimeError
-      </class>
-      <message>
-        Boo!
-      </message>
+    <rescued_exception class='RuntimeError' message='Boo!'>
       <backtrace>
         <level_0 location='example.rb:8:in `block (2 levels) in test_example&apos;'/>
         <level_1 location='example.rb:7:in `block in test_example&apos;'/>
@@ -333,6 +355,15 @@ The log:
       </backtrace>
     </rescued_exception>
   </section>
+  <verdict method='verdict_assert_equal?' outcome='failed' id='__error_count__'>
+    <expected class='Integer' value='0'/>
+    <actual class='Integer' value='1'/>
+    <exception class='Minitest::Assertion' message='Expected: 0'>
+      <backtrace>
+        <level_0 location='example.rb:6:in `test_example&apos;'/>
+      </backtrace>
+    </exception>
+  </verdict>
 </log>
 ```
 
