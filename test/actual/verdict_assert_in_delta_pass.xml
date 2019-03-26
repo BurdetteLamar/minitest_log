@@ -3,37 +3,21 @@
   <section name='Test' method='verdict_assert_in_delta?' type='pass'>
     <section name='Args=[0, 0, 1]'>
       <verdict method='verdict_assert_in_delta?' outcome='passed' id='0' message='Message 0'>
-        <exp_value>
-          0
-        </exp_value>
-        <act_value>
-          0
-        </act_value>
-        <delta>
-          1
-        </delta>
+        <expected class='Integer' value='0'/>
+        <actual class='Integer' value='0'/>
+        <delta class='Integer' value='1'/>
       </verdict>
     </section>
     <section name='Args=[1, 1, 1]'>
       <verdict method='verdict_assert_in_delta?' outcome='passed' id='1' message='Message 1'>
-        <exp_value>
-          1
-        </exp_value>
-        <act_value>
-          1
-        </act_value>
-        <delta>
-          1
-        </delta>
+        <expected class='Integer' value='1'/>
+        <actual class='Integer' value='1'/>
+        <delta class='Integer' value='1'/>
       </verdict>
     </section>
   </section>
   <verdict method='verdict_assert_equal?' outcome='passed' id='__error_count__'>
-    <exp_value>
-      0
-    </exp_value>
-    <act_value>
-      0
-    </act_value>
+    <expected class='Integer' value='0'/>
+    <actual class='Integer' value='0'/>
   </verdict>
 </log>

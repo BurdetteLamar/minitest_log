@@ -2,39 +2,20 @@
   <summary verdicts='1' failures='1' errors='2'/>
   <section name='Test' method='verdict_refute_equal?' type='error'>
     <section name='Args=[]'>
-      <rescued_exception>
-        <class>
-          ArgumentError
-        </class>
-        <message>
-          wrong number of arguments (given 1, expected 3..4)
-        </message>
+      <rescued_exception class='ArgumentError' message='wrong number of arguments (given 1, expected 3..4)'>
         <backtrace/>
       </rescued_exception>
     </section>
     <section name='Args=[nil, nil, nil]'>
-      <rescued_exception>
-        <class>
-          ArgumentError
-        </class>
-        <message>
-          wrong number of arguments (given 5, expected 3..4)
-        </message>
+      <rescued_exception class='ArgumentError' message='wrong number of arguments (given 5, expected 3..4)'>
         <backtrace/>
       </rescued_exception>
     </section>
   </section>
   <verdict method='verdict_assert_equal?' outcome='failed' id='__error_count__'>
-    <exp_value>
-      0
-    </exp_value>
-    <act_value>
-      2
-    </act_value>
-    <exception class='Minitest::Assertion'>
-      <message>
-        Expected: 0 Actual: 2
-      </message>
+    <expected class='Integer' value='0'/>
+    <actual class='Integer' value='2'/>
+    <exception class='Minitest::Assertion' message='Expected: 0'>
       <backtrace/>
     </exception>
   </verdict>

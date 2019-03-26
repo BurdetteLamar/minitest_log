@@ -135,9 +135,7 @@ class MinitestLog
         begin
           yield
         rescue Exception => x
-          put_element('rescued_exception') do
-            put_element('class', x.class)
-            put_element('message', x.message)
+          put_element('rescued_exception', {:class => x.class, :message => x.message}) do
             put_element('backtrace') do
               filter_backtrace(x.backtrace).each_with_index do |location, i|
                 put_element("level_#{i}", {:location => location})
@@ -351,12 +349,11 @@ class MinitestLog
     element_attributes.store(:message, message) unless message.nil?
     put_element('verdict', element_attributes) do
       args_hash.each_pair do |k, v|
-        put_element(k.to_s, v)
+        put_element(k.to_s, {:class => v.class, :value => v.inspect})
       end
       if exception
         self.counts[:failure] += 1
-        put_element('exception', {:class => exception.class}) do
-          put_element('message', exception.message)
+        put_element('exception', {:class => exception.class, :message => exception.message}) do
           put_element('backtrace') do
             filter_backtrace(exception.backtrace).each_with_index do |location, i|
               put_element("level_#{i}", {:location => location})

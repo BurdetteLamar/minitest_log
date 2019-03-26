@@ -3,31 +3,19 @@
   <section name='Test' method='verdict_assert_instance_of?' type='pass'>
     <section name='Args=[Integer, 0]'>
       <verdict method='verdict_assert_instance_of?' outcome='passed' id='0' message='Message 0'>
-        <exp_value>
-          Integer
-        </exp_value>
-        <act_value>
-          0
-        </act_value>
+        <expected class='Class' value='Integer'/>
+        <actual class='Integer' value='0'/>
       </verdict>
     </section>
     <section name='Args=[Symbol, :a]'>
       <verdict method='verdict_assert_instance_of?' outcome='passed' id='1' message='Message 1'>
-        <exp_value>
-          Symbol
-        </exp_value>
-        <act_value>
-          :a
-        </act_value>
+        <expected class='Class' value='Symbol'/>
+        <actual class='Symbol' value=':a'/>
       </verdict>
     </section>
   </section>
   <verdict method='verdict_assert_equal?' outcome='passed' id='__error_count__'>
-    <exp_value>
-      0
-    </exp_value>
-    <act_value>
-      0
-    </act_value>
+    <expected class='Integer' value='0'/>
+    <actual class='Integer' value='0'/>
   </verdict>
 </log>

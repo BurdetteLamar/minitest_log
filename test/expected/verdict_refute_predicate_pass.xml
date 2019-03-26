@@ -3,31 +3,19 @@
   <section name='Test' method='verdict_refute_predicate?' type='pass'>
     <section name='Args=[&quot;x&quot;, :empty?]'>
       <verdict method='verdict_refute_predicate?' outcome='passed' id='0' message='Message 0'>
-        <object>
-          x
-        </object>
-        <operator>
-          :empty?
-        </operator>
+        <object class='String' value='&quot;x&quot;'/>
+        <operator class='Symbol' value=':empty?'/>
       </verdict>
     </section>
     <section name='Args=[false, :nil?]'>
       <verdict method='verdict_refute_predicate?' outcome='passed' id='1' message='Message 1'>
-        <object>
-          false
-        </object>
-        <operator>
-          :nil?
-        </operator>
+        <object class='FalseClass' value='false'/>
+        <operator class='Symbol' value=':nil?'/>
       </verdict>
     </section>
   </section>
   <verdict method='verdict_assert_equal?' outcome='passed' id='__error_count__'>
-    <exp_value>
-      0
-    </exp_value>
-    <act_value>
-      0
-    </act_value>
+    <expected class='Integer' value='0'/>
+    <actual class='Integer' value='0'/>
   </verdict>
 </log>

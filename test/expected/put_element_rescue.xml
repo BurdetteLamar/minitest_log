@@ -1,13 +1,7 @@
 <log>
   <summary verdicts='1' failures='1' errors='1'/>
   <rescue>
-    <rescued_exception>
-      <class>
-        RuntimeError
-      </class>
-      <message>
-        Rescued!
-      </message>
+    <rescued_exception class='RuntimeError' message='Rescued!'>
       <backtrace/>
     </rescued_exception>
   </rescue>
@@ -20,16 +14,9 @@
       </backtrace>
     </uncaught_exception>
     <verdict method='verdict_assert_equal?' outcome='failed' id='__error_count__'>
-      <exp_value>
-        0
-      </exp_value>
-      <act_value>
-        1
-      </act_value>
-      <exception class='Minitest::Assertion'>
-        <message>
-          Expected: 0 Actual: 1
-        </message>
+      <expected class='Integer' value='0'/>
+      <actual class='Integer' value='1'/>
+      <exception class='Minitest::Assertion' message='Expected: 0'>
         <backtrace/>
       </exception>
     </verdict>

@@ -3,31 +3,19 @@
   <section name='Test' method='verdict_refute_same?' type='pass'>
     <section name='Args=[&quot;foo&quot;, &quot;foo&quot;]'>
       <verdict method='verdict_refute_same?' outcome='passed' id='0' message='Message 0'>
-        <exp_value>
-          foo
-        </exp_value>
-        <act_value>
-          foo
-        </act_value>
+        <expected class='String' value='&quot;foo&quot;'/>
+        <actual class='String' value='&quot;foo&quot;'/>
       </verdict>
     </section>
     <section name='Args=[[], []]'>
       <verdict method='verdict_refute_same?' outcome='passed' id='1' message='Message 1'>
-        <exp_value>
-          []
-        </exp_value>
-        <act_value>
-          []
-        </act_value>
+        <expected class='Array' value='[]'/>
+        <actual class='Array' value='[]'/>
       </verdict>
     </section>
   </section>
   <verdict method='verdict_assert_equal?' outcome='passed' id='__error_count__'>
-    <exp_value>
-      0
-    </exp_value>
-    <act_value>
-      0
-    </act_value>
+    <expected class='Integer' value='0'/>
+    <actual class='Integer' value='0'/>
   </verdict>
 </log>
