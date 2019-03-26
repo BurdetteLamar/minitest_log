@@ -1,0 +1,7 @@
+<log>
+  <summary verdicts='1' failures='0' errors='0'/>
+  <verdict method='verdict_assert_equal?' outcome='passed' id='error_count'>
+    <expected class='Integer' value='0'/>
+    <actual class='Integer' value='0'/>
+  </verdict>
+</log>
