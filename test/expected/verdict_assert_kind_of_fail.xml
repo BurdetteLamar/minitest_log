@@ -1,23 +1,23 @@
 <log>
-  <summary verdicts='2' failures='2' errors='0'/>
-  <section name='Test' method='verdict_assert_kind_of?' type='fail'>
-    <section name='Args=[Array, {}]'>
-      <verdict method='verdict_assert_kind_of?' outcome='failed' id='0' message='Message 0'>
-        <expected class='Class' value='Array'/>
-        <actual class='Hash' value='{}'/>
-        <exception class='Minitest::Assertion' message='Expected {} to be a kind of Array, not Hash.'>
-          <backtrace/>
-        </exception>
-      </verdict>
-    </section>
-    <section name='Args=[Hash, []]'>
-      <verdict method='verdict_assert_kind_of?' outcome='failed' id='1' message='Message 1'>
-        <expected class='Class' value='Hash'/>
-        <actual class='Array' value='[]'/>
-        <exception class='Minitest::Assertion' message='Expected [] to be a kind of Hash, not Array.'>
-          <backtrace/>
-        </exception>
-      </verdict>
-    </section>
-  </section>
+  <summary_ verdicts='2' failures='2' errors='0'/>
+  <section_ name='Test' method='verdict_assert_kind_of?' type='fail'>
+    <section_ name='Args=[Array, {}]'>
+      <verdict_ method='verdict_assert_kind_of?' outcome='failed' id='0' message='Message 0'>
+        <expected_ class='Class' value='Array'/>
+        <actual_ class='Hash' value='{}'/>
+        <exception_ class='Minitest::Assertion' message='Expected {} to be a kind of Array, not Hash.'>
+          <backtrace_/>
+        </exception_>
+      </verdict_>
+    </section_>
+    <section_ name='Args=[Hash, []]'>
+      <verdict_ method='verdict_assert_kind_of?' outcome='failed' id='1' message='Message 1'>
+        <expected_ class='Class' value='Hash'/>
+        <actual_ class='Array' value='[]'/>
+        <exception_ class='Minitest::Assertion' message='Expected [] to be a kind of Hash, not Array.'>
+          <backtrace_/>
+        </exception_>
+      </verdict_>
+    </section_>
+  </section_>
 </log>

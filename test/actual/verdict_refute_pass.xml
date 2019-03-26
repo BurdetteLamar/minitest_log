@@ -1,15 +1,15 @@
 <log>
-  <summary verdicts='2' failures='0' errors='0'/>
-  <section name='Test' method='verdict_refute?' type='pass'>
-    <section name='Args=[false]'>
-      <verdict method='verdict_refute?' outcome='passed' id='0' message='Message 0'>
-        <actual class='FalseClass' value='false'/>
-      </verdict>
-    </section>
-    <section name='Args=[nil]'>
-      <verdict method='verdict_refute?' outcome='passed' id='1' message='Message 1'>
-        <actual class='NilClass' value='nil'/>
-      </verdict>
-    </section>
-  </section>
+  <summary_ verdicts='2' failures='0' errors='0'/>
+  <section_ name='Test' method='verdict_refute?' type='pass'>
+    <section_ name='Args=[false]'>
+      <verdict_ method='verdict_refute?' outcome='passed' id='0' message='Message 0'>
+        <actual_ class='FalseClass' value='false'/>
+      </verdict_>
+    </section_>
+    <section_ name='Args=[nil]'>
+      <verdict_ method='verdict_refute?' outcome='passed' id='1' message='Message 1'>
+        <actual_ class='NilClass' value='nil'/>
+      </verdict_>
+    </section_>
+  </section_>
 </log>

@@ -1,21 +1,21 @@
 <log>
-  <summary verdicts='2' failures='2' errors='0'/>
-  <section name='Test' method='verdict_refute?' type='fail'>
-    <section name='Args=[true]'>
-      <verdict method='verdict_refute?' outcome='failed' id='0' message='Message 0'>
-        <actual class='TrueClass' value='true'/>
-        <exception class='Minitest::Assertion' message='Expected true to not be truthy.'>
-          <backtrace/>
-        </exception>
-      </verdict>
-    </section>
-    <section name='Args=[&quot;not_nil&quot;]'>
-      <verdict method='verdict_refute?' outcome='failed' id='1' message='Message 1'>
-        <actual class='String' value='&quot;not_nil&quot;'/>
-        <exception class='Minitest::Assertion' message='Expected # encoding: UTF-8'>
-          <backtrace/>
-        </exception>
-      </verdict>
-    </section>
-  </section>
+  <summary_ verdicts='2' failures='2' errors='0'/>
+  <section_ name='Test' method='verdict_refute?' type='fail'>
+    <section_ name='Args=[true]'>
+      <verdict_ method='verdict_refute?' outcome='failed' id='0' message='Message 0'>
+        <actual_ class='TrueClass' value='true'/>
+        <exception_ class='Minitest::Assertion' message='Expected true to not be truthy.'>
+          <backtrace_/>
+        </exception_>
+      </verdict_>
+    </section_>
+    <section_ name='Args=[&quot;not_nil&quot;]'>
+      <verdict_ method='verdict_refute?' outcome='failed' id='1' message='Message 1'>
+        <actual_ class='String' value='&quot;not_nil&quot;'/>
+        <exception_ class='Minitest::Assertion' message='Expected # encoding: UTF-8'>
+          <backtrace_/>
+        </exception_>
+      </verdict_>
+    </section_>
+  </section_>
 </log>

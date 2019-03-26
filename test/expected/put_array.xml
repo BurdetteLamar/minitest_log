@@ -1,10 +1,10 @@
 <log>
-  <summary verdicts='0' failures='0' errors='0'/>
-  <each_with_index name='put_array' class='Array' size='3'>
+  <summary_ verdicts='0' failures='0' errors='0'/>
+  <each_with_index_ name='put_array' class='Array' size='3'>
     <![CDATA[
 0: a
 1: aa
 2: aaa
 ]]>
-  </each_with_index>
+  </each_with_index_>
 </log>

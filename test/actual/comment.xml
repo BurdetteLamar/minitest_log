@@ -1,6 +1,6 @@
 <log>
-  <summary verdicts='0' failures='0' errors='0'/>
-  <comment>
+  <summary_ verdicts='0' failures='0' errors='0'/>
+  <comment_>
     My comment.
-  </comment>
+  </comment_>
 </log>

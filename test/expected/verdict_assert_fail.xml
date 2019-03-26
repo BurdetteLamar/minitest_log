@@ -1,21 +1,21 @@
 <log>
-  <summary verdicts='2' failures='2' errors='0'/>
-  <section name='Test' method='verdict_assert?' type='fail'>
-    <section name='Args=[false]'>
-      <verdict method='verdict_assert?' outcome='failed' id='0' message='Message 0'>
-        <actual class='FalseClass' value='false'/>
-        <exception class='Minitest::Assertion' message='Expected false to be truthy.'>
-          <backtrace/>
-        </exception>
-      </verdict>
-    </section>
-    <section name='Args=[nil]'>
-      <verdict method='verdict_assert?' outcome='failed' id='1' message='Message 1'>
-        <actual class='NilClass' value='nil'/>
-        <exception class='Minitest::Assertion' message='Expected nil to be truthy.'>
-          <backtrace/>
-        </exception>
-      </verdict>
-    </section>
-  </section>
+  <summary_ verdicts='2' failures='2' errors='0'/>
+  <section_ name='Test' method='verdict_assert?' type='fail'>
+    <section_ name='Args=[false]'>
+      <verdict_ method='verdict_assert?' outcome='failed' id='0' message='Message 0'>
+        <actual_ class='FalseClass' value='false'/>
+        <exception_ class='Minitest::Assertion' message='Expected false to be truthy.'>
+          <backtrace_/>
+        </exception_>
+      </verdict_>
+    </section_>
+    <section_ name='Args=[nil]'>
+      <verdict_ method='verdict_assert?' outcome='failed' id='1' message='Message 1'>
+        <actual_ class='NilClass' value='nil'/>
+        <exception_ class='Minitest::Assertion' message='Expected nil to be truthy.'>
+          <backtrace_/>
+        </exception_>
+      </verdict_>
+    </section_>
+  </section_>
 </log>

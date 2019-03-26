@@ -1,23 +1,23 @@
 <log>
-  <summary verdicts='2' failures='2' errors='0'/>
-  <section name='Test' method='verdict_assert_same?' type='fail'>
-    <section name='Args=[&quot;foo&quot;, &quot;foo&quot;]'>
-      <verdict method='verdict_assert_same?' outcome='failed' id='0' message='Message 0'>
-        <expected class='String' value='&quot;foo&quot;'/>
-        <actual class='String' value='&quot;foo&quot;'/>
-        <exception class='Minitest::Assertion' message='Expected # encoding: UTF-8'>
-          <backtrace/>
-        </exception>
-      </verdict>
-    </section>
-    <section name='Args=[[], []]'>
-      <verdict method='verdict_assert_same?' outcome='failed' id='1' message='Message 1'>
-        <expected class='Array' value='[]'/>
-        <actual class='Array' value='[]'/>
-        <exception class='Minitest::Assertion' message='Expected [] oid=(00000000) to be the same as [] oid=(00000000).'>
-          <backtrace/>
-        </exception>
-      </verdict>
-    </section>
-  </section>
+  <summary_ verdicts='2' failures='2' errors='0'/>
+  <section_ name='Test' method='verdict_assert_same?' type='fail'>
+    <section_ name='Args=[&quot;foo&quot;, &quot;foo&quot;]'>
+      <verdict_ method='verdict_assert_same?' outcome='failed' id='0' message='Message 0'>
+        <expected_ class='String' value='&quot;foo&quot;'/>
+        <actual_ class='String' value='&quot;foo&quot;'/>
+        <exception_ class='Minitest::Assertion' message='Expected # encoding: UTF-8'>
+          <backtrace_/>
+        </exception_>
+      </verdict_>
+    </section_>
+    <section_ name='Args=[[], []]'>
+      <verdict_ method='verdict_assert_same?' outcome='failed' id='1' message='Message 1'>
+        <expected_ class='Array' value='[]'/>
+        <actual_ class='Array' value='[]'/>
+        <exception_ class='Minitest::Assertion' message='Expected [] oid=(00000000) to be the same as [] oid=(00000000).'>
+          <backtrace_/>
+        </exception_>
+      </verdict_>
+    </section_>
+  </section_>
 </log>

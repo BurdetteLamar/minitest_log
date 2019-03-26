@@ -1,5 +1,5 @@
 <log>
-  <summary verdicts='0' failures='0' errors='0'/>
+  <summary_ verdicts='0' failures='0' errors='0'/>
   <pot_pourri a='0' b='1' timestamp='0000-00-00-xxx-00.00.00.000' c='2' d='3' duration_seconds='0.000'>
     onetwoFilethree
   </pot_pourri>

@@ -1,23 +1,23 @@
 <log>
-  <summary verdicts='2' failures='2' errors='0'/>
-  <section name='Test' method='verdict_assert_respond_to?' type='fail'>
-    <section name='Args=[&quot;&quot;, :foo]'>
-      <verdict method='verdict_assert_respond_to?' outcome='failed' id='0' message='Message 0'>
-        <object class='String' value='&quot;&quot;'/>
-        <method class='Symbol' value=':foo'/>
-        <exception class='Minitest::Assertion' message='Expected # encoding: UTF-8'>
-          <backtrace/>
-        </exception>
-      </verdict>
-    </section>
-    <section name='Args=[false, :bar]'>
-      <verdict method='verdict_assert_respond_to?' outcome='failed' id='1' message='Message 1'>
-        <object class='FalseClass' value='false'/>
-        <method class='Symbol' value=':bar'/>
-        <exception class='Minitest::Assertion' message='Expected false (FalseClass) to respond to #bar.'>
-          <backtrace/>
-        </exception>
-      </verdict>
-    </section>
-  </section>
+  <summary_ verdicts='2' failures='2' errors='0'/>
+  <section_ name='Test' method='verdict_assert_respond_to?' type='fail'>
+    <section_ name='Args=[&quot;&quot;, :foo]'>
+      <verdict_ method='verdict_assert_respond_to?' outcome='failed' id='0' message='Message 0'>
+        <object_ class='String' value='&quot;&quot;'/>
+        <method_ class='Symbol' value=':foo'/>
+        <exception_ class='Minitest::Assertion' message='Expected # encoding: UTF-8'>
+          <backtrace_/>
+        </exception_>
+      </verdict_>
+    </section_>
+    <section_ name='Args=[false, :bar]'>
+      <verdict_ method='verdict_assert_respond_to?' outcome='failed' id='1' message='Message 1'>
+        <object_ class='FalseClass' value='false'/>
+        <method_ class='Symbol' value=':bar'/>
+        <exception_ class='Minitest::Assertion' message='Expected false (FalseClass) to respond to #bar.'>
+          <backtrace_/>
+        </exception_>
+      </verdict_>
+    </section_>
+  </section_>
 </log>

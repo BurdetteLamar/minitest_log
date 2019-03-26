@@ -1,21 +1,21 @@
 <log>
-  <summary verdicts='2' failures='2' errors='0'/>
-  <section name='Test' method='verdict_assert_empty?' type='fail'>
-    <section name='Args=[[0]]'>
-      <verdict method='verdict_assert_empty?' outcome='failed' id='0' message='Message 0'>
-        <actual class='Array' value='[0]'/>
-        <exception class='Minitest::Assertion' message='Expected [0] to be empty.'>
-          <backtrace/>
-        </exception>
-      </verdict>
-    </section>
-    <section name='Args=[&quot;not_empty&quot;]'>
-      <verdict method='verdict_assert_empty?' outcome='failed' id='1' message='Message 1'>
-        <actual class='String' value='&quot;not_empty&quot;'/>
-        <exception class='Minitest::Assertion' message='Expected # encoding: UTF-8'>
-          <backtrace/>
-        </exception>
-      </verdict>
-    </section>
-  </section>
+  <summary_ verdicts='2' failures='2' errors='0'/>
+  <section_ name='Test' method='verdict_assert_empty?' type='fail'>
+    <section_ name='Args=[[0]]'>
+      <verdict_ method='verdict_assert_empty?' outcome='failed' id='0' message='Message 0'>
+        <actual_ class='Array' value='[0]'/>
+        <exception_ class='Minitest::Assertion' message='Expected [0] to be empty.'>
+          <backtrace_/>
+        </exception_>
+      </verdict_>
+    </section_>
+    <section_ name='Args=[&quot;not_empty&quot;]'>
+      <verdict_ method='verdict_assert_empty?' outcome='failed' id='1' message='Message 1'>
+        <actual_ class='String' value='&quot;not_empty&quot;'/>
+        <exception_ class='Minitest::Assertion' message='Expected # encoding: UTF-8'>
+          <backtrace_/>
+        </exception_>
+      </verdict_>
+    </section_>
+  </section_>
 </log>

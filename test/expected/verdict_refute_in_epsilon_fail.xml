@@ -1,25 +1,25 @@
 <log>
-  <summary verdicts='2' failures='2' errors='0'/>
-  <section name='Test' method='verdict_refute_in_epsilon?' type='fail'>
-    <section name='Args=[3, 2, 1]'>
-      <verdict method='verdict_refute_in_epsilon?' outcome='failed' id='0' message='Message 0'>
-        <expected class='Integer' value='3'/>
-        <actual class='Integer' value='2'/>
-        <epsilon class='Integer' value='1'/>
-        <exception class='Minitest::Assertion' message='Expected |3 - 2| (1) to not be &lt;= 3.'>
-          <backtrace/>
-        </exception>
-      </verdict>
-    </section>
-    <section name='Args=[4, 3, 1]'>
-      <verdict method='verdict_refute_in_epsilon?' outcome='failed' id='1' message='Message 1'>
-        <expected class='Integer' value='4'/>
-        <actual class='Integer' value='3'/>
-        <epsilon class='Integer' value='1'/>
-        <exception class='Minitest::Assertion' message='Expected |4 - 3| (1) to not be &lt;= 4.'>
-          <backtrace/>
-        </exception>
-      </verdict>
-    </section>
-  </section>
+  <summary_ verdicts='2' failures='2' errors='0'/>
+  <section_ name='Test' method='verdict_refute_in_epsilon?' type='fail'>
+    <section_ name='Args=[3, 2, 1]'>
+      <verdict_ method='verdict_refute_in_epsilon?' outcome='failed' id='0' message='Message 0'>
+        <expected_ class='Integer' value='3'/>
+        <actual_ class='Integer' value='2'/>
+        <epsilon_ class='Integer' value='1'/>
+        <exception_ class='Minitest::Assertion' message='Expected |3 - 2| (1) to not be &lt;= 3.'>
+          <backtrace_/>
+        </exception_>
+      </verdict_>
+    </section_>
+    <section_ name='Args=[4, 3, 1]'>
+      <verdict_ method='verdict_refute_in_epsilon?' outcome='failed' id='1' message='Message 1'>
+        <expected_ class='Integer' value='4'/>
+        <actual_ class='Integer' value='3'/>
+        <epsilon_ class='Integer' value='1'/>
+        <exception_ class='Minitest::Assertion' message='Expected |4 - 3| (1) to not be &lt;= 4.'>
+          <backtrace_/>
+        </exception_>
+      </verdict_>
+    </section_>
+  </section_>
 </log>

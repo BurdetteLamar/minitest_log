@@ -1,23 +1,23 @@
 <log>
-  <summary verdicts='2' failures='2' errors='0'/>
-  <section name='Test' method='verdict_refute_match?' type='fail'>
-    <section name='Args=[/b/, &quot;abc&quot;]'>
-      <verdict method='verdict_refute_match?' outcome='failed' id='0' message='Message 0'>
-        <expected class='Regexp' value='/b/'/>
-        <actual class='String' value='&quot;abc&quot;'/>
-        <exception class='Minitest::Assertion' message='Expected /b/ to not match # encoding: UTF-8'>
-          <backtrace/>
-        </exception>
-      </verdict>
-    </section>
-    <section name='Args=[/./, &quot;a&quot;]'>
-      <verdict method='verdict_refute_match?' outcome='failed' id='1' message='Message 1'>
-        <expected class='Regexp' value='/./'/>
-        <actual class='String' value='&quot;a&quot;'/>
-        <exception class='Minitest::Assertion' message='Expected /./ to not match # encoding: UTF-8'>
-          <backtrace/>
-        </exception>
-      </verdict>
-    </section>
-  </section>
+  <summary_ verdicts='2' failures='2' errors='0'/>
+  <section_ name='Test' method='verdict_refute_match?' type='fail'>
+    <section_ name='Args=[/b/, &quot;abc&quot;]'>
+      <verdict_ method='verdict_refute_match?' outcome='failed' id='0' message='Message 0'>
+        <expected_ class='Regexp' value='/b/'/>
+        <actual_ class='String' value='&quot;abc&quot;'/>
+        <exception_ class='Minitest::Assertion' message='Expected /b/ to not match # encoding: UTF-8'>
+          <backtrace_/>
+        </exception_>
+      </verdict_>
+    </section_>
+    <section_ name='Args=[/./, &quot;a&quot;]'>
+      <verdict_ method='verdict_refute_match?' outcome='failed' id='1' message='Message 1'>
+        <expected_ class='Regexp' value='/./'/>
+        <actual_ class='String' value='&quot;a&quot;'/>
+        <exception_ class='Minitest::Assertion' message='Expected /./ to not match # encoding: UTF-8'>
+          <backtrace_/>
+        </exception_>
+      </verdict_>
+    </section_>
+  </section_>
 </log>

@@ -1,7 +1,7 @@
 <log>
-  <summary verdicts='1' failures='0' errors='0'/>
-  <verdict method='verdict_assert_output?' outcome='passed' id='0'>
-    <stdout class='String' value='&quot;foo&quot;'/>
-    <stderr class='String' value='&quot;bar&quot;'/>
-  </verdict>
+  <summary_ verdicts='1' failures='0' errors='0'/>
+  <verdict_ method='verdict_assert_output?' outcome='passed' id='0'>
+    <stdout_ class='String' value='&quot;foo&quot;'/>
+    <stderr_ class='String' value='&quot;bar&quot;'/>
+  </verdict_>
 </log>
