@@ -11,8 +11,8 @@
         </act_value>
         <exception class='Minitest::Assertion'>
           <message>
-            Expected :foo (oid=1739868) to not be the same as :foo
-            (oid=1739868).
+            Expected :foo oid=(00000000) to not be the same as :foo
+            oid=(00000000).
           </message>
           <backtrace/>
         </exception>
@@ -28,7 +28,7 @@
         </act_value>
         <exception class='Minitest::Assertion'>
           <message>
-            Expected 0 (oid=1) to not be the same as 0 (oid=1).
+            Expected 0 oid=(00000000) to not be the same as 0 oid=(00000000).
           </message>
           <backtrace/>
         </exception>

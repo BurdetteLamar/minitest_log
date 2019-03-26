@@ -42,7 +42,7 @@ class MinitestLog
         :xml_indentation => DEFAULT_XML_INDENTATION
     ]
     options = default_options.merge(options)
-    log = self.new(file_path, options, im_ok_youre_not_ok = true)
+    log = self.new(file_path, options)
     begin
       yield log
     rescue => x
@@ -230,9 +230,8 @@ class MinitestLog
 
   private
 
-  def initialize(file_path, options=Hash.new, im_ok_youre_not_ok = false)
-    # TODO:  Use caller, instead of flag.f
-    unless im_ok_youre_not_ok
+  def initialize(file_path, options=Hash.new)
+    unless caller[1].match(/minitest_log.rb:\d+:in `open'/)
       # Caller should call MinitestLog.open, not MinitestLog.new.
       message = "Please use #{self.class}.open, not #{self.class}.new.\n"
       raise RuntimeError.new(message)

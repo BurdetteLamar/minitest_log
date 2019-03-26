@@ -57,7 +57,7 @@ module TestHelper
     duration_dummy = '0.000'
     content.gsub!(duration_regexp, "duration_seconds='#{duration_dummy}'")
 
-    oid_regexp = /\(oid=\d{8}\)/
+    oid_regexp = /\(oid=\d+\)/
     oid_dummy = '00000000'
     content.gsub!(oid_regexp, "oid=(#{oid_dummy})")
 
