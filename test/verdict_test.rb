@@ -372,46 +372,25 @@ class VerdictTest < MiniTest::Test
 
   # Minitest::Assertion does not have :refute_send, so we don't have :verdict_refute_send?.
 
-  def zzz_test_verdict_assert_silent
-
-    method = :verdict_assert_silent?
-    # Test with passing arguments.
-    verdict_id = :passes
-    file_path = create_temp_log(self) do |log|
-      message = format('Method=%s; verdict_id=%s', method, verdict_id)
-      verdict = log.send(method, verdict_id) do
+  def test_verdict_assert_silent
+    method = method_for_test(__method__)
+    name = _test_name(method, 'pass')
+    _test(name) do |log|
+      log.verdict_assert_silent?('0') do
       end
-      assert(verdict, message)
     end
-    checker = Checker.new(self, file_path)
-    checker.assert_verdict_count(1)
-    attributes = {
-        :id => verdict_id,
-        :method => method,
-        :outcome => 'passed',
-    }
-    checker.assert_verdict_attributes(verdict_id, attributes)
-    checker.assert_exception(nil)
-    # Test with failing arguments.
-    verdict_id = :fails
-    file_path = create_temp_log(self) do |log|
-      message = format('Method=%s; verdict_id=%s', method, verdict_id)
-      verdict = log.send(method, verdict_id) do
-        $stdout.print('Boo!')
-        $stderr.print('Boo!')
+    name = _test_name(method, 'fail')
+    _test(name) do |log|
+      log.verdict_assert_silent?('1') do
+        $stdout.write 'bar'
+        $stderr.write 'foo'
       end
-      assert(!verdict, message)
     end
-    checker = Checker.new(self, file_path)
-    checker.assert_verdict_count(1)
-    attributes = {
-        :id => verdict_id,
-        :method => method,
-        :outcome => 'failed',
-    }
-    checker.assert_verdict_attributes(verdict_id, attributes)
-    checker.assert_exception('&quot;&quot; +&quot;Boo!&quot;')
-
+    name = _test_name(method, 'error')
+    _test(name) do |log|
+      log.verdict_assert_silent?('2', 'message', 'extra') do
+      end
+    end
   end
 
   # Minitest::Assertion does not have :refute_silent, so we don't have :verdict_refute_silent?.
