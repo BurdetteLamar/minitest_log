@@ -1,4 +1,8 @@
 <log>
-  <summary verdicts='0' failures='0' errors='0'/>
-  <section name='My section' duration_seconds='3.001'/>
+  <summary verdicts='1' failures='0' errors='0'/>
+  <section name='My section' duration_seconds='3.000'/>
+  <verdict method='verdict_assert_equal?' outcome='passed' id='__error_count__'>
+    <expected class='Integer' value='0'/>
+    <actual class='Integer' value='0'/>
+  </verdict>
 </log>

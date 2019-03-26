@@ -1,5 +1,9 @@
 <log>
-  <summary verdicts='0' failures='0' errors='0'/>
+  <summary verdicts='1' failures='0' errors='0'/>
   <section name='My section' first_attr='first' second_attr='second'/>
   <section name='Another section' first_attr='first' second_attr='second' third_attr='third'/>
+  <verdict method='verdict_assert_equal?' outcome='passed' id='__error_count__'>
+    <expected class='Integer' value='0'/>
+    <actual class='Integer' value='0'/>
+  </verdict>
 </log>
