@@ -16,7 +16,7 @@ class LogTest < Minitest::Test
   end
 
   def test_open_no_block
-    exception = assert_raises(RuntimeError) do
+    exception = assert_raises(MinitestLog::MinitestLogError) do
       MinitestLog.open
     end
     store_and_assert('open_no_block.txt', exception.message)

@@ -33,10 +33,13 @@ class MinitestLog
   DEFAULT_XML_ROOT_TAG_NAME = 'log'
   DEFAULT_XML_INDENTATION = 2
 
-  # TODO:  Add exception classes.
+  class MinitestLogError < Exception; end
+
+  class NoBlockError < MinitestLogError
+  end
 
   def self.open(file_path = File.join(DEFAULT_DIR_PATH, DEFAULT_FILE_NAME), options=Hash.new)
-    raise "No block given.\n" unless (block_given?)
+    raise NoBlockError.new('No block given for MinitestLog#open.') unless (block_given?)
     default_options = Hash[
         :root_name => DEFAULT_XML_ROOT_TAG_NAME,
         :xml_indentation => DEFAULT_XML_INDENTATION
