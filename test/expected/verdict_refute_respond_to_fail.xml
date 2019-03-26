@@ -3,41 +3,25 @@
   <section name='Test' method='verdict_refute_respond_to?' type='fail'>
     <section name='Args=[&quot;&quot;, :size]'>
       <verdict method='verdict_refute_respond_to?' outcome='failed' id='0' message='Message 0'>
-        <object/>
-        <method>
-          :size
-        </method>
-        <exception class='Minitest::Assertion'>
-          <message>
-            Expected # encoding: UTF-8 &quot;&quot; to not respond to size.
-          </message>
+        <object class='String' value='&quot;&quot;'/>
+        <method class='Symbol' value=':size'/>
+        <exception class='Minitest::Assertion' message='Expected # encoding: UTF-8'>
           <backtrace/>
         </exception>
       </verdict>
     </section>
     <section name='Args=[nil, :class]'>
       <verdict method='verdict_refute_respond_to?' outcome='failed' id='1' message='Message 1'>
-        <object>
-          nil
-        </object>
-        <method>
-          :class
-        </method>
-        <exception class='Minitest::Assertion'>
-          <message>
-            Expected nil to not respond to class.
-          </message>
+        <object class='NilClass' value='nil'/>
+        <method class='Symbol' value=':class'/>
+        <exception class='Minitest::Assertion' message='Expected nil to not respond to class.'>
           <backtrace/>
         </exception>
       </verdict>
     </section>
   </section>
   <verdict method='verdict_assert_equal?' outcome='passed' id='__error_count__'>
-    <exp_value>
-      0
-    </exp_value>
-    <act_value>
-      0
-    </act_value>
+    <expected class='Integer' value='0'/>
+    <actual class='Integer' value='0'/>
   </verdict>
 </log>

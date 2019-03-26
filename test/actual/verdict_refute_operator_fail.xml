@@ -3,49 +3,27 @@
   <section name='Test' method='verdict_refute_operator?' type='fail'>
     <section name='Args=[0, :&lt;, 1]'>
       <verdict method='verdict_refute_operator?' outcome='failed' id='0' message='Message 0'>
-        <object_1>
-          0
-        </object_1>
-        <operator>
-          :&lt;
-        </operator>
-        <object_2>
-          1
-        </object_2>
-        <exception class='Minitest::Assertion'>
-          <message>
-            Expected 0 to not be &lt; 1.
-          </message>
+        <object_1 class='Integer' value='0'/>
+        <operator class='Symbol' value=':&lt;'/>
+        <object_2 class='Integer' value='1'/>
+        <exception class='Minitest::Assertion' message='Expected 0 to not be &lt; 1.'>
           <backtrace/>
         </exception>
       </verdict>
     </section>
     <section name='Args=[true, :==, true]'>
       <verdict method='verdict_refute_operator?' outcome='failed' id='1' message='Message 1'>
-        <object_1>
-          true
-        </object_1>
-        <operator>
-          :==
-        </operator>
-        <object_2>
-          true
-        </object_2>
-        <exception class='Minitest::Assertion'>
-          <message>
-            Expected true to not be == true.
-          </message>
+        <object_1 class='TrueClass' value='true'/>
+        <operator class='Symbol' value=':=='/>
+        <object_2 class='TrueClass' value='true'/>
+        <exception class='Minitest::Assertion' message='Expected true to not be == true.'>
           <backtrace/>
         </exception>
       </verdict>
     </section>
   </section>
   <verdict method='verdict_assert_equal?' outcome='passed' id='__error_count__'>
-    <exp_value>
-      0
-    </exp_value>
-    <act_value>
-      0
-    </act_value>
+    <expected class='Integer' value='0'/>
+    <actual class='Integer' value='0'/>
   </verdict>
 </log>

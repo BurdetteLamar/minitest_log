@@ -12,7 +12,7 @@ module VerdictAssertion
 
   def _verdict?(verdict_method, verdict_id, actual, message)
     args_hash = {
-        :act_value => actual,
+        :actual => actual,
     }
     _get_verdict?(verdict_method, verdict_id, message, args_hash)
   end
@@ -30,7 +30,7 @@ module VerdictAssertion
 
   def _verdict_empty?(verdict_method, verdict_id, actual, message)
     args_hash = {
-        :act_value => actual,
+        :actual => actual,
     }
     _get_verdict?(verdict_method, verdict_id, message, args_hash)
   end
@@ -53,8 +53,8 @@ module VerdictAssertion
 
   def _verdict_equal?(verdict_method, verdict_id, expected, actual, message)
     args_hash = {
-        :exp_value => expected,
-        :act_value => actual,
+        :expected => expected,
+        :actual => actual,
     }
     _get_verdict?(verdict_method, verdict_id, message, args_hash)
   end
@@ -72,8 +72,8 @@ module VerdictAssertion
 
   def _verdict_in_delta?(verdict_method, verdict_id, expected, actual, delta, message)
     args_hash = {
-        :exp_value => expected,
-        :act_value => actual,
+        :expected => expected,
+        :actual => actual,
         :delta => delta,
     }
     _get_verdict?(verdict_method, verdict_id, message, args_hash)
@@ -92,8 +92,8 @@ module VerdictAssertion
 
   def _verdict_in_epsilon?(verdict_method, verdict_id, expected, actual, epsilon, message)
     args_hash = {
-        :exp_value => expected,
-        :act_value => actual,
+        :expected => expected,
+        :actual => actual,
         :epsilon => epsilon,
     }
     _get_verdict?(verdict_method, verdict_id, message, args_hash)
@@ -112,8 +112,8 @@ module VerdictAssertion
 
   def _verdict_includes?(verdict_method, verdict_id, expected, actual, message)
     args_hash = {
-        :exp_value => expected,
-        :act_value => actual,
+        :expected => expected,
+        :actual => actual,
     }
     _get_verdict?(verdict_method, verdict_id, message, args_hash)
   end
@@ -131,8 +131,8 @@ module VerdictAssertion
 
   def _verdict_instance_of?(verdict_method, verdict_id, expected, actual, message)
     args_hash = {
-        :exp_value => expected,
-        :act_value => actual,
+        :expected => expected,
+        :actual => actual,
     }
     _get_verdict?(verdict_method, verdict_id, message, args_hash)
   end
@@ -150,8 +150,8 @@ module VerdictAssertion
 
   def _verdict_kind_of?(verdict_method, verdict_id, expected, actual, message)
     args_hash = {
-        :exp_value => expected,
-        :act_value => actual,
+        :expected => expected,
+        :actual => actual,
     }
     _get_verdict?(verdict_method, verdict_id, message, args_hash)
   end
@@ -170,8 +170,8 @@ module VerdictAssertion
 
   def _verdict_match?(verdict_method, verdict_id, expected, actual, message)
     args_hash = {
-        :exp_value => expected,
-        :act_value => actual,
+        :expected => expected,
+        :actual => actual,
     }
     _get_verdict?(verdict_method, verdict_id, message, args_hash)
   end
@@ -190,7 +190,7 @@ module VerdictAssertion
 
   def _verdict_nil?(verdict_method, verdict_id, actual, message)
     args_hash = {
-        :act_value => actual,
+        :actual => actual,
     }
     _get_verdict?(verdict_method, verdict_id, message, args_hash)
   end
@@ -305,8 +305,8 @@ module VerdictAssertion
 
   def _verdict_same?(verdict_method, verdict_id, expected, actual, message)
     args_hash = {
-        :exp_value => expected,
-        :act_value => actual,
+        :expected => expected,
+        :actual => actual,
     }
     _get_verdict?(verdict_method, verdict_id, message, args_hash)
   end

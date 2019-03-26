@@ -3,31 +3,19 @@
   <section name='Test' method='verdict_assert_match?' type='pass'>
     <section name='Args=[/b/, &quot;abc&quot;]'>
       <verdict method='verdict_assert_match?' outcome='passed' id='0' message='Message 0'>
-        <exp_value>
-          /b/
-        </exp_value>
-        <act_value>
-          abc
-        </act_value>
+        <expected class='Regexp' value='/b/'/>
+        <actual class='String' value='&quot;abc&quot;'/>
       </verdict>
     </section>
     <section name='Args=[/./, &quot;a&quot;]'>
       <verdict method='verdict_assert_match?' outcome='passed' id='1' message='Message 1'>
-        <exp_value>
-          /./
-        </exp_value>
-        <act_value>
-          a
-        </act_value>
+        <expected class='Regexp' value='/./'/>
+        <actual class='String' value='&quot;a&quot;'/>
       </verdict>
     </section>
   </section>
   <verdict method='verdict_assert_equal?' outcome='passed' id='__error_count__'>
-    <exp_value>
-      0
-    </exp_value>
-    <act_value>
-      0
-    </act_value>
+    <expected class='Integer' value='0'/>
+    <actual class='Integer' value='0'/>
   </verdict>
 </log>

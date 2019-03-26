@@ -3,43 +3,25 @@
   <section name='Test' method='verdict_refute_match?' type='fail'>
     <section name='Args=[/b/, &quot;abc&quot;]'>
       <verdict method='verdict_refute_match?' outcome='failed' id='0' message='Message 0'>
-        <exp_value>
-          /b/
-        </exp_value>
-        <act_value>
-          abc
-        </act_value>
-        <exception class='Minitest::Assertion'>
-          <message>
-            Expected /b/ to not match # encoding: UTF-8 &quot;abc&quot;.
-          </message>
+        <expected class='Regexp' value='/b/'/>
+        <actual class='String' value='&quot;abc&quot;'/>
+        <exception class='Minitest::Assertion' message='Expected /b/ to not match # encoding: UTF-8'>
           <backtrace/>
         </exception>
       </verdict>
     </section>
     <section name='Args=[/./, &quot;a&quot;]'>
       <verdict method='verdict_refute_match?' outcome='failed' id='1' message='Message 1'>
-        <exp_value>
-          /./
-        </exp_value>
-        <act_value>
-          a
-        </act_value>
-        <exception class='Minitest::Assertion'>
-          <message>
-            Expected /./ to not match # encoding: UTF-8 &quot;a&quot;.
-          </message>
+        <expected class='Regexp' value='/./'/>
+        <actual class='String' value='&quot;a&quot;'/>
+        <exception class='Minitest::Assertion' message='Expected /./ to not match # encoding: UTF-8'>
           <backtrace/>
         </exception>
       </verdict>
     </section>
   </section>
   <verdict method='verdict_assert_equal?' outcome='passed' id='__error_count__'>
-    <exp_value>
-      0
-    </exp_value>
-    <act_value>
-      0
-    </act_value>
+    <expected class='Integer' value='0'/>
+    <actual class='Integer' value='0'/>
   </verdict>
 </log>
