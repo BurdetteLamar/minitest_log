@@ -33,14 +33,19 @@ class MinitestLog
   DEFAULT_XML_ROOT_TAG_NAME = 'log'
   DEFAULT_XML_INDENTATION = 2
 
+  class MinitestLogError < Exception; end
+
+  class NoBlockError < MinitestLogError
+  end
+
   def self.open(file_path = File.join(DEFAULT_DIR_PATH, DEFAULT_FILE_NAME), options=Hash.new)
-    raise "No block given.\n" unless (block_given?)
+    raise NoBlockError.new('No block given for MinitestLog#open.') unless (block_given?)
     default_options = Hash[
         :root_name => DEFAULT_XML_ROOT_TAG_NAME,
         :xml_indentation => DEFAULT_XML_INDENTATION
     ]
     options = default_options.merge(options)
-    log = self.new(file_path, options, im_ok_youre_not_ok = true)
+    log = self.new(file_path, options)
     begin
       yield log
     rescue => x
@@ -89,6 +94,7 @@ class MinitestLog
   end
 
   def put_element(element_name = 'element', *args)
+    # TODO:  Reserve some elemenent names.
     attributes = {}
     pcdata = ''
     start_time = nil
@@ -227,8 +233,8 @@ class MinitestLog
 
   private
 
-  def initialize(file_path, options=Hash.new, im_ok_youre_not_ok = false)
-    unless im_ok_youre_not_ok
+  def initialize(file_path, options=Hash.new)
+    unless caller[1].match(/minitest_log.rb:\d+:in `open'/)
       # Caller should call MinitestLog.open, not MinitestLog.new.
       message = "Please use #{self.class}.open, not #{self.class}.new.\n"
       raise RuntimeError.new(message)
@@ -251,6 +257,9 @@ class MinitestLog
   end
 
   def dispose
+
+    # Add a verdict for the error count.
+    verdict_assert_equal?('__error_count__', 0, self.counts[:error])
 
     # Close the text log.
     log_puts("END\t#{self.root_name}")

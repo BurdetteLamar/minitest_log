@@ -1,5 +1,5 @@
 <log>
-  <summary verdicts='0' failures='0' errors='1'/>
+  <summary verdicts='1' failures='1' errors='1'/>
   <rescue>
     <rescued_exception>
       <class>
@@ -19,5 +19,19 @@
       <backtrace>
       </backtrace>
     </uncaught_exception>
+    <verdict method='verdict_assert_equal?' outcome='failed' id='__error_count__'>
+      <exp_value>
+        0
+      </exp_value>
+      <act_value>
+        1
+      </act_value>
+      <exception class='Minitest::Assertion'>
+        <message>
+          Expected: 0 Actual: 1
+        </message>
+        <backtrace/>
+      </exception>
+    </verdict>
   </no_rescue>
 </log>

@@ -1,6 +1,8 @@
 require 'test_helper'
 
-class MinitestLogTest < Minitest::Test
+class LogTest < Minitest::Test
+
+  include TestHelper
 
   def test_version_exist
     refute_nil ::MinitestLog::VERSION
@@ -14,20 +16,10 @@ class MinitestLogTest < Minitest::Test
   end
 
   def test_open_no_block
-    exception = assert_raises(RuntimeError) do
+    exception = assert_raises(MinitestLog::MinitestLogError) do
       MinitestLog.open
     end
     store_and_assert('open_no_block.txt', exception.message)
-  end
-
-  def _test(name, open_options = {})
-    file_name = "#{name}.xml"
-    file_path = actual_file_path(file_name)
-    MinitestLog.open(file_path, open_options) do |log|
-      yield log
-    end
-    condition_file(file_path)
-    assert_file(file_name)
   end
 
   def test_open_block
@@ -310,45 +302,6 @@ EOT
     inspect.instance_eval('undef :each')
     inspect.instance_eval('undef :to_s')
     _test_put(:put_inspect, inspect)
-  end
-
-  def actual_file_path(file_name)
-    File.join(
-        'test',
-        'actual',
-        file_name
-    )
-  end
-
-  def expected_file_path(file_name)
-    File.join(
-        'test',
-        'expected',
-        file_name
-    )
-  end
-
-  def store_and_assert(file_name, actual_content)
-    File.write(actual_file_path(file_name), actual_content)
-    assert_file(file_name)
-  end
-
-  def assert_file(file_name)
-    expected_content = File.readlines(expected_file_path(file_name))
-    actual_content = File.readlines(actual_file_path(file_name))
-    diff = Diff::LCS.diff(expected_content, actual_content)
-    assert_empty(diff)
-  end
-
-  def condition_file(file_path)
-    content = File.read(file_path)
-    timestamp_regexp = /timestamp='\d{4}-\d{2}-\d{2}-\w{3}-\d{2}\.\d{2}\.\d{2}\.\d{3}'/
-    timestamp_dummy = '0000-00-00-xxx-00.00.00.000'
-    content.gsub!(timestamp_regexp, "timestamp='#{timestamp_dummy}'")
-    duration_regexp = /duration_seconds='\d.\d{3}'/
-    duration_dummy = '0.000'
-    content.gsub!(duration_regexp, "duration_seconds='#{duration_dummy}'")
-    File.write(file_path, content)
   end
 
 end

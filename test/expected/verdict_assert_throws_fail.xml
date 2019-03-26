@@ -1,0 +1,22 @@
+<log>
+  <summary verdicts='2' failures='1' errors='0'/>
+  <verdict method='verdict_assert_throws?' outcome='failed' id='1'>
+    <error_class>
+      RuntimeError
+    </error_class>
+    <exception class='Minitest::Assertion'>
+      <message>
+        Expected RuntimeError to have been thrown.
+      </message>
+      <backtrace/>
+    </exception>
+  </verdict>
+  <verdict method='verdict_assert_equal?' outcome='passed' id='__error_count__'>
+    <exp_value>
+      0
+    </exp_value>
+    <act_value>
+      0
+    </act_value>
+  </verdict>
+</log>

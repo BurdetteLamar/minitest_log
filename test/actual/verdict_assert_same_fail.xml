@@ -1,0 +1,46 @@
+<log>
+  <summary verdicts='3' failures='2' errors='0'/>
+  <section name='Test' method='verdict_assert_same?' type='fail'>
+    <section name='Args=[&quot;foo&quot;, &quot;foo&quot;]'>
+      <verdict method='verdict_assert_same?' outcome='failed' id='0' message='Message 0'>
+        <exp_value>
+          foo
+        </exp_value>
+        <act_value>
+          foo
+        </act_value>
+        <exception class='Minitest::Assertion'>
+          <message>
+            Expected # encoding: UTF-8 &quot;foo&quot; oid=(00000000) to be the
+            same as # encoding: UTF-8 &quot;foo&quot; oid=(00000000).
+          </message>
+          <backtrace/>
+        </exception>
+      </verdict>
+    </section>
+    <section name='Args=[[], []]'>
+      <verdict method='verdict_assert_same?' outcome='failed' id='1' message='Message 1'>
+        <exp_value>
+          []
+        </exp_value>
+        <act_value>
+          []
+        </act_value>
+        <exception class='Minitest::Assertion'>
+          <message>
+            Expected [] oid=(00000000) to be the same as [] oid=(00000000).
+          </message>
+          <backtrace/>
+        </exception>
+      </verdict>
+    </section>
+  </section>
+  <verdict method='verdict_assert_equal?' outcome='passed' id='__error_count__'>
+    <exp_value>
+      0
+    </exp_value>
+    <act_value>
+      0
+    </act_value>
+  </verdict>
+</log>

@@ -1,0 +1,51 @@
+<log>
+  <summary verdicts='3' failures='2' errors='0'/>
+  <section name='Test' method='verdict_assert_operator?' type='fail'>
+    <section name='Args=[0, :==, 1]'>
+      <verdict method='verdict_assert_operator?' outcome='failed' id='0' message='Message 0'>
+        <object_1>
+          0
+        </object_1>
+        <operator>
+          :==
+        </operator>
+        <object_2>
+          1
+        </object_2>
+        <exception class='Minitest::Assertion'>
+          <message>
+            Expected 0 to be == 1.
+          </message>
+          <backtrace/>
+        </exception>
+      </verdict>
+    </section>
+    <section name='Args=[false, :==, true]'>
+      <verdict method='verdict_assert_operator?' outcome='failed' id='1' message='Message 1'>
+        <object_1>
+          false
+        </object_1>
+        <operator>
+          :==
+        </operator>
+        <object_2>
+          true
+        </object_2>
+        <exception class='Minitest::Assertion'>
+          <message>
+            Expected false to be == true.
+          </message>
+          <backtrace/>
+        </exception>
+      </verdict>
+    </section>
+  </section>
+  <verdict method='verdict_assert_equal?' outcome='passed' id='__error_count__'>
+    <exp_value>
+      0
+    </exp_value>
+    <act_value>
+      0
+    </act_value>
+  </verdict>
+</log>

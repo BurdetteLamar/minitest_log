@@ -1,0 +1,27 @@
+<log>
+  <summary verdicts='3' failures='0' errors='0'/>
+  <section name='Test' method='verdict_refute_empty?' type='pass'>
+    <section name='Args=[[0]]'>
+      <verdict method='verdict_refute_empty?' outcome='passed' id='0' message='Message 0'>
+        <act_value>
+          [0]
+        </act_value>
+      </verdict>
+    </section>
+    <section name='Args=[&quot;not_empty&quot;]'>
+      <verdict method='verdict_refute_empty?' outcome='passed' id='1' message='Message 1'>
+        <act_value>
+          not_empty
+        </act_value>
+      </verdict>
+    </section>
+  </section>
+  <verdict method='verdict_assert_equal?' outcome='passed' id='__error_count__'>
+    <exp_value>
+      0
+    </exp_value>
+    <act_value>
+      0
+    </act_value>
+  </verdict>
+</log>

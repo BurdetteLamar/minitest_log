@@ -1,0 +1,20 @@
+<log>
+  <summary verdicts='2' failures='1' errors='0'/>
+  <verdict method='verdict_assert_silent?' outcome='failed' id='1'>
+    <exception class='Minitest::Assertion'>
+      <message>
+        In stderr. --- expected +++ actual @@ -1,2 +1 @@ -# encoding: UTF-8
+        -&quot;&quot; +&quot;foo&quot;
+      </message>
+      <backtrace/>
+    </exception>
+  </verdict>
+  <verdict method='verdict_assert_equal?' outcome='passed' id='__error_count__'>
+    <exp_value>
+      0
+    </exp_value>
+    <act_value>
+      0
+    </act_value>
+  </verdict>
+</log>

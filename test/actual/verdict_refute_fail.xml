@@ -1,0 +1,39 @@
+<log>
+  <summary verdicts='3' failures='2' errors='0'/>
+  <section name='Test' method='verdict_refute?' type='fail'>
+    <section name='Args=[true]'>
+      <verdict method='verdict_refute?' outcome='failed' id='0' message='Message 0'>
+        <act_value>
+          true
+        </act_value>
+        <exception class='Minitest::Assertion'>
+          <message>
+            Expected true to not be truthy.
+          </message>
+          <backtrace/>
+        </exception>
+      </verdict>
+    </section>
+    <section name='Args=[&quot;not_nil&quot;]'>
+      <verdict method='verdict_refute?' outcome='failed' id='1' message='Message 1'>
+        <act_value>
+          not_nil
+        </act_value>
+        <exception class='Minitest::Assertion'>
+          <message>
+            Expected # encoding: UTF-8 &quot;not_nil&quot; to not be truthy.
+          </message>
+          <backtrace/>
+        </exception>
+      </verdict>
+    </section>
+  </section>
+  <verdict method='verdict_assert_equal?' outcome='passed' id='__error_count__'>
+    <exp_value>
+      0
+    </exp_value>
+    <act_value>
+      0
+    </act_value>
+  </verdict>
+</log>

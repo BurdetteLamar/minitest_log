@@ -1,0 +1,45 @@
+<log>
+  <summary verdicts='3' failures='2' errors='0'/>
+  <section name='Test' method='verdict_assert_predicate?' type='fail'>
+    <section name='Args=[&quot;x&quot;, :empty?]'>
+      <verdict method='verdict_assert_predicate?' outcome='failed' id='0' message='Message 0'>
+        <object>
+          x
+        </object>
+        <operator>
+          :empty?
+        </operator>
+        <exception class='Minitest::Assertion'>
+          <message>
+            Expected # encoding: UTF-8 &quot;x&quot; to be empty?.
+          </message>
+          <backtrace/>
+        </exception>
+      </verdict>
+    </section>
+    <section name='Args=[false, :nil?]'>
+      <verdict method='verdict_assert_predicate?' outcome='failed' id='1' message='Message 1'>
+        <object>
+          false
+        </object>
+        <operator>
+          :nil?
+        </operator>
+        <exception class='Minitest::Assertion'>
+          <message>
+            Expected false to be nil?.
+          </message>
+          <backtrace/>
+        </exception>
+      </verdict>
+    </section>
+  </section>
+  <verdict method='verdict_assert_equal?' outcome='passed' id='__error_count__'>
+    <exp_value>
+      0
+    </exp_value>
+    <act_value>
+      0
+    </act_value>
+  </verdict>
+</log>

@@ -1,5 +1,5 @@
 <log>
-  <summary verdicts='6' failures='0' errors='0'/>
+  <summary verdicts='7' failures='0' errors='0'/>
   <verdict method='verdict_assert?' outcome='passed' id='default_log'>
     <act_value>
       true
@@ -28,6 +28,14 @@
   <verdict method='verdict_assert?' outcome='passed' id='ruby_ruby'>
     <act_value>
       true
+    </act_value>
+  </verdict>
+  <verdict method='verdict_assert_equal?' outcome='passed' id='__error_count__'>
+    <exp_value>
+      0
+    </exp_value>
+    <act_value>
+      0
     </act_value>
   </verdict>
 </log>
