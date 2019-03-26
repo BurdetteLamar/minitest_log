@@ -359,12 +359,12 @@ class VerdictTest < MiniTest::Test
         )
   end
 
-  def zzz_test_verdict_refute_same
+  def test_verdict_refute_same
     _test_verdict(
         test_method: __method__,
         arg_count_range: (2..2),
-        pass_cases: [Args.new(:foo, :foo), Args.new(0, 0)],
-        fail_cases: [Args.new('foo', 'foo'), Args.new([], [])],
+        pass_cases: [Args.new('foo', 'foo'), Args.new([], [])],
+        fail_cases: [Args.new(:foo, :foo), Args.new(0, 0)],
         )
   end
 
