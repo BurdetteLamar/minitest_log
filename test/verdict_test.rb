@@ -350,25 +350,13 @@ class VerdictTest < MiniTest::Test
         )
   end
 
-  def zzz_test_verdict_assert_same
-
-    method = :verdict_assert_same?
-    passing_arguments = {
-        :expected => :same,
-        :actual => :same,
-    }
-    failing_arguments = {
-        :expected => :same,
-        :actual => :different,
-    }
-
-    verdict_common_test(
-        :method => method,
-        :passing_arguments => passing_arguments,
-        :failing_arguments => failing_arguments,
-        :exception_message => 'Expected :different'
-    )
-
+  def test_verdict_assert_same
+    _test_verdict(
+        test_method: __method__,
+        arg_count_range: (3..3),
+        pass_cases: [Args.new(:foo, :foo), Args.new(0, 0)],
+        fail_cases: [Args.new('foo', 'foo'), Args.new([], [])],
+        )
   end
 
   def zzz_test_verdict_refute_same
