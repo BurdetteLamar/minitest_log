@@ -1,17 +1,17 @@
 <log>
-  <summary verdicts='2' failures='0' errors='0'/>
-  <section name='Test' method='verdict_assert_kind_of?' type='pass'>
-    <section name='Args=[Exception, #&lt;ArgumentError: ArgumentError&gt;]'>
-      <verdict method='verdict_assert_kind_of?' outcome='passed' id='0' message='Message 0'>
-        <expected class='Class' value='Exception'/>
-        <actual class='ArgumentError' value='#&lt;ArgumentError: ArgumentError&gt;'/>
-      </verdict>
-    </section>
-    <section name='Args=[Numeric, 0]'>
-      <verdict method='verdict_assert_kind_of?' outcome='passed' id='1' message='Message 1'>
-        <expected class='Class' value='Numeric'/>
-        <actual class='Integer' value='0'/>
-      </verdict>
-    </section>
-  </section>
+  <summary_ verdicts='2' failures='0' errors='0'/>
+  <section_ name='Test' method='verdict_assert_kind_of?' type='pass'>
+    <section_ name='Args=[Exception, #&lt;ArgumentError: ArgumentError&gt;]'>
+      <verdict_ method='verdict_assert_kind_of?' outcome='passed' id='0' message='Message 0'>
+        <expected_ class='Class' value='Exception'/>
+        <actual_ class='ArgumentError' value='#&lt;ArgumentError: ArgumentError&gt;'/>
+      </verdict_>
+    </section_>
+    <section_ name='Args=[Numeric, 0]'>
+      <verdict_ method='verdict_assert_kind_of?' outcome='passed' id='1' message='Message 1'>
+        <expected_ class='Class' value='Numeric'/>
+        <actual_ class='Integer' value='0'/>
+      </verdict_>
+    </section_>
+  </section_>
 </log>

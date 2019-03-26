@@ -1,8 +1,8 @@
 <log>
-  <summary verdicts='1' failures='1' errors='0'/>
-  <verdict method='verdict_assert_silent?' outcome='failed' id='1'>
-    <exception class='Minitest::Assertion' message='In stderr.'>
-      <backtrace/>
-    </exception>
-  </verdict>
+  <summary_ verdicts='1' failures='1' errors='0'/>
+  <verdict_ method='verdict_assert_silent?' outcome='failed' id='1'>
+    <exception_ class='Minitest::Assertion' message='In stderr.'>
+      <backtrace_/>
+    </exception_>
+  </verdict_>
 </log>

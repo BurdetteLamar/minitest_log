@@ -1,23 +1,23 @@
 <log>
-  <summary verdicts='2' failures='2' errors='0'/>
-  <section name='Test' method='verdict_assert_predicate?' type='fail'>
-    <section name='Args=[&quot;x&quot;, :empty?]'>
-      <verdict method='verdict_assert_predicate?' outcome='failed' id='0' message='Message 0'>
-        <object class='String' value='&quot;x&quot;'/>
-        <operator class='Symbol' value=':empty?'/>
-        <exception class='Minitest::Assertion' message='Expected # encoding: UTF-8'>
-          <backtrace/>
-        </exception>
-      </verdict>
-    </section>
-    <section name='Args=[false, :nil?]'>
-      <verdict method='verdict_assert_predicate?' outcome='failed' id='1' message='Message 1'>
-        <object class='FalseClass' value='false'/>
-        <operator class='Symbol' value=':nil?'/>
-        <exception class='Minitest::Assertion' message='Expected false to be nil?.'>
-          <backtrace/>
-        </exception>
-      </verdict>
-    </section>
-  </section>
+  <summary_ verdicts='2' failures='2' errors='0'/>
+  <section_ name='Test' method='verdict_assert_predicate?' type='fail'>
+    <section_ name='Args=[&quot;x&quot;, :empty?]'>
+      <verdict_ method='verdict_assert_predicate?' outcome='failed' id='0' message='Message 0'>
+        <object_ class='String' value='&quot;x&quot;'/>
+        <operator_ class='Symbol' value=':empty?'/>
+        <exception_ class='Minitest::Assertion' message='Expected # encoding: UTF-8'>
+          <backtrace_/>
+        </exception_>
+      </verdict_>
+    </section_>
+    <section_ name='Args=[false, :nil?]'>
+      <verdict_ method='verdict_assert_predicate?' outcome='failed' id='1' message='Message 1'>
+        <object_ class='FalseClass' value='false'/>
+        <operator_ class='Symbol' value=':nil?'/>
+        <exception_ class='Minitest::Assertion' message='Expected false to be nil?.'>
+          <backtrace_/>
+        </exception_>
+      </verdict_>
+    </section_>
+  </section_>
 </log>

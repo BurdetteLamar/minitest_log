@@ -1,6 +1,6 @@
 <log>
-  <summary verdicts='1' failures='0' errors='0'/>
-  <verdict method='verdict_assert_throws?' outcome='passed' id='0'>
-    <error_class class='Class' value='Exception'/>
-  </verdict>
+  <summary_ verdicts='1' failures='0' errors='0'/>
+  <verdict_ method='verdict_assert_throws?' outcome='passed' id='0'>
+    <error_class_ class='Class' value='Exception'/>
+  </verdict_>
 </log>

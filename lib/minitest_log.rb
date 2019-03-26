@@ -30,9 +30,10 @@ class MinitestLog
   include Minitest::Assertions
 
   class MinitestLogError < Exception; end
-
-  class NoBlockError < MinitestLogError
-  end
+  class NoBlockError < MinitestLogError; end
+  class DuplicateVerdictIdError < MinitestLogError; end
+  class IllegalElementNameError < MinitestLogError; end
+  class IllegalNewError < MinitestLogError; end
 
   def self.open(file_path = File.join('.', 'log.xml'), options=Hash.new)
     raise NoBlockError.new('No block given for MinitestLog#open.') unless (block_given?)
@@ -91,7 +92,18 @@ class MinitestLog
   end
 
   def put_element(element_name = 'element', *args)
-    # TODO:  Reserve some elemenent names.
+    if false ||
+        caller[0].match(/minitest_log.rb/) ||
+        caller[0].match(/verdict_assertion.rb/)
+      # Make the element name special.
+      element_name += '_'
+    elsif element_name.end_with?('_')
+      # Don't accept user's special.
+      message = "Element name should not end with underescore: #{element_name}"
+      raise IllegalElementNameError.new(message)
+    else
+      # Ok.
+    end
     attributes = {}
     pcdata = ''
     start_time = nil
@@ -231,8 +243,8 @@ class MinitestLog
   def initialize(file_path, options=Hash.new)
     unless caller[1].match(/minitest_log.rb:\d+:in `open'/)
       # Caller should call MinitestLog.open, not MinitestLog.new.
-      message = "Please use #{self.class}.open, not #{self.class}.new.\n"
-      raise RuntimeError.new(message)
+      message = "Please use #{self.class}.open, not #{self.class}.new\n"
+      raise IllegalNewError.new(message)
     end
     self.assertions = 0
     self.file_path = file_path
@@ -281,7 +293,7 @@ class MinitestLog
             element = element.add_element(element_name)
             stack.push(element)
             if stack.length == 1
-              summary_element = element.add_element('summary')
+              summary_element = element.add_element('summary_')
               summary_element.add_attribute('verdicts', self.counts[:verdict].to_s)
               summary_element.add_attribute('failures', self.counts[:failure].to_s)
               summary_element.add_attribute('errors', self.counts[:error].to_s)
@@ -390,7 +402,7 @@ class MinitestLog
     self.verdict_ids ||= Set.new
     if self.verdict_ids.include?(verdict_id)
       message = format('Duplicate verdict id %s;  must be unique within its test method', verdict_id.inspect)
-      raise ArgumentError.new(message)
+      raise DuplicateVerdictIdError.new(message)
     end
     self.verdict_ids.add(verdict_id)
     nil

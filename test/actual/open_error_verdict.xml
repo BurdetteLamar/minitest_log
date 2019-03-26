@@ -1,7 +1,7 @@
 <log>
-  <summary verdicts='1' failures='0' errors='0'/>
-  <verdict method='verdict_assert_equal?' outcome='passed' id='error_count'>
-    <expected class='Integer' value='0'/>
-    <actual class='Integer' value='0'/>
-  </verdict>
+  <summary_ verdicts='1' failures='0' errors='0'/>
+  <verdict_ method='verdict_assert_equal?' outcome='passed' id='error_count'>
+    <expected_ class='Integer' value='0'/>
+    <actual_ class='Integer' value='0'/>
+  </verdict_>
 </log>

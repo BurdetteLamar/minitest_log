@@ -1,21 +1,21 @@
 <log>
-  <summary verdicts='6' failures='0' errors='0'/>
-  <verdict method='verdict_assert?' outcome='passed' id='default_log'>
-    <actual class='TrueClass' value='true'/>
-  </verdict>
-  <verdict method='verdict_assert?' outcome='passed' id='default_ruby'>
-    <actual class='TrueClass' value='true'/>
-  </verdict>
-  <verdict method='verdict_assert?' outcome='passed' id='log_log'>
-    <actual class='TrueClass' value='true'/>
-  </verdict>
-  <verdict method='verdict_assert?' outcome='passed' id='log_ruby'>
-    <actual class='TrueClass' value='true'/>
-  </verdict>
-  <verdict method='verdict_assert?' outcome='passed' id='ruby_log'>
-    <actual class='TrueClass' value='true'/>
-  </verdict>
-  <verdict method='verdict_assert?' outcome='passed' id='ruby_ruby'>
-    <actual class='TrueClass' value='true'/>
-  </verdict>
+  <summary_ verdicts='6' failures='0' errors='0'/>
+  <verdict_ method='verdict_assert?' outcome='passed' id='default_log'>
+    <actual_ class='TrueClass' value='true'/>
+  </verdict_>
+  <verdict_ method='verdict_assert?' outcome='passed' id='default_ruby'>
+    <actual_ class='TrueClass' value='true'/>
+  </verdict_>
+  <verdict_ method='verdict_assert?' outcome='passed' id='log_log'>
+    <actual_ class='TrueClass' value='true'/>
+  </verdict_>
+  <verdict_ method='verdict_assert?' outcome='passed' id='log_ruby'>
+    <actual_ class='TrueClass' value='true'/>
+  </verdict_>
+  <verdict_ method='verdict_assert?' outcome='passed' id='ruby_log'>
+    <actual_ class='TrueClass' value='true'/>
+  </verdict_>
+  <verdict_ method='verdict_assert?' outcome='passed' id='ruby_ruby'>
+    <actual_ class='TrueClass' value='true'/>
+  </verdict_>
 </log>

@@ -1,17 +1,17 @@
 <log>
-  <summary verdicts='0' failures='0' errors='1'/>
+  <summary_ verdicts='0' failures='0' errors='1'/>
   <rescue>
-    <rescued_exception class='RuntimeError' message='Rescued!'>
-      <backtrace/>
-    </rescued_exception>
+    <rescued_exception_ class='RuntimeError' message='Rescued!'>
+      <backtrace_/>
+    </rescued_exception_>
   </rescue>
   <no_rescue>
-    <uncaught_exception timestamp='0000-00-00-xxx-00.00.00.000' class='RuntimeError'>
-      <message>
+    <uncaught_exception_ timestamp='0000-00-00-xxx-00.00.00.000' class='RuntimeError'>
+      <message_>
         Not rescued!
-      </message>
-      <backtrace>
-      </backtrace>
-    </uncaught_exception>
+      </message_>
+      <backtrace_>
+      </backtrace_>
+    </uncaught_exception_>
   </no_rescue>
 </log>

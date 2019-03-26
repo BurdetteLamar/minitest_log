@@ -1,19 +1,19 @@
 <log>
-  <summary verdicts='2' failures='0' errors='0'/>
-  <section name='Test' method='verdict_refute_in_epsilon?' type='pass'>
-    <section name='Args=[3, 2, 0]'>
-      <verdict method='verdict_refute_in_epsilon?' outcome='passed' id='0' message='Message 0'>
-        <expected class='Integer' value='3'/>
-        <actual class='Integer' value='2'/>
-        <epsilon class='Integer' value='0'/>
-      </verdict>
-    </section>
-    <section name='Args=[4, 3, 0]'>
-      <verdict method='verdict_refute_in_epsilon?' outcome='passed' id='1' message='Message 1'>
-        <expected class='Integer' value='4'/>
-        <actual class='Integer' value='3'/>
-        <epsilon class='Integer' value='0'/>
-      </verdict>
-    </section>
-  </section>
+  <summary_ verdicts='2' failures='0' errors='0'/>
+  <section_ name='Test' method='verdict_refute_in_epsilon?' type='pass'>
+    <section_ name='Args=[3, 2, 0]'>
+      <verdict_ method='verdict_refute_in_epsilon?' outcome='passed' id='0' message='Message 0'>
+        <expected_ class='Integer' value='3'/>
+        <actual_ class='Integer' value='2'/>
+        <epsilon_ class='Integer' value='0'/>
+      </verdict_>
+    </section_>
+    <section_ name='Args=[4, 3, 0]'>
+      <verdict_ method='verdict_refute_in_epsilon?' outcome='passed' id='1' message='Message 1'>
+        <expected_ class='Integer' value='4'/>
+        <actual_ class='Integer' value='3'/>
+        <epsilon_ class='Integer' value='0'/>
+      </verdict_>
+    </section_>
+  </section_>
 </log>

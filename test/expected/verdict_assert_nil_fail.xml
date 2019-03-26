@@ -1,21 +1,21 @@
 <log>
-  <summary verdicts='2' failures='2' errors='0'/>
-  <section name='Test' method='verdict_assert_nil?' type='fail'>
-    <section name='Args=[0]'>
-      <verdict method='verdict_assert_nil?' outcome='failed' id='0' message='Message 0'>
-        <actual class='Integer' value='0'/>
-        <exception class='Minitest::Assertion' message='Expected 0 to be nil.'>
-          <backtrace/>
-        </exception>
-      </verdict>
-    </section>
-    <section name='Args=[false]'>
-      <verdict method='verdict_assert_nil?' outcome='failed' id='1' message='Message 1'>
-        <actual class='FalseClass' value='false'/>
-        <exception class='Minitest::Assertion' message='Expected false to be nil.'>
-          <backtrace/>
-        </exception>
-      </verdict>
-    </section>
-  </section>
+  <summary_ verdicts='2' failures='2' errors='0'/>
+  <section_ name='Test' method='verdict_assert_nil?' type='fail'>
+    <section_ name='Args=[0]'>
+      <verdict_ method='verdict_assert_nil?' outcome='failed' id='0' message='Message 0'>
+        <actual_ class='Integer' value='0'/>
+        <exception_ class='Minitest::Assertion' message='Expected 0 to be nil.'>
+          <backtrace_/>
+        </exception_>
+      </verdict_>
+    </section_>
+    <section_ name='Args=[false]'>
+      <verdict_ method='verdict_assert_nil?' outcome='failed' id='1' message='Message 1'>
+        <actual_ class='FalseClass' value='false'/>
+        <exception_ class='Minitest::Assertion' message='Expected false to be nil.'>
+          <backtrace_/>
+        </exception_>
+      </verdict_>
+    </section_>
+  </section_>
 </log>

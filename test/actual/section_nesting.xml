@@ -1,12 +1,12 @@
 <log>
-  <summary verdicts='0' failures='0' errors='0'/>
-  <section name='no_nesting'/>
-  <section name='outer'>
-    <section name='inner'/>
-  </section>
-  <section name='outer'>
-    <section name='mid'>
-      <section name='inner'/>
-    </section>
-  </section>
+  <summary_ verdicts='0' failures='0' errors='0'/>
+  <section_ name='no_nesting'/>
+  <section_ name='outer'>
+    <section_ name='inner'/>
+  </section_>
+  <section_ name='outer'>
+    <section_ name='mid'>
+      <section_ name='inner'/>
+    </section_>
+  </section_>
 </log>

@@ -1,17 +1,17 @@
 <log>
-  <summary verdicts='2' failures='0' errors='0'/>
-  <section name='Test' method='verdict_assert_predicate?' type='pass'>
-    <section name='Args=[&quot;&quot;, :empty?]'>
-      <verdict method='verdict_assert_predicate?' outcome='passed' id='0' message='Message 0'>
-        <object class='String' value='&quot;&quot;'/>
-        <operator class='Symbol' value=':empty?'/>
-      </verdict>
-    </section>
-    <section name='Args=[nil, :nil?]'>
-      <verdict method='verdict_assert_predicate?' outcome='passed' id='1' message='Message 1'>
-        <object class='NilClass' value='nil'/>
-        <operator class='Symbol' value=':nil?'/>
-      </verdict>
-    </section>
-  </section>
+  <summary_ verdicts='2' failures='0' errors='0'/>
+  <section_ name='Test' method='verdict_assert_predicate?' type='pass'>
+    <section_ name='Args=[&quot;&quot;, :empty?]'>
+      <verdict_ method='verdict_assert_predicate?' outcome='passed' id='0' message='Message 0'>
+        <object_ class='String' value='&quot;&quot;'/>
+        <operator_ class='Symbol' value=':empty?'/>
+      </verdict_>
+    </section_>
+    <section_ name='Args=[nil, :nil?]'>
+      <verdict_ method='verdict_assert_predicate?' outcome='passed' id='1' message='Message 1'>
+        <object_ class='NilClass' value='nil'/>
+        <operator_ class='Symbol' value=':nil?'/>
+      </verdict_>
+    </section_>
+  </section_>
 </log>

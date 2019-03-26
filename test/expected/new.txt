@@ -1,1 +1,1 @@
-Please use MinitestLog.open, not MinitestLog.new.
+Please use MinitestLog.open, not MinitestLog.new

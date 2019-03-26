@@ -1,23 +1,23 @@
 <log>
-  <summary verdicts='2' failures='2' errors='0'/>
-  <section name='Test' method='verdict_assert_instance_of?' type='fail'>
-    <section name='Args=[Integer, :a]'>
-      <verdict method='verdict_assert_instance_of?' outcome='failed' id='0' message='Message 0'>
-        <expected class='Class' value='Integer'/>
-        <actual class='Symbol' value=':a'/>
-        <exception class='Minitest::Assertion' message='Expected :a to be an instance of Integer, not Symbol.'>
-          <backtrace/>
-        </exception>
-      </verdict>
-    </section>
-    <section name='Args=[Symbol, 0]'>
-      <verdict method='verdict_assert_instance_of?' outcome='failed' id='1' message='Message 1'>
-        <expected class='Class' value='Symbol'/>
-        <actual class='Integer' value='0'/>
-        <exception class='Minitest::Assertion' message='Expected 0 to be an instance of Symbol, not Integer.'>
-          <backtrace/>
-        </exception>
-      </verdict>
-    </section>
-  </section>
+  <summary_ verdicts='2' failures='2' errors='0'/>
+  <section_ name='Test' method='verdict_assert_instance_of?' type='fail'>
+    <section_ name='Args=[Integer, :a]'>
+      <verdict_ method='verdict_assert_instance_of?' outcome='failed' id='0' message='Message 0'>
+        <expected_ class='Class' value='Integer'/>
+        <actual_ class='Symbol' value=':a'/>
+        <exception_ class='Minitest::Assertion' message='Expected :a to be an instance of Integer, not Symbol.'>
+          <backtrace_/>
+        </exception_>
+      </verdict_>
+    </section_>
+    <section_ name='Args=[Symbol, 0]'>
+      <verdict_ method='verdict_assert_instance_of?' outcome='failed' id='1' message='Message 1'>
+        <expected_ class='Class' value='Symbol'/>
+        <actual_ class='Integer' value='0'/>
+        <exception_ class='Minitest::Assertion' message='Expected 0 to be an instance of Symbol, not Integer.'>
+          <backtrace_/>
+        </exception_>
+      </verdict_>
+    </section_>
+  </section_>
 </log>

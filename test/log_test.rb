@@ -9,7 +9,7 @@ class LogTest < Minitest::Test
   end
 
   def test_new
-    exception = assert_raises(RuntimeError) do
+    exception = assert_raises(MinitestLog::IllegalNewError) do
       MinitestLog.new('foo.xml')
     end
     store_and_assert('new.txt', exception.message)
@@ -165,6 +165,20 @@ class LogTest < Minitest::Test
         log.send(method, 'attributes_hashes', {:a => 0, :b => 1}, {:c => 2, :d => 3}) do
         end
       end
+    end
+  end
+
+  def test_element_name
+    _test('element_name') do |log|
+      log.put_element('section') do
+        log.put_element('subsection')
+      end
+    end
+    _test('element_name_illegal') do |log|
+      e = assert_raises(MinitestLog::IllegalElementNameError) do
+        log.put_element('section_')
+      end
+      log.put_element('exception', {:class => e.class, :message => e.message})
     end
   end
 

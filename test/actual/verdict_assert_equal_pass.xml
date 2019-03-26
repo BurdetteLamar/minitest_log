@@ -1,17 +1,17 @@
 <log>
-  <summary verdicts='2' failures='0' errors='0'/>
-  <section name='Test' method='verdict_assert_equal?' type='pass'>
-    <section name='Args=[0, 0]'>
-      <verdict method='verdict_assert_equal?' outcome='passed' id='0' message='Message 0'>
-        <expected class='Integer' value='0'/>
-        <actual class='Integer' value='0'/>
-      </verdict>
-    </section>
-    <section name='Args=[:a, :a]'>
-      <verdict method='verdict_assert_equal?' outcome='passed' id='1' message='Message 1'>
-        <expected class='Symbol' value=':a'/>
-        <actual class='Symbol' value=':a'/>
-      </verdict>
-    </section>
-  </section>
+  <summary_ verdicts='2' failures='0' errors='0'/>
+  <section_ name='Test' method='verdict_assert_equal?' type='pass'>
+    <section_ name='Args=[0, 0]'>
+      <verdict_ method='verdict_assert_equal?' outcome='passed' id='0' message='Message 0'>
+        <expected_ class='Integer' value='0'/>
+        <actual_ class='Integer' value='0'/>
+      </verdict_>
+    </section_>
+    <section_ name='Args=[:a, :a]'>
+      <verdict_ method='verdict_assert_equal?' outcome='passed' id='1' message='Message 1'>
+        <expected_ class='Symbol' value=':a'/>
+        <actual_ class='Symbol' value=':a'/>
+      </verdict_>
+    </section_>
+  </section_>
 </log>

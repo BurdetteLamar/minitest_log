@@ -1,4 +1,4 @@
 <log>
-  <summary verdicts='1' failures='0' errors='0'/>
-  <verdict method='verdict_assert_silent?' outcome='passed' id='0'/>
+  <summary_ verdicts='1' failures='0' errors='0'/>
+  <verdict_ method='verdict_assert_silent?' outcome='passed' id='0'/>
 </log>

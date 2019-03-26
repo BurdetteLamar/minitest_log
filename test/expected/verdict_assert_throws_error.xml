@@ -1,10 +1,10 @@
 <log>
-  <summary verdicts='0' failures='0' errors='0'/>
-  <uncaught_exception timestamp='0000-00-00-xxx-00.00.00.000' class='ArgumentError'>
-    <message>
+  <summary_ verdicts='0' failures='0' errors='0'/>
+  <uncaught_exception_ timestamp='0000-00-00-xxx-00.00.00.000' class='ArgumentError'>
+    <message_>
       wrong number of arguments (given 1, expected 2..3)
-    </message>
-    <backtrace>
-    </backtrace>
-  </uncaught_exception>
+    </message_>
+    <backtrace_>
+    </backtrace_>
+  </uncaught_exception_>
 </log>

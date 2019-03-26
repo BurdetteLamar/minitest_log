@@ -1,17 +1,17 @@
 <log>
-  <summary verdicts='2' failures='0' errors='0'/>
-  <section name='Test' method='verdict_refute_includes?' type='pass'>
-    <section name='Args=[[0], 1]'>
-      <verdict method='verdict_refute_includes?' outcome='passed' id='0' message='Message 0'>
-        <expected class='Array' value='[0]'/>
-        <actual class='Integer' value='1'/>
-      </verdict>
-    </section>
-    <section name='Args=[[:a], :b]'>
-      <verdict method='verdict_refute_includes?' outcome='passed' id='1' message='Message 1'>
-        <expected class='Array' value='[:a]'/>
-        <actual class='Symbol' value=':b'/>
-      </verdict>
-    </section>
-  </section>
+  <summary_ verdicts='2' failures='0' errors='0'/>
+  <section_ name='Test' method='verdict_refute_includes?' type='pass'>
+    <section_ name='Args=[[0], 1]'>
+      <verdict_ method='verdict_refute_includes?' outcome='passed' id='0' message='Message 0'>
+        <expected_ class='Array' value='[0]'/>
+        <actual_ class='Integer' value='1'/>
+      </verdict_>
+    </section_>
+    <section_ name='Args=[[:a], :b]'>
+      <verdict_ method='verdict_refute_includes?' outcome='passed' id='1' message='Message 1'>
+        <expected_ class='Array' value='[:a]'/>
+        <actual_ class='Symbol' value=':b'/>
+      </verdict_>
+    </section_>
+  </section_>
 </log>

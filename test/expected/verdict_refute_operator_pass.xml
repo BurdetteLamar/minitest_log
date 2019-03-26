@@ -1,19 +1,19 @@
 <log>
-  <summary verdicts='2' failures='0' errors='0'/>
-  <section name='Test' method='verdict_refute_operator?' type='pass'>
-    <section name='Args=[0, :==, 1]'>
-      <verdict method='verdict_refute_operator?' outcome='passed' id='0' message='Message 0'>
-        <object_1 class='Integer' value='0'/>
-        <operator class='Symbol' value=':=='/>
-        <object_2 class='Integer' value='1'/>
-      </verdict>
-    </section>
-    <section name='Args=[false, :==, true]'>
-      <verdict method='verdict_refute_operator?' outcome='passed' id='1' message='Message 1'>
-        <object_1 class='FalseClass' value='false'/>
-        <operator class='Symbol' value=':=='/>
-        <object_2 class='TrueClass' value='true'/>
-      </verdict>
-    </section>
-  </section>
+  <summary_ verdicts='2' failures='0' errors='0'/>
+  <section_ name='Test' method='verdict_refute_operator?' type='pass'>
+    <section_ name='Args=[0, :==, 1]'>
+      <verdict_ method='verdict_refute_operator?' outcome='passed' id='0' message='Message 0'>
+        <object_1_ class='Integer' value='0'/>
+        <operator_ class='Symbol' value=':=='/>
+        <object_2_ class='Integer' value='1'/>
+      </verdict_>
+    </section_>
+    <section_ name='Args=[false, :==, true]'>
+      <verdict_ method='verdict_refute_operator?' outcome='passed' id='1' message='Message 1'>
+        <object_1_ class='FalseClass' value='false'/>
+        <operator_ class='Symbol' value=':=='/>
+        <object_2_ class='TrueClass' value='true'/>
+      </verdict_>
+    </section_>
+  </section_>
 </log>

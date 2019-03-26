@@ -1,17 +1,17 @@
 <log>
-  <summary verdicts='2' failures='0' errors='0'/>
-  <section name='Test' method='verdict_assert_match?' type='pass'>
-    <section name='Args=[/b/, &quot;abc&quot;]'>
-      <verdict method='verdict_assert_match?' outcome='passed' id='0' message='Message 0'>
-        <expected class='Regexp' value='/b/'/>
-        <actual class='String' value='&quot;abc&quot;'/>
-      </verdict>
-    </section>
-    <section name='Args=[/./, &quot;a&quot;]'>
-      <verdict method='verdict_assert_match?' outcome='passed' id='1' message='Message 1'>
-        <expected class='Regexp' value='/./'/>
-        <actual class='String' value='&quot;a&quot;'/>
-      </verdict>
-    </section>
-  </section>
+  <summary_ verdicts='2' failures='0' errors='0'/>
+  <section_ name='Test' method='verdict_assert_match?' type='pass'>
+    <section_ name='Args=[/b/, &quot;abc&quot;]'>
+      <verdict_ method='verdict_assert_match?' outcome='passed' id='0' message='Message 0'>
+        <expected_ class='Regexp' value='/b/'/>
+        <actual_ class='String' value='&quot;abc&quot;'/>
+      </verdict_>
+    </section_>
+    <section_ name='Args=[/./, &quot;a&quot;]'>
+      <verdict_ method='verdict_assert_match?' outcome='passed' id='1' message='Message 1'>
+        <expected_ class='Regexp' value='/./'/>
+        <actual_ class='String' value='&quot;a&quot;'/>
+      </verdict_>
+    </section_>
+  </section_>
 </log>

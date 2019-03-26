@@ -1,15 +1,15 @@
 <log>
-  <summary verdicts='0' failures='0' errors='2'/>
-  <section name='Test' method='verdict_assert_kind_of?' type='error'>
-    <section name='Args=[]'>
-      <rescued_exception class='ArgumentError' message='wrong number of arguments (given 1, expected 3..4)'>
-        <backtrace/>
-      </rescued_exception>
-    </section>
-    <section name='Args=[nil, nil, nil]'>
-      <rescued_exception class='ArgumentError' message='wrong number of arguments (given 5, expected 3..4)'>
-        <backtrace/>
-      </rescued_exception>
-    </section>
-  </section>
+  <summary_ verdicts='0' failures='0' errors='2'/>
+  <section_ name='Test' method='verdict_assert_kind_of?' type='error'>
+    <section_ name='Args=[]'>
+      <rescued_exception_ class='ArgumentError' message='wrong number of arguments (given 1, expected 3..4)'>
+        <backtrace_/>
+      </rescued_exception_>
+    </section_>
+    <section_ name='Args=[nil, nil, nil]'>
+      <rescued_exception_ class='ArgumentError' message='wrong number of arguments (given 5, expected 3..4)'>
+        <backtrace_/>
+      </rescued_exception_>
+    </section_>
+  </section_>
 </log>
