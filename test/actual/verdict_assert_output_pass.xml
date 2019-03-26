@@ -1,11 +1,7 @@
 <log>
-  <summary verdicts='2' failures='0' errors='0'/>
+  <summary verdicts='1' failures='0' errors='0'/>
   <verdict method='verdict_assert_output?' outcome='passed' id='0'>
     <stdout class='String' value='&quot;foo&quot;'/>
     <stderr class='String' value='&quot;bar&quot;'/>
-  </verdict>
-  <verdict method='verdict_assert_equal?' outcome='passed' id='__error_count__'>
-    <expected class='Integer' value='0'/>
-    <actual class='Integer' value='0'/>
   </verdict>
 </log>

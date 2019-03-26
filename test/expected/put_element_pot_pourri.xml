@@ -1,10 +1,6 @@
 <log>
-  <summary verdicts='1' failures='0' errors='0'/>
+  <summary verdicts='0' failures='0' errors='0'/>
   <pot_pourri a='0' b='1' timestamp='0000-00-00-xxx-00.00.00.000' c='2' d='3' duration_seconds='0.000'>
     onetwoFilethree
   </pot_pourri>
-  <verdict method='verdict_assert_equal?' outcome='passed' id='__error_count__'>
-    <expected class='Integer' value='0'/>
-    <actual class='Integer' value='0'/>
-  </verdict>
 </log>
