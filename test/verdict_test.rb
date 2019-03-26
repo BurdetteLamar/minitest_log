@@ -341,25 +341,13 @@ class VerdictTest < MiniTest::Test
         )
   end
 
-  def zzz_test_verdict_refute_respond_to
-
-    method = :verdict_refute_respond_to?
-    passing_arguments = {
-        :object => 0,
-        :method => :empty?
-    }
-    failing_arguments = {
-        :object => '',
-        :method => :empty?
-    }
-
-    verdict_common_test(
-        :method => method,
-        :passing_arguments => passing_arguments,
-        :failing_arguments => failing_arguments,
-        :exception_message => 'Expected # encoding: UTF-8 &quot;&quot; to not respond to empty?.'
-    )
-
+  def test_verdict_refute_respond_to
+    _test_verdict(
+        test_method: __method__,
+        arg_count_range: (3..3),
+        pass_cases: [Args.new('', :foo), Args.new(false, :bar)],
+        fail_cases: [Args.new('', :size), Args.new(nil, :class)],
+        )
   end
 
   def zzz_test_verdict_assert_same
