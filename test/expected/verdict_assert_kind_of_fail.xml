@@ -1,7 +1,7 @@
 <log>
   <summary_ verdicts='2' failures='2' errors='0'/>
   <section_ name='Test' method='verdict_assert_kind_of?' type='fail'>
-    <section_ name='Args=[Array, {}]'>
+    <section_ name='Args=[Array, {}, &quot;Message 0&quot;]'>
       <verdict_ method='verdict_assert_kind_of?' outcome='failed' id='0' message='Message 0'>
         <expected_ class='Class' value='Array'/>
         <actual_ class='Hash' value='{}'/>
@@ -10,7 +10,7 @@
         </exception_>
       </verdict_>
     </section_>
-    <section_ name='Args=[Hash, []]'>
+    <section_ name='Args=[Hash, [], &quot;Message 1&quot;]'>
       <verdict_ method='verdict_assert_kind_of?' outcome='failed' id='1' message='Message 1'>
         <expected_ class='Class' value='Hash'/>
         <actual_ class='Array' value='[]'/>

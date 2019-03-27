@@ -1,14 +1,14 @@
 <log>
   <summary_ verdicts='2' failures='0' errors='0'/>
   <section_ name='Test' method='verdict_assert_in_epsilon?' type='pass'>
-    <section_ name='Args=[3, 2, 1]'>
+    <section_ name='Args=[3, 2, 1, &quot;Message 0&quot;]'>
       <verdict_ method='verdict_assert_in_epsilon?' outcome='passed' id='0' message='Message 0'>
         <expected_ class='Integer' value='3'/>
         <actual_ class='Integer' value='2'/>
         <epsilon_ class='Integer' value='1'/>
       </verdict_>
     </section_>
-    <section_ name='Args=[4, 3, 1]'>
+    <section_ name='Args=[4, 3, 1, &quot;Message 1&quot;]'>
       <verdict_ method='verdict_assert_in_epsilon?' outcome='passed' id='1' message='Message 1'>
         <expected_ class='Integer' value='4'/>
         <actual_ class='Integer' value='3'/>

@@ -6,7 +6,7 @@
         <backtrace_/>
       </rescued_exception_>
     </section_>
-    <section_ name='Args=[nil, nil, nil]'>
+    <section_ name='Args=[nil, nil, nil, &quot;Message 1&quot;]'>
       <rescued_exception_ class='ArgumentError' message='wrong number of arguments (given 5, expected 3..4)'>
         <backtrace_/>
       </rescued_exception_>

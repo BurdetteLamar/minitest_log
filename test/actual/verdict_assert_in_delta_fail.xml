@@ -1,7 +1,7 @@
 <log>
   <summary_ verdicts='2' failures='2' errors='0'/>
   <section_ name='Test' method='verdict_assert_in_delta?' type='fail'>
-    <section_ name='Args=[0, 2, 1]'>
+    <section_ name='Args=[0, 2, 1, &quot;Message 0&quot;]'>
       <verdict_ method='verdict_assert_in_delta?' outcome='failed' id='0' message='Message 0'>
         <expected_ class='Integer' value='0'/>
         <actual_ class='Integer' value='2'/>
@@ -11,7 +11,7 @@
         </exception_>
       </verdict_>
     </section_>
-    <section_ name='Args=[2, 0, 1]'>
+    <section_ name='Args=[2, 0, 1, &quot;Message 1&quot;]'>
       <verdict_ method='verdict_assert_in_delta?' outcome='failed' id='1' message='Message 1'>
         <expected_ class='Integer' value='2'/>
         <actual_ class='Integer' value='0'/>

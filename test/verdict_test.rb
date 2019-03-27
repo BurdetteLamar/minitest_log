@@ -13,8 +13,10 @@ class VerdictTest < MiniTest::Test
     end
   end
 
-  def method_for_test(test_method)
-    "#{test_method.to_s.sub('test_', '')}?".to_sym
+  def methods_for_test(test_method)
+    method_s = "#{test_method.to_s.sub('test_', '')}?"
+    abbrev_s = method_s.sub('verdict_', 'v').sub('assert', 'a').sub('refute', 'r')
+    [method_s.to_sym, abbrev_s.to_sym]
   end
 
   def _test_name(method, type)
@@ -22,7 +24,7 @@ class VerdictTest < MiniTest::Test
   end
 
   def _test_verdict(test_method:, arg_count_range:, pass_cases: [], fail_cases: [])
-    method = method_for_test(test_method)
+    method, abbrev_method = methods_for_test(test_method)
     error_cases = [
         # Too few arguments.
         Args.new(),
@@ -35,20 +37,25 @@ class VerdictTest < MiniTest::Test
         :error => error_cases,
     }.each_pair do |type, cases|
       name = _test_name(method, type)
-      file_path = nil
-      _test(name) do |log|
-        log.section('Test', {:method => method, :type => type}) do
-          file_path = File.absolute_path(log.file_path)
-          cases.each_with_index do |_case, i|
-            verdict_id = i.to_s
-            args = _case.args
-            title = "Args=#{args}"
-            # Add message, unless it would make a too-short arg list long enough after all.
-            unless args.size < arg_count_range.min
-              args.push("Message #{i}")
-            end
-            log.section(title, :rescue) do
-              log.send(method, verdict_id, *args)
+      # Test with both full and abbrev method names.
+      # But there will be only one log file, written twice.
+      [method, abbrev_method].each_with_index do |_method, method_index|
+        file_path = nil
+        _test(name) do |log|
+          log.section('Test', {:method => method, :type => type}) do
+            cases.each_with_index do |_case, i|
+              # Be careful to not disturb case.args;  we're in a loop.
+              args = _case.args.clone
+              # Add message, unless it would make a too-short arg list long enough after all.
+              unless args.size < arg_count_range.min
+                args.push("Message #{i}")
+              end
+              title = "Args=#{args}"
+              file_path = File.absolute_path(log.file_path)
+              verdict_id = i.to_s
+              log.section(title, :rescue) do
+                log.send(_method, verdict_id, *args)
+              end
             end
           end
         end
@@ -270,24 +277,26 @@ class VerdictTest < MiniTest::Test
   end
 
   def test_verdict_assert_output
-    method = method_for_test(__method__)
-    name = _test_name(method, 'pass')
-    _test(name) do |log|
-      log.verdict_assert_output?('0', 'foo', 'bar') do
-        $stdout.write 'foo'
-        $stderr.write 'bar'
+    method, abbrev_method = methods_for_test(__method__)
+    [method, abbrev_method].each do |_method|
+      name = _test_name(method, 'pass')
+      _test(name) do |log|
+        log.send(_method, '0', 'foo', 'bar') do
+          $stdout.write 'foo'
+          $stderr.write 'bar'
+        end
       end
-    end
-    name = _test_name(method, 'fail')
-    _test(name) do |log|
-      log.verdict_assert_output?('1', 'foo', 'bar') do
-        $stdout.write 'bar'
-        $stderr.write 'foo'
+      name = _test_name(method, 'fail')
+      _test(name) do |log|
+        log.send(_method, '1', 'foo', 'bar') do
+          $stdout.write 'bar'
+          $stderr.write 'foo'
+        end
       end
-    end
-    name = _test_name(method, 'error')
-    _test(name) do |log|
-      log.verdict_assert_output?('2', 'foo')
+      name = _test_name(method, 'error')
+      _test(name) do |log|
+        log.send(_method, '2', 'foo')
+      end
     end
   end
 
@@ -312,22 +321,25 @@ class VerdictTest < MiniTest::Test
   end
 
   def test_verdict_assert_raises
-    method = method_for_test(__method__)
+    method, abbrev_method = methods_for_test(__method__)
+    [method, abbrev_method].each do |_method|
     name = _test_name(method, 'pass')
     _test(name) do |log|
-      log.verdict_assert_raises?('0', RuntimeError) do
+      log.send(_method, '0', RuntimeError) do
         raise RuntimeError.new('Boo!')
       end
     end
     name = _test_name(method, 'fail')
     _test(name) do |log|
-      log.verdict_assert_raises?('1', RuntimeError) do
+      log.send(_method, '1', RuntimeError) do
       end
     end
     name = _test_name(method, 'error')
     _test(name) do |log|
-      log.verdict_assert_raises?('2')
+      log.send(_method, '2')
     end
+    end
+
   end
 
   # Minitest::Assertion does not have :refute_raises, so we don't have :verdict_refute_raises?.
@@ -373,22 +385,24 @@ class VerdictTest < MiniTest::Test
   # Minitest::Assertion does not have :refute_send, so we don't have :verdict_refute_send?.
 
   def test_verdict_assert_silent
-    method = method_for_test(__method__)
-    name = _test_name(method, 'pass')
-    _test(name) do |log|
-      log.verdict_assert_silent?('0') do
+    method, abbrev_method = methods_for_test(__method__)
+    [method, abbrev_method].each do |_method|
+      name = _test_name(method, 'pass')
+      _test(name) do |log|
+        log.send(_method, '0') do
+        end
       end
-    end
-    name = _test_name(method, 'fail')
-    _test(name) do |log|
-      log.verdict_assert_silent?('1') do
-        $stdout.write 'bar'
-        $stderr.write 'foo'
+      name = _test_name(method, 'fail')
+      _test(name) do |log|
+        log.send(_method, '1') do
+          $stdout.write 'bar'
+          $stderr.write 'foo'
+        end
       end
-    end
-    name = _test_name(method, 'error')
-    _test(name) do |log|
-      log.verdict_assert_silent?('2', 'message', 'extra') do
+      name = _test_name(method, 'error')
+      _test(name) do |log|
+        log.send(_method, '2', 'message', 'extra') do
+        end
       end
     end
   end
@@ -396,22 +410,24 @@ class VerdictTest < MiniTest::Test
   # Minitest::Assertion does not have :refute_silent, so we don't have :verdict_refute_silent?.
 
   def test_verdict_assert_throws
-    method = method_for_test(__method__)
+    method, abbrev_method = methods_for_test(__method__)
+    [method, abbrev_method].each do |_method|
     name = _test_name(method, 'pass')
     _test(name) do |log|
-      log.verdict_assert_throws?('0', Exception) do
+      log.send(_method, '0', Exception) do
         throw Exception
       end
     end
     name = _test_name(method, 'fail')
     _test(name) do |log|
-      log.verdict_assert_throws?('1', RuntimeError) do
+      log.send(_method, '1', RuntimeError) do
       end
     end
     name = _test_name(method, 'error')
     _test(name) do |log|
-      log.verdict_assert_throws?('2')
+      log.send(_method, '2')
     end
+      end
   end
 
 end

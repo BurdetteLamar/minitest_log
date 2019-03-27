@@ -1,7 +1,7 @@
 <log>
   <summary_ verdicts='2' failures='2' errors='0'/>
   <section_ name='Test' method='verdict_refute_kind_of?' type='fail'>
-    <section_ name='Args=[Exception, #&lt;ArgumentError: ArgumentError&gt;]'>
+    <section_ name='Args=[Exception, #&lt;ArgumentError: ArgumentError&gt;, &quot;Message 0&quot;]'>
       <verdict_ method='verdict_refute_kind_of?' outcome='failed' id='0' message='Message 0'>
         <expected_ class='Class' value='Exception'/>
         <actual_ class='ArgumentError' value='#&lt;ArgumentError: ArgumentError&gt;'/>
@@ -10,7 +10,7 @@
         </exception_>
       </verdict_>
     </section_>
-    <section_ name='Args=[Numeric, 0]'>
+    <section_ name='Args=[Numeric, 0, &quot;Message 1&quot;]'>
       <verdict_ method='verdict_refute_kind_of?' outcome='failed' id='1' message='Message 1'>
         <expected_ class='Class' value='Numeric'/>
         <actual_ class='Integer' value='0'/>

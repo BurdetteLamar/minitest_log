@@ -1,13 +1,13 @@
 <log>
   <summary_ verdicts='2' failures='0' errors='0'/>
   <section_ name='Test' method='verdict_refute_kind_of?' type='pass'>
-    <section_ name='Args=[Array, {}]'>
+    <section_ name='Args=[Array, {}, &quot;Message 0&quot;]'>
       <verdict_ method='verdict_refute_kind_of?' outcome='passed' id='0' message='Message 0'>
         <expected_ class='Class' value='Array'/>
         <actual_ class='Hash' value='{}'/>
       </verdict_>
     </section_>
-    <section_ name='Args=[Hash, []]'>
+    <section_ name='Args=[Hash, [], &quot;Message 1&quot;]'>
       <verdict_ method='verdict_refute_kind_of?' outcome='passed' id='1' message='Message 1'>
         <expected_ class='Class' value='Hash'/>
         <actual_ class='Array' value='[]'/>

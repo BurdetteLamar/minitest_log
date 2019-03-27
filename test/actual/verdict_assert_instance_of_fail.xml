@@ -1,7 +1,7 @@
 <log>
   <summary_ verdicts='2' failures='2' errors='0'/>
   <section_ name='Test' method='verdict_assert_instance_of?' type='fail'>
-    <section_ name='Args=[Integer, :a]'>
+    <section_ name='Args=[Integer, :a, &quot;Message 0&quot;]'>
       <verdict_ method='verdict_assert_instance_of?' outcome='failed' id='0' message='Message 0'>
         <expected_ class='Class' value='Integer'/>
         <actual_ class='Symbol' value=':a'/>
@@ -10,7 +10,7 @@
         </exception_>
       </verdict_>
     </section_>
-    <section_ name='Args=[Symbol, 0]'>
+    <section_ name='Args=[Symbol, 0, &quot;Message 1&quot;]'>
       <verdict_ method='verdict_assert_instance_of?' outcome='failed' id='1' message='Message 1'>
         <expected_ class='Class' value='Symbol'/>
         <actual_ class='Integer' value='0'/>

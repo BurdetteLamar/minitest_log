@@ -1,7 +1,7 @@
 <log>
   <summary_ verdicts='2' failures='2' errors='0'/>
   <section_ name='Test' method='verdict_assert_respond_to?' type='fail'>
-    <section_ name='Args=[&quot;&quot;, :foo]'>
+    <section_ name='Args=[&quot;&quot;, :foo, &quot;Message 0&quot;]'>
       <verdict_ method='verdict_assert_respond_to?' outcome='failed' id='0' message='Message 0'>
         <object_ class='String' value='&quot;&quot;'/>
         <method_ class='Symbol' value=':foo'/>
@@ -10,7 +10,7 @@
         </exception_>
       </verdict_>
     </section_>
-    <section_ name='Args=[false, :bar]'>
+    <section_ name='Args=[false, :bar, &quot;Message 1&quot;]'>
       <verdict_ method='verdict_assert_respond_to?' outcome='failed' id='1' message='Message 1'>
         <object_ class='FalseClass' value='false'/>
         <method_ class='Symbol' value=':bar'/>
