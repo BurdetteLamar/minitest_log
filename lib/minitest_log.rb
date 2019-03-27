@@ -99,7 +99,7 @@ class MinitestLog
       element_name += '_'
     elsif element_name.end_with?('_')
       # Don't accept user's special.
-      message = "Element name should not end with underescore: #{element_name}"
+      message = "Element name should not end with underscore: #{element_name}"
       raise IllegalElementNameError.new(message)
     else
       # Ok.

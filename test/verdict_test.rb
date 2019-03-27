@@ -27,7 +27,7 @@ class VerdictTest < MiniTest::Test
     method, abbrev_method = methods_for_test(test_method)
     error_cases = [
         # Too few arguments.
-        Args.new(),
+        Args.new,
         # Too many arguments.
         Args.new(*Array.new(arg_count_range.max + 1))
     ]
@@ -39,8 +39,7 @@ class VerdictTest < MiniTest::Test
       name = _test_name(method, type)
       # Test with both full and abbrev method names.
       # But there will be only one log file, written twice.
-      [method, abbrev_method].each_with_index do |_method, method_index|
-        file_path = nil
+      [method, abbrev_method].each do |_method|
         _test(name) do |log|
           log.section('Test', {:method => method, :type => type}) do
             cases.each_with_index do |_case, i|
@@ -51,7 +50,6 @@ class VerdictTest < MiniTest::Test
                 args.push("Message #{i}")
               end
               title = "Args=#{args}"
-              file_path = File.absolute_path(log.file_path)
               verdict_id = i.to_s
               log.section(title, :rescue) do
                 log.send(_method, verdict_id, *args)
@@ -229,7 +227,6 @@ class VerdictTest < MiniTest::Test
   end
 
   def test_verdict_refute_match
-    x = nil
     _test_verdict(
         test_method: __method__,
         arg_count_range: (2..2),
