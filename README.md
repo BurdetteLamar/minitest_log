@@ -46,15 +46,12 @@ Open a log by calling ```MinitestLog#open```.
 ```open.rb```:
 ```ruby
 require 'minitest_log'
-
 class Example < MiniTest::Test
-
   def test_example
     MinitestLog.open do |log|
       log.comment('Test stuff goes here.')
     end
   end
-
 end
 ```
 
@@ -70,40 +67,6 @@ The log:
 </log>
 ```
 
-Customize a log by calling ```MinitestLog#open``` with options.
-
-```options.rb```:
-```ruby
-require 'minitest_log'
-
-class Example < MiniTest::Test
-
-  def test_example
-    options = {
-        :root_name => 'my_root_name',
-        :xml_indentation => 4,
-    }
-    MinitestLog.open('my_log.xml', options) do |log|
-      log.comment('Test code goes here.')
-    end
-  end
-
-end
-```
-
-The log:
-
-```my_log.xml```:
-```xml
-<my_root_name>
-    <summary_ verdicts='0' failures='0' errors='0'/>
-    <comment_>
-        Test code goes here.
-    </comment_>
-</my_root_name>
-```
-
-
 ### Nested Sections
 
 Nest sections in a log by nesting calls to ```MinitestLog#section```.
@@ -113,9 +76,7 @@ The nesting gives structure to both the test and the log.
 ```nested_sections.rb```:
 ```ruby
 require 'minitest_log'
-
 class Example < MiniTest::Test
-
   def test_example
     MinitestLog.open do |log|
       log.section('First outer') do
@@ -132,7 +93,6 @@ class Example < MiniTest::Test
       end
     end
   end
-
 end
 ```
 
@@ -164,9 +124,7 @@ The section name is always the first argument, but otherwise strings can be anyw
 ```example.rb```:
 ```ruby
 require 'minitest_log'
-
 class Example < MiniTest::Test
-
   def test_example
     MinitestLog.open do |log|
       log.section('My section', 'Text') do
@@ -175,7 +133,6 @@ class Example < MiniTest::Test
       end
     end
   end
-
 end
 ```
 
@@ -205,9 +162,7 @@ The section name is always the first argument, but otherwise hashes can be anywh
 ```example.rb```:
 ```ruby
 require 'minitest_log'
-
 class Example < MiniTest::Test
-
   def test_example
     MinitestLog.open do |log|
       attrs = {:first_attr => 'first', :second_attr => 'second'}
@@ -218,7 +173,6 @@ class Example < MiniTest::Test
       end
     end
   end
-
 end
 ```
 
@@ -242,16 +196,13 @@ The log:
 ```example.rb```:
 ```ruby
 require 'minitest_log'
-
 class Example < MiniTest::Test
-
   def test_example
     MinitestLog.open do |log|
       log.section('My section', :timestamp) do
       end
     end
   end
-
 end
 ```
 
@@ -261,7 +212,7 @@ The log:
 ```xml
 <log>
   <summary_ verdicts='0' failures='0' errors='0'/>
-  <section_ name='My section' timestamp='2019-03-27-Wed-10.35.24.469'/>
+  <section_ name='My section' timestamp='2019-03-27-Wed-10.42.35.535'/>
 </log>
 ```
 
@@ -274,9 +225,7 @@ The section name is always the first argument, but otherwise the symbol can be a
 ```example.rb```:
 ```ruby
 require 'minitest_log'
-
 class Example < MiniTest::Test
-
   def test_example
     MinitestLog.open do |log|
       log.section('My section', :duration) do
@@ -284,7 +233,6 @@ class Example < MiniTest::Test
       end
     end
   end
-
 end
 ```
 
@@ -294,7 +242,7 @@ The log:
 ```xml
 <log>
   <summary_ verdicts='0' failures='0' errors='0'/>
-  <section_ name='My section' duration_seconds='3.000'/>
+  <section_ name='My section' duration_seconds='3.001'/>
 </log>
 ```
 
@@ -309,9 +257,7 @@ Any exception raised during the section's execution will be rescued and logged. 
 ```example.rb```:
 ```ruby
 require 'minitest_log'
-
 class Example < MiniTest::Test
-
   def test_example
     MinitestLog.open do |log|
       log.section('My section', :rescue) do
@@ -319,7 +265,6 @@ class Example < MiniTest::Test
       end
     end
   end
-
 end
 ```
 
@@ -332,9 +277,9 @@ The log:
   <section_ name='My section'>
     <rescued_exception_ class='RuntimeError' message='Boo!'>
       <backtrace_>
-        <level_0_ location='example.rb:8:in `block (2 levels) in test_example&apos;'/>
-        <level_1_ location='example.rb:7:in `block in test_example&apos;'/>
-        <level_2_ location='example.rb:6:in `test_example&apos;'/>
+        <level_0_ location='example.rb:6:in `block (2 levels) in test_example&apos;'/>
+        <level_1_ location='example.rb:5:in `block in test_example&apos;'/>
+        <level_2_ location='example.rb:4:in `test_example&apos;'/>
       </backtrace_>
     </rescued_exception_>
   </section_>
