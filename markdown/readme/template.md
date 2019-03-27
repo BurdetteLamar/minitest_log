@@ -7,6 +7,12 @@
 
 (Here, we say *verdict*, not *assertion*, to emphasize that a failure does not terminate the test.)
 
+## Installation
+
+```
+gem install minitest_log
+```
+
 @[:page_toc](## Contents)
 
 @[:markdown](installation/template.md)
