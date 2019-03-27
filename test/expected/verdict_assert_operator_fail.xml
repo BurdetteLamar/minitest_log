@@ -1,7 +1,7 @@
 <log>
   <summary_ verdicts='2' failures='2' errors='0'/>
   <section_ name='Test' method='verdict_assert_operator?' type='fail'>
-    <section_ name='Args=[0, :==, 1]'>
+    <section_ name='Args=[0, :==, 1, &quot;Message 0&quot;]'>
       <verdict_ method='verdict_assert_operator?' outcome='failed' id='0' message='Message 0'>
         <object_1_ class='Integer' value='0'/>
         <operator_ class='Symbol' value=':=='/>
@@ -11,7 +11,7 @@
         </exception_>
       </verdict_>
     </section_>
-    <section_ name='Args=[false, :==, true]'>
+    <section_ name='Args=[false, :==, true, &quot;Message 1&quot;]'>
       <verdict_ method='verdict_assert_operator?' outcome='failed' id='1' message='Message 1'>
         <object_1_ class='FalseClass' value='false'/>
         <operator_ class='Symbol' value=':=='/>

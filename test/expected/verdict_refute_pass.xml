@@ -1,12 +1,12 @@
 <log>
   <summary_ verdicts='2' failures='0' errors='0'/>
   <section_ name='Test' method='verdict_refute?' type='pass'>
-    <section_ name='Args=[false]'>
+    <section_ name='Args=[false, &quot;Message 0&quot;]'>
       <verdict_ method='verdict_refute?' outcome='passed' id='0' message='Message 0'>
         <actual_ class='FalseClass' value='false'/>
       </verdict_>
     </section_>
-    <section_ name='Args=[nil]'>
+    <section_ name='Args=[nil, &quot;Message 1&quot;]'>
       <verdict_ method='verdict_refute?' outcome='passed' id='1' message='Message 1'>
         <actual_ class='NilClass' value='nil'/>
       </verdict_>

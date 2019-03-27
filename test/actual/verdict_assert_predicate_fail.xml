@@ -1,7 +1,7 @@
 <log>
   <summary_ verdicts='2' failures='2' errors='0'/>
   <section_ name='Test' method='verdict_assert_predicate?' type='fail'>
-    <section_ name='Args=[&quot;x&quot;, :empty?]'>
+    <section_ name='Args=[&quot;x&quot;, :empty?, &quot;Message 0&quot;]'>
       <verdict_ method='verdict_assert_predicate?' outcome='failed' id='0' message='Message 0'>
         <object_ class='String' value='&quot;x&quot;'/>
         <operator_ class='Symbol' value=':empty?'/>
@@ -10,7 +10,7 @@
         </exception_>
       </verdict_>
     </section_>
-    <section_ name='Args=[false, :nil?]'>
+    <section_ name='Args=[false, :nil?, &quot;Message 1&quot;]'>
       <verdict_ method='verdict_assert_predicate?' outcome='failed' id='1' message='Message 1'>
         <object_ class='FalseClass' value='false'/>
         <operator_ class='Symbol' value=':nil?'/>

@@ -1,13 +1,13 @@
 <log>
   <summary_ verdicts='2' failures='0' errors='0'/>
   <section_ name='Test' method='verdict_assert_respond_to?' type='pass'>
-    <section_ name='Args=[&quot;&quot;, :size]'>
+    <section_ name='Args=[&quot;&quot;, :size, &quot;Message 0&quot;]'>
       <verdict_ method='verdict_assert_respond_to?' outcome='passed' id='0' message='Message 0'>
         <object_ class='String' value='&quot;&quot;'/>
         <method_ class='Symbol' value=':size'/>
       </verdict_>
     </section_>
-    <section_ name='Args=[nil, :class]'>
+    <section_ name='Args=[nil, :class, &quot;Message 1&quot;]'>
       <verdict_ method='verdict_assert_respond_to?' outcome='passed' id='1' message='Message 1'>
         <object_ class='NilClass' value='nil'/>
         <method_ class='Symbol' value=':class'/>

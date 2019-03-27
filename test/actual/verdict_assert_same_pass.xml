@@ -1,13 +1,13 @@
 <log>
   <summary_ verdicts='2' failures='0' errors='0'/>
   <section_ name='Test' method='verdict_assert_same?' type='pass'>
-    <section_ name='Args=[:foo, :foo]'>
+    <section_ name='Args=[:foo, :foo, &quot;Message 0&quot;]'>
       <verdict_ method='verdict_assert_same?' outcome='passed' id='0' message='Message 0'>
         <expected_ class='Symbol' value=':foo'/>
         <actual_ class='Symbol' value=':foo'/>
       </verdict_>
     </section_>
-    <section_ name='Args=[0, 0]'>
+    <section_ name='Args=[0, 0, &quot;Message 1&quot;]'>
       <verdict_ method='verdict_assert_same?' outcome='passed' id='1' message='Message 1'>
         <expected_ class='Integer' value='0'/>
         <actual_ class='Integer' value='0'/>
