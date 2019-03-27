@@ -7,7 +7,18 @@ Class ```MinitestLog``` is a wrapper for class ```Minitest::Assertions``` that:
 
 Here, we say *verdict*, not *assertion*, to emphasize that a failure does not terminate the test.
 
-Se, we have:
+## Contents
+- [Verdicts](#verdicts)
+- [Logs and Sections](#logs-and-sections)
+  - [Opening the Log](#opening-the-log)
+  - [Nested Sections](#nested-sections)
+  - [Text](#text)
+  - [Attributes](#attributes)
+  - [Timestamp](#timestamp)
+  - [Duration](#duration)
+  - [Rescue](#rescue)
+
+So, we have:
  
 - **Verdicts**:
   - All verdicts are automatically logged.
@@ -222,7 +233,7 @@ The log:
 </log>
 ```
 
-#### Timestamp
+### Timestamp
  
  Put a timestamp onto a section by calling ```MinitestLog#section``` with the symbol ```:timestamp```.
  
@@ -250,7 +261,7 @@ The log:
 ```xml
 <log>
   <summary_ verdicts='0' failures='0' errors='0'/>
-  <section_ name='My section' timestamp='2019-03-27-Wed-04.21.07.332'/>
+  <section_ name='My section' timestamp='2019-03-27-Wed-04.33.25.608'/>
 </log>
 ```
 
