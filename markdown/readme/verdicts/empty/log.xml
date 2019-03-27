@@ -1,5 +1,4 @@
 <log>
-  <summary_ verdicts='2' failures='0' errors='0'/>
   <verdict_ method='verdict_assert_empty?' outcome='passed' id='first_verdict_id' message='My message'>
     <actual_ class='Array' value='[]'/>
   </verdict_>

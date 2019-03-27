@@ -1,5 +1,4 @@
 <log>
-  <summary_ verdicts='1' failures='1' errors='0'/>
   <verdict_ method='verdict_assert_equal?' outcome='failed' id='analyzed'>
     <expected_ class='Hash' value='{:a=&gt;0, :b=&gt;1, :c=&gt;2, :d=&gt;3, :e=&gt;4, :f=&gt;5}'/>
     <actual_ class='Hash' value='{:h=&gt;5, :g=&gt;4, :d=&gt;1, :c=&gt;0, :b=&gt;1, :a=&gt;0}'/>

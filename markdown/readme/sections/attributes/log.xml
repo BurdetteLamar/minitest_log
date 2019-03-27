@@ -1,5 +1,4 @@
 <log>
-  <summary_ verdicts='0' failures='0' errors='0'/>
   <section_ name='My section' first_attr='first' second_attr='second'/>
   <section_ name='Another section' first_attr='first' second_attr='second' third_attr='third'/>
 </log>

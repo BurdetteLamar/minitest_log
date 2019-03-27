@@ -60,7 +60,6 @@ The log:
 ```log.xml```:
 ```xml
 <log>
-  <summary_ verdicts='0' failures='0' errors='0'/>
   <comment_>
     Test stuff goes here.
   </comment_>
@@ -73,7 +72,7 @@ Nest sections in a log by nesting calls to ```MinitestLog#section```.
 
 The nesting gives structure to both the test and the log.
 
-```nested_sections.rb```:
+```example.rb```:
 ```ruby
 require 'minitest_log'
 class Example < MiniTest::Test
@@ -101,7 +100,6 @@ The log:
 ```log.xml```:
 ```xml
 <log>
-  <summary_ verdicts='0' failures='0' errors='0'/>
   <section_ name='First outer'>
     <section_ name='First inner'/>
     <section_ name='Second inner'/>
@@ -141,7 +139,6 @@ The log:
 ```log.xml```:
 ```xml
 <log>
-  <summary_ verdicts='0' failures='0' errors='0'/>
   <section_ name='My section'>
     Text
   </section_>
@@ -181,7 +178,6 @@ The log:
 ```log.xml```:
 ```xml
 <log>
-  <summary_ verdicts='0' failures='0' errors='0'/>
   <section_ name='My section' first_attr='first' second_attr='second'/>
   <section_ name='Another section' first_attr='first' second_attr='second' third_attr='third'/>
 </log>
@@ -211,8 +207,7 @@ The log:
 ```log.xml```:
 ```xml
 <log>
-  <summary_ verdicts='0' failures='0' errors='0'/>
-  <section_ name='My section' timestamp='2019-03-27-Wed-10.42.35.535'/>
+  <section_ name='My section' timestamp='2019-03-27-Wed-12.59.34.605'/>
 </log>
 ```
 
@@ -241,8 +236,7 @@ The log:
 ```log.xml```:
 ```xml
 <log>
-  <summary_ verdicts='0' failures='0' errors='0'/>
-  <section_ name='My section' duration_seconds='3.001'/>
+  <section_ name='My section' duration_seconds='3.000'/>
 </log>
 ```
 
@@ -273,7 +267,6 @@ The log:
 ```log.xml```:
 ```xml
 <log>
-  <summary_ verdicts='0' failures='0' errors='1'/>
   <section_ name='My section'>
     <rescued_exception_ class='RuntimeError' message='Boo!'>
       <backtrace_>
