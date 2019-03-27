@@ -1,7 +1,5 @@
 require 'minitest_log'
-
 class Example < MiniTest::Test
-
   def test_example
     MinitestLog.open do |log|
       log.section('First outer') do
@@ -18,5 +16,4 @@ class Example < MiniTest::Test
       end
     end
   end
-
 end

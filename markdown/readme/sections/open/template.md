@@ -7,12 +7,3 @@ Open a log by calling ```MinitestLog#open```.
 The log:
 
 @[xml](log.xml)
-
-Customize a log by calling ```MinitestLog#open``` with options.
-
-@[ruby](options.rb)
-
-The log:
-
-@[xml](my_log.xml)
-
