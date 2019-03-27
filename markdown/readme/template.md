@@ -15,8 +15,6 @@ gem install minitest_log
 
 @[:page_toc](## Contents)
 
-@[:markdown](installation/template.md)
-
 @[:markdown](verdicts/template.md)
 
 @[:markdown](sections/template.md)

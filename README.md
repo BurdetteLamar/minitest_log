@@ -7,8 +7,13 @@
 
 (Here, we say *verdict*, not *assertion*, to emphasize that a failure does not terminate the test.)
 
+## Installation
+
+```
+gem install minitest_log
+```
+
 ## Contents
-- [Installation](#installation)
 - [Verdicts](#verdicts)
 - [Logs and Sections](#logs-and-sections)
   - [First Log](#first-log)
@@ -20,11 +25,6 @@
   - [Duration](#duration)
   - [Rescue](#rescue)
 
-## Installation
-
-```
-gem install minitest_log
-```
 ## Verdicts
 
 TODO
@@ -98,13 +98,6 @@ class Example < MiniTest::Test
     end
   end
 end
-```
-
-The log:
-
-```log.xml```:
-```xml
-<log/>
 ```
 
 ### Nested Sections
@@ -249,7 +242,7 @@ The log:
 ```log.xml```:
 ```xml
 <log>
-  <section_ name='My section' timestamp='2019-03-27-Wed-14.05.50.428'/>
+  <section_ name='My section' timestamp='2019-03-27-Wed-14.23.20.942'/>
 </log>
 ```
 
