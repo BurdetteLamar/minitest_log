@@ -1,17 +1,13 @@
 <log>
-  <summary verdicts='2' failures='1' errors='0'/>
-  <verdict method='verdict_assert_equal?' outcome='failed' id='analyzed'>
-    <expected class='Hash' value='{:a=&gt;0, :b=&gt;1, :c=&gt;2, :d=&gt;3, :e=&gt;4, :f=&gt;5}'/>
-    <actual class='Hash' value='{:h=&gt;5, :g=&gt;4, :d=&gt;1, :c=&gt;0, :b=&gt;1, :a=&gt;0}'/>
-    <exception class='Minitest::Assertion' message='--- expected'>
-      <backtrace>
-        <level_0 location='hash.rb:9:in `block in test_example&apos;'/>
-        <level_1 location='hash.rb:6:in `test_example&apos;'/>
-      </backtrace>
-    </exception>
-  </verdict>
-  <verdict method='verdict_assert_equal?' outcome='passed' id='__error_count__'>
-    <expected class='Integer' value='0'/>
-    <actual class='Integer' value='0'/>
-  </verdict>
+  <summary_ verdicts='1' failures='1' errors='0'/>
+  <verdict_ method='verdict_assert_equal?' outcome='failed' id='analyzed'>
+    <expected_ class='Hash' value='{:a=&gt;0, :b=&gt;1, :c=&gt;2, :d=&gt;3, :e=&gt;4, :f=&gt;5}'/>
+    <actual_ class='Hash' value='{:h=&gt;5, :g=&gt;4, :d=&gt;1, :c=&gt;0, :b=&gt;1, :a=&gt;0}'/>
+    <exception_ class='Minitest::Assertion' message='--- expected'>
+      <backtrace_>
+        <level_0_ location='hash.rb:9:in `block in test_example&apos;'/>
+        <level_1_ location='hash.rb:6:in `test_example&apos;'/>
+      </backtrace_>
+    </exception_>
+  </verdict_>
 </log>

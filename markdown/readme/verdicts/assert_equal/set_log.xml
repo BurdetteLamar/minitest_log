@@ -1,17 +1,13 @@
 <log>
-  <summary verdicts='2' failures='1' errors='0'/>
-  <verdict method='verdict_assert_equal?' outcome='failed' id='analyzed'>
-    <expected class='Set' value='#&lt;Set: {:a, :b, :c, :d}&gt;'/>
-    <actual class='Set' value='#&lt;Set: {:c, :d, :e, :f}&gt;'/>
-    <exception class='Minitest::Assertion' message='Expected: #&lt;Set: {:a, :b, :c, :d}&gt;'>
-      <backtrace>
-        <level_0 location='set.rb:9:in `block in test_example&apos;'/>
-        <level_1 location='set.rb:6:in `test_example&apos;'/>
-      </backtrace>
-    </exception>
-  </verdict>
-  <verdict method='verdict_assert_equal?' outcome='passed' id='__error_count__'>
-    <expected class='Integer' value='0'/>
-    <actual class='Integer' value='0'/>
-  </verdict>
+  <summary_ verdicts='1' failures='1' errors='0'/>
+  <verdict_ method='verdict_assert_equal?' outcome='failed' id='analyzed'>
+    <expected_ class='Set' value='#&lt;Set: {:a, :b, :c, :d}&gt;'/>
+    <actual_ class='Set' value='#&lt;Set: {:c, :d, :e, :f}&gt;'/>
+    <exception_ class='Minitest::Assertion' message='Expected: #&lt;Set: {:a, :b, :c, :d}&gt;'>
+      <backtrace_>
+        <level_0_ location='set.rb:9:in `block in test_example&apos;'/>
+        <level_1_ location='set.rb:6:in `test_example&apos;'/>
+      </backtrace_>
+    </exception_>
+  </verdict_>
 </log>

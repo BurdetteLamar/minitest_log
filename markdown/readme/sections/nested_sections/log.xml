@@ -1,15 +1,11 @@
 <log>
-  <summary verdicts='1' failures='0' errors='0'/>
-  <section name='First outer'>
-    <section name='First inner'/>
-    <section name='Second inner'/>
-  </section>
-  <section name='Second outer'>
-    <section name='First inner'/>
-    <section name='Second inner'/>
-  </section>
-  <verdict method='verdict_assert_equal?' outcome='passed' id='__error_count__'>
-    <expected class='Integer' value='0'/>
-    <actual class='Integer' value='0'/>
-  </verdict>
+  <summary_ verdicts='0' failures='0' errors='0'/>
+  <section_ name='First outer'>
+    <section_ name='First inner'/>
+    <section_ name='Second inner'/>
+  </section_>
+  <section_ name='Second outer'>
+    <section_ name='First inner'/>
+    <section_ name='Second inner'/>
+  </section_>
 </log>

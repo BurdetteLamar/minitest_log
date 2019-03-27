@@ -52,14 +52,10 @@ The log:
 ```log.xml```:
 ```xml
 <log>
-  <summary verdicts='1' failures='0' errors='0'/>
-  <comment>
+  <summary_ verdicts='0' failures='0' errors='0'/>
+  <comment_>
     Test stuff goes here.
-  </comment>
-  <verdict method='verdict_assert_equal?' outcome='passed' id='__error_count__'>
-    <expected class='Integer' value='0'/>
-    <actual class='Integer' value='0'/>
-  </verdict>
+  </comment_>
 </log>
 ```
 
@@ -89,14 +85,10 @@ The log:
 ```my_log.xml```:
 ```xml
 <my_root_name>
-    <summary verdicts='1' failures='0' errors='0'/>
-    <comment>
+    <summary_ verdicts='0' failures='0' errors='0'/>
+    <comment_>
         Test code goes here.
-    </comment>
-    <verdict method='verdict_assert_equal?' outcome='passed' id='__error_count__'>
-        <expected class='Integer' value='0'/>
-        <actual class='Integer' value='0'/>
-    </verdict>
+    </comment_>
 </my_root_name>
 ```
 
@@ -138,19 +130,15 @@ The log:
 ```log.xml```:
 ```xml
 <log>
-  <summary verdicts='1' failures='0' errors='0'/>
-  <section name='First outer'>
-    <section name='First inner'/>
-    <section name='Second inner'/>
-  </section>
-  <section name='Second outer'>
-    <section name='First inner'/>
-    <section name='Second inner'/>
-  </section>
-  <verdict method='verdict_assert_equal?' outcome='passed' id='__error_count__'>
-    <expected class='Integer' value='0'/>
-    <actual class='Integer' value='0'/>
-  </verdict>
+  <summary_ verdicts='0' failures='0' errors='0'/>
+  <section_ name='First outer'>
+    <section_ name='First inner'/>
+    <section_ name='Second inner'/>
+  </section_>
+  <section_ name='Second outer'>
+    <section_ name='First inner'/>
+    <section_ name='Second inner'/>
+  </section_>
 </log>
 ```
 
@@ -185,17 +173,13 @@ The log:
 ```log.xml```:
 ```xml
 <log>
-  <summary verdicts='1' failures='0' errors='0'/>
-  <section name='My section'>
+  <summary_ verdicts='0' failures='0' errors='0'/>
+  <section_ name='My section'>
     Text
-  </section>
-  <section name='Another section'>
+  </section_>
+  <section_ name='Another section'>
     Text and more text
-  </section>
-  <verdict method='verdict_assert_equal?' outcome='passed' id='__error_count__'>
-    <expected class='Integer' value='0'/>
-    <actual class='Integer' value='0'/>
-  </verdict>
+  </section_>
 </log>
 ```
 
@@ -232,13 +216,9 @@ The log:
 ```log.xml```:
 ```xml
 <log>
-  <summary verdicts='1' failures='0' errors='0'/>
-  <section name='My section' first_attr='first' second_attr='second'/>
-  <section name='Another section' first_attr='first' second_attr='second' third_attr='third'/>
-  <verdict method='verdict_assert_equal?' outcome='passed' id='__error_count__'>
-    <expected class='Integer' value='0'/>
-    <actual class='Integer' value='0'/>
-  </verdict>
+  <summary_ verdicts='0' failures='0' errors='0'/>
+  <section_ name='My section' first_attr='first' second_attr='second'/>
+  <section_ name='Another section' first_attr='first' second_attr='second' third_attr='third'/>
 </log>
 ```
 
@@ -269,12 +249,8 @@ The log:
 ```log.xml```:
 ```xml
 <log>
-  <summary verdicts='1' failures='0' errors='0'/>
-  <section name='My section' timestamp='2019-03-26-Tue-10.27.41.373'/>
-  <verdict method='verdict_assert_equal?' outcome='passed' id='__error_count__'>
-    <expected class='Integer' value='0'/>
-    <actual class='Integer' value='0'/>
-  </verdict>
+  <summary_ verdicts='0' failures='0' errors='0'/>
+  <section_ name='My section' timestamp='2019-03-27-Wed-04.21.07.332'/>
 </log>
 ```
 
@@ -306,12 +282,8 @@ The log:
 ```log.xml```:
 ```xml
 <log>
-  <summary verdicts='1' failures='0' errors='0'/>
-  <section name='My section' duration_seconds='3.000'/>
-  <verdict method='verdict_assert_equal?' outcome='passed' id='__error_count__'>
-    <expected class='Integer' value='0'/>
-    <actual class='Integer' value='0'/>
-  </verdict>
+  <summary_ verdicts='0' failures='0' errors='0'/>
+  <section_ name='My section' duration_seconds='3.000'/>
 </log>
 ```
 
@@ -331,9 +303,9 @@ class Example < MiniTest::Test
 
   def test_example
     MinitestLog.open do |log|
-      log.section('My section', :rescue) do
-        raise RuntimeError.new('Boo!')
-      end
+      # log.section('My section', :rescue) do
+      #   raise RuntimeError.new('Boo!')
+      # end
     end
   end
 
@@ -345,25 +317,7 @@ The log:
 ```log.xml```:
 ```xml
 <log>
-  <summary verdicts='1' failures='1' errors='1'/>
-  <section name='My section'>
-    <rescued_exception class='RuntimeError' message='Boo!'>
-      <backtrace>
-        <level_0 location='example.rb:8:in `block (2 levels) in test_example&apos;'/>
-        <level_1 location='example.rb:7:in `block in test_example&apos;'/>
-        <level_2 location='example.rb:6:in `test_example&apos;'/>
-      </backtrace>
-    </rescued_exception>
-  </section>
-  <verdict method='verdict_assert_equal?' outcome='failed' id='__error_count__'>
-    <expected class='Integer' value='0'/>
-    <actual class='Integer' value='1'/>
-    <exception class='Minitest::Assertion' message='Expected: 0'>
-      <backtrace>
-        <level_0 location='example.rb:6:in `test_example&apos;'/>
-      </backtrace>
-    </exception>
-  </verdict>
+  <summary_ verdicts='0' failures='0' errors='0'/>
 </log>
 ```
 
