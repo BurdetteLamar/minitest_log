@@ -278,23 +278,25 @@ class VerdictTest < MiniTest::Test
 
   def test_verdict_assert_output
     method, abbrev_method = methods_for_test(__method__)
-    name = _test_name(method, 'pass')
-    _test(name) do |log|
-      log.verdict_assert_output?('0', 'foo', 'bar') do
-        $stdout.write 'foo'
-        $stderr.write 'bar'
+    [method, abbrev_method].each do |_method|
+      name = _test_name(method, 'pass')
+      _test(name) do |log|
+        log.send(_method, '0', 'foo', 'bar') do
+          $stdout.write 'foo'
+          $stderr.write 'bar'
+        end
       end
-    end
-    name = _test_name(method, 'fail')
-    _test(name) do |log|
-      log.verdict_assert_output?('1', 'foo', 'bar') do
-        $stdout.write 'bar'
-        $stderr.write 'foo'
+      name = _test_name(method, 'fail')
+      _test(name) do |log|
+        log.send(_method, '1', 'foo', 'bar') do
+          $stdout.write 'bar'
+          $stderr.write 'foo'
+        end
       end
-    end
-    name = _test_name(method, 'error')
-    _test(name) do |log|
-      log.verdict_assert_output?('2', 'foo')
+      name = _test_name(method, 'error')
+      _test(name) do |log|
+        log.send(_method, '2', 'foo')
+      end
     end
   end
 
@@ -320,21 +322,24 @@ class VerdictTest < MiniTest::Test
 
   def test_verdict_assert_raises
     method, abbrev_method = methods_for_test(__method__)
+    [method, abbrev_method].each do |_method|
     name = _test_name(method, 'pass')
     _test(name) do |log|
-      log.verdict_assert_raises?('0', RuntimeError) do
+      log.send(_method, '0', RuntimeError) do
         raise RuntimeError.new('Boo!')
       end
     end
     name = _test_name(method, 'fail')
     _test(name) do |log|
-      log.verdict_assert_raises?('1', RuntimeError) do
+      log.send(_method, '1', RuntimeError) do
       end
     end
     name = _test_name(method, 'error')
     _test(name) do |log|
-      log.verdict_assert_raises?('2')
+      log.send(_method, '2')
     end
+    end
+
   end
 
   # Minitest::Assertion does not have :refute_raises, so we don't have :verdict_refute_raises?.
@@ -381,21 +386,23 @@ class VerdictTest < MiniTest::Test
 
   def test_verdict_assert_silent
     method, abbrev_method = methods_for_test(__method__)
-    name = _test_name(method, 'pass')
-    _test(name) do |log|
-      log.verdict_assert_silent?('0') do
+    [method, abbrev_method].each do |_method|
+      name = _test_name(method, 'pass')
+      _test(name) do |log|
+        log.send(_method, '0') do
+        end
       end
-    end
-    name = _test_name(method, 'fail')
-    _test(name) do |log|
-      log.verdict_assert_silent?('1') do
-        $stdout.write 'bar'
-        $stderr.write 'foo'
+      name = _test_name(method, 'fail')
+      _test(name) do |log|
+        log.send(_method, '1') do
+          $stdout.write 'bar'
+          $stderr.write 'foo'
+        end
       end
-    end
-    name = _test_name(method, 'error')
-    _test(name) do |log|
-      log.verdict_assert_silent?('2', 'message', 'extra') do
+      name = _test_name(method, 'error')
+      _test(name) do |log|
+        log.send(_method, '2', 'message', 'extra') do
+        end
       end
     end
   end
@@ -404,21 +411,23 @@ class VerdictTest < MiniTest::Test
 
   def test_verdict_assert_throws
     method, abbrev_method = methods_for_test(__method__)
+    [method, abbrev_method].each do |_method|
     name = _test_name(method, 'pass')
     _test(name) do |log|
-      log.verdict_assert_throws?('0', Exception) do
+      log.send(_method, '0', Exception) do
         throw Exception
       end
     end
     name = _test_name(method, 'fail')
     _test(name) do |log|
-      log.verdict_assert_throws?('1', RuntimeError) do
+      log.send(_method, '1', RuntimeError) do
       end
     end
     name = _test_name(method, 'error')
     _test(name) do |log|
-      log.verdict_assert_throws?('2')
+      log.send(_method, '2')
     end
+      end
   end
 
 end
