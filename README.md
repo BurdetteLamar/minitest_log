@@ -1,15 +1,17 @@
 # MinitestLog
 
-Class ```MinitestLog``` is a wrapper for class ```Minitest::Assertions``` that:
+```MinitestLog``` allows you to:
 
-- Automatically and fully logs each assertion, whether passing or failing.
-- Allows a test to be structured as nested sections.
+- Structure your test code as nested sections.  The same structure carries forward into the test's execution log.
+- Specify verdicts (verifications) that are fully logged, whether passed or failed.
 
-Here, we say *verdict*, not *assertion*, to emphasize that a failure does not terminate the test.
+(Here, we say *verdict*, not *assertion*, to emphasize that a failure does not terminate the test.)
 
 ## Contents
+- [Installation](#installation)
 - [Verdicts](#verdicts)
 - [Logs and Sections](#logs-and-sections)
+  - [First Log](#first-log)
   - [Opening the Log](#opening-the-log)
   - [Nested Sections](#nested-sections)
   - [Text](#text)
@@ -18,26 +20,69 @@ Here, we say *verdict*, not *assertion*, to emphasize that a failure does not te
   - [Duration](#duration)
   - [Rescue](#rescue)
 
-So, we have:
- 
-- **Verdicts**:
-  - All verdicts are automatically logged.
-  - Verdicts for certain collections are closely analyzed (e.g., ```Hash```, ```Sets```).
-- **Sections** that can have:
-  - Nested subsections
-  - Verdicts
-  - Text
-  - Attributes
-  - Duration
-  - Timestamp
-  - Rescuing
-  - Comments
+## Installation
 
+```
+gem install minitest_log
+```
 ## Verdicts
 
 TODO
 
 ## Logs and Sections
+
+### First Log
+
+To begin with, here's a fairly simple test that uses ```minitest_log```
+
+```example.rb```:
+```ruby
+require 'minitest_log'
+class Example < MiniTest::Test
+  def test_example
+    MinitestLog.open do |log|
+      # Use nested sections to help organize the test code.
+      log.section('Test some math methods') do
+        log.section('Trig') do
+          # Use verdicts to verify values.
+          log.verdict_assert_equal?('sine of 0', 0, Math::sin(0))
+          # Use method :va_equal? as a shorthand alias for method :verdict_assert_equal?.
+          log.va_equal?('cosine of 0', 1, Math::cos(0))
+        end
+        log.section('Log') do
+          log.va_equal?('exp of 0', 1, Math::exp(0))
+        end
+      end
+    end
+  end
+end
+```
+
+The log:
+
+```log.xml```:
+```xml
+<log>
+  <section_ name='Test some math methods'>
+    <section_ name='Trig'>
+      <verdict_ method='verdict_assert_equal?' outcome='passed' id='sine of 0'>
+        <expected_ class='Integer' value='0'/>
+        <actual_ class='Float' value='0.0'/>
+      </verdict_>
+      <verdict_ method='verdict_assert_equal?' outcome='passed' id='cosine of 0'>
+        <expected_ class='Integer' value='1'/>
+        <actual_ class='Float' value='1.0'/>
+      </verdict_>
+    </section_>
+    <section_ name='Log'>
+      <verdict_ method='verdict_assert_equal?' outcome='passed' id='exp of 0'>
+        <expected_ class='Integer' value='1'/>
+        <actual_ class='Float' value='1.0'/>
+      </verdict_>
+    </section_>
+  </section_>
+</log>
+```
 
 ### Opening the Log
 
@@ -49,7 +94,7 @@ require 'minitest_log'
 class Example < MiniTest::Test
   def test_example
     MinitestLog.open do |log|
-      log.comment('Test stuff goes here.')
+      # Test code goes here.
     end
   end
 end
@@ -59,11 +104,7 @@ The log:
 
 ```log.xml```:
 ```xml
-<log>
-  <comment_>
-    Test stuff goes here.
-  </comment_>
-</log>
+<log/>
 ```
 
 ### Nested Sections
@@ -78,6 +119,7 @@ require 'minitest_log'
 class Example < MiniTest::Test
   def test_example
     MinitestLog.open do |log|
+      # Test code can go here.
       log.section('First outer') do
         log.section('First inner') do
         end
@@ -207,7 +249,7 @@ The log:
 ```log.xml```:
 ```xml
 <log>
-  <section_ name='My section' timestamp='2019-03-27-Wed-12.59.34.605'/>
+  <section_ name='My section' timestamp='2019-03-27-Wed-14.01.06.191'/>
 </log>
 ```
 

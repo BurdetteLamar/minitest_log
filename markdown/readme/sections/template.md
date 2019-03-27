@@ -1,5 +1,7 @@
 ## Logs and Sections
 
+@[:markdown](first_log/template.md)
+
 @[:markdown](open/template.md)
 
 @[:markdown](nested_sections/template.md)

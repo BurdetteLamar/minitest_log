@@ -1,28 +1,15 @@
 # MinitestLog
 
-Class ```MinitestLog``` is a wrapper for class ```Minitest::Assertions``` that:
+```MinitestLog``` allows you to:
 
-- Automatically and fully logs each assertion, whether passing or failing.
-- Allows a test to be structured as nested sections.
+- Structure your test code as nested sections.  The same structure carries forward into the test's execution log.
+- Specify verdicts (verifications) that are fully logged, whether passed or failed.
 
-Here, we say *verdict*, not *assertion*, to emphasize that a failure does not terminate the test.
+(Here, we say *verdict*, not *assertion*, to emphasize that a failure does not terminate the test.)
 
 @[:page_toc](## Contents)
 
-So, we have:
- 
-- **Verdicts**:
-  - All verdicts are automatically logged.
-  - Verdicts for certain collections are closely analyzed (e.g., ```Hash```, ```Sets```).
-- **Sections** that can have:
-  - Nested subsections
-  - Verdicts
-  - Text
-  - Attributes
-  - Duration
-  - Timestamp
-  - Rescuing
-  - Comments
+@[:markdown](installation/template.md)
 
 @[:markdown](verdicts/template.md)
 
