@@ -1,4 +1,4 @@
 <log>
   <summary_ verdicts='0' failures='0' errors='0'/>
-  <exception class='MinitestLog::IllegalElementNameError' message='Element name should not end with underescore: section_'/>
+  <exception class='MinitestLog::IllegalElementNameError' message='Element name should not end with underscore: section_'/>
 </log>

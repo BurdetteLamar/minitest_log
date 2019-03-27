@@ -261,7 +261,7 @@ The log:
 ```xml
 <log>
   <summary_ verdicts='0' failures='0' errors='0'/>
-  <section_ name='My section' timestamp='2019-03-27-Wed-04.33.25.608'/>
+  <section_ name='My section' timestamp='2019-03-27-Wed-10.35.24.469'/>
 </log>
 ```
 
@@ -314,9 +314,9 @@ class Example < MiniTest::Test
 
   def test_example
     MinitestLog.open do |log|
-      # log.section('My section', :rescue) do
-      #   raise RuntimeError.new('Boo!')
-      # end
+      log.section('My section', :rescue) do
+        raise RuntimeError.new('Boo!')
+      end
     end
   end
 
@@ -328,7 +328,16 @@ The log:
 ```log.xml```:
 ```xml
 <log>
-  <summary_ verdicts='0' failures='0' errors='0'/>
+  <summary_ verdicts='0' failures='0' errors='1'/>
+  <section_ name='My section'>
+    <rescued_exception_ class='RuntimeError' message='Boo!'>
+      <backtrace_>
+        <level_0_ location='example.rb:8:in `block (2 levels) in test_example&apos;'/>
+        <level_1_ location='example.rb:7:in `block in test_example&apos;'/>
+        <level_2_ location='example.rb:6:in `test_example&apos;'/>
+      </backtrace_>
+    </rescued_exception_>
+  </section_>
 </log>
 ```
 
