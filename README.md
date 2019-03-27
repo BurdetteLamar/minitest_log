@@ -45,12 +45,12 @@ class Example < MiniTest::Test
       log.section('Test some math methods') do
         log.section('Trig') do
           # Use verdicts to verify values.
-          log.verdict_assert_equal?('sine of 0', 0, Math::sin(0))
+          log.verdict_assert_equal?('sine of 0.0', 0.0, Math::sin(0.0))
           # Use method :va_equal? as a shorthand alias for method :verdict_assert_equal?.
-          log.va_equal?('cosine of 0', 1, Math::cos(0))
+          log.va_equal?('cosine of 0.0', 1.0, Math::cos(0.0))
         end
         log.section('Log') do
-          log.va_equal?('exp of 0', 1, Math::exp(0))
+          log.va_equal?('exp of 0.0', 1.0, Math::exp(0.0))
         end
       end
     end
@@ -65,18 +65,18 @@ The log:
 <log>
   <section_ name='Test some math methods'>
     <section_ name='Trig'>
-      <verdict_ method='verdict_assert_equal?' outcome='passed' id='sine of 0'>
-        <expected_ class='Integer' value='0'/>
+      <verdict_ method='verdict_assert_equal?' outcome='passed' id='sine of 0.0'>
+        <expected_ class='Float' value='0.0'/>
         <actual_ class='Float' value='0.0'/>
       </verdict_>
-      <verdict_ method='verdict_assert_equal?' outcome='passed' id='cosine of 0'>
-        <expected_ class='Integer' value='1'/>
+      <verdict_ method='verdict_assert_equal?' outcome='passed' id='cosine of 0.0'>
+        <expected_ class='Float' value='1.0'/>
         <actual_ class='Float' value='1.0'/>
       </verdict_>
     </section_>
     <section_ name='Log'>
-      <verdict_ method='verdict_assert_equal?' outcome='passed' id='exp of 0'>
-        <expected_ class='Integer' value='1'/>
+      <verdict_ method='verdict_assert_equal?' outcome='passed' id='exp of 0.0'>
+        <expected_ class='Float' value='1.0'/>
         <actual_ class='Float' value='1.0'/>
       </verdict_>
     </section_>
@@ -249,7 +249,7 @@ The log:
 ```log.xml```:
 ```xml
 <log>
-  <section_ name='My section' timestamp='2019-03-27-Wed-14.01.06.191'/>
+  <section_ name='My section' timestamp='2019-03-27-Wed-14.05.50.428'/>
 </log>
 ```
 

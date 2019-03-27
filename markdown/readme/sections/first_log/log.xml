@@ -1,18 +1,18 @@
 <log>
   <section_ name='Test some math methods'>
     <section_ name='Trig'>
-      <verdict_ method='verdict_assert_equal?' outcome='passed' id='sine of 0'>
-        <expected_ class='Integer' value='0'/>
+      <verdict_ method='verdict_assert_equal?' outcome='passed' id='sine of 0.0'>
+        <expected_ class='Float' value='0.0'/>
         <actual_ class='Float' value='0.0'/>
       </verdict_>
-      <verdict_ method='verdict_assert_equal?' outcome='passed' id='cosine of 0'>
-        <expected_ class='Integer' value='1'/>
+      <verdict_ method='verdict_assert_equal?' outcome='passed' id='cosine of 0.0'>
+        <expected_ class='Float' value='1.0'/>
         <actual_ class='Float' value='1.0'/>
       </verdict_>
     </section_>
     <section_ name='Log'>
-      <verdict_ method='verdict_assert_equal?' outcome='passed' id='exp of 0'>
-        <expected_ class='Integer' value='1'/>
+      <verdict_ method='verdict_assert_equal?' outcome='passed' id='exp of 0.0'>
+        <expected_ class='Float' value='1.0'/>
         <actual_ class='Float' value='1.0'/>
       </verdict_>
     </section_>
