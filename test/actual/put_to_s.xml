@@ -1,5 +1,4 @@
 <log>
-  <summary_ verdicts='0' failures='0' errors='0'/>
   <data_ name='put_to_s' class='Float' method=':to_s'>
     3.14159
   </data_>

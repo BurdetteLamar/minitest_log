@@ -1,5 +1,4 @@
 <log>
-  <summary_ verdicts='0' failures='0' errors='0'/>
   <data_ name='put_string' class='String' size='3'>
     Foo
   </data_>

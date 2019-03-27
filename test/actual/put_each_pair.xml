@@ -1,5 +1,4 @@
 <log>
-  <summary_ verdicts='0' failures='0' errors='0'/>
   <data_ name='put_each_pair' class='Hash' size='2' method=':each_pair'>
     <![CDATA[
 a => 0

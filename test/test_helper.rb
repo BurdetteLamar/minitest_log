@@ -8,7 +8,7 @@ module TestHelper
 
   include REXML
 
-  def _test(name, open_options = {})
+  def with_test_log(name, open_options = {})
     file_name = "#{name}.xml"
     file_path = actual_file_path(file_name)
     MinitestLog.open(file_path, open_options) do |log|

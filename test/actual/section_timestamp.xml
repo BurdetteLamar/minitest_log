@@ -1,5 +1,4 @@
 <log>
-  <summary_ verdicts='0' failures='0' errors='0'/>
   <section_ name='no_timestamp'/>
   <section_ name='timestamp' timestamp='0000-00-00-xxx-00.00.00.000'/>
 </log>

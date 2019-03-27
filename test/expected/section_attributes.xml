@@ -1,5 +1,4 @@
 <log>
-  <summary_ verdicts='0' failures='0' errors='0'/>
   <section_ name='no_attributes'/>
   <section_ name='attributes_hash' a='0' b='1'/>
   <section_ name='attributes_hashes' a='0' b='1' c='2' d='3'/>

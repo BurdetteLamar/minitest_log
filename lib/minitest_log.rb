@@ -24,7 +24,8 @@ class MinitestLog
     :root_name,
     :verdict_ids,
     :xml_indentation,
-    :error_verdict
+    :error_verdict,
+    :summary
 
   include REXML
   include Minitest::Assertions
@@ -41,6 +42,7 @@ class MinitestLog
         :root_name => 'log',
         :xml_indentation => 2,
         :error_verdict => false,
+        :summary => false
     ]
     options = default_options.merge(options)
     log = self.new(file_path, options)
@@ -250,6 +252,7 @@ class MinitestLog
     self.file_path = file_path
     self.root_name = options[:root_name]
     self.xml_indentation = options[:xml_indentation]
+    self.summary = options[:summary]
     self.error_verdict = options[:error_verdict] || false
     self.backtrace_filter = options[:backtrace_filter] || /log|ruby/
     self.file = File.open(self.file_path, 'w')
@@ -292,7 +295,7 @@ class MinitestLog
             element_name = text
             element = element.add_element(element_name)
             stack.push(element)
-            if stack.length == 1
+            if stack.length == 1 && self.summary
               summary_element = element.add_element('summary_')
               summary_element.add_attribute('verdicts', self.counts[:verdict].to_s)
               summary_element.add_attribute('failures', self.counts[:failure].to_s)

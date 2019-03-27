@@ -1,5 +1,5 @@
 <log>
-  <summary_ verdicts='0' failures='0' errors='2'/>
+  <summary_ verdicts='1' failures='1' errors='2'/>
   <section_ name='Test' method='verdict_refute_operator?' type='error'>
     <section_ name='Args=[]'>
       <rescued_exception_ class='ArgumentError' message='wrong number of arguments (given 1, expected 4..5)'>
@@ -12,4 +12,11 @@
       </rescued_exception_>
     </section_>
   </section_>
+  <verdict_ method='verdict_assert_equal?' outcome='failed' id='error_count'>
+    <expected_ class='Integer' value='0'/>
+    <actual_ class='Integer' value='2'/>
+    <exception_ class='Minitest::Assertion' message='Expected: 0'>
+      <backtrace_/>
+    </exception_>
+  </verdict_>
 </log>
