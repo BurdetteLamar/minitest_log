@@ -7,7 +7,9 @@ Class ```MinitestLog``` is a wrapper for class ```Minitest::Assertions``` that:
 
 Here, we say *verdict*, not *assertion*, to emphasize that a failure does not terminate the test.
 
-Se, we have:
+@[:page_toc](## Contents)
+
+So, we have:
  
 - **Verdicts**:
   - All verdicts are automatically logged.

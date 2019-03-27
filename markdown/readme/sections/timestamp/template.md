@@ -1,4 +1,4 @@
-#### Timestamp
+### Timestamp
  
  Put a timestamp onto a section by calling ```MinitestLog#section``` with the symbol ```:timestamp```.
  
