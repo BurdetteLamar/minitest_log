@@ -13,7 +13,7 @@ class VerdictTest < MiniTest::Test
     end
   end
 
-  def method_for_test(test_method)
+  def methods_for_test(test_method)
     method_s = "#{test_method.to_s.sub('test_', '')}?"
     abbrev_s = method_s.sub('verdict_', 'v').sub('assert', 'a').sub('refute', 'r')
     [method_s.to_sym, abbrev_s.to_sym]
@@ -24,7 +24,7 @@ class VerdictTest < MiniTest::Test
   end
 
   def _test_verdict(test_method:, arg_count_range:, pass_cases: [], fail_cases: [])
-    method, abbrev_method = method_for_test(test_method)
+    method, abbrev_method = methods_for_test(test_method)
     error_cases = [
         # Too few arguments.
         Args.new(),
@@ -277,7 +277,7 @@ class VerdictTest < MiniTest::Test
   end
 
   def test_verdict_assert_output
-    method, abbrev_method = method_for_test(__method__)
+    method, abbrev_method = methods_for_test(__method__)
     name = _test_name(method, 'pass')
     _test(name) do |log|
       log.verdict_assert_output?('0', 'foo', 'bar') do
@@ -319,7 +319,7 @@ class VerdictTest < MiniTest::Test
   end
 
   def test_verdict_assert_raises
-    method, abbrev_method = method_for_test(__method__)
+    method, abbrev_method = methods_for_test(__method__)
     name = _test_name(method, 'pass')
     _test(name) do |log|
       log.verdict_assert_raises?('0', RuntimeError) do
@@ -380,7 +380,7 @@ class VerdictTest < MiniTest::Test
   # Minitest::Assertion does not have :refute_send, so we don't have :verdict_refute_send?.
 
   def test_verdict_assert_silent
-    method, abbrev_method = method_for_test(__method__)
+    method, abbrev_method = methods_for_test(__method__)
     name = _test_name(method, 'pass')
     _test(name) do |log|
       log.verdict_assert_silent?('0') do
@@ -403,7 +403,7 @@ class VerdictTest < MiniTest::Test
   # Minitest::Assertion does not have :refute_silent, so we don't have :verdict_refute_silent?.
 
   def test_verdict_assert_throws
-    method, abbrev_method = method_for_test(__method__)
+    method, abbrev_method = methods_for_test(__method__)
     name = _test_name(method, 'pass')
     _test(name) do |log|
       log.verdict_assert_throws?('0', Exception) do
