@@ -1,19 +1,15 @@
 <log>
-  <summary verdicts='3' failures='1' errors='0'/>
-  <verdict method='verdict_refute?' outcome='passed' id='refute_false'>
-    <actual class='FalseClass' value='false'/>
-  </verdict>
-  <verdict method='verdict_refute?' outcome='failed' id='refute_true'>
-    <actual class='TrueClass' value='true'/>
-    <exception class='Minitest::Assertion' message='Expected true to not be truthy.'>
-      <backtrace>
-        <level_0 location='example.rb:8:in `block in test_example&apos;'/>
-        <level_1 location='example.rb:6:in `test_example&apos;'/>
-      </backtrace>
-    </exception>
-  </verdict>
-  <verdict method='verdict_assert_equal?' outcome='passed' id='__error_count__'>
-    <expected class='Integer' value='0'/>
-    <actual class='Integer' value='0'/>
-  </verdict>
+  <summary_ verdicts='2' failures='1' errors='0'/>
+  <verdict_ method='verdict_refute?' outcome='passed' id='refute_false'>
+    <actual_ class='FalseClass' value='false'/>
+  </verdict_>
+  <verdict_ method='verdict_refute?' outcome='failed' id='refute_true'>
+    <actual_ class='TrueClass' value='true'/>
+    <exception_ class='Minitest::Assertion' message='Expected true to not be truthy.'>
+      <backtrace_>
+        <level_0_ location='example.rb:8:in `block in test_example&apos;'/>
+        <level_1_ location='example.rb:6:in `test_example&apos;'/>
+      </backtrace_>
+    </exception_>
+  </verdict_>
 </log>

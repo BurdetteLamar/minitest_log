@@ -1,13 +1,9 @@
 <log>
-  <summary verdicts='1' failures='0' errors='0'/>
-  <section name='My section'>
+  <summary_ verdicts='0' failures='0' errors='0'/>
+  <section_ name='My section'>
     Text
-  </section>
-  <section name='Another section'>
+  </section_>
+  <section_ name='Another section'>
     Text and more text
-  </section>
-  <verdict method='verdict_assert_equal?' outcome='passed' id='__error_count__'>
-    <expected class='Integer' value='0'/>
-    <actual class='Integer' value='0'/>
-  </verdict>
+  </section_>
 </log>

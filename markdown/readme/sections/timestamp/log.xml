@@ -1,8 +1,4 @@
 <log>
-  <summary verdicts='1' failures='0' errors='0'/>
-  <section name='My section' timestamp='2019-03-26-Tue-10.27.41.373'/>
-  <verdict method='verdict_assert_equal?' outcome='passed' id='__error_count__'>
-    <expected class='Integer' value='0'/>
-    <actual class='Integer' value='0'/>
-  </verdict>
+  <summary_ verdicts='0' failures='0' errors='0'/>
+  <section_ name='My section' timestamp='2019-03-27-Wed-04.21.07.332'/>
 </log>

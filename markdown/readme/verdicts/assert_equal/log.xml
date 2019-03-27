@@ -1,11 +1,7 @@
 <log>
-  <summary verdicts='2' failures='0' errors='0'/>
-  <verdict method='verdict_assert_equal?' outcome='passed' id='my_verdict_id'>
-    <expected class='String' value='&quot;Lorem ipsum&quot;'/>
-    <actual class='String' value='&quot;Lorem ipsum&quot;'/>
-  </verdict>
-  <verdict method='verdict_assert_equal?' outcome='passed' id='__error_count__'>
-    <expected class='Integer' value='0'/>
-    <actual class='Integer' value='0'/>
-  </verdict>
+  <summary_ verdicts='1' failures='0' errors='0'/>
+  <verdict_ method='verdict_assert_equal?' outcome='passed' id='my_verdict_id'>
+    <expected_ class='String' value='&quot;Lorem ipsum&quot;'/>
+    <actual_ class='String' value='&quot;Lorem ipsum&quot;'/>
+  </verdict_>
 </log>

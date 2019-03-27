@@ -1,17 +1,13 @@
 <log>
-  <summary verdicts='2' failures='1' errors='0'/>
-  <verdict method='verdict_assert_equal?' outcome='failed' id='analyzed'>
-    <expected class='Array' value='[:a, :b, :c, :d, :e, :f, :k, :l, :m, :n]'/>
-    <actual class='Array' value='[:a, :b, :g, :h, :c, :d, :i, :j, :k, :l]'/>
-    <exception class='Minitest::Assertion' message='--- expected'>
-      <backtrace>
-        <level_0 location='array.rb:9:in `block in test_example&apos;'/>
-        <level_1 location='array.rb:6:in `test_example&apos;'/>
-      </backtrace>
-    </exception>
-  </verdict>
-  <verdict method='verdict_assert_equal?' outcome='passed' id='__error_count__'>
-    <expected class='Integer' value='0'/>
-    <actual class='Integer' value='0'/>
-  </verdict>
+  <summary_ verdicts='1' failures='1' errors='0'/>
+  <verdict_ method='verdict_assert_equal?' outcome='failed' id='analyzed'>
+    <expected_ class='Array' value='[:a, :b, :c, :d, :e, :f, :k, :l, :m, :n]'/>
+    <actual_ class='Array' value='[:a, :b, :g, :h, :c, :d, :i, :j, :k, :l]'/>
+    <exception_ class='Minitest::Assertion' message='--- expected'>
+      <backtrace_>
+        <level_0_ location='array.rb:9:in `block in test_example&apos;'/>
+        <level_1_ location='array.rb:6:in `test_example&apos;'/>
+      </backtrace_>
+    </exception_>
+  </verdict_>
 </log>

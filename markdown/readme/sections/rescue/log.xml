@@ -1,21 +1,3 @@
 <log>
-  <summary verdicts='1' failures='1' errors='1'/>
-  <section name='My section'>
-    <rescued_exception class='RuntimeError' message='Boo!'>
-      <backtrace>
-        <level_0 location='example.rb:8:in `block (2 levels) in test_example&apos;'/>
-        <level_1 location='example.rb:7:in `block in test_example&apos;'/>
-        <level_2 location='example.rb:6:in `test_example&apos;'/>
-      </backtrace>
-    </rescued_exception>
-  </section>
-  <verdict method='verdict_assert_equal?' outcome='failed' id='__error_count__'>
-    <expected class='Integer' value='0'/>
-    <actual class='Integer' value='1'/>
-    <exception class='Minitest::Assertion' message='Expected: 0'>
-      <backtrace>
-        <level_0 location='example.rb:6:in `test_example&apos;'/>
-      </backtrace>
-    </exception>
-  </verdict>
+  <summary_ verdicts='0' failures='0' errors='0'/>
 </log>
