@@ -471,4 +471,12 @@ class MinitestLog
     verdict_method.to_s.sub('verdict_', '').sub('?', '').to_sym
   end
 
+  def self.parse(file_path)
+    document = nil
+    File.open(file_path) do |file|
+      document = REXML::Document.new(file)
+    end
+    document
+  end
+
 end

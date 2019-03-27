@@ -323,4 +323,16 @@ EOT
     _test_put(:put_inspect, inspect)
   end
 
+  def test_parse
+    # Just to make sure we can parse (later).
+    file_path = nil
+    MinitestLog.open do |log|
+      file_path = log.file_path
+      log.section('Foo')
+    end
+    document = MinitestLog.parse(file_path)
+    File.delete(file_path)
+    assert_equal('log', document.root.name)
+  end
+
 end
