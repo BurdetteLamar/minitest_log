@@ -1,9 +1,12 @@
 # MinitestLog
 
+
+```MinitestLog``` layers structured logging onto module ```Minitest```.
+
 ```MinitestLog``` allows you to:
 
-- Structure your test code as nested sections.  The same structure carries forward into the test's execution log.
-- Specify verdicts (verifications) that are fully logged, whether passed or failed.
+- Organize your test code as nested sections, so the test can "tell its story."  That same structure carries forward into the test's execution log.
+- Specify verdicts that are logged in detail, whether passed or failed.
 
 (Here, we say *verdict*, not *assertion*, to emphasize that a failure does not terminate the test.)
 
@@ -14,7 +17,6 @@ gem install minitest_log
 ```
 
 ## Contents
-- [Verdicts](#verdicts)
 - [Logs and Sections](#logs-and-sections)
   - [First Log](#first-log)
   - [Opening the Log](#opening-the-log)
@@ -24,10 +26,7 @@ gem install minitest_log
   - [Timestamp](#timestamp)
   - [Duration](#duration)
   - [Rescue](#rescue)
-
-## Verdicts
-
-TODO
+- [Verdicts](#verdicts)
 
 ## Logs and Sections
 
@@ -40,16 +39,47 @@ To begin with, here's a fairly simple test that uses ```minitest_log```
 require 'minitest_log'
 class Example < MiniTest::Test
   def test_example
+    # Open the log.
     MinitestLog.open do |log|
+      log.section('Show off section functionality') do
+        log.section('Name', 'The first argument becomes the section name.')
+        log.section('Text', 'A String argument becomes text.')
+        log.section('Nesting', 'Sections can nest.') do
+          log.section('Outer', 'Outer section.') do
+            log.section('Inner', 'Inner section.')
+            log.section('Another','Another.')
+          end
+        end
+        log.section('Childless', 'A section need not have children.')
+        log.section('Attributes', {:a => 0, :b => 1}, 'A Hash becomes attributes.')
+        log.section('Timestamp', :timestamp, 'Symbol :timestamp requests that the current time be logged.')
+        log.section('Duration', :duration, 'Symbol :duration requests that the duration be logged .') do
+          sleep(1)
+        end
+        log.section('Rescue', :rescue, 'Symbol :rescue, requests that any exception be rescued and logged.') do
+          raise Exception.new('Oops!')
+          log.comment('This comment will not be reached.')
+        end
+        log.comment('This comment will be reached.')
+        log.section(
+            'Pot pourri',
+            :duration,
+            :timestamp,
+            :rescue,
+            {:a => 0, :b => 1},
+            'A section can have lots of stuff.'
+        )
+      end
+      # cdata, comment, put_element, put_data
       # Use nested sections to help organize the test code.
       log.section('Test some math methods') do
-        log.section('Trig') do
+        log.section('Trigonometric') do
           # Use verdicts to verify values.
           log.verdict_assert_equal?('sine of 0.0', 0.0, Math::sin(0.0))
           # Use method :va_equal? as a shorthand alias for method :verdict_assert_equal?.
           log.va_equal?('cosine of 0.0', 1.0, Math::cos(0.0))
         end
-        log.section('Log') do
+        log.section('Exponentiation') do
           log.va_equal?('exp of 0.0', 1.0, Math::exp(0.0))
         end
       end
@@ -63,8 +93,57 @@ The log:
 ```log.xml```:
 ```xml
 <log>
+  <section_ name='Show off section functionality'>
+    <section_ name='Name'>
+      The first argument becomes the section name.
+    </section_>
+    <section_ name='Text'>
+      A String argument becomes text.
+    </section_>
+    <section_ name='Nesting'>
+      Sections can nest.
+      <section_ name='Outer'>
+        Outer section.
+        <section_ name='Inner'>
+          Inner section.
+        </section_>
+        <section_ name='Another'>
+          Another.
+        </section_>
+      </section_>
+    </section_>
+    <section_ name='Childless'>
+      A section need not have children.
+    </section_>
+    <section_ name='Attributes' a='0' b='1'>
+      A Hash becomes attributes.
+    </section_>
+    <section_ name='Timestamp' timestamp='2019-03-28-Thu-12.08.30.537'>
+      Symbol :timestamp requests that the current time be logged.
+    </section_>
+    <section_ name='Duration' duration_seconds='1.001'>
+      Symbol :duration requests that the duration be logged .
+    </section_>
+    <section_ name='Rescue'>
+      Symbol :rescue, requests that any exception be rescued and logged.
+      <rescued_exception_ class='Exception' message='Oops!'>
+        <backtrace_>
+          <level_0_ location='example.rb:22:in `block (3 levels) in test_example&apos;'/>
+          <level_1_ location='example.rb:21:in `block (2 levels) in test_example&apos;'/>
+          <level_2_ location='example.rb:6:in `block in test_example&apos;'/>
+          <level_3_ location='example.rb:5:in `test_example&apos;'/>
+        </backtrace_>
+      </rescued_exception_>
+    </section_>
+    <comment_>
+      This comment will be reached.
+    </comment_>
+    <section_ name='Pot pourri' timestamp='2019-03-28-Thu-12.08.31.541' a='0' b='1' duration_seconds='0.000'>
+      A section can have lots of stuff.
+    </section_>
+  </section_>
   <section_ name='Test some math methods'>
-    <section_ name='Trig'>
+    <section_ name='Trigonometric'>
       <verdict_ method='verdict_assert_equal?' outcome='passed' id='sine of 0.0'>
         <expected_ class='Float' value='0.0'/>
         <actual_ class='Float' value='0.0'/>
@@ -74,7 +153,7 @@ The log:
         <actual_ class='Float' value='1.0'/>
       </verdict_>
     </section_>
-    <section_ name='Log'>
+    <section_ name='Exponentiation'>
       <verdict_ method='verdict_assert_equal?' outcome='passed' id='exp of 0.0'>
         <expected_ class='Float' value='1.0'/>
         <actual_ class='Float' value='1.0'/>
@@ -242,7 +321,7 @@ The log:
 ```log.xml```:
 ```xml
 <log>
-  <section_ name='My section' timestamp='2019-03-27-Wed-14.23.20.942'/>
+  <section_ name='My section' timestamp='2019-03-28-Thu-12.08.33.707'/>
 </log>
 ```
 
@@ -315,5 +394,6 @@ The log:
 ```
 
 
+## Verdicts
 
-
+TODO
