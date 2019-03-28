@@ -12,6 +12,16 @@ class VerdictTest < MiniTest::Test
       self.args = args
     end
   end
+  
+  def with_verdict_test_log(name, options = {})
+    verdict_options = options.merge(
+                               :error_verdict => true,
+                               :summary => true,
+    )
+    with_test_log(name, verdict_options) do |log|
+      yield log
+    end
+  end
 
   def methods_for_test(test_method)
     method_s = "#{test_method.to_s.sub('test_', '')}?"
@@ -40,7 +50,7 @@ class VerdictTest < MiniTest::Test
       # Test with both full and abbrev method names.
       # But there will be only one log file, written twice.
       [method, abbrev_method].each do |_method|
-        _test(name) do |log|
+        with_verdict_test_log(name) do |log|
           log.section('Test', {:method => method, :type => type}) do
             cases.each_with_index do |_case, i|
               # Be careful to not disturb case.args;  we're in a loop.
@@ -277,21 +287,21 @@ class VerdictTest < MiniTest::Test
     method, abbrev_method = methods_for_test(__method__)
     [method, abbrev_method].each do |_method|
       name = _test_name(method, 'pass')
-      _test(name) do |log|
+      with_verdict_test_log(name) do |log|
         log.send(_method, '0', 'foo', 'bar') do
           $stdout.write 'foo'
           $stderr.write 'bar'
         end
       end
       name = _test_name(method, 'fail')
-      _test(name) do |log|
+      with_verdict_test_log(name) do |log|
         log.send(_method, '1', 'foo', 'bar') do
           $stdout.write 'bar'
           $stderr.write 'foo'
         end
       end
       name = _test_name(method, 'error')
-      _test(name) do |log|
+      with_verdict_test_log(name) do |log|
         log.send(_method, '2', 'foo')
       end
     end
@@ -321,18 +331,18 @@ class VerdictTest < MiniTest::Test
     method, abbrev_method = methods_for_test(__method__)
     [method, abbrev_method].each do |_method|
     name = _test_name(method, 'pass')
-    _test(name) do |log|
+    with_verdict_test_log(name) do |log|
       log.send(_method, '0', RuntimeError) do
         raise RuntimeError.new('Boo!')
       end
     end
     name = _test_name(method, 'fail')
-    _test(name) do |log|
+    with_verdict_test_log(name) do |log|
       log.send(_method, '1', RuntimeError) do
       end
     end
     name = _test_name(method, 'error')
-    _test(name) do |log|
+    with_verdict_test_log(name) do |log|
       log.send(_method, '2')
     end
     end
@@ -385,19 +395,19 @@ class VerdictTest < MiniTest::Test
     method, abbrev_method = methods_for_test(__method__)
     [method, abbrev_method].each do |_method|
       name = _test_name(method, 'pass')
-      _test(name) do |log|
+      with_verdict_test_log(name) do |log|
         log.send(_method, '0') do
         end
       end
       name = _test_name(method, 'fail')
-      _test(name) do |log|
+      with_verdict_test_log(name) do |log|
         log.send(_method, '1') do
           $stdout.write 'bar'
           $stderr.write 'foo'
         end
       end
       name = _test_name(method, 'error')
-      _test(name) do |log|
+      with_verdict_test_log(name) do |log|
         log.send(_method, '2', 'message', 'extra') do
         end
       end
@@ -410,18 +420,18 @@ class VerdictTest < MiniTest::Test
     method, abbrev_method = methods_for_test(__method__)
     [method, abbrev_method].each do |_method|
     name = _test_name(method, 'pass')
-    _test(name) do |log|
+    with_verdict_test_log(name) do |log|
       log.send(_method, '0', Exception) do
         throw Exception
       end
     end
     name = _test_name(method, 'fail')
-    _test(name) do |log|
+    with_verdict_test_log(name) do |log|
       log.send(_method, '1', RuntimeError) do
       end
     end
     name = _test_name(method, 'error')
-    _test(name) do |log|
+    with_verdict_test_log(name) do |log|
       log.send(_method, '2')
     end
       end

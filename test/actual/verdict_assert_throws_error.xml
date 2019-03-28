@@ -1,5 +1,5 @@
 <log>
-  <summary_ verdicts='0' failures='0' errors='0'/>
+  <summary_ verdicts='1' failures='0' errors='0'/>
   <uncaught_exception_ timestamp='0000-00-00-xxx-00.00.00.000' class='ArgumentError'>
     <message_>
       wrong number of arguments (given 1, expected 2..3)
@@ -7,4 +7,8 @@
     <backtrace_>
     </backtrace_>
   </uncaught_exception_>
+  <verdict_ method='verdict_assert_equal?' outcome='passed' id='error_count'>
+    <expected_ class='Integer' value='0'/>
+    <actual_ class='Integer' value='0'/>
+  </verdict_>
 </log>

@@ -1,5 +1,4 @@
 <log>
-  <summary_ verdicts='0' failures='0' errors='0'/>
   <section_ name='no_inspected'/>
   <section_ name='one_inspected'>
     :one

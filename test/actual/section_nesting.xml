@@ -1,5 +1,4 @@
 <log>
-  <summary_ verdicts='0' failures='0' errors='0'/>
   <section_ name='no_nesting'/>
   <section_ name='outer'>
     <section_ name='inner'/>

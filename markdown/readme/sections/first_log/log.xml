@@ -1,0 +1,69 @@
+<log>
+  <section_ name='Show off section functionality'>
+    <section_ name='Name'>
+      The first argument becomes the section name.
+    </section_>
+    <section_ name='Text'>
+      A String argument becomes text.
+    </section_>
+    <section_ name='Nesting'>
+      Sections can nest.
+      <section_ name='Outer'>
+        Outer section.
+        <section_ name='Inner'>
+          Inner section.
+        </section_>
+        <section_ name='Another'>
+          Another.
+        </section_>
+      </section_>
+    </section_>
+    <section_ name='Childless'>
+      A section need not have children.
+    </section_>
+    <section_ name='Attributes' a='0' b='1'>
+      A Hash becomes attributes.
+    </section_>
+    <section_ name='Timestamp' timestamp='2019-03-28-Thu-14.18.09.722'>
+      Symbol :timestamp requests that the current time be logged.
+    </section_>
+    <section_ name='Duration' duration_seconds='1.000'>
+      Symbol :duration requests that the duration be logged .
+    </section_>
+    <section_ name='Rescue'>
+      Symbol :rescue, requests that any exception be rescued and logged.
+      <rescued_exception_ class='Exception' message='Oops!'>
+        <backtrace_>
+          <level_0_ location='example.rb:22:in `block (3 levels) in test_example&apos;'/>
+          <level_1_ location='example.rb:21:in `block (2 levels) in test_example&apos;'/>
+          <level_2_ location='example.rb:6:in `block in test_example&apos;'/>
+          <level_3_ location='example.rb:5:in `test_example&apos;'/>
+        </backtrace_>
+      </rescued_exception_>
+    </section_>
+    <comment_>
+      This comment will be reached, because the test did not terminate.
+    </comment_>
+    <section_ name='Pot pourri' timestamp='2019-03-28-Thu-14.18.10.726' a='0' b='1' duration_seconds='0.000'>
+      A section can have lots of stuff.
+    </section_>
+  </section_>
+  <section_ name='Test some math methods'>
+    <section_ name='Trigonometric'>
+      <verdict_ method='verdict_assert_equal?' outcome='passed' id='sine of 0.0'>
+        <expected_ class='Float' value='0.0'/>
+        <actual_ class='Float' value='0.0'/>
+      </verdict_>
+      <verdict_ method='verdict_assert_equal?' outcome='passed' id='cosine of 0.0'>
+        <expected_ class='Float' value='1.0'/>
+        <actual_ class='Float' value='1.0'/>
+      </verdict_>
+    </section_>
+    <section_ name='Exponentiation'>
+      <verdict_ method='verdict_assert_equal?' outcome='passed' id='exp of 0.0'>
+        <expected_ class='Float' value='1.0'/>
+        <actual_ class='Float' value='1.0'/>
+      </verdict_>
+    </section_>
+  </section_>
+</log>

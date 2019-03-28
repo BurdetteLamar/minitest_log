@@ -1,7 +1,5 @@
 require 'minitest_log'
-
 class Example < MiniTest::Test
-
   def test_example
     MinitestLog.open do |log|
       attrs = {:first_attr => 'first', :second_attr => 'second'}
@@ -12,5 +10,4 @@ class Example < MiniTest::Test
       end
     end
   end
-
 end

@@ -1,5 +1,5 @@
 <log>
-  <summary_ verdicts='2' failures='2' errors='0'/>
+  <summary_ verdicts='3' failures='2' errors='0'/>
   <section_ name='Test' method='verdict_refute_match?' type='fail'>
     <section_ name='Args=[/b/, &quot;abc&quot;, &quot;Message 0&quot;]'>
       <verdict_ method='verdict_refute_match?' outcome='failed' id='0' message='Message 0'>
@@ -20,4 +20,8 @@
       </verdict_>
     </section_>
   </section_>
+  <verdict_ method='verdict_assert_equal?' outcome='passed' id='error_count'>
+    <expected_ class='Integer' value='0'/>
+    <actual_ class='Integer' value='0'/>
+  </verdict_>
 </log>

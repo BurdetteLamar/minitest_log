@@ -1,5 +1,4 @@
 <log>
-<summary_ verdicts='0' failures='0' errors='0'/>
 <section_ name='Section'>
 <data_ name='indentation' class='Integer' method=':to_s'>
 0

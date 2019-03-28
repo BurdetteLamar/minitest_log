@@ -23,7 +23,7 @@ class LogTest < Minitest::Test
   end
 
   def test_open_block
-    _test('open_block') do |_|
+    with_test_log('open_block') do |_|
     end
   end
 
@@ -39,23 +39,23 @@ class LogTest < Minitest::Test
   end
 
   def test_open_file_path
-    _test('open_file_path') do |_|
+    with_test_log('open_file_path') do |_|
     end
   end
 
   def test_open_root_name
-    _test('open_root_name', :root_name => 'foo') do |_|
+    with_test_log('open_root_name', :root_name => 'foo') do |_|
     end
   end
 
   def test_open_error_verdict
-    _test('open_error_verdict', :error_verdict => true) do |_|
+    with_test_log('open_error_verdict', :error_verdict => true) do |_|
     end
   end
 
   def test_open_xml_indentation
     [-1, 0, 2].each do |indentation|
-      _test("open_xml_indentation.#{indentation}", :xml_indentation => indentation) do |log|
+      with_test_log("open_xml_indentation.#{indentation}", :xml_indentation => indentation) do |log|
         log.section('Section') do
           log.put_data('indentation', indentation)
         end
@@ -64,7 +64,7 @@ class LogTest < Minitest::Test
   end
 
   def test_open_backtrace_filter
-    _test('open_backtrace_filter') do |log|
+    with_test_log('open_backtrace_filter') do |log|
       Dir.mktmpdir do |dir_path|
         Dir.chdir(dir_path) do
           file_path = nil
@@ -102,7 +102,7 @@ class LogTest < Minitest::Test
   def test_nesting
     [:section, :put_element].each do |method|
       name = "#{method}_nesting"
-      _test(name) do |log|
+      with_test_log(name) do |log|
         log.send(method, 'no_nesting')
         log.send(method, 'outer') do
           log.send(method, 'inner')
@@ -119,7 +119,7 @@ class LogTest < Minitest::Test
   def test_timestamp
     [:section, :put_element].each do |method|
       name = "#{method}_timestamp"
-      _test(name) do |log|
+      with_test_log(name) do |log|
         log.send(method, 'no_timestamp') do
         end
         log.send(method, 'timestamp', :timestamp) do
@@ -131,7 +131,7 @@ class LogTest < Minitest::Test
   def test_duration
     [:section, :put_element].each do |method|
       name = "#{method}_duration"
-      _test(name) do |log|
+      with_test_log(name) do |log|
         log.send(method, 'no_duration') do
         end
         log.send(method, 'duration', :duration) do
@@ -143,7 +143,7 @@ class LogTest < Minitest::Test
   def test_rescue
     [:section, :put_element].each do |method|
       name = "#{method}_rescue"
-      _test(name) do |log|
+      with_test_log(name) do |log|
         log.send(method, 'rescue', :rescue) do
           fail 'Rescued!'
         end
@@ -157,7 +157,7 @@ class LogTest < Minitest::Test
   def test_attributes
     [:section, :put_element].each do |method|
       name = "#{method}_attributes"
-      _test(name) do |log|
+      with_test_log(name) do |log|
         log.send(method, 'no_attributes') do
         end
         log.send(method, 'attributes_hash', {:a => 0, :b => 1}) do
@@ -169,12 +169,12 @@ class LogTest < Minitest::Test
   end
 
   def test_element_name
-    _test('element_name') do |log|
+    with_test_log('element_name') do |log|
       log.put_element('section') do
         log.put_element('subsection')
       end
     end
-    _test('element_name_illegal') do |log|
+    with_test_log('element_name_illegal') do |log|
       e = assert_raises(MinitestLog::IllegalElementNameError) do
         log.put_element('section_')
       end
@@ -185,7 +185,7 @@ class LogTest < Minitest::Test
   def test_pcdata
     [:section, :put_element].each do |method|
       name = "#{method}_pcdata"
-      _test(name) do |log|
+      with_test_log(name) do |log|
         log.send(method, 'no_pcdata') do
         end
         log.send(method, 'one_string', 'One') do
@@ -209,7 +209,7 @@ class LogTest < Minitest::Test
     ]
     [:section, :put_element].each do |method|
       name = "#{method}_pot_pourri"
-      _test(name) do |log|
+      with_test_log(name) do |log|
         log.send(method, 'pot_pourri', *pot_pourri)
       end
     end
@@ -218,7 +218,7 @@ class LogTest < Minitest::Test
   def test_inspected
     [:section, :put_element].each do |method|
       name = "#{method}_inspected"
-      _test(name) do |log|
+      with_test_log(name) do |log|
         log.send(method, 'no_inspected') do
         end
         log.send(method, 'one_inspected', :one) do
@@ -230,7 +230,7 @@ class LogTest < Minitest::Test
   end
 
   def test_put_cdata
-    _test('cdata') do |log|
+    with_test_log('cdata') do |log|
       data = <<EOT
 
 Log
@@ -247,14 +247,14 @@ EOT
   end
 
   def test_comment
-    _test('comment') do |log|
+    with_test_log('comment') do |log|
       log.comment('My comment.')
     end
   end
 
   def _test_put(method, obj)
     # Test using method.
-    _test(method) do |log|
+    with_test_log(method) do |log|
       log.send(method, method.to_s, obj)
     end
     # Test using method :put_data.
