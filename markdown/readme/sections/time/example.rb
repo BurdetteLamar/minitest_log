@@ -6,7 +6,7 @@ class Example < MiniTest::Test
       log.section('My section with duration', :duration, 'Section with duration.') do
         sleep(0.5)
       end
-      log.section('My section with booth', :duration, :timestamp, 'Section with both.') do
+      log.section('My section with both', :duration, :timestamp, 'Section with both.') do
         sleep(0.5)
       end
     end

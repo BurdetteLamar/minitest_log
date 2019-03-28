@@ -39,7 +39,7 @@ class Example < MiniTest::Test
   def test_example
     MinitestLog.new('log.xml') do |log|
       log.section('My section name', 'The first argument becomes the section name.')
-      log.section('Another section name', 'After the section name, a String argument becomes text.')
+      log.section('Another section name', 'After the section name, any string argument becomes text.')
       log.section('My nested sections', 'Sections can nest.') do
         log.section('Outer', 'Outer section.') do
           log.section('Inner', 'Inner section.')
@@ -58,7 +58,7 @@ end
     The first argument becomes the section name.
   </section_>
   <section_ name='Another section name'>
-    After the section name, a String argument becomes text.
+    After the section name, any string argument becomes text.
   </section_>
   <section_ name='My nested sections'>
     Sections can nest.
@@ -81,7 +81,7 @@ You can put attributes onto a section by calling ```section``` with hash argumen
 
 Each name/value pair in the hash becomes an attribute in the log section header.
 
-The first argument is always the section name.  Additional hash arguments become attributes.
+The first argument is always the section name.  Addition hash arguments become attributes.
 
 ```example.rb```:
 ```ruby
@@ -124,7 +124,7 @@ class Example < MiniTest::Test
       log.section('My section with duration', :duration, 'Section with duration.') do
         sleep(0.5)
       end
-      log.section('My section with booth', :duration, :timestamp, 'Section with both.') do
+      log.section('My section with both', :duration, :timestamp, 'Section with both.') do
         sleep(0.5)
       end
     end
@@ -135,13 +135,13 @@ end
 ```log.xml```:
 ```xml
 <log>
-  <section_ name='My section with timestamp' timestamp='2019-03-28-Thu-16.56.57.506'>
+  <section_ name='My section with timestamp' timestamp='2019-03-28-Thu-17.04.49.782'>
     Section with timestamp.
   </section_>
   <section_ name='My section with duration' duration_seconds='0.500'>
     Section with duration.
   </section_>
-  <section_ name='My section with booth' timestamp='2019-03-28-Thu-16.56.58.006' duration_seconds='0.500'>
+  <section_ name='My section with both' timestamp='2019-03-28-Thu-17.04.50.284' duration_seconds='0.500'>
     Section with both.
   </section_>
 </log>

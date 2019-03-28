@@ -3,7 +3,7 @@
     The first argument becomes the section name.
   </section_>
   <section_ name='Another section name'>
-    After the section name, a String argument becomes text.
+    After the section name, any string argument becomes text.
   </section_>
   <section_ name='My nested sections'>
     Sections can nest.
