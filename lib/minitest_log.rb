@@ -36,8 +36,8 @@ class MinitestLog
   class IllegalElementNameError < MinitestLogError; end
   class IllegalNewError < MinitestLogError; end
 
-  def self.open(file_path = File.join('.', 'log.xml'), options=Hash.new)
-    raise NoBlockError.new('No block given for MinitestLog#open.') unless (block_given?)
+  def initialize(file_path, options=Hash.new)
+    raise NoBlockError.new('No block given for MinitestLog#new.') unless (block_given?)
     default_options = Hash[
         :root_name => 'log',
         :xml_indentation => 2,
@@ -45,19 +45,34 @@ class MinitestLog
         :summary => false
     ]
     options = default_options.merge(options)
-    log = self.new(file_path, options)
+    self.assertions = 0
+    self.file_path = file_path
+    self.root_name = options[:root_name]
+    self.xml_indentation = options[:xml_indentation]
+    self.summary = options[:summary]
+    self.error_verdict = options[:error_verdict] || false
+    self.backtrace_filter = options[:backtrace_filter] || /log|ruby/
+    self.file = File.open(self.file_path, 'w')
+    log_puts("REMARK\tThis text log is the precursor for an XML log.")
+    log_puts("REMARK\tIf the logged process completes, this text will be converted to XML.")
+    log_puts("BEGIN\t#{self.root_name}")
+    self.counts = Hash[
+        :verdict => 0,
+        :failure => 0,
+        :error => 0,
+    ]
     begin
-      yield log
+      yield self
     rescue => x
-      log.put_element('uncaught_exception', :timestamp, :class => x.class) do
-        log.put_element('message', x.message)
-        log.put_element('backtrace') do
-          backtrace = log.send(:filter_backtrace, x.backtrace)
-          log.put_cdata(backtrace.join("\n"))
+      put_element('uncaught_exception', :timestamp, :class => x.class) do
+        put_element('message', x.message)
+        put_element('backtrace') do
+          backtrace = filter_backtrace(x.backtrace)
+          put_cdata(backtrace.join("\n"))
         end
       end
     end
-    log.send(:dispose)
+    dispose
     nil
   end
 
@@ -241,31 +256,6 @@ class MinitestLog
   end
 
   private
-
-  def initialize(file_path, options=Hash.new)
-    unless caller[1].match(/minitest_log.rb:\d+:in `open'/)
-      # Caller should call MinitestLog.open, not MinitestLog.new.
-      message = "Please use #{self.class}.open, not #{self.class}.new\n"
-      raise IllegalNewError.new(message)
-    end
-    self.assertions = 0
-    self.file_path = file_path
-    self.root_name = options[:root_name]
-    self.xml_indentation = options[:xml_indentation]
-    self.summary = options[:summary]
-    self.error_verdict = options[:error_verdict] || false
-    self.backtrace_filter = options[:backtrace_filter] || /log|ruby/
-    self.file = File.open(self.file_path, 'w')
-    log_puts("REMARK\tThis text log is the precursor for an XML log.")
-    log_puts("REMARK\tIf the logged process completes, this text will be converted to XML.")
-    log_puts("BEGIN\t#{self.root_name}")
-    self.counts = Hash[
-        :verdict => 0,
-        :failure => 0,
-        :error => 0,
-    ]
-    nil
-  end
 
   def dispose
 
