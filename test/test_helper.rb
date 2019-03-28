@@ -11,7 +11,7 @@ module TestHelper
   def with_test_log(name, open_options = {})
     file_name = "#{name}.xml"
     file_path = actual_file_path(file_name)
-    MinitestLog.open(file_path, open_options) do |log|
+    MinitestLog.new(file_path, open_options) do |log|
       yield log
     end
     condition_file(file_path)

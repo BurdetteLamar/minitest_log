@@ -1,5 +1,5 @@
 <log>
-  <data_ name='file_path' class='String' size='9'>
-    ./log.xml
+  <data_ name='file_path' class='String' size='7'>
+    log.xml
   </data_>
 </log>

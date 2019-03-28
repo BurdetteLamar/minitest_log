@@ -8,16 +8,9 @@ class LogTest < Minitest::Test
     refute_nil ::MinitestLog::VERSION
   end
 
-  def test_new
-    exception = assert_raises(MinitestLog::IllegalNewError) do
-      MinitestLog.new('foo.xml')
-    end
-    store_and_assert('new.txt', exception.message)
-  end
-
   def test_open_no_block
     exception = assert_raises(MinitestLog::MinitestLogError) do
-      MinitestLog.open
+      MinitestLog.new('log.xml')
     end
     store_and_assert('open_no_block.txt', exception.message)
   end
@@ -29,7 +22,7 @@ class LogTest < Minitest::Test
 
   def test_open_default_file_path
     file_path = nil
-    MinitestLog.open do |log|
+    MinitestLog.new('log.xml') do |log|
       file_path = log.file_path
       log.put_data('file_path', file_path)
     end
@@ -69,7 +62,7 @@ class LogTest < Minitest::Test
         Dir.chdir(dir_path) do
           file_path = nil
           # Default backtrace filter is /log|ruby/.
-          MinitestLog.open('./log.xml') do |temp_log|
+          MinitestLog.new('./log.xml') do |temp_log|
             file_path = temp_log.file_path
             raise 'Boo!'
           end
@@ -79,7 +72,7 @@ class LogTest < Minitest::Test
           # All 'ruby' filtered out.
           log.verdict_assert?('default_ruby', content.scan(/ruby/).size == 0)
 
-          MinitestLog.open('./log.xml', :backtrace_filter => /log/) do |temp_log|
+          MinitestLog.new('./log.xml', :backtrace_filter => /log/) do |temp_log|
             file_path = temp_log.file_path
             raise 'Boo!'
           end
@@ -87,7 +80,7 @@ class LogTest < Minitest::Test
           log.verdict_assert?('log_log', content.scan(/log/).size == 2)
           log.verdict_assert?('log_ruby', content.scan(/ruby/).size > 0)
 
-          MinitestLog.open('./log.xml', :backtrace_filter => /ruby/) do |temp_log|
+          MinitestLog.new('./log.xml', :backtrace_filter => /ruby/) do |temp_log|
             file_path = temp_log.file_path
             raise 'Boo!'
           end
@@ -260,7 +253,7 @@ EOT
     # Test using method :put_data.
     file_name = "#{method}.xml"
     file_path = actual_file_path(file_name)
-    MinitestLog.open(file_path) do |log|
+    MinitestLog.new(file_path) do |log|
       log.send(:put_data, method.to_s, obj)
     end
     assert_file(file_name)
@@ -326,7 +319,7 @@ EOT
   def test_parse
     # Just to make sure we can parse (later).
     file_path = nil
-    MinitestLog.open do |log|
+    MinitestLog.new('log.xml') do |log|
       file_path = log.file_path
       log.section('Foo')
     end

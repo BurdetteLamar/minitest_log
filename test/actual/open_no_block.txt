@@ -1,1 +1,1 @@
-No block given for MinitestLog#open.
+No block given for MinitestLog#new.
