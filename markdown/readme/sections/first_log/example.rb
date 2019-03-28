@@ -1,8 +1,8 @@
 require 'minitest_log'
 class Example < MiniTest::Test
   def test_example
-    # Open the log.
-    MinitestLog.open do |log|
+    # New log in file log.xml.
+    MinitestLog.open('log.xml') do |log|
       log.section('Show off section functionality') do
         log.section('Name', 'The first argument becomes the section name.')
         log.section('Text', 'A String argument becomes text.')
@@ -20,9 +20,9 @@ class Example < MiniTest::Test
         end
         log.section('Rescue', :rescue, 'Symbol :rescue, requests that any exception be rescued and logged.') do
           raise Exception.new('Oops!')
-          log.comment('This comment will not be reached, because the test did not terminate.')
+          log.comment('This comment will not be reached, because the block terminates.')
         end
-        log.comment('This comment will be reached.')
+        log.comment('This comment will be reached, because the test did not terminate.')
         log.section(
             'Pot pourri',
             :duration,

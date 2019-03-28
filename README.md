@@ -39,8 +39,8 @@ To begin with, here's a fairly simple test that uses ```minitest_log```
 require 'minitest_log'
 class Example < MiniTest::Test
   def test_example
-    # Open the log.
-    MinitestLog.open do |log|
+    # New log in file log.xml.
+    MinitestLog.open('log.xml') do |log|
       log.section('Show off section functionality') do
         log.section('Name', 'The first argument becomes the section name.')
         log.section('Text', 'A String argument becomes text.')
@@ -58,9 +58,9 @@ class Example < MiniTest::Test
         end
         log.section('Rescue', :rescue, 'Symbol :rescue, requests that any exception be rescued and logged.') do
           raise Exception.new('Oops!')
-          log.comment('This comment will not be reached.')
+          log.comment('This comment will not be reached, because the block terminates.')
         end
-        log.comment('This comment will be reached.')
+        log.comment('This comment will be reached, because the test did not terminate.')
         log.section(
             'Pot pourri',
             :duration,
@@ -118,10 +118,10 @@ The log:
     <section_ name='Attributes' a='0' b='1'>
       A Hash becomes attributes.
     </section_>
-    <section_ name='Timestamp' timestamp='2019-03-28-Thu-12.08.30.537'>
+    <section_ name='Timestamp' timestamp='2019-03-28-Thu-14.18.09.722'>
       Symbol :timestamp requests that the current time be logged.
     </section_>
-    <section_ name='Duration' duration_seconds='1.001'>
+    <section_ name='Duration' duration_seconds='1.000'>
       Symbol :duration requests that the duration be logged .
     </section_>
     <section_ name='Rescue'>
@@ -136,9 +136,9 @@ The log:
       </rescued_exception_>
     </section_>
     <comment_>
-      This comment will be reached.
+      This comment will be reached, because the test did not terminate.
     </comment_>
-    <section_ name='Pot pourri' timestamp='2019-03-28-Thu-12.08.31.541' a='0' b='1' duration_seconds='0.000'>
+    <section_ name='Pot pourri' timestamp='2019-03-28-Thu-14.18.10.726' a='0' b='1' duration_seconds='0.000'>
       A section can have lots of stuff.
     </section_>
   </section_>
@@ -321,7 +321,7 @@ The log:
 ```log.xml```:
 ```xml
 <log>
-  <section_ name='My section' timestamp='2019-03-28-Thu-12.08.33.707'/>
+  <section_ name='My section' timestamp='2019-03-28-Thu-14.18.12.896'/>
 </log>
 ```
 
