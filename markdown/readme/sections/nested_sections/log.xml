@@ -1,10 +1,20 @@
 <log>
-  <section_ name='First outer'>
-    <section_ name='First inner'/>
-    <section_ name='Second inner'/>
+  <section_ name='My section name'>
+    The first argument becomes the section name.
   </section_>
-  <section_ name='Second outer'>
-    <section_ name='First inner'/>
-    <section_ name='Second inner'/>
+  <section_ name='Another section name'>
+    After the section name, a String argument becomes text.
+  </section_>
+  <section_ name='My nested sections'>
+    Sections can nest.
+    <section_ name='Outer'>
+      Outer section.
+      <section_ name='Inner'>
+        Inner section.
+      </section_>
+      <section_ name='Another'>
+        Another.
+      </section_>
+    </section_>
   </section_>
 </log>

@@ -1,11 +1,9 @@
 ### Nested Sections
 
-Nest sections in a log by nesting calls to ```MinitestLog#section```.
+Give structure to your log by nesting sections.
 
-The nesting gives structure to both the test and the log.
+The first argument is always the section name.  Additional string arguments become text (PCDATA).
 
 @[ruby](example.rb)
-
-The log:
 
 @[xml](log.xml)

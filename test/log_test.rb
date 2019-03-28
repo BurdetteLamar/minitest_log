@@ -20,17 +20,6 @@ class LogTest < Minitest::Test
     end
   end
 
-  def test_open_default_file_path
-    file_path = nil
-    MinitestLog.new('log.xml') do |log|
-      file_path = log.file_path
-      log.put_data('file_path', file_path)
-    end
-    actual = File.read(file_path)
-    File.delete(file_path)
-    store_and_assert('open_default_file_path.xml', actual)
-  end
-
   def test_open_file_path
     with_test_log('open_file_path') do |_|
     end

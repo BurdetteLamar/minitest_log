@@ -5,7 +5,8 @@
     <exception_ class='Minitest::Assertion' message='Expected: #&lt;Set: {:a, :b, :c, :d}&gt;'>
       <backtrace_>
         <level_0_ location='set.rb:9:in `block in test_example&apos;'/>
-        <level_1_ location='set.rb:6:in `test_example&apos;'/>
+        <level_1_ location='set.rb:6:in `new&apos;'/>
+        <level_2_ location='set.rb:6:in `test_example&apos;'/>
       </backtrace_>
     </exception_>
   </verdict_>

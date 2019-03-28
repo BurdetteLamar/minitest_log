@@ -1,13 +1,11 @@
 ### Attributes
 
-Put attributes onto a section by calling ```MinitestLog#section``` with hash arguments.
+You can put attributes onto a section by calling ```section``` with hash arguments.
 
 Each name/value pair in the hash becomes an attribute in the log section header.
 
-The section name is always the first argument, but otherwise hashes can be anywhere among the arguments.
+The first argument is always the section name.  Additional hash arguments become attributes.
 
 @[ruby](example.rb)
-
-The log:
 
 @[xml](log.xml)

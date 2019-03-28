@@ -7,7 +7,8 @@
     <exception_ class='Minitest::Assertion' message='Expected false to be truthy.'>
       <backtrace_>
         <level_0_ location='example.rb:8:in `block in test_example&apos;'/>
-        <level_1_ location='example.rb:6:in `test_example&apos;'/>
+        <level_1_ location='example.rb:6:in `new&apos;'/>
+        <level_2_ location='example.rb:6:in `test_example&apos;'/>
       </backtrace_>
     </exception_>
   </verdict_>

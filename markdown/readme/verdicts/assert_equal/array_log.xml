@@ -5,7 +5,8 @@
     <exception_ class='Minitest::Assertion' message='--- expected'>
       <backtrace_>
         <level_0_ location='array.rb:9:in `block in test_example&apos;'/>
-        <level_1_ location='array.rb:6:in `test_example&apos;'/>
+        <level_1_ location='array.rb:6:in `new&apos;'/>
+        <level_2_ location='array.rb:6:in `test_example&apos;'/>
       </backtrace_>
     </exception_>
   </verdict_>
