@@ -1,9 +1,9 @@
 <log>
-  <each_with_index_ name='put_each_with_index' class='Array' size='3'>
+  <data_ name='put_each_with_index' class='Array' size='3' method=':each_with_index'>
     <![CDATA[
 0: a
 1: aa
 2: aaa
 ]]>
-  </each_with_index_>
+  </data_>
 </log>

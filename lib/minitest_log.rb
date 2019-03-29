@@ -191,7 +191,7 @@ class MinitestLog
     end
     lines.push('')
     lines.push('')
-    put_element('each_with_index', :name => name, :class => obj.class, :size => obj.size) do
+    put_element('data', :name => name, :class => obj.class, :size => obj.size, :method => ':each_with_index') do
       put_cdata(lines.join("\n"))
     end
     nil

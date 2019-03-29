@@ -20,6 +20,7 @@ gem install minitest_log
 - [Logs and Sections](#logs-and-sections)
   - [Nested Sections](#nested-sections)
   - [Attributes](#attributes)
+  - [Attributes](#attributes)
   - [About Time](#about-time)
   - [Rescue](#rescue)
 - [Verdicts](#verdicts)
@@ -71,6 +72,65 @@ end
         Another.
       </section_>
     </section_>
+  </section_>
+</log>
+```
+
+### Attributes
+
+You can put data into a section.
+
+```example.rb```:
+```ruby
+require 'minitest_log'
+class Example < MiniTest::Test
+  def test_example
+    MinitestLog.new('log.xml') do |log|
+      log.section('My data section') do
+        string = "When you come to a fork in the road, take it. -- Yogi Berra"
+        hash = {
+            :name => 'Ichabod Crane',
+            :address => '14 Main Street',
+            :city => 'Sleepy Hollow',
+            :state => 'NY',
+            :zipcode => '10591',
+        }
+        array = %w/apple orange peach banana strawberry pear/
+        log.put_data('My string', string)
+        log.put_data('My hash', hash)
+        log.put_data('My array', array)
+      end
+    end
+  end
+end
+```
+
+```log.xml```:
+```xml
+<log>
+  <section_ name='My data section'>
+    <data_ name='My string' class='String' size='59'>
+      When you come to a fork in the road, take it. -- Yogi Berra
+    </data_>
+    <data_ name='My hash' class='Hash' size='5' method=':each_pair'>
+      <![CDATA[
+name => Ichabod Crane
+address => 14 Main Street
+city => Sleepy Hollow
+state => NY
+zipcode => 10591
+]]>
+    </data_>
+    <data_ name='My array' class='Array' size='6' method=':each_with_index'>
+      <![CDATA[
+0: apple
+1: orange
+2: peach
+3: banana
+4: strawberry
+5: pear
+]]>
+    </data_>
   </section_>
 </log>
 ```
@@ -135,13 +195,13 @@ end
 ```log.xml```:
 ```xml
 <log>
-  <section_ name='My section with timestamp' timestamp='2019-03-28-Thu-17.04.49.782'>
+  <section_ name='My section with timestamp' timestamp='2019-03-29-Fri-07.38.10.940'>
     Section with timestamp.
   </section_>
   <section_ name='My section with duration' duration_seconds='0.500'>
     Section with duration.
   </section_>
-  <section_ name='My section with both' timestamp='2019-03-28-Thu-17.04.50.284' duration_seconds='0.500'>
+  <section_ name='My section with both' timestamp='2019-03-29-Fri-07.38.11.441' duration_seconds='0.501'>
     Section with both.
   </section_>
 </log>
