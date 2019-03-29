@@ -19,7 +19,7 @@ gem install minitest_log
 ## Contents
 - [Logs and Sections](#logs-and-sections)
   - [Nested Sections](#nested-sections)
-  - [Attributes](#attributes)
+  - [Data](#data)
   - [Attributes](#attributes)
   - [About Time](#about-time)
   - [Rescue](#rescue)
@@ -76,9 +76,11 @@ end
 </log>
 ```
 
-### Attributes
+### Data
 
 You can put data into a section.
+
+Generally speaking, a collection will be explicated in the log.
 
 ```example.rb```:
 ```ruby
@@ -195,13 +197,13 @@ end
 ```log.xml```:
 ```xml
 <log>
-  <section_ name='My section with timestamp' timestamp='2019-03-29-Fri-07.38.10.940'>
+  <section_ name='My section with timestamp' timestamp='2019-03-29-Fri-10.31.19.025'>
     Section with timestamp.
   </section_>
   <section_ name='My section with duration' duration_seconds='0.500'>
     Section with duration.
   </section_>
-  <section_ name='My section with both' timestamp='2019-03-29-Fri-07.38.11.441' duration_seconds='0.501'>
+  <section_ name='My section with both' timestamp='2019-03-29-Fri-10.31.19.526' duration_seconds='0.501'>
     Section with both.
   </section_>
 </log>
