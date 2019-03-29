@@ -84,23 +84,45 @@ Generally speaking, a collection will be explicated in the log.
 
 ```example.rb```:
 ```ruby
+require 'set'
+require 'uri'
 require 'minitest_log'
 class Example < MiniTest::Test
   def test_example
     MinitestLog.new('log.xml') do |log|
-      log.section('My data section') do
-        string = "When you come to a fork in the road, take it. -- Yogi Berra"
-        hash = {
-            :name => 'Ichabod Crane',
-            :address => '14 Main Street',
-            :city => 'Sleepy Hollow',
-            :state => 'NY',
-            :zipcode => '10591',
-        }
-        array = %w/apple orange peach banana strawberry pear/
-        log.put_data('My string', string)
-        log.put_data('My hash', hash)
-        log.put_data('My array', array)
+      log.section('Built-in classes') do
+        log.section('String') do
+          string = "When you come to a fork in the road, take it. -- Yogi Berra"
+          log.put_data('My string', string)
+        end
+        log.section('Objects logged using :each_pair') do
+          hash = {
+              :name => 'Ichabod Crane',
+              :address => '14 Main Street',
+              :city => 'Sleepy Hollow',
+              :state => 'NY',
+              :zipcode => '10591',
+          }
+          Struct.new('Foo', :x, :y, :z)
+          foo = Struct::Foo.new(0, 1, 2)
+          log.put_data('My hash', hash)
+          log.put_data('My struct', foo)
+        end
+        log.section('Objects logged using :each_with_index') do
+          array = %w/apple orange peach banana strawberry pear/
+          set = Set.new(array)
+          dir = Dir.new(File.dirname(__FILE__ ))
+          log.put_data('My array', array)
+          log.put_data('My set', set)
+          log.put_data('My directory', dir)
+        end
+        log.section('Objects logged using :to_s') do
+          log.put_data('My integer', 0)
+          log.put_data('My exception', Exception.new('Boo!'))
+          log.put_data('My regexp', 'Bar')
+          log.put_data('My time', Time.now)
+          log.put_data('My uri,', URI('https://www.github.com'))
+        end
       end
     end
   end
@@ -110,21 +132,33 @@ end
 ```log.xml```:
 ```xml
 <log>
-  <section_ name='My data section'>
-    <data_ name='My string' class='String' size='59'>
-      When you come to a fork in the road, take it. -- Yogi Berra
-    </data_>
-    <data_ name='My hash' class='Hash' size='5' method=':each_pair'>
-      <![CDATA[
+  <section_ name='Built-in classes'>
+    <section_ name='String'>
+      <data_ name='My string' class='String' size='59'>
+        When you come to a fork in the road, take it. -- Yogi Berra
+      </data_>
+    </section_>
+    <section_ name='Objects logged using :each_pair'>
+      <data_ name='My hash' class='Hash' method=':each_pair' size='5'>
+        <![CDATA[
 name => Ichabod Crane
 address => 14 Main Street
 city => Sleepy Hollow
 state => NY
 zipcode => 10591
 ]]>
-    </data_>
-    <data_ name='My array' class='Array' size='6' method=':each_with_index'>
-      <![CDATA[
+      </data_>
+      <data_ name='My struct' class='Struct::Foo' method=':each_pair' size='3'>
+        <![CDATA[
+x => 0
+y => 1
+z => 2
+]]>
+      </data_>
+    </section_>
+    <section_ name='Objects logged using :each_with_index'>
+      <data_ name='My array' class='Array' method=':each_with_index' size='6'>
+        <![CDATA[
 0: apple
 1: orange
 2: peach
@@ -132,7 +166,44 @@ zipcode => 10591
 4: strawberry
 5: pear
 ]]>
-    </data_>
+      </data_>
+      <data_ name='My set' class='Set' method=':each_with_index' size='6'>
+        <![CDATA[
+0: apple
+1: orange
+2: peach
+3: banana
+4: strawberry
+5: pear
+]]>
+      </data_>
+      <data_ name='My directory' class='Dir' method=':each_with_index'>
+        <![CDATA[
+0: .
+1: ..
+2: example.rb
+3: log.xml
+4: template.md
+]]>
+      </data_>
+    </section_>
+    <section_ name='Objects logged using :to_s'>
+      <data_ name='My integer' class='Integer' method=':to_s'>
+        0
+      </data_>
+      <data_ name='My exception' class='Exception' method=':to_s'>
+        Boo!
+      </data_>
+      <data_ name='My regexp' class='String' size='3'>
+        Bar
+      </data_>
+      <data_ name='My time' class='Time' method=':to_s'>
+        2019-03-29 12:07:12 -0500
+      </data_>
+      <data_ name='My uri,' class='URI::HTTPS' method=':to_s'>
+        https://www.github.com
+      </data_>
+    </section_>
   </section_>
 </log>
 ```
@@ -197,13 +268,13 @@ end
 ```log.xml```:
 ```xml
 <log>
-  <section_ name='My section with timestamp' timestamp='2019-03-29-Fri-10.31.19.025'>
+  <section_ name='My section with timestamp' timestamp='2019-03-29-Fri-12.07.13.630'>
     Section with timestamp.
   </section_>
   <section_ name='My section with duration' duration_seconds='0.500'>
     Section with duration.
   </section_>
-  <section_ name='My section with both' timestamp='2019-03-29-Fri-10.31.19.526' duration_seconds='0.501'>
+  <section_ name='My section with both' timestamp='2019-03-29-Fri-12.07.14.131' duration_seconds='0.500'>
     Section with both.
   </section_>
 </log>
