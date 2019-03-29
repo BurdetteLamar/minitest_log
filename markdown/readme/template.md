@@ -1,14 +1,11 @@
 # MinitestLog
 
 
-```MinitestLog``` layers structured logging onto module ```Minitest```.
+```MinitestLog``` gives you three things:
 
-```MinitestLog``` allows you to:
-
-- Organize your test code as nested sections, so the test can "tell its story."  That same structure carries forward into the test's execution log.
-- Specify verdicts that are logged in detail, whether passed or failed.
-
-(Here, we say *verdict*, not *assertion*, to emphasize that a failure does not terminate the test.)
+- **Nested sections:**  Use nested sections to structure your test, so that it can "tell its story" clearly.
+- **Data explication:**  Use data-logging methods to log objects. Most collections (```Aray```, ```Hash```, etc.) are explicated piece-by-piece.
+- **Verdicts:** Use verdict methods to express assertions. A verdict method call an underlying assertion method (in ```Minitest::Assertions```).  Details for the verdict are logged, whether passed or failed.
 
 ## Installation
 
