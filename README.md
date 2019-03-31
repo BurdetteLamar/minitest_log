@@ -5,7 +5,7 @@
 
 - **Nested sections:**  Use nested sections to structure your test (and its log), so that it can "tell its story" clearly.
 - **Data explication:**  Use data-logging methods to log objects. Most collections (```Aray```, ```Hash```, etc.) are explicated piece-by-piece.
-- **Verdicts:** Use verdict methods to express assertions. A verdict method call an underlying assertion method (in ```Minitest::Assertions```).  Details for the verdict are logged, whether passed or failed.
+- **Verdicts:** Use verdict methods to express assertions. Each verdict method calls a corresponding assertion method (in ```Minitest::Assertions```).  Details for the verdict are logged, whether passed or failed.
 
 ## Installation
 
@@ -17,6 +17,10 @@ gem install minitest_log
 - [Logs and Sections](#logs-and-sections)
   - [Nested Sections](#nested-sections)
   - [Data](#data)
+    - [Strings](#strings)
+    - [Hash-Like Objects](#hash-like-objects)
+    - [Array-Like Objects](#array-like-objects)
+    - [Other Objects](#other-objects)
   - [Attributes](#attributes)
   - [About Time](#about-time)
   - [Rescue](#rescue)
@@ -79,20 +83,48 @@ You can put data into a section.
 
 Generally speaking, a collection will be explicated in the log.
 
-```example.rb```:
+#### Strings
+
+An object that is a ```kind_of?(String)``` is logged simply.
+
+```kind_of_string.rb```:
 ```ruby
-require 'set'
-require 'uri'
 require 'minitest_log'
 class Example < MiniTest::Test
   def test_example
-    MinitestLog.new('log.xml') do |log|
-      log.section('Built-in classes') do
-        log.section('String') do
-          string = "When you come to a fork in the road, take it. -- Yogi Berra"
-          log.put_data('My string', string)
-        end
-        log.section('Objects logged using :each_pair') do
+    MinitestLog.new('kind_of_string.xml') do |log|
+      log.section('Objects that are a kind_of?(String)') do
+        string = 'When you come to a fork in the road, take it. -- Yogi Berra'
+        log.put_data('My string', string)
+      end
+    end
+  end
+end
+```
+
+```kind_of_string.xml```:
+```xml
+<log>
+  <section_ name='Objects that are a kind_of?(String)'>
+    <data_ name='My string' class='String' size='59'>
+      When you come to a fork in the road, take it. -- Yogi Berra
+    </data_>
+  </section_>
+</log>
+```
+
+#### Hash-Like Objects
+
+Otherwise, an object that ```respond_to?(:each_with_pair)``` is logged as name-value pairs.
+
+```each_pair.rb```:
+```ruby
+require 'minitest_log'
+class Example < MiniTest::Test
+  def test_example
+    MinitestLog.new('each_pair.xml') do |log|
+      log.section('Objects logged using :each_pair') do
+        log.section('Hash') do
           hash = {
               :name => 'Ichabod Crane',
               :address => '14 Main Street',
@@ -100,25 +132,12 @@ class Example < MiniTest::Test
               :state => 'NY',
               :zipcode => '10591',
           }
+          log.put_data('My hash', hash)
+        end
+        log.section('Struct') do
           Struct.new('Foo', :x, :y, :z)
           foo = Struct::Foo.new(0, 1, 2)
-          log.put_data('My hash', hash)
           log.put_data('My struct', foo)
-        end
-        log.section('Objects logged using :each_with_index') do
-          array = %w/apple orange peach banana strawberry pear/
-          set = Set.new(array)
-          dir = Dir.new(File.dirname(__FILE__ ))
-          log.put_data('My array', array)
-          log.put_data('My set', set)
-          log.put_data('My directory', dir)
-        end
-        log.section('Objects logged using :to_s') do
-          log.put_data('My integer', 0)
-          log.put_data('My exception', Exception.new('Boo!'))
-          log.put_data('My regexp', 'Bar')
-          log.put_data('My time', Time.now)
-          log.put_data('My uri,', URI('https://www.github.com'))
         end
       end
     end
@@ -126,16 +145,11 @@ class Example < MiniTest::Test
 end
 ```
 
-```log.xml```:
+```each_pair.xml```:
 ```xml
 <log>
-  <section_ name='Built-in classes'>
-    <section_ name='String'>
-      <data_ name='My string' class='String' size='59'>
-        When you come to a fork in the road, take it. -- Yogi Berra
-      </data_>
-    </section_>
-    <section_ name='Objects logged using :each_pair'>
+  <section_ name='Objects logged using :each_pair'>
+    <section_ name='Hash'>
       <data_ name='My hash' class='Hash' method=':each_pair' size='5'>
         <![CDATA[
 name => Ichabod Crane
@@ -145,6 +159,8 @@ state => NY
 zipcode => 10591
 ]]>
       </data_>
+    </section_>
+    <section_ name='Struct'>
       <data_ name='My struct' class='Struct::Foo' method=':each_pair' size='3'>
         <![CDATA[
 x => 0
@@ -153,7 +169,42 @@ z => 2
 ]]>
       </data_>
     </section_>
-    <section_ name='Objects logged using :each_with_index'>
+  </section_>
+</log>
+```
+
+#### Array-Like Objects
+
+Otherwise, an object that ```respond_to?(:each_with_index``` is logged as a numbered list.
+
+```each_with_index.rb```:
+```ruby
+require 'set'
+require 'minitest_log'
+class Example < MiniTest::Test
+  def test_example
+    MinitestLog.new('each_with_index.xml') do |log|
+      log.section('Objects logged using :each_with_index') do
+        log.section('Array') do
+          array = %w/apple orange peach banana strawberry pear/
+          log.put_data('My array', array)
+        end
+        log.section('Set') do
+          set = Set.new(%w/baseball football basketball hockey/)
+          puts set.respond_to?(:each_with_index)
+          log.put_data('My set', set)
+        end
+      end
+    end
+  end
+end
+```
+
+```each_with_index.xml```:
+```xml
+<log>
+  <section_ name='Objects logged using :each_with_index'>
+    <section_ name='Array'>
       <data_ name='My array' class='Array' method=':each_with_index' size='6'>
         <![CDATA[
 0: apple
@@ -164,46 +215,70 @@ z => 2
 5: pear
 ]]>
       </data_>
-      <data_ name='My set' class='Set' method=':each_with_index' size='6'>
-        <![CDATA[
-0: apple
-1: orange
-2: peach
-3: banana
-4: strawberry
-5: pear
-]]>
-      </data_>
-      <data_ name='My directory' class='Dir' method=':each_with_index'>
-        <![CDATA[
-0: .
-1: ..
-2: example.rb
-3: log.xml
-4: template.md
-]]>
-      </data_>
     </section_>
-    <section_ name='Objects logged using :to_s'>
-      <data_ name='My integer' class='Integer' method=':to_s'>
-        0
-      </data_>
-      <data_ name='My exception' class='Exception' method=':to_s'>
-        Boo!
-      </data_>
-      <data_ name='My regexp' class='String' size='3'>
-        Bar
-      </data_>
-      <data_ name='My time' class='Time' method=':to_s'>
-        2019-03-29 17:10:48 -0500
-      </data_>
-      <data_ name='My uri,' class='URI::HTTPS' method=':to_s'>
-        https://www.github.com
+    <section_ name='Set'>
+      <data_ name='My set' class='Set' method=':each_with_index' size='4'>
+        <![CDATA[
+0: baseball
+1: football
+2: basketball
+3: hockey
+]]>
       </data_>
     </section_>
   </section_>
 </log>
 ```
+
+#### Other Objects
+
+Otherwise, the logger tries, successively, to format the object using ```:to_s```,
+```:inspect```, and ```__id__```.
+
+If all that fails, the logger raises an exception.
+
+```to_s.rb```:
+```ruby
+require 'uri'
+require 'minitest_log'
+class Example < MiniTest::Test
+  def test_example
+    MinitestLog.new('to_s.xml') do |log|
+      log.section('Objects logged using :to_s') do
+        log.put_data('My integer', 0)
+        log.put_data('My exception', Exception.new('Boo!'))
+        log.put_data('My regexp', 'Bar')
+        log.put_data('My time', Time.now)
+        log.put_data('My uri,', URI('https://www.github.com'))
+      end
+    end
+  end
+end
+```
+
+```to_s.xml```:
+```xml
+<log>
+  <section_ name='Objects logged using :to_s'>
+    <data_ name='My integer' class='Integer' method=':to_s'>
+      0
+    </data_>
+    <data_ name='My exception' class='Exception' method=':to_s'>
+      Boo!
+    </data_>
+    <data_ name='My regexp' class='String' size='3'>
+      Bar
+    </data_>
+    <data_ name='My time' class='Time' method=':to_s'>
+      2019-03-31 11:11:22 -0500
+    </data_>
+    <data_ name='My uri,' class='URI::HTTPS' method=':to_s'>
+      https://www.github.com
+    </data_>
+  </section_>
+</log>
+```
+
 
 ### Attributes
 
@@ -265,13 +340,13 @@ end
 ```log.xml```:
 ```xml
 <log>
-  <section_ name='My section with timestamp' timestamp='2019-03-29-Fri-17.10.49.705'>
+  <section_ name='My section with timestamp' timestamp='2019-03-31-Sun-11.11.23.824'>
     Section with timestamp.
   </section_>
-  <section_ name='My section with duration' duration_seconds='0.501'>
+  <section_ name='My section with duration' duration_seconds='0.500'>
     Section with duration.
   </section_>
-  <section_ name='My section with both' timestamp='2019-03-29-Fri-17.10.50.206' duration_seconds='0.501'>
+  <section_ name='My section with both' timestamp='2019-03-31-Sun-11.11.24.325' duration_seconds='0.500'>
     Section with both.
   </section_>
 </log>

@@ -268,8 +268,12 @@ class MinitestLog
       put_each(name, obj)
     when obj.respond_to?(:to_s)
       put_to_s(name, obj)
-    else
+    when obj.respond_to?(:inspect)
       put_inspect(name, obj)
+    when obj.respond_to?(:__id__)
+      put_id(name, obj)
+    else
+      message = "Object does not respond to method :__id__: name=#{name}, obj=#{obj}"
     end
   end
 

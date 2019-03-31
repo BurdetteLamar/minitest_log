@@ -1,0 +1,19 @@
+<log>
+  <section_ name='Objects logged using :to_s'>
+    <data_ name='My integer' class='Integer' method=':to_s'>
+      0
+    </data_>
+    <data_ name='My exception' class='Exception' method=':to_s'>
+      Boo!
+    </data_>
+    <data_ name='My regexp' class='String' size='3'>
+      Bar
+    </data_>
+    <data_ name='My time' class='Time' method=':to_s'>
+      2019-03-31 11:11:22 -0500
+    </data_>
+    <data_ name='My uri,' class='URI::HTTPS' method=':to_s'>
+      https://www.github.com
+    </data_>
+  </section_>
+</log>
