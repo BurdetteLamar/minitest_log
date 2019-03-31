@@ -1,0 +1,26 @@
+<log>
+  <section_ name='Objects logged using :each_with_index'>
+    <section_ name='Array'>
+      <data_ name='My array' class='Array' method=':each_with_index' size='6'>
+        <![CDATA[
+0: apple
+1: orange
+2: peach
+3: banana
+4: strawberry
+5: pear
+]]>
+      </data_>
+    </section_>
+    <section_ name='Set'>
+      <data_ name='My set' class='Set' method=':each_with_index' size='4'>
+        <![CDATA[
+0: baseball
+1: football
+2: basketball
+3: hockey
+]]>
+      </data_>
+    </section_>
+  </section_>
+</log>

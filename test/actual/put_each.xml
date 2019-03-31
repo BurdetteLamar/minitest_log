@@ -1,5 +1,5 @@
 <log>
-  <data_ name='put_each' class='Array' size='3' method=':each'>
+  <data_ name='put_each' class='Array' method=':each' size='3'>
     <![CDATA[
 first
 second

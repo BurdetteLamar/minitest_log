@@ -1,9 +1,9 @@
 <log>
-  <each_with_index_ name='put_set' class='Set' size='3'>
+  <data_ name='put_set' class='Set' method=':each_with_index' size='3'>
     <![CDATA[
 0: a
 1: aa
 2: aaa
 ]]>
-  </each_with_index_>
+  </data_>
 </log>

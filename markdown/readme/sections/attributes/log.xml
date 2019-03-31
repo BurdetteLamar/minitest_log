@@ -1,4 +1,8 @@
 <log>
-  <section_ name='My section' first_attr='first' second_attr='second'/>
-  <section_ name='Another section' first_attr='first' second_attr='second' third_attr='third'/>
+  <section_ name='My section with attributes' first_attr='first' second_attr='second'>
+    A Hash becomes attributes.
+  </section_>
+  <section_ name='My section with more attributes' first_attr='first' second_attr='second' third_attr='third'>
+    More attributes.
+  </section_>
 </log>

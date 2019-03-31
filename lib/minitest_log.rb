@@ -191,7 +191,13 @@ class MinitestLog
     end
     lines.push('')
     lines.push('')
-    put_element('each_with_index', :name => name, :class => obj.class, :size => obj.size) do
+    attrs = {
+        :name => name,
+        :class => obj.class,
+        :method => ':each_with_index',
+    }
+    add_attr_if(attrs, obj, :size)
+    put_element('data', attrs) do
       put_cdata(lines.join("\n"))
     end
     nil
@@ -206,7 +212,13 @@ class MinitestLog
     end
     lines.push('')
     lines.push('')
-    put_element('data', :name => name, :class => obj.class, :size => obj.size, :method => ':each') do
+    attrs = {
+        :name => name,
+        :class => obj.class,
+        :method => ':each',
+    }
+    add_attr_if(attrs, obj, :size)
+    put_element('data', attrs) do
       put_cdata(lines.join("\n"))
     end
     nil
@@ -219,7 +231,13 @@ class MinitestLog
     end
     lines.push('')
     lines.push('')
-    put_element('data', :name => name, :class => obj.class, :size => obj.size, :method => ':each_pair') do
+    attrs = {
+        :name => name,
+        :class => obj.class,
+        :method => ':each_pair',
+    }
+    add_attr_if(attrs, obj, :size)
+    put_element('data', attrs) do
       put_cdata(lines.join("\n"))
     end
     nil
@@ -250,8 +268,12 @@ class MinitestLog
       put_each(name, obj)
     when obj.respond_to?(:to_s)
       put_to_s(name, obj)
-    else
+    when obj.respond_to?(:inspect)
       put_inspect(name, obj)
+    when obj.respond_to?(:__id__)
+      put_id(name, obj)
+    else
+      message = "Object does not respond to method :__id__: name=#{name}, obj=#{obj}"
     end
   end
 
@@ -462,6 +484,11 @@ class MinitestLog
     # with prefixed 'verdict_' and suffixed '?'.
     # Just remove them to form the assertion method name.
     verdict_method.to_s.sub('verdict_', '').sub('?', '').to_sym
+  end
+
+  def add_attr_if(attrs, obj, method)
+    return unless obj.respond_to?(method)
+    attrs[method] = obj.send(method)
   end
 
   def self.parse(file_path)

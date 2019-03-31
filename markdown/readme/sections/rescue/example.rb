@@ -1,8 +1,8 @@
 require 'minitest_log'
 class Example < MiniTest::Test
   def test_example
-    MinitestLog.open do |log|
-      log.section('My section', :rescue) do
+    MinitestLog.new('log.xml') do |log|
+      log.section('My rescued section', :rescue) do
         raise RuntimeError.new('Boo!')
       end
     end
