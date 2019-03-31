@@ -1,6 +1,6 @@
 ### Attributes
 
-You can put attributes onto a section by calling ```section``` with hash arguments.
+Put attributes onto a section by calling ```section``` with hash arguments.
 
 Each name/value pair in the hash becomes an attribute in the log section header.
 

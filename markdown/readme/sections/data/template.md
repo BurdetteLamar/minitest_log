@@ -1,6 +1,6 @@
 ### Data
 
-You can put data into a section.
+Put data onto the log using method ```:put_data```.
 
 Generally speaking, a collection will be explicated in the log.
 
@@ -30,10 +30,10 @@ Otherwise, an object that ```respond_to?(:each_with_index)``` is logged as a num
 
 #### Other Objects
 
-Otherwise, the logger tries, successively, to format the object using ```:to_s```,
-```:inspect```, and ```__id__```.
+Otherwise, the logger tries, successively, to log the object using ```:to_s```,
+```:inspect```, and ```:__id__```.
 
-If all that fails, the logger raises an exception.
+If all that fails, the logger raises an exception (which is not illustrated here).
 
 @[ruby](to_s.rb)
 
