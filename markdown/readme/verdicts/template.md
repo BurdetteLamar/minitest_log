@@ -1,6 +1,6 @@
 ## Verdicts
 
-@[markdown](assert/template.md)
+@[:markdown](assert/template.md)
 
-@[markdown](refute/template.md)
+@[:markdown](refute/template.md)
 

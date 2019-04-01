@@ -139,13 +139,13 @@ end
 ```log.xml```:
 ```xml
 <log>
-  <section_ name='My section with timestamp' timestamp='2019-04-01-Mon-10.04.07.155'>
+  <section_ name='My section with timestamp' timestamp='2019-04-01-Mon-10.06.54.178'>
     Section with timestamp.
   </section_>
   <section_ name='My section with duration' duration_seconds='0.500'>
     Section with duration.
   </section_>
-  <section_ name='My section with both' timestamp='2019-04-01-Mon-10.04.07.656' duration_seconds='0.500'>
+  <section_ name='My section with both' timestamp='2019-04-01-Mon-10.06.54.679' duration_seconds='0.500'>
     Section with both.
   </section_>
 </log>
@@ -381,7 +381,7 @@ end
       Bar
     </data_>
     <data_ name='My time' class='Time' method=':to_s'>
-      2019-04-01 10:04:05 -0500
+      2019-04-01 10:06:52 -0500
     </data_>
     <data_ name='My uri,' class='URI::HTTPS' method=':to_s'>
       https://www.github.com
@@ -393,15 +393,9 @@ end
 
 ## Verdicts
 
-```template.md```:
-```markdown
 ### Assert Verdicts
 
-```
 
-```template.md```:
-```markdown
 ### Refute Verdicts
 
-```
 
