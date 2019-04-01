@@ -1,3 +1,6 @@
 ## Verdicts
 
-TODO
+@[markdown](assert/template.md)
+
+@[markdown](refute/template.md)
+

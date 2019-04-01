@@ -1,11 +1,11 @@
 <log>
-  <section_ name='My section with timestamp' timestamp='2019-04-01-Mon-09.51.01.600'>
+  <section_ name='My section with timestamp' timestamp='2019-04-01-Mon-10.04.07.155'>
     Section with timestamp.
   </section_>
   <section_ name='My section with duration' duration_seconds='0.500'>
     Section with duration.
   </section_>
-  <section_ name='My section with both' timestamp='2019-04-01-Mon-09.51.02.101' duration_seconds='0.500'>
+  <section_ name='My section with both' timestamp='2019-04-01-Mon-10.04.07.656' duration_seconds='0.500'>
     Section with both.
   </section_>
 </log>

@@ -25,6 +25,8 @@ gem install minitest_log
   - [Array-Like Objects](#array-like-objects)
   - [Other Objects](#other-objects)
 - [Verdicts](#verdicts)
+  - [Assert Verdicts](#assert-verdicts)
+  - [Refute Verdicts](#refute-verdicts)
 
 ## Logs and Sections
 
@@ -137,13 +139,13 @@ end
 ```log.xml```:
 ```xml
 <log>
-  <section_ name='My section with timestamp' timestamp='2019-04-01-Mon-09.51.01.600'>
+  <section_ name='My section with timestamp' timestamp='2019-04-01-Mon-10.04.07.155'>
     Section with timestamp.
   </section_>
   <section_ name='My section with duration' duration_seconds='0.500'>
     Section with duration.
   </section_>
-  <section_ name='My section with both' timestamp='2019-04-01-Mon-09.51.02.101' duration_seconds='0.500'>
+  <section_ name='My section with both' timestamp='2019-04-01-Mon-10.04.07.656' duration_seconds='0.500'>
     Section with both.
   </section_>
 </log>
@@ -379,7 +381,7 @@ end
       Bar
     </data_>
     <data_ name='My time' class='Time' method=':to_s'>
-      2019-04-01 09:50:59 -0500
+      2019-04-01 10:04:05 -0500
     </data_>
     <data_ name='My uri,' class='URI::HTTPS' method=':to_s'>
       https://www.github.com
@@ -391,4 +393,15 @@ end
 
 ## Verdicts
 
-TODO
+```template.md```:
+```markdown
+### Assert Verdicts
+
+```
+
+```template.md```:
+```markdown
+### Refute Verdicts
+
+```
+
