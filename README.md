@@ -140,13 +140,13 @@ end
 ```log.xml```:
 ```xml
 <log>
-  <section_ name='My section with timestamp' timestamp='2019-04-01-Mon-11.22.07.430'>
+  <section_ name='My section with timestamp' timestamp='2019-04-01-Mon-11.26.12.651'>
     Section with timestamp.
   </section_>
   <section_ name='My section with duration' duration_seconds='0.500'>
     Section with duration.
   </section_>
-  <section_ name='My section with both' timestamp='2019-04-01-Mon-11.22.07.931' duration_seconds='0.500'>
+  <section_ name='My section with both' timestamp='2019-04-01-Mon-11.26.13.152' duration_seconds='0.500'>
     Section with both.
   </section_>
 </log>
@@ -382,7 +382,7 @@ end
       Bar
     </data_>
     <data_ name='My time' class='Time' method=':to_s'>
-      2019-04-01 11:22:05 -0500
+      2019-04-01 11:26:10 -0500
     </data_>
     <data_ name='My uri,' class='URI::HTTPS' method=':to_s'>
       https://www.github.com
@@ -400,7 +400,7 @@ Each verdict method in ```MinitestLog``` is a wrapper for a corresponding ```Min
 
 The wrapping verdict logs all details for the wrapped assertion.
 
-The arguments for the verdict method and its assert method are the same, except that the verdict method adds a leading verdict identifier.  (Both allow an optional trailing message string.)
+The arguments for the verdict method and its assert method are the same, except that the verdict method adds a required leading verdict identifier.  (Both allow an optional trailing message string.)
 
 The verdict identifier:
 - Is commonly a string or a symbol, but may be any object that responds to ```:to_s```.
@@ -418,7 +418,37 @@ Each verdict method returns ```true``` or ```false``` to indicate whether the ve
 
 #### verdict_assert?
 
-@[ruby]()
+```verdict_assert.rb```:
+```ruby
+require 'minitest_log'
+class Example < Minitest::Test
+  def test_verdict_assert
+    MinitestLog.new('verdict_assert.xml') do |log|
+      log.verdict_assert?(:true_id, true, 'True message')
+      log.verdict_assert?(:false_id, false, 'False message')
+    end
+  end
+end```
+
+```verdict_assert.xml```:
+```xml
+<log>
+  <verdict_ method='verdict_assert?' outcome='passed' id='true_id' message='True message'>
+    <actual_ class='TrueClass' value='true'/>
+  </verdict_>
+  <verdict_ method='verdict_assert?' outcome='failed' id='false_id' message='False message'>
+    <actual_ class='FalseClass' value='false'/>
+    <exception_ class='Minitest::Assertion' message='Expected false to be truthy.'>
+      <backtrace_>
+        <level_0_ location='verdict_assert.rb:6:in `block in test_verdict_assert&apos;'/>
+        <level_1_ location='verdict_assert.rb:4:in `new&apos;'/>
+        <level_2_ location='verdict_assert.rb:4:in `test_verdict_assert&apos;'/>
+      </backtrace_>
+    </exception_>
+  </verdict_>
+</log>
+```
+
 ### Refute Verdicts
 
 

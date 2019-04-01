@@ -6,7 +6,7 @@ Each verdict method in ```MinitestLog``` is a wrapper for a corresponding ```Min
 
 The wrapping verdict logs all details for the wrapped assertion.
 
-The arguments for the verdict method and its assert method are the same, except that the verdict method adds a leading verdict identifier.  (Both allow an optional trailing message string.)
+The arguments for the verdict method and its assert method are the same, except that the verdict method adds a required leading verdict identifier.  (Both allow an optional trailing message string.)
 
 The verdict identifier:
 - Is commonly a string or a symbol, but may be any object that responds to ```:to_s```.
