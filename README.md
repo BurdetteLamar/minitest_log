@@ -16,14 +16,14 @@ gem install minitest_log
 ## Contents
 - [Logs and Sections](#logs-and-sections)
   - [Nested Sections](#nested-sections)
+  - [Attributes](#attributes)
+  - [About Time](#about-time)
+  - [Rescue](#rescue)
   - [Data](#data)
     - [Strings](#strings)
     - [Hash-Like Objects](#hash-like-objects)
     - [Array-Like Objects](#array-like-objects)
     - [Other Objects](#other-objects)
-  - [Attributes](#attributes)
-  - [About Time](#about-time)
-  - [Rescue](#rescue)
 - [Verdicts](#verdicts)
 
 ## Logs and Sections
@@ -73,6 +73,114 @@ end
         Another.
       </section_>
     </section_>
+  </section_>
+</log>
+```
+
+### Attributes
+
+Put attributes onto a section by calling ```section``` with hash arguments.
+
+Each name/value pair in the hash becomes an attribute in the log section header.
+
+The first argument is always the section name.  Addition hash arguments become attributes.
+
+```example.rb```:
+```ruby
+require 'minitest_log'
+class Example < MiniTest::Test
+  def test_example
+    MinitestLog.new('log.xml') do |log|
+      attrs = {:first_attr => 'first', :second_attr => 'second'}
+      log.section('My section with attributes', attrs, 'A Hash becomes attributes.')
+      more_attrs = {:third_attr => 'third'}
+      log.section('My section with more attributes', attrs, more_attrs, 'More attributes.')
+    end
+  end
+end
+```
+
+```log.xml```:
+```xml
+<log>
+  <section_ name='My section with attributes' first_attr='first' second_attr='second'>
+    A Hash becomes attributes.
+  </section_>
+  <section_ name='My section with more attributes' first_attr='first' second_attr='second' third_attr='third'>
+    More attributes.
+  </section_>
+</log>
+```
+
+### About Time
+
+Use symbols ```:timestamp``` or ```:duration``` to add a timestamp or a duration to a section.
+
+```example.rb```:
+```ruby
+require 'minitest_log'
+class Example < MiniTest::Test
+  def test_example
+    MinitestLog.new('log.xml') do |log|
+      log.section('My section with timestamp', :timestamp, 'Section with timestamp.')
+      log.section('My section with duration', :duration, 'Section with duration.') do
+        sleep(0.5)
+      end
+      log.section('My section with both', :duration, :timestamp, 'Section with both.') do
+        sleep(0.5)
+      end
+    end
+  end
+end
+```
+
+```log.xml```:
+```xml
+<log>
+  <section_ name='My section with timestamp' timestamp='2019-04-01-Mon-09.44.09.403'>
+    Section with timestamp.
+  </section_>
+  <section_ name='My section with duration' duration_seconds='0.500'>
+    Section with duration.
+  </section_>
+  <section_ name='My section with both' timestamp='2019-04-01-Mon-09.44.09.904' duration_seconds='0.500'>
+    Section with both.
+  </section_>
+</log>
+```
+
+### Rescue
+
+Rescue a section using the symbol ```:rescue```.
+
+Any exception raised during that section's execution will be rescued and logged.  Such an exception terminates the *section* (but not the *test*).
+
+```example.rb```:
+```ruby
+require 'minitest_log'
+class Example < MiniTest::Test
+  def test_example
+    MinitestLog.new('log.xml') do |log|
+      log.section('My rescued section', :rescue) do
+        raise RuntimeError.new('Boo!')
+      end
+    end
+  end
+end
+```
+
+```log.xml```:
+```xml
+<log>
+  <section_ name='My rescued section'>
+    <rescued_exception_ class='RuntimeError' message='Boo!'>
+      <backtrace_>
+        <level_0_ location='example.rb:6:in `block (2 levels) in test_example&apos;'/>
+        <level_1_ location='example.rb:5:in `block in test_example&apos;'/>
+        <level_2_ location='example.rb:4:in `new&apos;'/>
+        <level_3_ location='example.rb:4:in `test_example&apos;'/>
+      </backtrace_>
+    </rescued_exception_>
   </section_>
 </log>
 ```
@@ -270,7 +378,7 @@ end
       Bar
     </data_>
     <data_ name='My time' class='Time' method=':to_s'>
-      2019-04-01 09:35:07 -0500
+      2019-04-01 09:44:08 -0500
     </data_>
     <data_ name='My uri,' class='URI::HTTPS' method=':to_s'>
       https://www.github.com
@@ -279,114 +387,6 @@ end
 </log>
 ```
 
-
-### Attributes
-
-Put attributes onto a section by calling ```section``` with hash arguments.
-
-Each name/value pair in the hash becomes an attribute in the log section header.
-
-The first argument is always the section name.  Addition hash arguments become attributes.
-
-```example.rb```:
-```ruby
-require 'minitest_log'
-class Example < MiniTest::Test
-  def test_example
-    MinitestLog.new('log.xml') do |log|
-      attrs = {:first_attr => 'first', :second_attr => 'second'}
-      log.section('My section with attributes', attrs, 'A Hash becomes attributes.')
-      more_attrs = {:third_attr => 'third'}
-      log.section('My section with more attributes', attrs, more_attrs, 'More attributes.')
-    end
-  end
-end
-```
-
-```log.xml```:
-```xml
-<log>
-  <section_ name='My section with attributes' first_attr='first' second_attr='second'>
-    A Hash becomes attributes.
-  </section_>
-  <section_ name='My section with more attributes' first_attr='first' second_attr='second' third_attr='third'>
-    More attributes.
-  </section_>
-</log>
-```
-
-### About Time
-
-Use symbols ```:timestamp``` or ```:duration``` to add a timestamp or a duration to a section.
-
-```example.rb```:
-```ruby
-require 'minitest_log'
-class Example < MiniTest::Test
-  def test_example
-    MinitestLog.new('log.xml') do |log|
-      log.section('My section with timestamp', :timestamp, 'Section with timestamp.')
-      log.section('My section with duration', :duration, 'Section with duration.') do
-        sleep(0.5)
-      end
-      log.section('My section with both', :duration, :timestamp, 'Section with both.') do
-        sleep(0.5)
-      end
-    end
-  end
-end
-```
-
-```log.xml```:
-```xml
-<log>
-  <section_ name='My section with timestamp' timestamp='2019-04-01-Mon-09.35.09.123'>
-    Section with timestamp.
-  </section_>
-  <section_ name='My section with duration' duration_seconds='0.500'>
-    Section with duration.
-  </section_>
-  <section_ name='My section with both' timestamp='2019-04-01-Mon-09.35.09.624' duration_seconds='0.500'>
-    Section with both.
-  </section_>
-</log>
-```
-
-### Rescue
-
-Rescue a section using the symbol ```:rescue```.
-
-Any exception raised during that section's execution will be rescued and logged.  Such an exception terminates the *section* (but not the *test*).
-
-```example.rb```:
-```ruby
-require 'minitest_log'
-class Example < MiniTest::Test
-  def test_example
-    MinitestLog.new('log.xml') do |log|
-      log.section('My rescued section', :rescue) do
-        raise RuntimeError.new('Boo!')
-      end
-    end
-  end
-end
-```
-
-```log.xml```:
-```xml
-<log>
-  <section_ name='My rescued section'>
-    <rescued_exception_ class='RuntimeError' message='Boo!'>
-      <backtrace_>
-        <level_0_ location='example.rb:6:in `block (2 levels) in test_example&apos;'/>
-        <level_1_ location='example.rb:5:in `block in test_example&apos;'/>
-        <level_2_ location='example.rb:4:in `new&apos;'/>
-        <level_3_ location='example.rb:4:in `test_example&apos;'/>
-      </backtrace_>
-    </rescued_exception_>
-  </section_>
-</log>
-```
 
 
 ## Verdicts
