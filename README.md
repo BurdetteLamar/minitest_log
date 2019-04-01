@@ -28,6 +28,7 @@ gem install minitest_log
   - [Assert Verdicts](#assert-verdicts)
     - [<code>verdict_assert?</code>](#-code-verdict_assert-code-)
     - [<code>verdict_assert_empty?</code>](#-code-verdict_assert_empty-code-)
+    - [<code>verdict_assert_in_delta?</code>](#-code-verdict_assert_in_delta-code-)
   - [Refute Verdicts](#refute-verdicts)
 
 ## Logs and Sections
@@ -141,13 +142,13 @@ end
 ```log.xml```:
 ```xml
 <log>
-  <section_ name='My section with timestamp' timestamp='2019-04-01-Mon-14.02.10.446'>
+  <section_ name='My section with timestamp' timestamp='2019-04-01-Mon-14.17.00.452'>
     Section with timestamp.
   </section_>
   <section_ name='My section with duration' duration_seconds='0.500'>
     Section with duration.
   </section_>
-  <section_ name='My section with both' timestamp='2019-04-01-Mon-14.02.10.947' duration_seconds='0.500'>
+  <section_ name='My section with both' timestamp='2019-04-01-Mon-14.17.00.953' duration_seconds='0.501'>
     Section with both.
   </section_>
 </log>
@@ -383,7 +384,7 @@ end
       Bar
     </data_>
     <data_ name='My time' class='Time' method=':to_s'>
-      2019-04-01 14:02:08 -0500
+      2019-04-01 14:16:58 -0500
     </data_>
     <data_ name='My uri,' class='URI::HTTPS' method=':to_s'>
       https://www.github.com
@@ -419,6 +420,8 @@ Each verdict method returns ```true``` or ```false``` to indicate whether the ve
 
 #### <code>verdict_assert?</code>
 
+Calls [assert](https://docs.ruby-lang.org/en/2.1.0/MiniTest/Assertions.html#method-i-assert)
+
 ```verdict_assert.rb```:
 ```ruby
 require 'minitest_log'
@@ -453,6 +456,8 @@ end
 
 #### <code>verdict_assert_empty?</code>
 
+Calls [assert_equal](https://docs.ruby-lang.org/en/2.1.0/MiniTest/Assertions.html#method-i-assert_equal)
+
 ```verdict_assert_empty.rb```:
 ```ruby
 require 'minitest_log'
@@ -481,6 +486,39 @@ end
         <level_2_ location='verdict_assert_empty.rb:4:in `test_verdict_assert&apos;'/>
       </backtrace_>
     </exception_>
+  </verdict_>
+</log>
+```
+
+#### <code>verdict_assert_in_delta?</code>
+
+Calls [assert_in_delta](https://docs.ruby-lang.org/en/2.1.0/MiniTest/Assertions.html#method-i-assert_in_delta)
+
+```verdict_assert_in_delta.rb```:
+```ruby
+require 'minitest_log'
+class Example < Minitest::Test
+  def test_verdict_assert
+    MinitestLog.new('verdict_assert_in_delta.xml') do |log|
+      log.verdict_assert_in_delta?(:in_delta_id, 0, 0, 1, 'In delta message')
+      log.verdict_assert_in_delta?(:not_in_delta_id, 0, 1, 2, 'Not in delta message')
+    end
+  end
+end
+```
+
+```verdict_assert_in_delta.xml```:
+```xml
+<log>
+  <verdict_ method='verdict_assert_in_delta?' outcome='passed' id='in_delta_id' message='In delta message'>
+    <expected_ class='Integer' value='0'/>
+    <actual_ class='Integer' value='0'/>
+    <delta_ class='Integer' value='1'/>
+  </verdict_>
+  <verdict_ method='verdict_assert_in_delta?' outcome='passed' id='not_in_delta_id' message='Not in delta message'>
+    <expected_ class='Integer' value='0'/>
+    <actual_ class='Integer' value='1'/>
+    <delta_ class='Integer' value='2'/>
   </verdict_>
 </log>
 ```
