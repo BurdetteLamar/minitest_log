@@ -140,13 +140,13 @@ end
 ```log.xml```:
 ```xml
 <log>
-  <section_ name='My section with timestamp' timestamp='2019-04-01-Mon-11.29.54.205'>
+  <section_ name='My section with timestamp' timestamp='2019-04-01-Mon-13.44.28.470'>
     Section with timestamp.
   </section_>
   <section_ name='My section with duration' duration_seconds='0.500'>
     Section with duration.
   </section_>
-  <section_ name='My section with both' timestamp='2019-04-01-Mon-11.29.54.706' duration_seconds='0.500'>
+  <section_ name='My section with both' timestamp='2019-04-01-Mon-13.44.28.971' duration_seconds='0.500'>
     Section with both.
   </section_>
 </log>
@@ -382,7 +382,7 @@ end
       Bar
     </data_>
     <data_ name='My time' class='Time' method=':to_s'>
-      2019-04-01 11:29:52 -0500
+      2019-04-01 13:44:26 -0500
     </data_>
     <data_ name='My uri,' class='URI::HTTPS' method=':to_s'>
       https://www.github.com
@@ -417,6 +417,18 @@ Each verdict method returns ```true``` or ```false``` to indicate whether the ve
 ### Assert Verdicts
 
 #### verdict_assert?
+
+```verdict_assert.rb```:
+```ruby
+require 'minitest_log'
+class Example < Minitest::Test
+  def test_verdict_assert
+    MinitestLog.new('verdict_assert.xml') do |log|
+      log.verdict_assert?(:true_id, true, 'True message')
+      log.verdict_assert?(:false_id, false, 'False message')
+    end
+  end
+end```
 
 ```verdict_assert.rb```:
 ```ruby
