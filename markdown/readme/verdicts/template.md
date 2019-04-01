@@ -17,7 +17,6 @@ Example verdict:
 ```ruby
 log.verdict_assert?(:my_verdict_id, true, 'My message')
 ```
-### Return Values
 
 Each verdict method returns ```true``` or ```false``` to indicate whether the verdict succeeded or failed.
 

@@ -25,8 +25,8 @@ gem install minitest_log
   - [Array-Like Objects](#array-like-objects)
   - [Other Objects](#other-objects)
 - [Verdicts](#verdicts)
-  - [Return Values](#return-values)
   - [Assert Verdicts](#assert-verdicts)
+    - [verdict_assert?](#verdict_assert)
   - [Refute Verdicts](#refute-verdicts)
 
 ## Logs and Sections
@@ -140,13 +140,13 @@ end
 ```log.xml```:
 ```xml
 <log>
-  <section_ name='My section with timestamp' timestamp='2019-04-01-Mon-11.09.42.887'>
+  <section_ name='My section with timestamp' timestamp='2019-04-01-Mon-11.22.07.430'>
     Section with timestamp.
   </section_>
   <section_ name='My section with duration' duration_seconds='0.500'>
     Section with duration.
   </section_>
-  <section_ name='My section with both' timestamp='2019-04-01-Mon-11.09.43.388' duration_seconds='0.500'>
+  <section_ name='My section with both' timestamp='2019-04-01-Mon-11.22.07.931' duration_seconds='0.500'>
     Section with both.
   </section_>
 </log>
@@ -382,7 +382,7 @@ end
       Bar
     </data_>
     <data_ name='My time' class='Time' method=':to_s'>
-      2019-04-01 11:09:41 -0500
+      2019-04-01 11:22:05 -0500
     </data_>
     <data_ name='My uri,' class='URI::HTTPS' method=':to_s'>
       https://www.github.com
@@ -411,13 +411,14 @@ Example verdict:
 ```ruby
 log.verdict_assert?(:my_verdict_id, true, 'My message')
 ```
-### Return Values
 
 Each verdict method returns ```true``` or ```false``` to indicate whether the verdict succeeded or failed.
 
 ### Assert Verdicts
 
+#### verdict_assert?
 
+@[ruby]()
 ### Refute Verdicts
 
 
