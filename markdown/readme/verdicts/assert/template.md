@@ -2,8 +2,7 @@
 
 #### verdict_assert?
 
-@[ruby](verdict_assert.rb)
-
-@[ruby](verdict_assert.rb)
-
 @[xml](verdict_assert.xml)
+
+@[ruby](verdict_assert.rb)
+
