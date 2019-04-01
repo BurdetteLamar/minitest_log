@@ -79,7 +79,7 @@ end
 
 ### Data
 
-You can put data into a section.
+Put data onto the log using method ```:put_data```.
 
 Generally speaking, a collection will be explicated in the log.
 
@@ -175,7 +175,7 @@ z => 2
 
 #### Array-Like Objects
 
-Otherwise, an object that ```respond_to?(:each_with_index``` is logged as a numbered list.
+Otherwise, an object that ```respond_to?(:each_with_index)``` is logged as a numbered list.
 
 ```each_with_index.rb```:
 ```ruby
@@ -232,10 +232,10 @@ end
 
 #### Other Objects
 
-Otherwise, the logger tries, successively, to format the object using ```:to_s```,
-```:inspect```, and ```__id__```.
+Otherwise, the logger tries, successively, to log the object using ```:to_s```,
+```:inspect```, and ```:__id__```.
 
-If all that fails, the logger raises an exception.
+If all that fails, the logger raises an exception (which is not illustrated here).
 
 ```to_s.rb```:
 ```ruby
@@ -270,7 +270,7 @@ end
       Bar
     </data_>
     <data_ name='My time' class='Time' method=':to_s'>
-      2019-03-31 11:11:22 -0500
+      2019-04-01 09:35:07 -0500
     </data_>
     <data_ name='My uri,' class='URI::HTTPS' method=':to_s'>
       https://www.github.com
@@ -282,7 +282,7 @@ end
 
 ### Attributes
 
-You can put attributes onto a section by calling ```section``` with hash arguments.
+Put attributes onto a section by calling ```section``` with hash arguments.
 
 Each name/value pair in the hash becomes an attribute in the log section header.
 
@@ -317,7 +317,7 @@ end
 
 ### About Time
 
-Use symbols ```:timestamp``` or ```:duration``` to add a timestamp and a duration to as section.
+Use symbols ```:timestamp``` or ```:duration``` to add a timestamp or a duration to a section.
 
 ```example.rb```:
 ```ruby
@@ -340,13 +340,13 @@ end
 ```log.xml```:
 ```xml
 <log>
-  <section_ name='My section with timestamp' timestamp='2019-03-31-Sun-11.11.23.824'>
+  <section_ name='My section with timestamp' timestamp='2019-04-01-Mon-09.35.09.123'>
     Section with timestamp.
   </section_>
   <section_ name='My section with duration' duration_seconds='0.500'>
     Section with duration.
   </section_>
-  <section_ name='My section with both' timestamp='2019-03-31-Sun-11.11.24.325' duration_seconds='0.500'>
+  <section_ name='My section with both' timestamp='2019-04-01-Mon-09.35.09.624' duration_seconds='0.500'>
     Section with both.
   </section_>
 </log>

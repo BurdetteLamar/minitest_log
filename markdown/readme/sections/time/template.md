@@ -1,6 +1,6 @@
 ### About Time
 
-Use symbols ```:timestamp``` or ```:duration``` to add a timestamp and a duration to as section.
+Use symbols ```:timestamp``` or ```:duration``` to add a timestamp or a duration to a section.
 
 @[ruby](example.rb)
 
