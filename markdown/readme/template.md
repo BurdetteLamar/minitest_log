@@ -17,4 +17,6 @@ gem install minitest_log
 
 @[:markdown](sections/template.md)
 
+@[:markdown](data/template.md)
+
 @[:markdown](verdicts/template.md)

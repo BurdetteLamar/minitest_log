@@ -19,11 +19,11 @@ gem install minitest_log
   - [Attributes](#attributes)
   - [About Time](#about-time)
   - [Rescue](#rescue)
-  - [Data](#data)
-    - [Strings](#strings)
-    - [Hash-Like Objects](#hash-like-objects)
-    - [Array-Like Objects](#array-like-objects)
-    - [Other Objects](#other-objects)
+- [Data](#data)
+  - [Strings](#strings)
+  - [Hash-Like Objects](#hash-like-objects)
+  - [Array-Like Objects](#array-like-objects)
+  - [Other Objects](#other-objects)
 - [Verdicts](#verdicts)
 
 ## Logs and Sections
@@ -137,13 +137,13 @@ end
 ```log.xml```:
 ```xml
 <log>
-  <section_ name='My section with timestamp' timestamp='2019-04-01-Mon-09.44.09.403'>
+  <section_ name='My section with timestamp' timestamp='2019-04-01-Mon-09.51.01.600'>
     Section with timestamp.
   </section_>
   <section_ name='My section with duration' duration_seconds='0.500'>
     Section with duration.
   </section_>
-  <section_ name='My section with both' timestamp='2019-04-01-Mon-09.44.09.904' duration_seconds='0.500'>
+  <section_ name='My section with both' timestamp='2019-04-01-Mon-09.51.02.101' duration_seconds='0.500'>
     Section with both.
   </section_>
 </log>
@@ -185,13 +185,14 @@ end
 </log>
 ```
 
-### Data
+
+## Data
 
 Put data onto the log using method ```:put_data```.
 
 Generally speaking, a collection will be explicated in the log.
 
-#### Strings
+### Strings
 
 An object that is a ```kind_of?(String)``` is logged simply.
 
@@ -221,7 +222,7 @@ end
 </log>
 ```
 
-#### Hash-Like Objects
+### Hash-Like Objects
 
 Otherwise, an object that ```respond_to?(:each_with_pair)``` is logged as name-value pairs.
 
@@ -281,7 +282,7 @@ z => 2
 </log>
 ```
 
-#### Array-Like Objects
+### Array-Like Objects
 
 Otherwise, an object that ```respond_to?(:each_with_index)``` is logged as a numbered list.
 
@@ -338,7 +339,7 @@ end
 </log>
 ```
 
-#### Other Objects
+### Other Objects
 
 Otherwise, the logger tries, successively, to log the object using ```:to_s```,
 ```:inspect```, and ```:__id__```.
@@ -378,7 +379,7 @@ end
       Bar
     </data_>
     <data_ name='My time' class='Time' method=':to_s'>
-      2019-04-01 09:44:08 -0500
+      2019-04-01 09:50:59 -0500
     </data_>
     <data_ name='My uri,' class='URI::HTTPS' method=':to_s'>
       https://www.github.com
@@ -386,7 +387,6 @@ end
   </section_>
 </log>
 ```
-
 
 
 ## Verdicts
