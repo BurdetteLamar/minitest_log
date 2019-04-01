@@ -25,6 +25,7 @@ gem install minitest_log
   - [Array-Like Objects](#array-like-objects)
   - [Other Objects](#other-objects)
 - [Verdicts](#verdicts)
+  - [Return Values](#return-values)
   - [Assert Verdicts](#assert-verdicts)
   - [Refute Verdicts](#refute-verdicts)
 
@@ -139,13 +140,13 @@ end
 ```log.xml```:
 ```xml
 <log>
-  <section_ name='My section with timestamp' timestamp='2019-04-01-Mon-10.06.54.178'>
+  <section_ name='My section with timestamp' timestamp='2019-04-01-Mon-11.09.42.887'>
     Section with timestamp.
   </section_>
   <section_ name='My section with duration' duration_seconds='0.500'>
     Section with duration.
   </section_>
-  <section_ name='My section with both' timestamp='2019-04-01-Mon-10.06.54.679' duration_seconds='0.500'>
+  <section_ name='My section with both' timestamp='2019-04-01-Mon-11.09.43.388' duration_seconds='0.500'>
     Section with both.
   </section_>
 </log>
@@ -381,7 +382,7 @@ end
       Bar
     </data_>
     <data_ name='My time' class='Time' method=':to_s'>
-      2019-04-01 10:06:52 -0500
+      2019-04-01 11:09:41 -0500
     </data_>
     <data_ name='My uri,' class='URI::HTTPS' method=':to_s'>
       https://www.github.com
@@ -392,6 +393,27 @@ end
 
 
 ## Verdicts
+
+Use ```MinitestLog``` verdicts to log details of ```Minitest``` assertions.
+
+Each verdict method in ```MinitestLog``` is a wrapper for a corresponding ```Minitest``` assertion (or refutation).
+
+The wrapping verdict logs all details for the wrapped assertion.
+
+The arguments for the verdict method and its assert method are the same, except that the verdict method adds a leading verdict identifier.  (Both allow an optional trailing message string.)
+
+The verdict identifier:
+- Is commonly a string or a symbol, but may be any object that responds to ```:to_s```.
+- Must be unique among the verdict identifiers in its *test method* (but not necessarily in its *test class*.)
+
+Example verdict:
+
+```ruby
+log.verdict_assert?(:my_verdict_id, true, 'My message')
+```
+### Return Values
+
+Each verdict method returns ```true``` or ```false``` to indicate whether the verdict succeeded or failed.
 
 ### Assert Verdicts
 
