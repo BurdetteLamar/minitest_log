@@ -29,6 +29,7 @@ gem install minitest_log
     - [<code>verdict_assert?</code>](#-code-verdict_assert-code-)
     - [<code>verdict_assert_empty?</code>](#-code-verdict_assert_empty-code-)
     - [<code>verdict_assert_in_delta?</code>](#-code-verdict_assert_in_delta-code-)
+    - [<code>verdict_assert_in_epsilon?</code>](#-code-verdict_assert_in_epsilon-code-)
   - [Refute Verdicts](#refute-verdicts)
 
 ## Logs and Sections
@@ -142,13 +143,13 @@ end
 ```log.xml```:
 ```xml
 <log>
-  <section_ name='My section with timestamp' timestamp='2019-04-01-Mon-14.17.00.452'>
+  <section_ name='My section with timestamp' timestamp='2019-04-01-Mon-14.21.29.273'>
     Section with timestamp.
   </section_>
   <section_ name='My section with duration' duration_seconds='0.500'>
     Section with duration.
   </section_>
-  <section_ name='My section with both' timestamp='2019-04-01-Mon-14.17.00.953' duration_seconds='0.501'>
+  <section_ name='My section with both' timestamp='2019-04-01-Mon-14.21.29.774' duration_seconds='0.500'>
     Section with both.
   </section_>
 </log>
@@ -384,7 +385,7 @@ end
       Bar
     </data_>
     <data_ name='My time' class='Time' method=':to_s'>
-      2019-04-01 14:16:58 -0500
+      2019-04-01 14:21:27 -0500
     </data_>
     <data_ name='My uri,' class='URI::HTTPS' method=':to_s'>
       https://www.github.com
@@ -420,7 +421,7 @@ Each verdict method returns ```true``` or ```false``` to indicate whether the ve
 
 #### <code>verdict_assert?</code>
 
-Calls [assert](https://docs.ruby-lang.org/en/2.1.0/MiniTest/Assertions.html#method-i-assert)
+Calls [assert](https://docs.ruby-lang.org/en/2.1.0/MiniTest/Assertions.html#method-i-assert).
 
 ```verdict_assert.rb```:
 ```ruby
@@ -456,7 +457,7 @@ end
 
 #### <code>verdict_assert_empty?</code>
 
-Calls [assert_equal](https://docs.ruby-lang.org/en/2.1.0/MiniTest/Assertions.html#method-i-assert_equal)
+Calls [assert_equal](https://docs.ruby-lang.org/en/2.1.0/MiniTest/Assertions.html#method-i-assert_equal).
 
 ```verdict_assert_empty.rb```:
 ```ruby
@@ -492,7 +493,7 @@ end
 
 #### <code>verdict_assert_in_delta?</code>
 
-Calls [assert_in_delta](https://docs.ruby-lang.org/en/2.1.0/MiniTest/Assertions.html#method-i-assert_in_delta)
+Calls [assert_in_delta](https://docs.ruby-lang.org/en/2.1.0/MiniTest/Assertions.html#method-i-assert_in_delta).
 
 ```verdict_assert_in_delta.rb```:
 ```ruby
@@ -519,6 +520,46 @@ end
     <expected_ class='Integer' value='0'/>
     <actual_ class='Integer' value='1'/>
     <delta_ class='Integer' value='2'/>
+  </verdict_>
+</log>
+```
+
+#### <code>verdict_assert_in_epsilon?</code>
+
+Calls [assert_in_epsilon](https://docs.ruby-lang.org/en/2.1.0/MiniTest/Assertions.html#method-i-assert_in_epsilon).
+
+```verdict_assert_in_epsilon.rb```:
+```ruby
+require 'minitest_log'
+class Example < Minitest::Test
+  def test_verdict_assert
+    MinitestLog.new('verdict_assert_in_epsilon.xml') do |log|
+      log.verdict_assert_in_epsilon?(:in_epsilon_id, 3, 2, 1, 'In epsilon message')
+      log.verdict_assert_in_epsilon?(:not_in_epsilon_id, 3, 2, 0, 'Not in epsilon message')
+    end
+  end
+end
+```
+
+```verdict_assert_in_epsilon.xml```:
+```xml
+<log>
+  <verdict_ method='verdict_assert_in_epsilon?' outcome='passed' id='in_epsilon_id' message='In epsilon message'>
+    <expected_ class='Integer' value='3'/>
+    <actual_ class='Integer' value='2'/>
+    <epsilon_ class='Integer' value='1'/>
+  </verdict_>
+  <verdict_ method='verdict_assert_in_epsilon?' outcome='failed' id='not_in_epsilon_id' message='Not in epsilon message'>
+    <expected_ class='Integer' value='3'/>
+    <actual_ class='Integer' value='2'/>
+    <epsilon_ class='Integer' value='0'/>
+    <exception_ class='Minitest::Assertion' message='Expected |3 - 2| (1) to be &lt;= 0.'>
+      <backtrace_>
+        <level_0_ location='verdict_assert_in_epsilon.rb:6:in `block in test_verdict_assert&apos;'/>
+        <level_1_ location='verdict_assert_in_epsilon.rb:4:in `new&apos;'/>
+        <level_2_ location='verdict_assert_in_epsilon.rb:4:in `test_verdict_assert&apos;'/>
+      </backtrace_>
+    </exception_>
   </verdict_>
 </log>
 ```
