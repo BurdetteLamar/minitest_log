@@ -1,17 +1,10 @@
 <log>
-  <verdict_ method='verdict_assert_empty?' outcome='failed' id='empty_id' message='Empty message'>
-    <actual_ class='TrueClass' value='true'/>
-    <exception_ class='Minitest::Assertion' message='Expected true (TrueClass) to respond to #empty?.'>
-      <backtrace_>
-        <level_0_ location='verdict_assert_empty.rb:5:in `block in test_verdict_assert&apos;'/>
-        <level_1_ location='verdict_assert_empty.rb:4:in `new&apos;'/>
-        <level_2_ location='verdict_assert_empty.rb:4:in `test_verdict_assert&apos;'/>
-      </backtrace_>
-    </exception_>
+  <verdict_ method='verdict_assert_empty?' outcome='passed' id='empty_id' message='Empty message'>
+    <actual_ class='Array' value='[]'/>
   </verdict_>
   <verdict_ method='verdict_assert_empty?' outcome='failed' id='not_empty_id' message='Not empty message'>
-    <actual_ class='FalseClass' value='false'/>
-    <exception_ class='Minitest::Assertion' message='Expected false (FalseClass) to respond to #empty?.'>
+    <actual_ class='Array' value='[:a]'/>
+    <exception_ class='Minitest::Assertion' message='Expected [:a] to be empty.'>
       <backtrace_>
         <level_0_ location='verdict_assert_empty.rb:6:in `block in test_verdict_assert&apos;'/>
         <level_1_ location='verdict_assert_empty.rb:4:in `new&apos;'/>

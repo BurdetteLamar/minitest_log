@@ -141,13 +141,13 @@ end
 ```log.xml```:
 ```xml
 <log>
-  <section_ name='My section with timestamp' timestamp='2019-04-01-Mon-13.59.30.190'>
+  <section_ name='My section with timestamp' timestamp='2019-04-01-Mon-14.02.10.446'>
     Section with timestamp.
   </section_>
   <section_ name='My section with duration' duration_seconds='0.500'>
     Section with duration.
   </section_>
-  <section_ name='My section with both' timestamp='2019-04-01-Mon-13.59.30.691' duration_seconds='0.500'>
+  <section_ name='My section with both' timestamp='2019-04-01-Mon-14.02.10.947' duration_seconds='0.500'>
     Section with both.
   </section_>
 </log>
@@ -383,7 +383,7 @@ end
       Bar
     </data_>
     <data_ name='My time' class='Time' method=':to_s'>
-      2019-04-01 13:59:28 -0500
+      2019-04-01 14:02:08 -0500
     </data_>
     <data_ name='My uri,' class='URI::HTTPS' method=':to_s'>
       https://www.github.com
@@ -459,8 +459,8 @@ require 'minitest_log'
 class Example < Minitest::Test
   def test_verdict_assert
     MinitestLog.new('verdict_assert_empty.xml') do |log|
-      log.verdict_assert_empty?(:empty_id, true, 'Empty message')
-      log.verdict_assert_empty?(:not_empty_id, false, 'Not empty message')
+      log.verdict_assert_empty?(:empty_id, [], 'Empty message')
+      log.verdict_assert_empty?(:not_empty_id, [:a], 'Not empty message')
     end
   end
 end
@@ -469,19 +469,12 @@ end
 ```verdict_assert_empty.xml```:
 ```xml
 <log>
-  <verdict_ method='verdict_assert_empty?' outcome='failed' id='empty_id' message='Empty message'>
-    <actual_ class='TrueClass' value='true'/>
-    <exception_ class='Minitest::Assertion' message='Expected true (TrueClass) to respond to #empty?.'>
-      <backtrace_>
-        <level_0_ location='verdict_assert_empty.rb:5:in `block in test_verdict_assert&apos;'/>
-        <level_1_ location='verdict_assert_empty.rb:4:in `new&apos;'/>
-        <level_2_ location='verdict_assert_empty.rb:4:in `test_verdict_assert&apos;'/>
-      </backtrace_>
-    </exception_>
+  <verdict_ method='verdict_assert_empty?' outcome='passed' id='empty_id' message='Empty message'>
+    <actual_ class='Array' value='[]'/>
   </verdict_>
   <verdict_ method='verdict_assert_empty?' outcome='failed' id='not_empty_id' message='Not empty message'>
-    <actual_ class='FalseClass' value='false'/>
-    <exception_ class='Minitest::Assertion' message='Expected false (FalseClass) to respond to #empty?.'>
+    <actual_ class='Array' value='[:a]'/>
+    <exception_ class='Minitest::Assertion' message='Expected [:a] to be empty.'>
       <backtrace_>
         <level_0_ location='verdict_assert_empty.rb:6:in `block in test_verdict_assert&apos;'/>
         <level_1_ location='verdict_assert_empty.rb:4:in `new&apos;'/>
