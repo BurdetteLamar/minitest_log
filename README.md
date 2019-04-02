@@ -145,13 +145,13 @@ end
 ```log.xml```:
 ```xml
 <log>
-  <section_ name='My section with timestamp' timestamp='2019-04-02-Tue-15.29.27.651'>
+  <section_ name='My section with timestamp' timestamp='2019-04-02-Tue-15.44.21.543'>
     Section with timestamp.
   </section_>
   <section_ name='My section with duration' duration_seconds='0.500'>
     Section with duration.
   </section_>
-  <section_ name='My section with both' timestamp='2019-04-02-Tue-15.29.28.152' duration_seconds='0.500'>
+  <section_ name='My section with both' timestamp='2019-04-02-Tue-15.44.22.044' duration_seconds='0.501'>
     Section with both.
   </section_>
 </log>
@@ -173,7 +173,7 @@ class Example < MiniTest::Test
         raise RuntimeError.new('Boo!')
         log.comment('This code will not be reached, because the section terminates.')
       end
-      log.comment('This codew will be reached, because it is not in the terminated section.')
+      log.comment('This code will be reached, because it is not in the terminated section.')
     end
   end
 end
@@ -193,14 +193,14 @@ end
     </rescued_exception_>
   </section_>
   <comment_>
-    This codew will be reached, because it is not in the terminated section.
+    This code will be reached, because it is not in the terminated section.
   </comment_>
 </log>
 ```
 
 ### Unrescued Exception
 
-An exception in an unrescued section is logged, and the test terminates.
+An exception raised in an unrescued section is logged, and the test terminates.
 
 ```example.rb```:
 ```ruby
@@ -208,7 +208,7 @@ require 'minitest_log'
 class Example < MiniTest::Test
   def test_example
     MinitestLog.new('log.xml') do |log|
-      log.section('My rescued section') do
+      log.section('My unrescued section') do
         raise RuntimeError.new('Boo!')
       end
       log.comment('This code will not be reached, because the test terminated.')
@@ -220,8 +220,8 @@ end
 ```log.xml```:
 ```xml
 <log>
-  <section_ name='My rescued section'>
-    <uncaught_exception_ timestamp='2019-04-02-Tue-15.29.29.140' class='RuntimeError'>
+  <section_ name='My unrescued section'>
+    <uncaught_exception_ timestamp='2019-04-02-Tue-15.44.23.026' class='RuntimeError'>
       <message_>
         Boo!
       </message_>
@@ -245,7 +245,7 @@ A data object ```obj``` is treated as follows:
 - If ```obj.kind_of?(String)```, it is treated as a [string](#strings)
 - Otherwise if ```obj.respond_to?(:each_pair)```, it is treated as [hash-like](#hash-like-objects).
 - Otherwise, it ```obj.respond_to?(:each_with_index```, it is treated as [array-like](#array-like-objects).
-- Otherwise, it is treated as "[other](other-objects)".
+- Otherwise, it is treated as "[other](#other-objects)".
 
 ### Strings
 
@@ -434,7 +434,7 @@ end
       Bar
     </data_>
     <data_ name='My time' class='Time' method=':to_s'>
-      2019-04-02 15:29:25 -0500
+      2019-04-02 15:44:19 -0500
     </data_>
     <data_ name='My uri,' class='URI::HTTPS' method=':to_s'>
       https://www.github.com
@@ -446,7 +446,7 @@ end
 
 ## Verdicts
 
-Use ```MinitestLog``` verdicts to log details of ```Minitest``` assertions.
+Use ```MinitestLog``` verdict methods to log details of ```Minitest``` assertions.
 
 Each verdict method in ```MinitestLog``` is a wrapper for a corresponding ```Minitest``` assertion (or refutation).
 
@@ -468,10 +468,10 @@ Each verdict method returns ```true``` or ```false``` to indicate whether the ve
 
 Verdict methods are described below.
 
-For each is shown:
+For each the following is given:
 
 - The method's syntax.
-- An example test using the method.
+- An example test using the method, including both passing and failing verdicts.
 - The log output by the example test.
 - Descriptive text, adapted from [docs.ruby-lang.org](https://docs.ruby-lang.org/en/2.1.0/MiniTest/Assertions.html)
 

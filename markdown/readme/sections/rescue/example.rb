@@ -6,7 +6,7 @@ class Example < MiniTest::Test
         raise RuntimeError.new('Boo!')
         log.comment('This code will not be reached, because the section terminates.')
       end
-      log.comment('This codew will be reached, because it is not in the terminated section.')
+      log.comment('This code will be reached, because it is not in the terminated section.')
     end
   end
 end

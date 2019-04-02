@@ -10,6 +10,6 @@
     </rescued_exception_>
   </section_>
   <comment_>
-    This codew will be reached, because it is not in the terminated section.
+    This code will be reached, because it is not in the terminated section.
   </comment_>
 </log>

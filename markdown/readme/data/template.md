@@ -7,7 +7,7 @@ A data object ```obj``` is treated as follows:
 - If ```obj.kind_of?(String)```, it is treated as a [string](#strings)
 - Otherwise if ```obj.respond_to?(:each_pair)```, it is treated as [hash-like](#hash-like-objects).
 - Otherwise, it ```obj.respond_to?(:each_with_index```, it is treated as [array-like](#array-like-objects).
-- Otherwise, it is treated as "[other](other-objects)".
+- Otherwise, it is treated as "[other](#other-objects)".
 
 ### Strings
 

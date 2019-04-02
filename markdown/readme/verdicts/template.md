@@ -1,6 +1,6 @@
 ## Verdicts
 
-Use ```MinitestLog``` verdicts to log details of ```Minitest``` assertions.
+Use ```MinitestLog``` verdict methods to log details of ```Minitest``` assertions.
 
 Each verdict method in ```MinitestLog``` is a wrapper for a corresponding ```Minitest``` assertion (or refutation).
 
@@ -22,10 +22,10 @@ Each verdict method returns ```true``` or ```false``` to indicate whether the ve
 
 Verdict methods are described below.
 
-For each is shown:
+For each the following is given:
 
 - The method's syntax.
-- An example test using the method.
+- An example test using the method, including both passing and failing verdicts.
 - The log output by the example test.
 - Descriptive text, adapted from [docs.ruby-lang.org](https://docs.ruby-lang.org/en/2.1.0/MiniTest/Assertions.html)
 
