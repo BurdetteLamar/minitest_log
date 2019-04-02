@@ -1,6 +1,6 @@
 ### Assert Verdicts
 
-#### <code>verdict_assert?</code>
+#### verdict_assert?
 
 Calls [assert](https://docs.ruby-lang.org/en/2.1.0/MiniTest/Assertions.html#method-i-assert).
 
@@ -8,7 +8,7 @@ Calls [assert](https://docs.ruby-lang.org/en/2.1.0/MiniTest/Assertions.html#meth
 
 @[xml](verdict_assert.xml)
 
-#### <code>verdict_assert_empty?</code>
+#### verdict_assert_empty?
 
 Calls [assert_equal](https://docs.ruby-lang.org/en/2.1.0/MiniTest/Assertions.html#method-i-assert_equal).
 
@@ -16,7 +16,7 @@ Calls [assert_equal](https://docs.ruby-lang.org/en/2.1.0/MiniTest/Assertions.htm
 
 @[xml](verdict_assert_empty.xml)
 
-#### <code>verdict_assert_in_delta?</code>
+#### verdict_assert_in_delta?
 
 Calls [assert_in_delta](https://docs.ruby-lang.org/en/2.1.0/MiniTest/Assertions.html#method-i-assert_in_delta).
 
@@ -24,7 +24,7 @@ Calls [assert_in_delta](https://docs.ruby-lang.org/en/2.1.0/MiniTest/Assertions.
 
 @[xml](verdict_assert_in_delta.xml)
 
-#### <code>verdict_assert_in_epsilon?</code>
+#### verdict_assert_in_epsilon?
 
 Calls [assert_in_epsilon](https://docs.ruby-lang.org/en/2.1.0/MiniTest/Assertions.html#method-i-assert_in_epsilon).
 

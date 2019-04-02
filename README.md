@@ -26,10 +26,10 @@ gem install minitest_log
   - [Other Objects](#other-objects)
 - [Verdicts](#verdicts)
   - [Assert Verdicts](#assert-verdicts)
-    - [<code>verdict_assert?</code>](#-code-verdict_assert-code-)
-    - [<code>verdict_assert_empty?</code>](#-code-verdict_assert_empty-code-)
-    - [<code>verdict_assert_in_delta?</code>](#-code-verdict_assert_in_delta-code-)
-    - [<code>verdict_assert_in_epsilon?</code>](#-code-verdict_assert_in_epsilon-code-)
+    - [verdict_assert?](#verdict_assert)
+    - [verdict_assert_empty?](#verdict_assert_empty)
+    - [verdict_assert_in_delta?](#verdict_assert_in_delta)
+    - [verdict_assert_in_epsilon?](#verdict_assert_in_epsilon)
   - [Refute Verdicts](#refute-verdicts)
 
 ## Logs and Sections
@@ -143,13 +143,13 @@ end
 ```log.xml```:
 ```xml
 <log>
-  <section_ name='My section with timestamp' timestamp='2019-04-01-Mon-14.21.29.273'>
+  <section_ name='My section with timestamp' timestamp='2019-04-02-Tue-11.55.38.925'>
     Section with timestamp.
   </section_>
   <section_ name='My section with duration' duration_seconds='0.500'>
     Section with duration.
   </section_>
-  <section_ name='My section with both' timestamp='2019-04-01-Mon-14.21.29.774' duration_seconds='0.500'>
+  <section_ name='My section with both' timestamp='2019-04-02-Tue-11.55.39.426' duration_seconds='0.500'>
     Section with both.
   </section_>
 </log>
@@ -385,7 +385,7 @@ end
       Bar
     </data_>
     <data_ name='My time' class='Time' method=':to_s'>
-      2019-04-01 14:21:27 -0500
+      2019-04-02 11:55:37 -0500
     </data_>
     <data_ name='My uri,' class='URI::HTTPS' method=':to_s'>
       https://www.github.com
@@ -419,7 +419,7 @@ Each verdict method returns ```true``` or ```false``` to indicate whether the ve
 
 ### Assert Verdicts
 
-#### <code>verdict_assert?</code>
+#### verdict_assert?
 
 Calls [assert](https://docs.ruby-lang.org/en/2.1.0/MiniTest/Assertions.html#method-i-assert).
 
@@ -455,7 +455,7 @@ end
 </log>
 ```
 
-#### <code>verdict_assert_empty?</code>
+#### verdict_assert_empty?
 
 Calls [assert_equal](https://docs.ruby-lang.org/en/2.1.0/MiniTest/Assertions.html#method-i-assert_equal).
 
@@ -491,7 +491,7 @@ end
 </log>
 ```
 
-#### <code>verdict_assert_in_delta?</code>
+#### verdict_assert_in_delta?
 
 Calls [assert_in_delta](https://docs.ruby-lang.org/en/2.1.0/MiniTest/Assertions.html#method-i-assert_in_delta).
 
@@ -524,7 +524,7 @@ end
 </log>
 ```
 
-#### <code>verdict_assert_in_epsilon?</code>
+#### verdict_assert_in_epsilon?
 
 Calls [assert_in_epsilon](https://docs.ruby-lang.org/en/2.1.0/MiniTest/Assertions.html#method-i-assert_in_epsilon).
 
