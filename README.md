@@ -28,6 +28,7 @@ gem install minitest_log
   - [Assert Verdicts](#assert-verdicts)
     - [verdict_assert?](#verdict_assert)
     - [verdict_assert_empty?](#verdict_assert_empty)
+    - [verdict_assert_equal?](#verdict_assert_equal)
     - [verdict_assert_in_delta?](#verdict_assert_in_delta)
     - [verdict_assert_in_epsilon?](#verdict_assert_in_epsilon)
   - [Refute Verdicts](#refute-verdicts)
@@ -143,13 +144,13 @@ end
 ```log.xml```:
 ```xml
 <log>
-  <section_ name='My section with timestamp' timestamp='2019-04-02-Tue-11.55.38.925'>
+  <section_ name='My section with timestamp' timestamp='2019-04-02-Tue-14.58.36.806'>
     Section with timestamp.
   </section_>
-  <section_ name='My section with duration' duration_seconds='0.500'>
+  <section_ name='My section with duration' duration_seconds='0.501'>
     Section with duration.
   </section_>
-  <section_ name='My section with both' timestamp='2019-04-02-Tue-11.55.39.426' duration_seconds='0.500'>
+  <section_ name='My section with both' timestamp='2019-04-02-Tue-14.58.37.308' duration_seconds='0.500'>
     Section with both.
   </section_>
 </log>
@@ -385,7 +386,7 @@ end
       Bar
     </data_>
     <data_ name='My time' class='Time' method=':to_s'>
-      2019-04-02 11:55:37 -0500
+      2019-04-02 14:58:35 -0500
     </data_>
     <data_ name='My uri,' class='URI::HTTPS' method=':to_s'>
       https://www.github.com
@@ -417,11 +418,17 @@ log.verdict_assert?(:my_verdict_id, true, 'My message')
 
 Each verdict method returns ```true``` or ```false``` to indicate whether the verdict succeeded or failed.
 
+The text below is adapted from [docs.ruby-lang.org](https://docs.ruby-lang.org/en/2.1.0/MiniTest/Assertions.html)
+
 ### Assert Verdicts
 
 #### verdict_assert?
 
-Calls [assert](https://docs.ruby-lang.org/en/2.1.0/MiniTest/Assertions.html#method-i-assert).
+```ruby
+MinitestLog#verdict_assert?(id, obj, msg = nil)
+```
+
+Fails unless obj is truthy.
 
 ```verdict_assert.rb```:
 ```ruby
@@ -457,13 +464,17 @@ end
 
 #### verdict_assert_empty?
 
-Calls [assert_equal](https://docs.ruby-lang.org/en/2.1.0/MiniTest/Assertions.html#method-i-assert_equal).
+```ruby
+MinitestLog#verdict_assert_empty?(id, obj, msg = nil)
+```
+
+Fails unless obj is empty.
 
 ```verdict_assert_empty.rb```:
 ```ruby
 require 'minitest_log'
 class Example < Minitest::Test
-  def test_verdict_assert
+  def test_verdict_assert_empty
     MinitestLog.new('verdict_assert_empty.xml') do |log|
       log.verdict_assert_empty?(:empty_id, [], 'Empty message')
       log.verdict_assert_empty?(:not_empty_id, [:a], 'Not empty message')
@@ -482,9 +493,54 @@ end
     <actual_ class='Array' value='[:a]'/>
     <exception_ class='Minitest::Assertion' message='Expected [:a] to be empty.'>
       <backtrace_>
-        <level_0_ location='verdict_assert_empty.rb:6:in `block in test_verdict_assert&apos;'/>
+        <level_0_ location='verdict_assert_empty.rb:6:in `block in test_verdict_assert_empty&apos;'/>
         <level_1_ location='verdict_assert_empty.rb:4:in `new&apos;'/>
-        <level_2_ location='verdict_assert_empty.rb:4:in `test_verdict_assert&apos;'/>
+        <level_2_ location='verdict_assert_empty.rb:4:in `test_verdict_assert_empty&apos;'/>
+      </backtrace_>
+    </exception_>
+  </verdict_>
+</log>
+```
+
+#### verdict_assert_equal?
+
+```ruby
+MinitestLog#verdict_assert_equal?(id, exp, act, msg = nil)
+```
+Fails unless exp == act printing the difference between the two, if possible.
+
+If there is no visible difference but the assertion fails, you should suspect that your #== is buggy, or your inspect output is missing crucial details.
+
+For floats use verdict_assert_in_delta?.
+
+```verdict_assert_equal.rb```:
+```ruby
+require 'minitest_log'
+class Example < Minitest::Test
+  def test_verdict_assert_equal
+    MinitestLog.new('verdict_assert_equal.xml') do |log|
+      log.verdict_assert_equal?(:iequal_id, 0, 0, 'Equal message')
+      log.verdict_assert_equal?(:not_equal_id, 0, 1, 'Not equal message')
+    end
+  end
+end
+```
+
+```verdict_assert_equal.xml```:
+```xml
+<log>
+  <verdict_ method='verdict_assert_equal?' outcome='passed' id='iequal_id' message='Equal message'>
+    <expected_ class='Integer' value='0'/>
+    <actual_ class='Integer' value='0'/>
+  </verdict_>
+  <verdict_ method='verdict_assert_equal?' outcome='failed' id='not_equal_id' message='Not equal message'>
+    <expected_ class='Integer' value='0'/>
+    <actual_ class='Integer' value='1'/>
+    <exception_ class='Minitest::Assertion' message='Expected: 0'>
+      <backtrace_>
+        <level_0_ location='verdict_assert_equal.rb:6:in `block in test_verdict_assert_equal&apos;'/>
+        <level_1_ location='verdict_assert_equal.rb:4:in `new&apos;'/>
+        <level_2_ location='verdict_assert_equal.rb:4:in `test_verdict_assert_equal&apos;'/>
       </backtrace_>
     </exception_>
   </verdict_>
@@ -493,13 +549,17 @@ end
 
 #### verdict_assert_in_delta?
 
-Calls [assert_in_delta](https://docs.ruby-lang.org/en/2.1.0/MiniTest/Assertions.html#method-i-assert_in_delta).
+```ruby
+MinitestLog#verdicct_assert_in_delta?(id, exp, act, delta = 0.001, msg = nil)
+````
+
+For comparing Floats. Fails unless exp and act are within delta of each other.
 
 ```verdict_assert_in_delta.rb```:
 ```ruby
 require 'minitest_log'
 class Example < Minitest::Test
-  def test_verdict_assert
+  def test_verdict_assert_in_delta
     MinitestLog.new('verdict_assert_in_delta.xml') do |log|
       log.verdict_assert_in_delta?(:in_delta_id, 0, 0, 1, 'In delta message')
       log.verdict_assert_in_delta?(:not_in_delta_id, 0, 1, 2, 'Not in delta message')
@@ -526,13 +586,17 @@ end
 
 #### verdict_assert_in_epsilon?
 
-Calls [assert_in_epsilon](https://docs.ruby-lang.org/en/2.1.0/MiniTest/Assertions.html#method-i-assert_in_epsilon).
+```ruby
+MinitestLog#verdict_assert_in_epsilon?(id, a, b, epsilon = 0.001, msg = nil) click to toggle source 
+```
+
+For comparing Floats. Fails unless exp and act have a relative error less than epsilon.
 
 ```verdict_assert_in_epsilon.rb```:
 ```ruby
 require 'minitest_log'
 class Example < Minitest::Test
-  def test_verdict_assert
+  def test_verdict_assert_in_epsilon
     MinitestLog.new('verdict_assert_in_epsilon.xml') do |log|
       log.verdict_assert_in_epsilon?(:in_epsilon_id, 3, 2, 1, 'In epsilon message')
       log.verdict_assert_in_epsilon?(:not_in_epsilon_id, 3, 2, 0, 'Not in epsilon message')
@@ -555,9 +619,9 @@ end
     <epsilon_ class='Integer' value='0'/>
     <exception_ class='Minitest::Assertion' message='Expected |3 - 2| (1) to be &lt;= 0.'>
       <backtrace_>
-        <level_0_ location='verdict_assert_in_epsilon.rb:6:in `block in test_verdict_assert&apos;'/>
+        <level_0_ location='verdict_assert_in_epsilon.rb:6:in `block in test_verdict_assert_in_epsilon&apos;'/>
         <level_1_ location='verdict_assert_in_epsilon.rb:4:in `new&apos;'/>
-        <level_2_ location='verdict_assert_in_epsilon.rb:4:in `test_verdict_assert&apos;'/>
+        <level_2_ location='verdict_assert_in_epsilon.rb:4:in `test_verdict_assert_in_epsilon&apos;'/>
       </backtrace_>
     </exception_>
   </verdict_>

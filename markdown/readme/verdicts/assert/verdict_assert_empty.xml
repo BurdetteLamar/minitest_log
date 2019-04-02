@@ -6,9 +6,9 @@
     <actual_ class='Array' value='[:a]'/>
     <exception_ class='Minitest::Assertion' message='Expected [:a] to be empty.'>
       <backtrace_>
-        <level_0_ location='verdict_assert_empty.rb:6:in `block in test_verdict_assert&apos;'/>
+        <level_0_ location='verdict_assert_empty.rb:6:in `block in test_verdict_assert_empty&apos;'/>
         <level_1_ location='verdict_assert_empty.rb:4:in `new&apos;'/>
-        <level_2_ location='verdict_assert_empty.rb:4:in `test_verdict_assert&apos;'/>
+        <level_2_ location='verdict_assert_empty.rb:4:in `test_verdict_assert_empty&apos;'/>
       </backtrace_>
     </exception_>
   </verdict_>
