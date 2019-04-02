@@ -19,7 +19,7 @@ gem install minitest_log
   - [Attributes](#attributes)
   - [About Time](#about-time)
   - [Rescue](#rescue)
-  - [Rescue](#rescue)
+  - [Unrescued Exception](#unrescued-exception)
 - [Data](#data)
   - [Strings](#strings)
   - [Hash-Like Objects](#hash-like-objects)
@@ -145,13 +145,13 @@ end
 ```log.xml```:
 ```xml
 <log>
-  <section_ name='My section with timestamp' timestamp='2019-04-02-Tue-15.16.35.337'>
+  <section_ name='My section with timestamp' timestamp='2019-04-02-Tue-15.29.27.651'>
     Section with timestamp.
   </section_>
   <section_ name='My section with duration' duration_seconds='0.500'>
     Section with duration.
   </section_>
-  <section_ name='My section with both' timestamp='2019-04-02-Tue-15.16.35.838' duration_seconds='0.500'>
+  <section_ name='My section with both' timestamp='2019-04-02-Tue-15.29.28.152' duration_seconds='0.500'>
     Section with both.
   </section_>
 </log>
@@ -198,7 +198,7 @@ end
 </log>
 ```
 
-### Rescue
+### Unrescued Exception
 
 An exception in an unrescued section is logged, and the test terminates.
 
@@ -211,9 +211,7 @@ class Example < MiniTest::Test
       log.section('My rescued section') do
         raise RuntimeError.new('Boo!')
       end
-      log.section('Another section') do
-        log.comment('This code will not be reached, because the test terminated.')
-      end
+      log.comment('This code will not be reached, because the test terminated.')
     end
   end
 end
@@ -223,7 +221,7 @@ end
 ```xml
 <log>
   <section_ name='My rescued section'>
-    <uncaught_exception_ timestamp='2019-04-02-Tue-15.16.36.818' class='RuntimeError'>
+    <uncaught_exception_ timestamp='2019-04-02-Tue-15.29.29.140' class='RuntimeError'>
       <message_>
         Boo!
       </message_>
@@ -242,7 +240,12 @@ example.rb:4:in `test_example']]>
 
 Put data onto the log using method ```:put_data```.
 
-Generally speaking, a collection will be explicated in the log.
+A data object ```obj``` is treated as follows:
+
+- If ```obj.kind_of?(String)```, it is treated as a [string](#strings)
+- Otherwise if ```obj.respond_to?(:each_pair)```, it is treated as [hash-like](#hash-like-objects).
+- Otherwise, it ```obj.respond_to?(:each_with_index```, it is treated as [array-like](#array-like-objects).
+- Otherwise, it is treated as "[other](other-objects)".
 
 ### Strings
 
@@ -276,7 +279,7 @@ end
 
 ### Hash-Like Objects
 
-Otherwise, an object that ```respond_to?(:each_with_pair)``` is logged as name-value pairs.
+Otherwise, an object that ```respond_to?(:each_pair)``` is logged as name-value pairs.
 
 ```each_pair.rb```:
 ```ruby
@@ -431,7 +434,7 @@ end
       Bar
     </data_>
     <data_ name='My time' class='Time' method=':to_s'>
-      2019-04-02 15:16:33 -0500
+      2019-04-02 15:29:25 -0500
     </data_>
     <data_ name='My uri,' class='URI::HTTPS' method=':to_s'>
       https://www.github.com

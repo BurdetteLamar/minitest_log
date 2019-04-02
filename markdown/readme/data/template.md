@@ -2,7 +2,12 @@
 
 Put data onto the log using method ```:put_data```.
 
-Generally speaking, a collection will be explicated in the log.
+A data object ```obj``` is treated as follows:
+
+- If ```obj.kind_of?(String)```, it is treated as a [string](#strings)
+- Otherwise if ```obj.respond_to?(:each_pair)```, it is treated as [hash-like](#hash-like-objects).
+- Otherwise, it ```obj.respond_to?(:each_with_index```, it is treated as [array-like](#array-like-objects).
+- Otherwise, it is treated as "[other](other-objects)".
 
 ### Strings
 
@@ -14,7 +19,7 @@ An object that is a ```kind_of?(String)``` is logged simply.
 
 ### Hash-Like Objects
 
-Otherwise, an object that ```respond_to?(:each_with_pair)``` is logged as name-value pairs.
+Otherwise, an object that ```respond_to?(:each_pair)``` is logged as name-value pairs.
 
 @[ruby](each_pair.rb)
 

@@ -5,9 +5,7 @@ class Example < MiniTest::Test
       log.section('My rescued section') do
         raise RuntimeError.new('Boo!')
       end
-      log.section('Another section') do
-        log.comment('This code will not be reached, because the test terminated.')
-      end
+      log.comment('This code will not be reached, because the test terminated.')
     end
   end
 end
