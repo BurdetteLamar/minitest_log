@@ -8,3 +8,4 @@
 
 @[:markdown](rescue/template.md)
 
+@[:markdown](unrescued/template.md)

@@ -20,7 +20,14 @@ log.verdict_assert?(:my_verdict_id, true, 'My message')
 
 Each verdict method returns ```true``` or ```false``` to indicate whether the verdict succeeded or failed.
 
-The text below is adapted from [docs.ruby-lang.org](https://docs.ruby-lang.org/en/2.1.0/MiniTest/Assertions.html)
+Verdict methods are described below.
+
+For each is shown:
+
+- The method's syntax.
+- An example test using the method.
+- The log output by the example test.
+- Descriptive text, adapted from [docs.ruby-lang.org](https://docs.ruby-lang.org/en/2.1.0/MiniTest/Assertions.html)
 
 @[:markdown](assert/template.md)
 

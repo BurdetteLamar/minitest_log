@@ -19,6 +19,7 @@ gem install minitest_log
   - [Attributes](#attributes)
   - [About Time](#about-time)
   - [Rescue](#rescue)
+  - [Rescue](#rescue)
 - [Data](#data)
   - [Strings](#strings)
   - [Hash-Like Objects](#hash-like-objects)
@@ -144,13 +145,13 @@ end
 ```log.xml```:
 ```xml
 <log>
-  <section_ name='My section with timestamp' timestamp='2019-04-02-Tue-14.58.36.806'>
+  <section_ name='My section with timestamp' timestamp='2019-04-02-Tue-15.16.35.337'>
     Section with timestamp.
   </section_>
-  <section_ name='My section with duration' duration_seconds='0.501'>
+  <section_ name='My section with duration' duration_seconds='0.500'>
     Section with duration.
   </section_>
-  <section_ name='My section with both' timestamp='2019-04-02-Tue-14.58.37.308' duration_seconds='0.500'>
+  <section_ name='My section with both' timestamp='2019-04-02-Tue-15.16.35.838' duration_seconds='0.500'>
     Section with both.
   </section_>
 </log>
@@ -170,7 +171,9 @@ class Example < MiniTest::Test
     MinitestLog.new('log.xml') do |log|
       log.section('My rescued section', :rescue) do
         raise RuntimeError.new('Boo!')
+        log.comment('This code will not be reached, because the section terminates.')
       end
+      log.comment('This codew will be reached, because it is not in the terminated section.')
     end
   end
 end
@@ -189,9 +192,51 @@ end
       </backtrace_>
     </rescued_exception_>
   </section_>
+  <comment_>
+    This codew will be reached, because it is not in the terminated section.
+  </comment_>
 </log>
 ```
 
+### Rescue
+
+An exception in an unrescued section is logged, and the test terminates.
+
+```example.rb```:
+```ruby
+require 'minitest_log'
+class Example < MiniTest::Test
+  def test_example
+    MinitestLog.new('log.xml') do |log|
+      log.section('My rescued section') do
+        raise RuntimeError.new('Boo!')
+      end
+      log.section('Another section') do
+        log.comment('This code will not be reached, because the test terminated.')
+      end
+    end
+  end
+end
+```
+
+```log.xml```:
+```xml
+<log>
+  <section_ name='My rescued section'>
+    <uncaught_exception_ timestamp='2019-04-02-Tue-15.16.36.818' class='RuntimeError'>
+      <message_>
+        Boo!
+      </message_>
+      <backtrace_>
+        <![CDATA[example.rb:6:in `block (2 levels) in test_example'
+example.rb:5:in `block in test_example'
+example.rb:4:in `new'
+example.rb:4:in `test_example']]>
+      </backtrace_>
+    </uncaught_exception_>
+  </section_>
+</log>
+```
 
 ## Data
 
@@ -386,7 +431,7 @@ end
       Bar
     </data_>
     <data_ name='My time' class='Time' method=':to_s'>
-      2019-04-02 14:58:35 -0500
+      2019-04-02 15:16:33 -0500
     </data_>
     <data_ name='My uri,' class='URI::HTTPS' method=':to_s'>
       https://www.github.com
@@ -418,7 +463,14 @@ log.verdict_assert?(:my_verdict_id, true, 'My message')
 
 Each verdict method returns ```true``` or ```false``` to indicate whether the verdict succeeded or failed.
 
-The text below is adapted from [docs.ruby-lang.org](https://docs.ruby-lang.org/en/2.1.0/MiniTest/Assertions.html)
+Verdict methods are described below.
+
+For each is shown:
+
+- The method's syntax.
+- An example test using the method.
+- The log output by the example test.
+- Descriptive text, adapted from [docs.ruby-lang.org](https://docs.ruby-lang.org/en/2.1.0/MiniTest/Assertions.html)
 
 ### Assert Verdicts
 
