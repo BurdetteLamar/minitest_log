@@ -1,0 +1,17 @@
+<log>
+  <verdict_ method='verdict_assert_kind_of?' outcome='passed' id='kind_of_id' message='Kind of message'>
+    <expected_ class='Class' value='String'/>
+    <actual_ class='String' value='&quot;my_string&quot;'/>
+  </verdict_>
+  <verdict_ method='verdict_assert_kind_of?' outcome='failed' id='not_kind_of_id' message='Not kind of message'>
+    <expected_ class='Class' value='Integer'/>
+    <actual_ class='String' value='&quot;my_string&quot;'/>
+    <exception_ class='Minitest::Assertion' message='Expected # encoding: UTF-8'>
+      <backtrace_>
+        <level_0_ location='verdict_assert_kind_of.rb:6:in `block in test_verdict_assert_kind_of&apos;'/>
+        <level_1_ location='verdict_assert_kind_of.rb:4:in `new&apos;'/>
+        <level_2_ location='verdict_assert_kind_of.rb:4:in `test_verdict_assert_kind_of&apos;'/>
+      </backtrace_>
+    </exception_>
+  </verdict_>
+</log>

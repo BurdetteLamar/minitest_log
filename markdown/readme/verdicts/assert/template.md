@@ -94,3 +94,16 @@ Fails unless obj is an instance of cls.
 
 @[xml](verdict_assert_instance_of.xml)
 
+#### verdict_assert_kind_of?
+
+```ruby
+verdict_assert_kind_of?(id, cls, obj, msg = nil)
+va_kind_of?(id, cls, obj, msg = nil)
+```
+
+Fails unless obj is a kind of cls.
+
+@[ruby](verdict_assert_kind_of.rb)
+
+@[xml](verdict_assert_kind_of.xml)
+
