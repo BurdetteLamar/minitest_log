@@ -4,7 +4,7 @@ Use ```MinitestLog``` verdict methods to log details of ```Minitest``` assertion
 
 Each verdict method in ```MinitestLog``` is a wrapper for a corresponding ```Minitest``` assertion (or refutation).
 
-The wrapping verdict logs all details for the wrapped assertion.
+The verdict method logs all details for the assertion.
 
 The arguments for the verdict method and its assert method are the same, except that the verdict method adds a required leading verdict identifier.  (Both allow an optional trailing message string.)
 
@@ -20,9 +20,7 @@ log.verdict_assert?(:my_verdict_id, true, 'My message')
 
 Each verdict method returns ```true``` or ```false``` to indicate whether the verdict succeeded or failed.
 
-Verdict methods are described below.
-
-For each the following is given:
+Verdict methods are described below.  For each, the following is given:
 
 - The method's syntax.
 - An example test using the method, including both passing and failing verdicts.

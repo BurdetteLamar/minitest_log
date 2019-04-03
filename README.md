@@ -27,11 +27,11 @@ gem install minitest_log
   - [Other Objects](#other-objects)
 - [Verdicts](#verdicts)
   - [Assert Verdicts](#assert-verdicts)
-    - [verdict_assert?](#verdict_assert)
-    - [verdict_assert_empty?](#verdict_assert_empty)
-    - [verdict_assert_equal?](#verdict_assert_equal)
-    - [verdict_assert_in_delta?](#verdict_assert_in_delta)
-    - [verdict_assert_in_epsilon?](#verdict_assert_in_epsilon)
+    - [verdict_assert?(id, obj, msg = nil)](#verdict_assertid-obj-msg-nil)
+    - [verdict_assert_empty?(id, obj, msg = nil)](#verdict_assert_emptyid-obj-msg-nil)
+    - [verdict_assert_equal?(id, exp, act, msg = nil)](#verdict_assert_equalid-exp-act-msg-nil)
+    - [verdicct_assert_in_delta?(id, exp, act, delta = 0.001, msg = nil)](#verdicct_assert_in_deltaid-exp-act-delta-0001-msg-nil)
+    - [verdict_assert_in_epsilon?(id, a, b, epsilon = 0.001, msg = nil)](#verdict_assert_in_epsilonid-a-b-epsilon-0001-msg-nil)
   - [Refute Verdicts](#refute-verdicts)
 
 ## Logs and Sections
@@ -145,13 +145,13 @@ end
 ```log.xml```:
 ```xml
 <log>
-  <section_ name='My section with timestamp' timestamp='2019-04-02-Tue-15.44.21.543'>
+  <section_ name='My section with timestamp' timestamp='2019-04-03-Wed-13.47.33.299'>
     Section with timestamp.
   </section_>
   <section_ name='My section with duration' duration_seconds='0.500'>
     Section with duration.
   </section_>
-  <section_ name='My section with both' timestamp='2019-04-02-Tue-15.44.22.044' duration_seconds='0.501'>
+  <section_ name='My section with both' timestamp='2019-04-03-Wed-13.47.33.800' duration_seconds='0.500'>
     Section with both.
   </section_>
 </log>
@@ -221,7 +221,7 @@ end
 ```xml
 <log>
   <section_ name='My unrescued section'>
-    <uncaught_exception_ timestamp='2019-04-02-Tue-15.44.23.026' class='RuntimeError'>
+    <uncaught_exception_ timestamp='2019-04-03-Wed-13.47.34.765' class='RuntimeError'>
       <message_>
         Boo!
       </message_>
@@ -434,7 +434,7 @@ end
       Bar
     </data_>
     <data_ name='My time' class='Time' method=':to_s'>
-      2019-04-02 15:44:19 -0500
+      2019-04-03 13:47:31 -0500
     </data_>
     <data_ name='My uri,' class='URI::HTTPS' method=':to_s'>
       https://www.github.com
@@ -450,7 +450,7 @@ Use ```MinitestLog``` verdict methods to log details of ```Minitest``` assertion
 
 Each verdict method in ```MinitestLog``` is a wrapper for a corresponding ```Minitest``` assertion (or refutation).
 
-The wrapping verdict logs all details for the wrapped assertion.
+The verdict method logs all details for the assertion.
 
 The arguments for the verdict method and its assert method are the same, except that the verdict method adds a required leading verdict identifier.  (Both allow an optional trailing message string.)
 
@@ -466,9 +466,7 @@ log.verdict_assert?(:my_verdict_id, true, 'My message')
 
 Each verdict method returns ```true``` or ```false``` to indicate whether the verdict succeeded or failed.
 
-Verdict methods are described below.
-
-For each the following is given:
+Verdict methods are described below.  For each, the following is given:
 
 - The method's syntax.
 - An example test using the method, including both passing and failing verdicts.
@@ -477,11 +475,7 @@ For each the following is given:
 
 ### Assert Verdicts
 
-#### verdict_assert?
-
-```ruby
-MinitestLog#verdict_assert?(id, obj, msg = nil)
-```
+#### verdict_assert?(id, obj, msg = nil)
 
 Fails unless obj is truthy.
 
@@ -517,11 +511,7 @@ end
 </log>
 ```
 
-#### verdict_assert_empty?
-
-```ruby
-MinitestLog#verdict_assert_empty?(id, obj, msg = nil)
-```
+#### verdict_assert_empty?(id, obj, msg = nil)
 
 Fails unless obj is empty.
 
@@ -557,11 +547,8 @@ end
 </log>
 ```
 
-#### verdict_assert_equal?
+#### verdict_assert_equal?(id, exp, act, msg = nil)
 
-```ruby
-MinitestLog#verdict_assert_equal?(id, exp, act, msg = nil)
-```
 Fails unless exp == act printing the difference between the two, if possible.
 
 If there is no visible difference but the assertion fails, you should suspect that your #== is buggy, or your inspect output is missing crucial details.
@@ -602,11 +589,7 @@ end
 </log>
 ```
 
-#### verdict_assert_in_delta?
-
-```ruby
-MinitestLog#verdicct_assert_in_delta?(id, exp, act, delta = 0.001, msg = nil)
-````
+#### verdicct_assert_in_delta?(id, exp, act, delta = 0.001, msg = nil)
 
 For comparing Floats. Fails unless exp and act are within delta of each other.
 
@@ -639,11 +622,7 @@ end
 </log>
 ```
 
-#### verdict_assert_in_epsilon?
-
-```ruby
-MinitestLog#verdict_assert_in_epsilon?(id, a, b, epsilon = 0.001, msg = nil) click to toggle source 
-```
+#### verdict_assert_in_epsilon?(id, a, b, epsilon = 0.001, msg = nil)
 
 For comparing Floats. Fails unless exp and act have a relative error less than epsilon.
 
