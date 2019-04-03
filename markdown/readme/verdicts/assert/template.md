@@ -63,3 +63,15 @@ For comparing Floats. Fails unless exp and act have a relative error less than e
 
 @[xml](verdict_assert_in_epsilon.xml)
 
+#### verdict_assert_includes?
+
+```ruby
+verdict_assert_includes?(id, collection, obj, msg = nil)
+```
+
+Fails unless collection includes obj.
+
+@[ruby](verdict_assert_includes.rb)
+
+@[xml](verdict_assert_include.xml)
+
