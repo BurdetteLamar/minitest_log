@@ -12,13 +12,16 @@ The verdict identifier:
 - Is commonly a string or a symbol, but may be any object that responds to ```:to_s```.
 - Must be unique among the verdict identifiers in its *test method* (but not necessarily in its *test class*.)
 
-Example verdict:
+Each verdict method returns ```true``` or ```false``` to indicate whether the verdict succeeded or failed.
+
+Each verdict method also has a shorter alias -- ```va``` substituting for ```verdict_assert```, and ```vr``` substituting for ```verdict_refute```.  (This not only saves keystrokes, but also *really*, *really* helps your editor do code completion.)
+
+Example verdict (long form and alias):
 
 ```ruby
 log.verdict_assert?(:my_verdict_id, true, 'My message')
+log.va?(:my_verdict_id, true, 'My message')
 ```
-
-Each verdict method returns ```true``` or ```false``` to indicate whether the verdict succeeded or failed.
 
 Verdict methods are described below.  For each, the following is given:
 

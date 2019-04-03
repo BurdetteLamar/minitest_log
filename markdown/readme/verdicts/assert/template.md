@@ -4,6 +4,7 @@
 
 ```ruby
 verdict_assert?(id, obj, msg = nil)
+va?(id, obj, msg = nil)
 ```
 
 Fails unless obj is truthy.
@@ -16,6 +17,7 @@ Fails unless obj is truthy.
 
 ```ruby
 verdict_assert_empty?(id, obj, msg = nil)
+va_empty?(id, obj, msg = nil)
 ```
 
 Fails unless obj is empty.
@@ -28,6 +30,7 @@ Fails unless obj is empty.
 
 ```ruby
 verdict_assert_equal?(id, exp, act, msg = nil)
+va_equal?(id, exp, act, msg = nil)
 ```
 Fails unless exp == act printing the difference between the two, if possible.
 
@@ -42,7 +45,8 @@ For floats use verdict_assert_in_delta?.
 #### verdict_assert_in_delta?
 
 ```ruby
-verdicct_assert_in_delta?(id, exp, act, delta = 0.001, msg = nil)
+verdict_assert_in_delta?(id, exp, act, delta = 0.001, msg = nil)
+va_in_delta?(id, exp, act, delta = 0.001, msg = nil)
 ````
 
 For comparing Floats. Fails unless exp and act are within delta of each other.
@@ -55,6 +59,7 @@ For comparing Floats. Fails unless exp and act are within delta of each other.
 
 ```ruby
 verdict_assert_in_epsilon?(id, a, b, epsilon = 0.001, msg = nil)
+va_in_epsilon?(id, a, b, epsilon = 0.001, msg = nil)
 ```
 
 For comparing Floats. Fails unless exp and act have a relative error less than epsilon.
@@ -67,6 +72,7 @@ For comparing Floats. Fails unless exp and act have a relative error less than e
 
 ```ruby
 verdict_assert_includes?(id, collection, obj, msg = nil)
+va_includes?(id, collection, obj, msg = nil)
 ```
 
 Fails unless collection includes obj.
@@ -74,4 +80,17 @@ Fails unless collection includes obj.
 @[ruby](verdict_assert_includes.rb)
 
 @[xml](verdict_assert_includes.xml)
+
+#### verdict_assert_includes?
+
+```ruby
+verdict_assert_instance_of?(id, cls, obj, msg = nil)
+va_instance_of?(id, cls, obj, msg = nil)
+```
+
+Fails unless obj is an instance of cls.
+
+@[ruby](verdict_assert_instance_of.rb)
+
+@[xml](verdict_assert_instance_of.xml)
 

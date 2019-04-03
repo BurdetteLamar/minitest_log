@@ -1,5 +1,5 @@
 <log>
-  <verdict_ method='verdict_assert_equal?' outcome='passed' id='iequal_id' message='Equal message'>
+  <verdict_ method='verdict_assert_equal?' outcome='passed' id='equal_id' message='Equal message'>
     <expected_ class='Integer' value='0'/>
     <actual_ class='Integer' value='0'/>
   </verdict_>

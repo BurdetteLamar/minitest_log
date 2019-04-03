@@ -33,6 +33,7 @@ gem install minitest_log
     - [verdict_assert_in_delta?](#verdict_assert_in_delta)
     - [verdict_assert_in_epsilon?](#verdict_assert_in_epsilon)
     - [verdict_assert_includes?](#verdict_assert_includes)
+    - [verdict_assert_includes?](#verdict_assert_includes)
   - [Refute Verdicts](#refute-verdicts)
 
 ## Logs and Sections
@@ -146,13 +147,13 @@ end
 ```log.xml```:
 ```xml
 <log>
-  <section_ name='My section with timestamp' timestamp='2019-04-03-Wed-14.02.03.532'>
+  <section_ name='My section with timestamp' timestamp='2019-04-03-Wed-15.00.03.123'>
     Section with timestamp.
   </section_>
   <section_ name='My section with duration' duration_seconds='0.500'>
     Section with duration.
   </section_>
-  <section_ name='My section with both' timestamp='2019-04-03-Wed-14.02.04.034' duration_seconds='0.500'>
+  <section_ name='My section with both' timestamp='2019-04-03-Wed-15.00.03.624' duration_seconds='0.500'>
     Section with both.
   </section_>
 </log>
@@ -222,7 +223,7 @@ end
 ```xml
 <log>
   <section_ name='My unrescued section'>
-    <uncaught_exception_ timestamp='2019-04-03-Wed-14.02.05.009' class='RuntimeError'>
+    <uncaught_exception_ timestamp='2019-04-03-Wed-15.00.04.590' class='RuntimeError'>
       <message_>
         Boo!
       </message_>
@@ -435,7 +436,7 @@ end
       Bar
     </data_>
     <data_ name='My time' class='Time' method=':to_s'>
-      2019-04-03 14:02:01 -0500
+      2019-04-03 15:00:01 -0500
     </data_>
     <data_ name='My uri,' class='URI::HTTPS' method=':to_s'>
       https://www.github.com
@@ -459,13 +460,16 @@ The verdict identifier:
 - Is commonly a string or a symbol, but may be any object that responds to ```:to_s```.
 - Must be unique among the verdict identifiers in its *test method* (but not necessarily in its *test class*.)
 
-Example verdict:
+Each verdict method returns ```true``` or ```false``` to indicate whether the verdict succeeded or failed.
+
+Each verdict method also has a shorter alias -- ```va``` substituting for ```verdict_assert```, and ```vr``` substituting for ```verdict_refute```.  (This not only saves keystrokes, but also *really*, *really* helps your editor do code completion.)
+
+Example verdict (long form and alias):
 
 ```ruby
 log.verdict_assert?(:my_verdict_id, true, 'My message')
+log.va?(:my_verdict_id, true, 'My message')
 ```
-
-Each verdict method returns ```true``` or ```false``` to indicate whether the verdict succeeded or failed.
 
 Verdict methods are described below.  For each, the following is given:
 
@@ -480,6 +484,7 @@ Verdict methods are described below.  For each, the following is given:
 
 ```ruby
 verdict_assert?(id, obj, msg = nil)
+va?(id, obj, msg = nil)
 ```
 
 Fails unless obj is truthy.
@@ -520,6 +525,7 @@ end
 
 ```ruby
 verdict_assert_empty?(id, obj, msg = nil)
+va_empty?(id, obj, msg = nil)
 ```
 
 Fails unless obj is empty.
@@ -560,6 +566,7 @@ end
 
 ```ruby
 verdict_assert_equal?(id, exp, act, msg = nil)
+va_equal?(id, exp, act, msg = nil)
 ```
 Fails unless exp == act printing the difference between the two, if possible.
 
@@ -573,7 +580,7 @@ require 'minitest_log'
 class Example < Minitest::Test
   def test_verdict_assert_equal
     MinitestLog.new('verdict_assert_equal.xml') do |log|
-      log.verdict_assert_equal?(:iequal_id, 0, 0, 'Equal message')
+      log.verdict_assert_equal?(:equal_id, 0, 0, 'Equal message')
       log.verdict_assert_equal?(:not_equal_id, 0, 1, 'Not equal message')
     end
   end
@@ -583,7 +590,7 @@ end
 ```verdict_assert_equal.xml```:
 ```xml
 <log>
-  <verdict_ method='verdict_assert_equal?' outcome='passed' id='iequal_id' message='Equal message'>
+  <verdict_ method='verdict_assert_equal?' outcome='passed' id='equal_id' message='Equal message'>
     <expected_ class='Integer' value='0'/>
     <actual_ class='Integer' value='0'/>
   </verdict_>
@@ -604,7 +611,8 @@ end
 #### verdict_assert_in_delta?
 
 ```ruby
-verdicct_assert_in_delta?(id, exp, act, delta = 0.001, msg = nil)
+verdict_assert_in_delta?(id, exp, act, delta = 0.001, msg = nil)
+va_in_delta?(id, exp, act, delta = 0.001, msg = nil)
 ````
 
 For comparing Floats. Fails unless exp and act are within delta of each other.
@@ -642,6 +650,7 @@ end
 
 ```ruby
 verdict_assert_in_epsilon?(id, a, b, epsilon = 0.001, msg = nil)
+va_in_epsilon?(id, a, b, epsilon = 0.001, msg = nil)
 ```
 
 For comparing Floats. Fails unless exp and act have a relative error less than epsilon.
@@ -686,6 +695,7 @@ end
 
 ```ruby
 verdict_assert_includes?(id, collection, obj, msg = nil)
+va_includes?(id, collection, obj, msg = nil)
 ```
 
 Fails unless collection includes obj.
@@ -718,6 +728,49 @@ end
         <level_0_ location='verdict_assert_includes.rb:6:in `block in test_verdict_assert_includes&apos;'/>
         <level_1_ location='verdict_assert_includes.rb:4:in `new&apos;'/>
         <level_2_ location='verdict_assert_includes.rb:4:in `test_verdict_assert_includes&apos;'/>
+      </backtrace_>
+    </exception_>
+  </verdict_>
+</log>
+```
+
+#### verdict_assert_includes?
+
+```ruby
+verdict_assert_instance_of?(id, cls, obj, msg = nil)
+va_instance_of?(id, cls, obj, msg = nil)
+```
+
+Fails unless obj is an instance of cls.
+
+```verdict_assert_instance_of.rb```:
+```ruby
+require 'minitest_log'
+class Example < Minitest::Test
+  def test_verdict_assert_instance_of
+    MinitestLog.new('verdict_assert_instance_of.xml') do |log|
+      log.verdict_assert_instance_of?(:instance_of_id, String, 'my_string', 'Instance of message')
+      log.verdict_assert_instance_of?(:not_instance_of_id, Integer, 'my_string', 'Not instance of message')
+    end
+  end
+end
+```
+
+```verdict_assert_instance_of.xml```:
+```xml
+<log>
+  <verdict_ method='verdict_assert_instance_of?' outcome='passed' id='instance_of_id' message='Instance of message'>
+    <expected_ class='Class' value='String'/>
+    <actual_ class='String' value='&quot;my_string&quot;'/>
+  </verdict_>
+  <verdict_ method='verdict_assert_instance_of?' outcome='failed' id='not_instance_of_id' message='Not instance of message'>
+    <expected_ class='Class' value='Integer'/>
+    <actual_ class='String' value='&quot;my_string&quot;'/>
+    <exception_ class='Minitest::Assertion' message='Expected # encoding: UTF-8'>
+      <backtrace_>
+        <level_0_ location='verdict_assert_instance_of.rb:6:in `block in test_verdict_assert_instance_of&apos;'/>
+        <level_1_ location='verdict_assert_instance_of.rb:4:in `new&apos;'/>
+        <level_2_ location='verdict_assert_instance_of.rb:4:in `test_verdict_assert_instance_of&apos;'/>
       </backtrace_>
     </exception_>
   </verdict_>
