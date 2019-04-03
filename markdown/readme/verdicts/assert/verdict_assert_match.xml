@@ -1,0 +1,17 @@
+<log>
+  <verdict_ method='verdict_assert_match?' outcome='passed' id='match_id' message='Match message'>
+    <expected_ class='Regexp' value='/foo/'/>
+    <actual_ class='String' value='&quot;food&quot;'/>
+  </verdict_>
+  <verdict_ method='verdict_assert_match?' outcome='failed' id='not_match_id' message='Not match message'>
+    <expected_ class='Regexp' value='/foo/'/>
+    <actual_ class='String' value='&quot;feed&quot;'/>
+    <exception_ class='Minitest::Assertion' message='Expected /foo/ to match # encoding: UTF-8'>
+      <backtrace_>
+        <level_0_ location='verdict_assert_match.rb:6:in `block in test_verdict_assert_match&apos;'/>
+        <level_1_ location='verdict_assert_match.rb:4:in `new&apos;'/>
+        <level_2_ location='verdict_assert_match.rb:4:in `test_verdict_assert_match&apos;'/>
+      </backtrace_>
+    </exception_>
+  </verdict_>
+</log>

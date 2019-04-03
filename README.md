@@ -35,6 +35,7 @@ gem install minitest_log
     - [verdict_assert_includes?](#verdict_assert_includes)
     - [verdict_assert_instance_of?](#verdict_assert_instance_of)
     - [verdict_assert_kind_of?](#verdict_assert_kind_of)
+    - [verdict_assert_match?](#verdict_assert_match)
   - [Refute Verdicts](#refute-verdicts)
 
 ## Logs and Sections
@@ -148,13 +149,13 @@ end
 ```log.xml```:
 ```xml
 <log>
-  <section_ name='My section with timestamp' timestamp='2019-04-03-Wed-15.08.58.768'>
+  <section_ name='My section with timestamp' timestamp='2019-04-03-Wed-15.19.43.574'>
     Section with timestamp.
   </section_>
   <section_ name='My section with duration' duration_seconds='0.500'>
     Section with duration.
   </section_>
-  <section_ name='My section with both' timestamp='2019-04-03-Wed-15.08.59.269' duration_seconds='0.501'>
+  <section_ name='My section with both' timestamp='2019-04-03-Wed-15.19.44.074' duration_seconds='0.501'>
     Section with both.
   </section_>
 </log>
@@ -224,7 +225,7 @@ end
 ```xml
 <log>
   <section_ name='My unrescued section'>
-    <uncaught_exception_ timestamp='2019-04-03-Wed-15.09.00.207' class='RuntimeError'>
+    <uncaught_exception_ timestamp='2019-04-03-Wed-15.19.45.047' class='RuntimeError'>
       <message_>
         Boo!
       </message_>
@@ -437,7 +438,7 @@ end
       Bar
     </data_>
     <data_ name='My time' class='Time' method=':to_s'>
-      2019-04-03 15:08:57 -0500
+      2019-04-03 15:19:41 -0500
     </data_>
     <data_ name='My uri,' class='URI::HTTPS' method=':to_s'>
       https://www.github.com
@@ -793,8 +794,8 @@ require 'minitest_log'
 class Example < Minitest::Test
   def test_verdict_assert_kind_of
     MinitestLog.new('verdict_assert_kind_of.xml') do |log|
-      log.verdict_assert_kind_of?(:kind_of_id, String, 'my_string', 'Kind of message')
-      log.verdict_assert_kind_of?(:not_kind_of_id, Integer, 'my_string', 'Not kind of message')
+      log.verdict_assert_kind_of?(:kind_of_id, Numeric, 1.0, 'Kind of message')
+      log.verdict_assert_kind_of?(:not_kind_of_id, String, 1.0, 'Not kind of message')
     end
   end
 end
@@ -804,17 +805,60 @@ end
 ```xml
 <log>
   <verdict_ method='verdict_assert_kind_of?' outcome='passed' id='kind_of_id' message='Kind of message'>
-    <expected_ class='Class' value='String'/>
-    <actual_ class='String' value='&quot;my_string&quot;'/>
+    <expected_ class='Class' value='Numeric'/>
+    <actual_ class='Float' value='1.0'/>
   </verdict_>
   <verdict_ method='verdict_assert_kind_of?' outcome='failed' id='not_kind_of_id' message='Not kind of message'>
-    <expected_ class='Class' value='Integer'/>
-    <actual_ class='String' value='&quot;my_string&quot;'/>
-    <exception_ class='Minitest::Assertion' message='Expected # encoding: UTF-8'>
+    <expected_ class='Class' value='String'/>
+    <actual_ class='Float' value='1.0'/>
+    <exception_ class='Minitest::Assertion' message='Expected 1.0 to be a kind of String, not Float.'>
       <backtrace_>
         <level_0_ location='verdict_assert_kind_of.rb:6:in `block in test_verdict_assert_kind_of&apos;'/>
         <level_1_ location='verdict_assert_kind_of.rb:4:in `new&apos;'/>
         <level_2_ location='verdict_assert_kind_of.rb:4:in `test_verdict_assert_kind_of&apos;'/>
+      </backtrace_>
+    </exception_>
+  </verdict_>
+</log>
+```
+
+#### verdict_assert_match?
+
+```ruby
+verdict_assert_match?(id, cls, obj, msg = nil)
+va_match?(id, cls, obj, msg = nil)
+```
+
+Fails unless matcher =~ obj.
+
+```verdict_assert_match.rb```:
+```ruby
+require 'minitest_log'
+class Example < Minitest::Test
+  def test_verdict_assert_match
+    MinitestLog.new('verdict_assert_match.xml') do |log|
+      log.verdict_assert_match?(:match_id, /foo/, 'food', 'Match message')
+      log.verdict_assert_match?(:not_match_id, /foo/, 'feed', 'Not match message')
+    end
+  end
+end
+```
+
+```verdict_assert_match.xml```:
+```xml
+<log>
+  <verdict_ method='verdict_assert_match?' outcome='passed' id='match_id' message='Match message'>
+    <expected_ class='Regexp' value='/foo/'/>
+    <actual_ class='String' value='&quot;food&quot;'/>
+  </verdict_>
+  <verdict_ method='verdict_assert_match?' outcome='failed' id='not_match_id' message='Not match message'>
+    <expected_ class='Regexp' value='/foo/'/>
+    <actual_ class='String' value='&quot;feed&quot;'/>
+    <exception_ class='Minitest::Assertion' message='Expected /foo/ to match # encoding: UTF-8'>
+      <backtrace_>
+        <level_0_ location='verdict_assert_match.rb:6:in `block in test_verdict_assert_match&apos;'/>
+        <level_1_ location='verdict_assert_match.rb:4:in `new&apos;'/>
+        <level_2_ location='verdict_assert_match.rb:4:in `test_verdict_assert_match&apos;'/>
       </backtrace_>
     </exception_>
   </verdict_>

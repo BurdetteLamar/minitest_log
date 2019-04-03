@@ -107,3 +107,16 @@ Fails unless obj is a kind of cls.
 
 @[xml](verdict_assert_kind_of.xml)
 
+#### verdict_assert_match?
+
+```ruby
+verdict_assert_match?(id, cls, obj, msg = nil)
+va_match?(id, cls, obj, msg = nil)
+```
+
+Fails unless matcher =~ obj.
+
+@[ruby](verdict_assert_match.rb)
+
+@[xml](verdict_assert_match.xml)
+
