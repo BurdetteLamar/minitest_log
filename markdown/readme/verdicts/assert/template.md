@@ -81,7 +81,7 @@ Fails unless collection includes obj.
 
 @[xml](verdict_assert_includes.xml)
 
-#### verdict_assert_includes?
+#### verdict_assert_instance_of?
 
 ```ruby
 verdict_assert_instance_of?(id, cls, obj, msg = nil)
