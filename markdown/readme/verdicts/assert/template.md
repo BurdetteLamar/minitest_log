@@ -73,5 +73,5 @@ Fails unless collection includes obj.
 
 @[ruby](verdict_assert_includes.rb)
 
-@[xml](verdict_assert_include.xml)
+@[xml](verdict_assert_includes.xml)
 

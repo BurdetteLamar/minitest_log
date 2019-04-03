@@ -32,6 +32,7 @@ gem install minitest_log
     - [verdict_assert_equal?](#verdict_assert_equal)
     - [verdict_assert_in_delta?](#verdict_assert_in_delta)
     - [verdict_assert_in_epsilon?](#verdict_assert_in_epsilon)
+    - [verdict_assert_includes?](#verdict_assert_includes)
   - [Refute Verdicts](#refute-verdicts)
 
 ## Logs and Sections
@@ -145,13 +146,13 @@ end
 ```log.xml```:
 ```xml
 <log>
-  <section_ name='My section with timestamp' timestamp='2019-04-03-Wed-13.50.22.970'>
+  <section_ name='My section with timestamp' timestamp='2019-04-03-Wed-14.02.03.532'>
     Section with timestamp.
   </section_>
   <section_ name='My section with duration' duration_seconds='0.500'>
     Section with duration.
   </section_>
-  <section_ name='My section with both' timestamp='2019-04-03-Wed-13.50.23.471' duration_seconds='0.500'>
+  <section_ name='My section with both' timestamp='2019-04-03-Wed-14.02.04.034' duration_seconds='0.500'>
     Section with both.
   </section_>
 </log>
@@ -221,7 +222,7 @@ end
 ```xml
 <log>
   <section_ name='My unrescued section'>
-    <uncaught_exception_ timestamp='2019-04-03-Wed-13.50.24.437' class='RuntimeError'>
+    <uncaught_exception_ timestamp='2019-04-03-Wed-14.02.05.009' class='RuntimeError'>
       <message_>
         Boo!
       </message_>
@@ -434,7 +435,7 @@ end
       Bar
     </data_>
     <data_ name='My time' class='Time' method=':to_s'>
-      2019-04-03 13:50:21 -0500
+      2019-04-03 14:02:01 -0500
     </data_>
     <data_ name='My uri,' class='URI::HTTPS' method=':to_s'>
       https://www.github.com
@@ -675,6 +676,48 @@ end
         <level_0_ location='verdict_assert_in_epsilon.rb:6:in `block in test_verdict_assert_in_epsilon&apos;'/>
         <level_1_ location='verdict_assert_in_epsilon.rb:4:in `new&apos;'/>
         <level_2_ location='verdict_assert_in_epsilon.rb:4:in `test_verdict_assert_in_epsilon&apos;'/>
+      </backtrace_>
+    </exception_>
+  </verdict_>
+</log>
+```
+
+#### verdict_assert_includes?
+
+```ruby
+verdict_assert_includes?(id, collection, obj, msg = nil)
+```
+
+Fails unless collection includes obj.
+
+```verdict_assert_includes.rb```:
+```ruby
+require 'minitest_log'
+class Example < Minitest::Test
+  def test_verdict_assert_includes
+    MinitestLog.new('verdict_assert_includes.xml') do |log|
+      log.verdict_assert_includes?(:includes_id, [:a, :b, :c], :b, 'Included message')
+      log.verdict_assert_includes?(:not_includes_id, [:a, :b, :c], :d, 'Not included message')
+    end
+  end
+end
+```
+
+```verdict_assert_includes.xml```:
+```xml
+<log>
+  <verdict_ method='verdict_assert_includes?' outcome='passed' id='includes_id' message='Included message'>
+    <expected_ class='Array' value='[:a, :b, :c]'/>
+    <actual_ class='Symbol' value=':b'/>
+  </verdict_>
+  <verdict_ method='verdict_assert_includes?' outcome='failed' id='not_includes_id' message='Not included message'>
+    <expected_ class='Array' value='[:a, :b, :c]'/>
+    <actual_ class='Symbol' value=':d'/>
+    <exception_ class='Minitest::Assertion' message='Expected [:a, :b, :c] to include :d.'>
+      <backtrace_>
+        <level_0_ location='verdict_assert_includes.rb:6:in `block in test_verdict_assert_includes&apos;'/>
+        <level_1_ location='verdict_assert_includes.rb:4:in `new&apos;'/>
+        <level_2_ location='verdict_assert_includes.rb:4:in `test_verdict_assert_includes&apos;'/>
       </backtrace_>
     </exception_>
   </verdict_>
