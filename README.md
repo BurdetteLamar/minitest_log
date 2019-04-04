@@ -149,13 +149,13 @@ end
 ```log.xml```:
 ```xml
 <log>
-  <section_ name='My section with timestamp' timestamp='2019-04-03-Wed-15.19.43.574'>
+  <section_ name='My section with timestamp' timestamp='2019-04-04-Thu-09.36.04.106'>
     Section with timestamp.
   </section_>
   <section_ name='My section with duration' duration_seconds='0.500'>
     Section with duration.
   </section_>
-  <section_ name='My section with both' timestamp='2019-04-03-Wed-15.19.44.074' duration_seconds='0.501'>
+  <section_ name='My section with both' timestamp='2019-04-04-Thu-09.36.04.607' duration_seconds='0.500'>
     Section with both.
   </section_>
 </log>
@@ -225,7 +225,7 @@ end
 ```xml
 <log>
   <section_ name='My unrescued section'>
-    <uncaught_exception_ timestamp='2019-04-03-Wed-15.19.45.047' class='RuntimeError'>
+    <uncaught_exception_ timestamp='2019-04-04-Thu-09.36.05.558' class='RuntimeError'>
       <message_>
         Boo!
       </message_>
@@ -438,7 +438,7 @@ end
       Bar
     </data_>
     <data_ name='My time' class='Time' method=':to_s'>
-      2019-04-03 15:19:41 -0500
+      2019-04-04 09:36:02 -0500
     </data_>
     <data_ name='My uri,' class='URI::HTTPS' method=':to_s'>
       https://www.github.com
@@ -489,7 +489,7 @@ verdict_assert?(id, obj, msg = nil)
 va?(id, obj, msg = nil)
 ```
 
-Fails unless obj is truthy.
+Fails unless ```obj``` is truthy.
 
 ```verdict_assert.rb```:
 ```ruby
@@ -530,7 +530,7 @@ verdict_assert_empty?(id, obj, msg = nil)
 va_empty?(id, obj, msg = nil)
 ```
 
-Fails unless obj is empty.
+Fails unless ```obj``` is empty.
 
 ```verdict_assert_empty.rb```:
 ```ruby
@@ -570,9 +570,7 @@ end
 verdict_assert_equal?(id, exp, act, msg = nil)
 va_equal?(id, exp, act, msg = nil)
 ```
-Fails unless exp == act printing the difference between the two, if possible.
-
-If there is no visible difference but the assertion fails, you should suspect that your #== is buggy, or your inspect output is missing crucial details.
+Fails unless ```exp == act```.
 
 For floats use verdict_assert_in_delta?.
 
@@ -617,7 +615,7 @@ verdict_assert_in_delta?(id, exp, act, delta = 0.001, msg = nil)
 va_in_delta?(id, exp, act, delta = 0.001, msg = nil)
 ````
 
-For comparing Floats. Fails unless exp and act are within delta of each other.
+For comparing Floats. Fails unless ```exp``` and ```act``` are within ```delta``` of each other.
 
 ```verdict_assert_in_delta.rb```:
 ```ruby
@@ -655,7 +653,7 @@ verdict_assert_in_epsilon?(id, a, b, epsilon = 0.001, msg = nil)
 va_in_epsilon?(id, a, b, epsilon = 0.001, msg = nil)
 ```
 
-For comparing Floats. Fails unless exp and act have a relative error less than epsilon.
+For comparing Floats. Fails unless ```exp``` and ```act``` have a relative error less than ```epsilon```.
 
 ```verdict_assert_in_epsilon.rb```:
 ```ruby
@@ -700,7 +698,7 @@ verdict_assert_includes?(id, collection, obj, msg = nil)
 va_includes?(id, collection, obj, msg = nil)
 ```
 
-Fails unless collection includes obj.
+Fails unless ```collection``` includes ```obj```.
 
 ```verdict_assert_includes.rb```:
 ```ruby
@@ -743,7 +741,7 @@ verdict_assert_instance_of?(id, cls, obj, msg = nil)
 va_instance_of?(id, cls, obj, msg = nil)
 ```
 
-Fails unless obj is an instance of cls.
+Fails unless ```obj``` is an instance of ```cls```.
 
 ```verdict_assert_instance_of.rb```:
 ```ruby
@@ -786,7 +784,7 @@ verdict_assert_kind_of?(id, cls, obj, msg = nil)
 va_kind_of?(id, cls, obj, msg = nil)
 ```
 
-Fails unless obj is a kind of cls.
+Fails unless ```obj``` is a kind of cls.
 
 ```verdict_assert_kind_of.rb```:
 ```ruby
@@ -829,7 +827,7 @@ verdict_assert_match?(id, cls, obj, msg = nil)
 va_match?(id, cls, obj, msg = nil)
 ```
 
-Fails unless matcher =~ obj.
+Fails unless ```matcher =~ obj```.
 
 ```verdict_assert_match.rb```:
 ```ruby
