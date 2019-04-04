@@ -7,7 +7,7 @@ verdict_assert?(id, obj, msg = nil)
 va?(id, obj, msg = nil)
 ```
 
-Fails unless obj is truthy.
+Fails unless ```obj``` is truthy.
 
 @[ruby](verdict_assert.rb)
 
@@ -20,7 +20,7 @@ verdict_assert_empty?(id, obj, msg = nil)
 va_empty?(id, obj, msg = nil)
 ```
 
-Fails unless obj is empty.
+Fails unless ```obj``` is empty.
 
 @[ruby](verdict_assert_empty.rb)
 
@@ -32,9 +32,7 @@ Fails unless obj is empty.
 verdict_assert_equal?(id, exp, act, msg = nil)
 va_equal?(id, exp, act, msg = nil)
 ```
-Fails unless exp == act printing the difference between the two, if possible.
-
-If there is no visible difference but the assertion fails, you should suspect that your #== is buggy, or your inspect output is missing crucial details.
+Fails unless ```exp == act```.
 
 For floats use verdict_assert_in_delta?.
 
@@ -49,7 +47,7 @@ verdict_assert_in_delta?(id, exp, act, delta = 0.001, msg = nil)
 va_in_delta?(id, exp, act, delta = 0.001, msg = nil)
 ````
 
-For comparing Floats. Fails unless exp and act are within delta of each other.
+For comparing Floats. Fails unless ```exp``` and ```act``` are within ```delta``` of each other.
 
 @[ruby](verdict_assert_in_delta.rb)
 
@@ -62,7 +60,7 @@ verdict_assert_in_epsilon?(id, a, b, epsilon = 0.001, msg = nil)
 va_in_epsilon?(id, a, b, epsilon = 0.001, msg = nil)
 ```
 
-For comparing Floats. Fails unless exp and act have a relative error less than epsilon.
+For comparing Floats. Fails unless ```exp``` and ```act``` have a relative error less than ```epsilon```.
 
 @[ruby](verdict_assert_in_epsilon.rb)
 
@@ -75,7 +73,7 @@ verdict_assert_includes?(id, collection, obj, msg = nil)
 va_includes?(id, collection, obj, msg = nil)
 ```
 
-Fails unless collection includes obj.
+Fails unless ```collection``` includes ```obj```.
 
 @[ruby](verdict_assert_includes.rb)
 
@@ -88,7 +86,7 @@ verdict_assert_instance_of?(id, cls, obj, msg = nil)
 va_instance_of?(id, cls, obj, msg = nil)
 ```
 
-Fails unless obj is an instance of cls.
+Fails unless ```obj``` is an instance of ```cls```.
 
 @[ruby](verdict_assert_instance_of.rb)
 
@@ -101,7 +99,7 @@ verdict_assert_kind_of?(id, cls, obj, msg = nil)
 va_kind_of?(id, cls, obj, msg = nil)
 ```
 
-Fails unless obj is a kind of cls.
+Fails unless ```obj``` is a kind of cls.
 
 @[ruby](verdict_assert_kind_of.rb)
 
@@ -114,7 +112,7 @@ verdict_assert_match?(id, cls, obj, msg = nil)
 va_match?(id, cls, obj, msg = nil)
 ```
 
-Fails unless matcher =~ obj.
+Fails unless ```matcher =~ obj```.
 
 @[ruby](verdict_assert_match.rb)
 
