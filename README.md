@@ -36,6 +36,7 @@ gem install minitest_log
     - [verdict_assert_instance_of?](#verdict_assert_instance_of)
     - [verdict_assert_kind_of?](#verdict_assert_kind_of)
     - [verdict_assert_match?](#verdict_assert_match)
+    - [verdict_assert_nil?](#verdict_assert_nil)
   - [Refute Verdicts](#refute-verdicts)
 
 ## Logs and Sections
@@ -149,13 +150,13 @@ end
 ```log.xml```:
 ```xml
 <log>
-  <section_ name='My section with timestamp' timestamp='2019-04-04-Thu-09.36.04.106'>
+  <section_ name='My section with timestamp' timestamp='2019-04-04-Thu-09.41.55.049'>
     Section with timestamp.
   </section_>
   <section_ name='My section with duration' duration_seconds='0.500'>
     Section with duration.
   </section_>
-  <section_ name='My section with both' timestamp='2019-04-04-Thu-09.36.04.607' duration_seconds='0.500'>
+  <section_ name='My section with both' timestamp='2019-04-04-Thu-09.41.55.551' duration_seconds='0.500'>
     Section with both.
   </section_>
 </log>
@@ -225,7 +226,7 @@ end
 ```xml
 <log>
   <section_ name='My unrescued section'>
-    <uncaught_exception_ timestamp='2019-04-04-Thu-09.36.05.558' class='RuntimeError'>
+    <uncaught_exception_ timestamp='2019-04-04-Thu-09.41.56.472' class='RuntimeError'>
       <message_>
         Boo!
       </message_>
@@ -438,7 +439,7 @@ end
       Bar
     </data_>
     <data_ name='My time' class='Time' method=':to_s'>
-      2019-04-04 09:36:02 -0500
+      2019-04-04 09:41:53 -0500
     </data_>
     <data_ name='My uri,' class='URI::HTTPS' method=':to_s'>
       https://www.github.com
@@ -784,7 +785,7 @@ verdict_assert_kind_of?(id, cls, obj, msg = nil)
 va_kind_of?(id, cls, obj, msg = nil)
 ```
 
-Fails unless ```obj``` is a kind of cls.
+Fails unless ```obj``` is a kind of ```cls```.
 
 ```verdict_assert_kind_of.rb```:
 ```ruby
@@ -857,6 +858,54 @@ end
         <level_0_ location='verdict_assert_match.rb:6:in `block in test_verdict_assert_match&apos;'/>
         <level_1_ location='verdict_assert_match.rb:4:in `new&apos;'/>
         <level_2_ location='verdict_assert_match.rb:4:in `test_verdict_assert_match&apos;'/>
+      </backtrace_>
+    </exception_>
+  </verdict_>
+</log>
+```
+
+#### verdict_assert_nil?
+
+```ruby
+verdict_assert_nil?(id, obj, msg = nil)
+va_nil?(id, obj, msg = nil)
+```
+
+Fails unless ```obj``` is nil.
+
+```verdict_assert_nil.rb```:
+```ruby
+require 'minitest_log'
+class Example < Minitest::Test
+  def test_verdict_assert_niil
+    MinitestLog.new('verdict_assert_nil.xml') do |log|
+      log.verdict_assert_nil?(:nil_id, [], 'Nil message')
+      log.verdict_assert_nil?(:not_nil_id, [:a], 'Not nil message')
+    end
+  end
+end
+```
+
+```verdict_assert_nil.xml```:
+```xml
+<log>
+  <verdict_ method='verdict_assert_nil?' outcome='failed' id='nil_id' message='Nil message'>
+    <actual_ class='Array' value='[]'/>
+    <exception_ class='Minitest::Assertion' message='Expected [] to be nil.'>
+      <backtrace_>
+        <level_0_ location='verdict_assert_nil.rb:5:in `block in test_verdict_assert_niil&apos;'/>
+        <level_1_ location='verdict_assert_nil.rb:4:in `new&apos;'/>
+        <level_2_ location='verdict_assert_nil.rb:4:in `test_verdict_assert_niil&apos;'/>
+      </backtrace_>
+    </exception_>
+  </verdict_>
+  <verdict_ method='verdict_assert_nil?' outcome='failed' id='not_nil_id' message='Not nil message'>
+    <actual_ class='Array' value='[:a]'/>
+    <exception_ class='Minitest::Assertion' message='Expected [:a] to be nil.'>
+      <backtrace_>
+        <level_0_ location='verdict_assert_nil.rb:6:in `block in test_verdict_assert_niil&apos;'/>
+        <level_1_ location='verdict_assert_nil.rb:4:in `new&apos;'/>
+        <level_2_ location='verdict_assert_nil.rb:4:in `test_verdict_assert_niil&apos;'/>
       </backtrace_>
     </exception_>
   </verdict_>

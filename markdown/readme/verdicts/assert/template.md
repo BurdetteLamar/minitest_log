@@ -99,7 +99,7 @@ verdict_assert_kind_of?(id, cls, obj, msg = nil)
 va_kind_of?(id, cls, obj, msg = nil)
 ```
 
-Fails unless ```obj``` is a kind of cls.
+Fails unless ```obj``` is a kind of ```cls```.
 
 @[ruby](verdict_assert_kind_of.rb)
 
@@ -117,4 +117,17 @@ Fails unless ```matcher =~ obj```.
 @[ruby](verdict_assert_match.rb)
 
 @[xml](verdict_assert_match.xml)
+
+#### verdict_assert_nil?
+
+```ruby
+verdict_assert_nil?(id, obj, msg = nil)
+va_nil?(id, obj, msg = nil)
+```
+
+Fails unless ```obj``` is nil.
+
+@[ruby](verdict_assert_nil.rb)
+
+@[xml](verdict_assert_nil.xml)
 
