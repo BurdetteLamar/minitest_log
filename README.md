@@ -37,6 +37,7 @@ gem install minitest_log
     - [verdict_assert_kind_of?](#verdict_assert_kind_of)
     - [verdict_assert_match?](#verdict_assert_match)
     - [verdict_assert_nil?](#verdict_assert_nil)
+    - [verdictAssert_operator?](#verdictassert_operator)
   - [Refute Verdicts](#refute-verdicts)
 
 ## Logs and Sections
@@ -150,13 +151,13 @@ end
 ```log.xml```:
 ```xml
 <log>
-  <section_ name='My section with timestamp' timestamp='2019-04-04-Thu-09.41.55.049'>
+  <section_ name='My section with timestamp' timestamp='2019-04-05-Fri-10.49.54.960'>
     Section with timestamp.
   </section_>
   <section_ name='My section with duration' duration_seconds='0.500'>
     Section with duration.
   </section_>
-  <section_ name='My section with both' timestamp='2019-04-04-Thu-09.41.55.551' duration_seconds='0.500'>
+  <section_ name='My section with both' timestamp='2019-04-05-Fri-10.49.55.461' duration_seconds='0.500'>
     Section with both.
   </section_>
 </log>
@@ -226,7 +227,7 @@ end
 ```xml
 <log>
   <section_ name='My unrescued section'>
-    <uncaught_exception_ timestamp='2019-04-04-Thu-09.41.56.472' class='RuntimeError'>
+    <uncaught_exception_ timestamp='2019-04-05-Fri-10.49.56.417' class='RuntimeError'>
       <message_>
         Boo!
       </message_>
@@ -439,7 +440,7 @@ end
       Bar
     </data_>
     <data_ name='My time' class='Time' method=':to_s'>
-      2019-04-04 09:41:53 -0500
+      2019-04-05 10:49:53 -0500
     </data_>
     <data_ name='My uri,' class='URI::HTTPS' method=':to_s'>
       https://www.github.com
@@ -877,7 +878,7 @@ Fails unless ```obj``` is nil.
 ```ruby
 require 'minitest_log'
 class Example < Minitest::Test
-  def test_verdict_assert_niil
+  def test_verdict_assert_nil
     MinitestLog.new('verdict_assert_nil.xml') do |log|
       log.verdict_assert_nil?(:nil_id, [], 'Nil message')
       log.verdict_assert_nil?(:not_nil_id, [:a], 'Not nil message')
@@ -893,9 +894,9 @@ end
     <actual_ class='Array' value='[]'/>
     <exception_ class='Minitest::Assertion' message='Expected [] to be nil.'>
       <backtrace_>
-        <level_0_ location='verdict_assert_nil.rb:5:in `block in test_verdict_assert_niil&apos;'/>
+        <level_0_ location='verdict_assert_nil.rb:5:in `block in test_verdict_assert_nil&apos;'/>
         <level_1_ location='verdict_assert_nil.rb:4:in `new&apos;'/>
-        <level_2_ location='verdict_assert_nil.rb:4:in `test_verdict_assert_niil&apos;'/>
+        <level_2_ location='verdict_assert_nil.rb:4:in `test_verdict_assert_nil&apos;'/>
       </backtrace_>
     </exception_>
   </verdict_>
@@ -903,9 +904,51 @@ end
     <actual_ class='Array' value='[:a]'/>
     <exception_ class='Minitest::Assertion' message='Expected [:a] to be nil.'>
       <backtrace_>
-        <level_0_ location='verdict_assert_nil.rb:6:in `block in test_verdict_assert_niil&apos;'/>
+        <level_0_ location='verdict_assert_nil.rb:6:in `block in test_verdict_assert_nil&apos;'/>
         <level_1_ location='verdict_assert_nil.rb:4:in `new&apos;'/>
-        <level_2_ location='verdict_assert_nil.rb:4:in `test_verdict_assert_niil&apos;'/>
+        <level_2_ location='verdict_assert_nil.rb:4:in `test_verdict_assert_nil&apos;'/>
+      </backtrace_>
+    </exception_>
+  </verdict_>
+</log>
+```
+
+#### verdictAssert_operator?
+
+```verdict_assert_operator?(id, o1, op, o2 = UNDEFINED, msg = nil)
+
+For testing with binary operators.
+
+```verdict_assert_operator.rb```:
+```ruby
+require 'minitest_log'
+class Example < Minitest::Test
+  def test_verdict_assert_operator
+    MinitestLog.new('verdict_assert_operator.xml') do |log|
+      log.verdict_assert_operator?(:operator_id, 3, :<=, 4, 'Message')
+      log.verdict_assert_operator?(:not_operator_id, 5, :<=, 4, 'Message')
+    end
+  end
+end
+```
+
+```verdict_assert_operator.xml```:
+```xml
+<log>
+  <verdict_ method='verdict_assert_operator?' outcome='passed' id='operator_id' message='Message'>
+    <object_1_ class='Integer' value='3'/>
+    <operator_ class='Symbol' value=':&lt;='/>
+    <object_2_ class='Integer' value='4'/>
+  </verdict_>
+  <verdict_ method='verdict_assert_operator?' outcome='failed' id='not_operator_id' message='Message'>
+    <object_1_ class='Integer' value='5'/>
+    <operator_ class='Symbol' value=':&lt;='/>
+    <object_2_ class='Integer' value='4'/>
+    <exception_ class='Minitest::Assertion' message='Expected 5 to be &lt;= 4.'>
+      <backtrace_>
+        <level_0_ location='verdict_assert_operator.rb:6:in `block in test_verdict_assert_operator&apos;'/>
+        <level_1_ location='verdict_assert_operator.rb:4:in `new&apos;'/>
+        <level_2_ location='verdict_assert_operator.rb:4:in `test_verdict_assert_operator&apos;'/>
       </backtrace_>
     </exception_>
   </verdict_>

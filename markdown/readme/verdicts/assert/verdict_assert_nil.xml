@@ -3,9 +3,9 @@
     <actual_ class='Array' value='[]'/>
     <exception_ class='Minitest::Assertion' message='Expected [] to be nil.'>
       <backtrace_>
-        <level_0_ location='verdict_assert_nil.rb:5:in `block in test_verdict_assert_niil&apos;'/>
+        <level_0_ location='verdict_assert_nil.rb:5:in `block in test_verdict_assert_nil&apos;'/>
         <level_1_ location='verdict_assert_nil.rb:4:in `new&apos;'/>
-        <level_2_ location='verdict_assert_nil.rb:4:in `test_verdict_assert_niil&apos;'/>
+        <level_2_ location='verdict_assert_nil.rb:4:in `test_verdict_assert_nil&apos;'/>
       </backtrace_>
     </exception_>
   </verdict_>
@@ -13,9 +13,9 @@
     <actual_ class='Array' value='[:a]'/>
     <exception_ class='Minitest::Assertion' message='Expected [:a] to be nil.'>
       <backtrace_>
-        <level_0_ location='verdict_assert_nil.rb:6:in `block in test_verdict_assert_niil&apos;'/>
+        <level_0_ location='verdict_assert_nil.rb:6:in `block in test_verdict_assert_nil&apos;'/>
         <level_1_ location='verdict_assert_nil.rb:4:in `new&apos;'/>
-        <level_2_ location='verdict_assert_nil.rb:4:in `test_verdict_assert_niil&apos;'/>
+        <level_2_ location='verdict_assert_nil.rb:4:in `test_verdict_assert_nil&apos;'/>
       </backtrace_>
     </exception_>
   </verdict_>

@@ -1,0 +1,19 @@
+<log>
+  <verdict_ method='verdict_assert_operator?' outcome='passed' id='operator_id' message='Message'>
+    <object_1_ class='Integer' value='3'/>
+    <operator_ class='Symbol' value=':&lt;='/>
+    <object_2_ class='Integer' value='4'/>
+  </verdict_>
+  <verdict_ method='verdict_assert_operator?' outcome='failed' id='not_operator_id' message='Message'>
+    <object_1_ class='Integer' value='5'/>
+    <operator_ class='Symbol' value=':&lt;='/>
+    <object_2_ class='Integer' value='4'/>
+    <exception_ class='Minitest::Assertion' message='Expected 5 to be &lt;= 4.'>
+      <backtrace_>
+        <level_0_ location='verdict_assert_operator.rb:6:in `block in test_verdict_assert_operator&apos;'/>
+        <level_1_ location='verdict_assert_operator.rb:4:in `new&apos;'/>
+        <level_2_ location='verdict_assert_operator.rb:4:in `test_verdict_assert_operator&apos;'/>
+      </backtrace_>
+    </exception_>
+  </verdict_>
+</log>
