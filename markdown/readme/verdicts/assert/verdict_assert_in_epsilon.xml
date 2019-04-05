@@ -1,18 +1,18 @@
 <log>
-  <verdict_ method='verdict_assert_in_epsilon?' outcome='passed' id='in_epsilon_id' message='In epsilon message'>
+  <verdict_ method='verdict_assert_in_epsilon?' outcome='passed' id='one_id' message='One message'>
     <expected_ class='Integer' value='3'/>
     <actual_ class='Integer' value='2'/>
     <epsilon_ class='Integer' value='1'/>
   </verdict_>
-  <verdict_ method='verdict_assert_in_epsilon?' outcome='failed' id='not_in_epsilon_id' message='Not in epsilon message'>
+  <verdict_ method='verdict_assert_in_epsilon?' outcome='failed' id='another_id' message='Another message'>
     <expected_ class='Integer' value='3'/>
     <actual_ class='Integer' value='2'/>
     <epsilon_ class='Integer' value='0'/>
     <exception_ class='Minitest::Assertion' message='Expected |3 - 2| (1) to be &lt;= 0.'>
       <backtrace_>
-        <level_0_ location='verdict_assert_in_epsilon.rb:6:in `block in test_verdict_assert_in_epsilon&apos;'/>
+        <level_0_ location='verdict_assert_in_epsilon.rb:6:in `block in test_demo_verrdict&apos;'/>
         <level_1_ location='verdict_assert_in_epsilon.rb:4:in `new&apos;'/>
-        <level_2_ location='verdict_assert_in_epsilon.rb:4:in `test_verdict_assert_in_epsilon&apos;'/>
+        <level_2_ location='verdict_assert_in_epsilon.rb:4:in `test_demo_verrdict&apos;'/>
       </backtrace_>
     </exception_>
   </verdict_>

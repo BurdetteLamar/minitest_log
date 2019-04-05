@@ -1,9 +1,9 @@
 require 'minitest_log'
 class Example < Minitest::Test
-  def test_verdict_assert_kind_of
+  def test_demo_verdict
     MinitestLog.new('verdict_assert_kind_of.xml') do |log|
-      log.verdict_assert_kind_of?(:kind_of_id, Numeric, 1.0, 'Kind of message')
-      log.verdict_assert_kind_of?(:not_kind_of_id, String, 1.0, 'Not kind of message')
+      log.verdict_assert_kind_of?(:one_id, Numeric, 1.0, 'One message')
+      log.verdict_assert_kind_of?(:another_id, String, 1.0, 'Another message')
     end
   end
 end
