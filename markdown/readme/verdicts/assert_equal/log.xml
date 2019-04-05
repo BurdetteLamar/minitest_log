@@ -1,6 +1,0 @@
-<log>
-  <verdict_ method='verdict_assert_equal?' outcome='passed' id='my_verdict_id'>
-    <expected_ class='String' value='&quot;Lorem ipsum&quot;'/>
-    <actual_ class='String' value='&quot;Lorem ipsum&quot;'/>
-  </verdict_>
-</log>

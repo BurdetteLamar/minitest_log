@@ -1,0 +1,15 @@
+<log>
+  <section_ name='My unrescued section'>
+    <uncaught_exception_ timestamp='2019-04-05-Fri-15.02.25.534' class='RuntimeError'>
+      <message_>
+        Boo!
+      </message_>
+      <backtrace_>
+        <![CDATA[example.rb:6:in `block (2 levels) in test_example'
+example.rb:5:in `block in test_example'
+example.rb:4:in `new'
+example.rb:4:in `test_example']]>
+      </backtrace_>
+    </uncaught_exception_>
+  </section_>
+</log>

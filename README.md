@@ -16,15 +16,30 @@ gem install minitest_log
 ## Contents
 - [Logs and Sections](#logs-and-sections)
   - [Nested Sections](#nested-sections)
-  - [Data](#data)
-    - [Strings](#strings)
-    - [Hash-Like Objects](#hash-like-objects)
-    - [Array-Like Objects](#array-like-objects)
-    - [Other Objects](#other-objects)
   - [Attributes](#attributes)
   - [About Time](#about-time)
   - [Rescue](#rescue)
+  - [Unrescued Exception](#unrescued-exception)
+- [Data](#data)
+  - [Strings](#strings)
+  - [Hash-Like Objects](#hash-like-objects)
+  - [Array-Like Objects](#array-like-objects)
+  - [Other Objects](#other-objects)
 - [Verdicts](#verdicts)
+  - [Assert Verdicts](#assert-verdicts)
+    - [verdict_assert?](#verdict_assert)
+    - [verdict_assert_empty?](#verdict_assert_empty)
+    - [verdict_assert_equal?](#verdict_assert_equal)
+    - [verdict_assert_in_delta?](#verdict_assert_in_delta)
+    - [verdict_assert_in_epsilon?](#verdict_assert_in_epsilon)
+    - [verdict_assert_includes?](#verdict_assert_includes)
+    - [verdict_assert_instance_of?](#verdict_assert_instance_of)
+    - [verdict_assert_kind_of?](#verdict_assert_kind_of)
+    - [verdict_assert_match?](#verdict_assert_match)
+    - [verdict_assert_nil?](#verdict_assert_nil)
+    - [verdict_assert_operator?](#verdict_assert_operator)
+    - [verdict_assert_output?](#verdict_assert_output)
+  - [Refute Verdicts](#refute-verdicts)
 
 ## Logs and Sections
 
@@ -77,13 +92,169 @@ end
 </log>
 ```
 
-### Data
+### Attributes
 
-You can put data into a section.
+Put attributes onto a section by calling ```section``` with hash arguments.
 
-Generally speaking, a collection will be explicated in the log.
+Each name/value pair in the hash becomes an attribute in the log section header.
 
-#### Strings
+The first argument is always the section name.  Addition hash arguments become attributes.
+
+```example.rb```:
+```ruby
+require 'minitest_log'
+class Example < MiniTest::Test
+  def test_example
+    MinitestLog.new('log.xml') do |log|
+      attrs = {:first_attr => 'first', :second_attr => 'second'}
+      log.section('My section with attributes', attrs, 'A Hash becomes attributes.')
+      more_attrs = {:third_attr => 'third'}
+      log.section('My section with more attributes', attrs, more_attrs, 'More attributes.')
+    end
+  end
+end
+```
+
+```log.xml```:
+```xml
+<log>
+  <section_ name='My section with attributes' first_attr='first' second_attr='second'>
+    A Hash becomes attributes.
+  </section_>
+  <section_ name='My section with more attributes' first_attr='first' second_attr='second' third_attr='third'>
+    More attributes.
+  </section_>
+</log>
+```
+
+### About Time
+
+Use symbols ```:timestamp``` or ```:duration``` to add a timestamp or a duration to a section.
+
+```example.rb```:
+```ruby
+require 'minitest_log'
+class Example < MiniTest::Test
+  def test_example
+    MinitestLog.new('log.xml') do |log|
+      log.section('My section with timestamp', :timestamp, 'Section with timestamp.')
+      log.section('My section with duration', :duration, 'Section with duration.') do
+        sleep(0.5)
+      end
+      log.section('My section with both', :duration, :timestamp, 'Section with both.') do
+        sleep(0.5)
+      end
+    end
+  end
+end
+```
+
+```log.xml```:
+```xml
+<log>
+  <section_ name='My section with timestamp' timestamp='2019-04-05-Fri-15.02.24.020'>
+    Section with timestamp.
+  </section_>
+  <section_ name='My section with duration' duration_seconds='0.501'>
+    Section with duration.
+  </section_>
+  <section_ name='My section with both' timestamp='2019-04-05-Fri-15.02.24.541' duration_seconds='0.500'>
+    Section with both.
+  </section_>
+</log>
+```
+
+### Rescue
+
+Rescue a section using the symbol ```:rescue```.
+
+Any exception raised during that section's execution will be rescued and logged.  Such an exception terminates the *section* (but not the *test*).
+
+```example.rb```:
+```ruby
+require 'minitest_log'
+class Example < MiniTest::Test
+  def test_example
+    MinitestLog.new('log.xml') do |log|
+      log.section('My rescued section', :rescue) do
+        raise RuntimeError.new('Boo!')
+        log.comment('This code will not be reached, because the section terminates.')
+      end
+      log.comment('This code will be reached, because it is not in the terminated section.')
+    end
+  end
+end
+```
+
+```log.xml```:
+```xml
+<log>
+  <section_ name='My rescued section'>
+    <rescued_exception_ class='RuntimeError' message='Boo!'>
+      <backtrace_>
+        <level_0_ location='example.rb:6:in `block (2 levels) in test_example&apos;'/>
+        <level_1_ location='example.rb:5:in `block in test_example&apos;'/>
+        <level_2_ location='example.rb:4:in `new&apos;'/>
+        <level_3_ location='example.rb:4:in `test_example&apos;'/>
+      </backtrace_>
+    </rescued_exception_>
+  </section_>
+  <comment_>
+    This code will be reached, because it is not in the terminated section.
+  </comment_>
+</log>
+```
+
+### Unrescued Exception
+
+An exception raised in an unrescued section is logged, and the test terminates.
+
+```example.rb```:
+```ruby
+require 'minitest_log'
+class Example < MiniTest::Test
+  def test_example
+    MinitestLog.new('log.xml') do |log|
+      log.section('My unrescued section') do
+        raise RuntimeError.new('Boo!')
+      end
+      log.comment('This code will not be reached, because the test terminated.')
+    end
+  end
+end
+```
+
+```log.xml```:
+```xml
+<log>
+  <section_ name='My unrescued section'>
+    <uncaught_exception_ timestamp='2019-04-05-Fri-15.02.25.534' class='RuntimeError'>
+      <message_>
+        Boo!
+      </message_>
+      <backtrace_>
+        <![CDATA[example.rb:6:in `block (2 levels) in test_example'
+example.rb:5:in `block in test_example'
+example.rb:4:in `new'
+example.rb:4:in `test_example']]>
+      </backtrace_>
+    </uncaught_exception_>
+  </section_>
+</log>
+```
+
+## Data
+
+Put data onto the log using method ```:put_data```.
+
+A data object ```obj``` is treated as follows:
+
+- If ```obj.kind_of?(String)```, it is treated as a [string](#strings)
+- Otherwise if ```obj.respond_to?(:each_pair)```, it is treated as [hash-like](#hash-like-objects).
+- Otherwise, it ```obj.respond_to?(:each_with_index```, it is treated as [array-like](#array-like-objects).
+- Otherwise, it is treated as "[other](#other-objects)".
+
+### Strings
 
 An object that is a ```kind_of?(String)``` is logged simply.
 
@@ -113,9 +284,9 @@ end
 </log>
 ```
 
-#### Hash-Like Objects
+### Hash-Like Objects
 
-Otherwise, an object that ```respond_to?(:each_with_pair)``` is logged as name-value pairs.
+Otherwise, an object that ```respond_to?(:each_pair)``` is logged as name-value pairs.
 
 ```each_pair.rb```:
 ```ruby
@@ -173,9 +344,9 @@ z => 2
 </log>
 ```
 
-#### Array-Like Objects
+### Array-Like Objects
 
-Otherwise, an object that ```respond_to?(:each_with_index``` is logged as a numbered list.
+Otherwise, an object that ```respond_to?(:each_with_index)``` is logged as a numbered list.
 
 ```each_with_index.rb```:
 ```ruby
@@ -230,12 +401,12 @@ end
 </log>
 ```
 
-#### Other Objects
+### Other Objects
 
-Otherwise, the logger tries, successively, to format the object using ```:to_s```,
-```:inspect```, and ```__id__```.
+Otherwise, the logger tries, successively, to log the object using ```:to_s```,
+```:inspect```, and ```:__id__```.
 
-If all that fails, the logger raises an exception.
+If all that fails, the logger raises an exception (which is not illustrated here).
 
 ```to_s.rb```:
 ```ruby
@@ -270,7 +441,7 @@ end
       Bar
     </data_>
     <data_ name='My time' class='Time' method=':to_s'>
-      2019-03-31 11:11:22 -0500
+      2019-04-05 15:02:22 -0500
     </data_>
     <data_ name='My uri,' class='URI::HTTPS' method=':to_s'>
       https://www.github.com
@@ -280,115 +451,566 @@ end
 ```
 
 
-### Attributes
-
-You can put attributes onto a section by calling ```section``` with hash arguments.
-
-Each name/value pair in the hash becomes an attribute in the log section header.
-
-The first argument is always the section name.  Addition hash arguments become attributes.
-
-```example.rb```:
-```ruby
-require 'minitest_log'
-class Example < MiniTest::Test
-  def test_example
-    MinitestLog.new('log.xml') do |log|
-      attrs = {:first_attr => 'first', :second_attr => 'second'}
-      log.section('My section with attributes', attrs, 'A Hash becomes attributes.')
-      more_attrs = {:third_attr => 'third'}
-      log.section('My section with more attributes', attrs, more_attrs, 'More attributes.')
-    end
-  end
-end
-```
-
-```log.xml```:
-```xml
-<log>
-  <section_ name='My section with attributes' first_attr='first' second_attr='second'>
-    A Hash becomes attributes.
-  </section_>
-  <section_ name='My section with more attributes' first_attr='first' second_attr='second' third_attr='third'>
-    More attributes.
-  </section_>
-</log>
-```
-
-### About Time
-
-Use symbols ```:timestamp``` or ```:duration``` to add a timestamp and a duration to as section.
-
-```example.rb```:
-```ruby
-require 'minitest_log'
-class Example < MiniTest::Test
-  def test_example
-    MinitestLog.new('log.xml') do |log|
-      log.section('My section with timestamp', :timestamp, 'Section with timestamp.')
-      log.section('My section with duration', :duration, 'Section with duration.') do
-        sleep(0.5)
-      end
-      log.section('My section with both', :duration, :timestamp, 'Section with both.') do
-        sleep(0.5)
-      end
-    end
-  end
-end
-```
-
-```log.xml```:
-```xml
-<log>
-  <section_ name='My section with timestamp' timestamp='2019-03-31-Sun-11.11.23.824'>
-    Section with timestamp.
-  </section_>
-  <section_ name='My section with duration' duration_seconds='0.500'>
-    Section with duration.
-  </section_>
-  <section_ name='My section with both' timestamp='2019-03-31-Sun-11.11.24.325' duration_seconds='0.500'>
-    Section with both.
-  </section_>
-</log>
-```
-
-### Rescue
-
-Rescue a section using the symbol ```:rescue```.
-
-Any exception raised during that section's execution will be rescued and logged.  Such an exception terminates the *section* (but not the *test*).
-
-```example.rb```:
-```ruby
-require 'minitest_log'
-class Example < MiniTest::Test
-  def test_example
-    MinitestLog.new('log.xml') do |log|
-      log.section('My rescued section', :rescue) do
-        raise RuntimeError.new('Boo!')
-      end
-    end
-  end
-end
-```
-
-```log.xml```:
-```xml
-<log>
-  <section_ name='My rescued section'>
-    <rescued_exception_ class='RuntimeError' message='Boo!'>
-      <backtrace_>
-        <level_0_ location='example.rb:6:in `block (2 levels) in test_example&apos;'/>
-        <level_1_ location='example.rb:5:in `block in test_example&apos;'/>
-        <level_2_ location='example.rb:4:in `new&apos;'/>
-        <level_3_ location='example.rb:4:in `test_example&apos;'/>
-      </backtrace_>
-    </rescued_exception_>
-  </section_>
-</log>
-```
-
-
 ## Verdicts
 
-TODO
+Use ```MinitestLog``` verdict methods to log details of ```Minitest``` assertions.
+
+Each verdict method in ```MinitestLog``` is a wrapper for a corresponding ```Minitest``` assertion (or refutation).
+
+The verdict method logs all details for the assertion.
+
+The arguments for the verdict method and its assert method are the same, except that the verdict method adds a required leading verdict identifier.  (Both allow an optional trailing message string.)
+
+The verdict identifier:
+- Is commonly a string or a symbol, but may be any object that responds to ```:to_s```.
+- Must be unique among the verdict identifiers in its *test method* (but not necessarily in its *test class*.)
+
+Each verdict method returns ```true``` or ```false``` to indicate whether the verdict succeeded or failed.
+
+Each verdict method also has a shorter alias -- ```va``` substituting for ```verdict_assert```, and ```vr``` substituting for ```verdict_refute```.  (This not only saves keystrokes, but also *really*, *really* helps your editor do code completion.)
+
+Example verdict (long form and alias):
+
+```ruby
+log.verdict_assert?(:my_verdict_id, true, 'My message')
+log.va?(:my_verdict_id, true, 'My message')
+```
+
+Verdict methods are described below.  For each, the following is given:
+
+- The method's syntax.
+- An example test using the method, including both passing and failing verdicts.
+- The log output by the example test.
+- Descriptive text, adapted from [docs.ruby-lang.org](https://docs.ruby-lang.org/en/2.1.0/MiniTest/Assertions.html)
+
+### Assert Verdicts
+
+#### verdict_assert?
+
+```ruby
+verdict_assert?(id, obj, msg = nil)
+va?(id, obj, msg = nil)
+```
+
+Fails unless ```obj``` is truthy.
+
+```verdict_assert.rb```:
+```ruby
+require 'minitest_log'
+class Example < Minitest::Test
+  def test_demo_verdict
+    MinitestLog.new('verdict_assert.xml') do |log|
+      log.verdict_assert?(:one_id, true, 'One message')
+      log.verdict_assert?(:another_id, false, 'Another message')
+    end
+  end
+end
+```
+
+```verdict_assert.xml```:
+```xml
+<log>
+  <verdict_ method='verdict_assert?' outcome='passed' id='one_id' message='One message'>
+    <actual_ class='TrueClass' value='true'/>
+  </verdict_>
+  <verdict_ method='verdict_assert?' outcome='failed' id='another_id' message='Another message'>
+    <actual_ class='FalseClass' value='false'/>
+    <exception_ class='Minitest::Assertion' message='Expected false to be truthy.'>
+      <backtrace_>
+        <level_0_ location='verdict_assert.rb:6:in `block in test_demo_verdict&apos;'/>
+        <level_1_ location='verdict_assert.rb:4:in `new&apos;'/>
+        <level_2_ location='verdict_assert.rb:4:in `test_demo_verdict&apos;'/>
+      </backtrace_>
+    </exception_>
+  </verdict_>
+</log>
+```
+
+#### verdict_assert_empty?
+
+```ruby
+verdict_assert_empty?(id, obj, msg = nil)
+va_empty?(id, obj, msg = nil)
+```
+
+Fails unless ```obj``` is empty.
+
+```verdict_assert_empty.rb```:
+```ruby
+require 'minitest_log'
+class Example < Minitest::Test
+  def test_demo_verdict
+    MinitestLog.new('verdict_assert_empty.xml') do |log|
+      log.verdict_assert_empty?(:one_id, [], 'One message')
+      log.verdict_assert_empty?(:another_id, [:a], 'Another message')
+    end
+  end
+end
+```
+
+```verdict_assert_empty.xml```:
+```xml
+<log>
+  <verdict_ method='verdict_assert_empty?' outcome='passed' id='one_id' message='One message'>
+    <actual_ class='Array' value='[]'/>
+  </verdict_>
+  <verdict_ method='verdict_assert_empty?' outcome='failed' id='another_id' message='Another message'>
+    <actual_ class='Array' value='[:a]'/>
+    <exception_ class='Minitest::Assertion' message='Expected [:a] to be empty.'>
+      <backtrace_>
+        <level_0_ location='verdict_assert_empty.rb:6:in `block in test_demo_verdict&apos;'/>
+        <level_1_ location='verdict_assert_empty.rb:4:in `new&apos;'/>
+        <level_2_ location='verdict_assert_empty.rb:4:in `test_demo_verdict&apos;'/>
+      </backtrace_>
+    </exception_>
+  </verdict_>
+</log>
+```
+
+#### verdict_assert_equal?
+
+```ruby
+verdict_assert_equal?(id, exp, act, msg = nil)
+va_equal?(id, exp, act, msg = nil)
+```
+Fails unless ```exp == act```.
+
+For floats use verdict_assert_in_delta?.
+
+```verdict_assert_equal.rb```:
+```ruby
+require 'minitest_log'
+class Example < Minitest::Test
+  def test_demo_verdict
+    MinitestLog.new('verdict_assert_equal.xml') do |log|
+      log.verdict_assert_equal?(:one_id, 0, 0, 'One message')
+      log.verdict_assert_equal?(:another_id, 0, 1, 'Another message')
+    end
+  end
+end
+```
+
+```verdict_assert_equal.xml```:
+```xml
+<log>
+  <verdict_ method='verdict_assert_equal?' outcome='passed' id='one_id' message='One message'>
+    <expected_ class='Integer' value='0'/>
+    <actual_ class='Integer' value='0'/>
+  </verdict_>
+  <verdict_ method='verdict_assert_equal?' outcome='failed' id='another_id' message='Another message'>
+    <expected_ class='Integer' value='0'/>
+    <actual_ class='Integer' value='1'/>
+    <exception_ class='Minitest::Assertion' message='Expected: 0'>
+      <backtrace_>
+        <level_0_ location='verdict_assert_equal.rb:6:in `block in test_demo_verdict&apos;'/>
+        <level_1_ location='verdict_assert_equal.rb:4:in `new&apos;'/>
+        <level_2_ location='verdict_assert_equal.rb:4:in `test_demo_verdict&apos;'/>
+      </backtrace_>
+    </exception_>
+  </verdict_>
+</log>
+```
+
+#### verdict_assert_in_delta?
+
+```ruby
+verdict_assert_in_delta?(id, exp, act, delta = 0.001, msg = nil)
+va_in_delta?(id, exp, act, delta = 0.001, msg = nil)
+````
+
+For comparing Floats. Fails unless ```exp``` and ```act``` are within ```delta``` of each other.
+
+```verdict_assert_in_delta.rb```:
+```ruby
+require 'minitest_log'
+class Example < Minitest::Test
+  def test_demo_verdict
+    MinitestLog.new('verdict_assert_in_delta.xml') do |log|
+      log.verdict_assert_in_delta?(:one_id, 0, 0, 1, 'One message')
+      log.verdict_assert_in_delta?(:another_id, 0, 1, 2, 'Another message')
+    end
+  end
+end
+```
+
+```verdict_assert_in_delta.xml```:
+```xml
+<log>
+  <verdict_ method='verdict_assert_in_delta?' outcome='passed' id='one_id' message='One message'>
+    <expected_ class='Integer' value='0'/>
+    <actual_ class='Integer' value='0'/>
+    <delta_ class='Integer' value='1'/>
+  </verdict_>
+  <verdict_ method='verdict_assert_in_delta?' outcome='passed' id='another_id' message='Another message'>
+    <expected_ class='Integer' value='0'/>
+    <actual_ class='Integer' value='1'/>
+    <delta_ class='Integer' value='2'/>
+  </verdict_>
+</log>
+```
+
+#### verdict_assert_in_epsilon?
+
+```ruby
+verdict_assert_in_epsilon?(id, a, b, epsilon = 0.001, msg = nil)
+va_in_epsilon?(id, a, b, epsilon = 0.001, msg = nil)
+```
+
+For comparing Floats. Fails unless ```exp``` and ```act``` have a relative error less than ```epsilon```.
+
+```verdict_assert_in_epsilon.rb```:
+```ruby
+require 'minitest_log'
+class Example < Minitest::Test
+  def test_demo_verrdict
+    MinitestLog.new('verdict_assert_in_epsilon.xml') do |log|
+      log.verdict_assert_in_epsilon?(:one_id, 3, 2, 1, 'One message')
+      log.verdict_assert_in_epsilon?(:another_id, 3, 2, 0, 'Another message')
+    end
+  end
+end
+```
+
+```verdict_assert_in_epsilon.xml```:
+```xml
+<log>
+  <verdict_ method='verdict_assert_in_epsilon?' outcome='passed' id='one_id' message='One message'>
+    <expected_ class='Integer' value='3'/>
+    <actual_ class='Integer' value='2'/>
+    <epsilon_ class='Integer' value='1'/>
+  </verdict_>
+  <verdict_ method='verdict_assert_in_epsilon?' outcome='failed' id='another_id' message='Another message'>
+    <expected_ class='Integer' value='3'/>
+    <actual_ class='Integer' value='2'/>
+    <epsilon_ class='Integer' value='0'/>
+    <exception_ class='Minitest::Assertion' message='Expected |3 - 2| (1) to be &lt;= 0.'>
+      <backtrace_>
+        <level_0_ location='verdict_assert_in_epsilon.rb:6:in `block in test_demo_verrdict&apos;'/>
+        <level_1_ location='verdict_assert_in_epsilon.rb:4:in `new&apos;'/>
+        <level_2_ location='verdict_assert_in_epsilon.rb:4:in `test_demo_verrdict&apos;'/>
+      </backtrace_>
+    </exception_>
+  </verdict_>
+</log>
+```
+
+#### verdict_assert_includes?
+
+```ruby
+verdict_assert_includes?(id, collection, obj, msg = nil)
+va_includes?(id, collection, obj, msg = nil)
+```
+
+Fails unless ```collection``` includes ```obj```.
+
+```verdict_assert_includes.rb```:
+```ruby
+require 'minitest_log'
+class Example < Minitest::Test
+  def test_demo_verdict
+    MinitestLog.new('verdict_assert_includes.xml') do |log|
+      log.verdict_assert_includes?(:one_id, [:a, :b, :c], :b, 'One message')
+      log.verdict_assert_includes?(:another_id, [:a, :b, :c], :d, 'Another message')
+    end
+  end
+end
+```
+
+```verdict_assert_includes.xml```:
+```xml
+<log>
+  <verdict_ method='verdict_assert_includes?' outcome='passed' id='one_id' message='One message'>
+    <expected_ class='Array' value='[:a, :b, :c]'/>
+    <actual_ class='Symbol' value=':b'/>
+  </verdict_>
+  <verdict_ method='verdict_assert_includes?' outcome='failed' id='another_id' message='Another message'>
+    <expected_ class='Array' value='[:a, :b, :c]'/>
+    <actual_ class='Symbol' value=':d'/>
+    <exception_ class='Minitest::Assertion' message='Expected [:a, :b, :c] to include :d.'>
+      <backtrace_>
+        <level_0_ location='verdict_assert_includes.rb:6:in `block in test_demo_verdict&apos;'/>
+        <level_1_ location='verdict_assert_includes.rb:4:in `new&apos;'/>
+        <level_2_ location='verdict_assert_includes.rb:4:in `test_demo_verdict&apos;'/>
+      </backtrace_>
+    </exception_>
+  </verdict_>
+</log>
+```
+
+#### verdict_assert_instance_of?
+
+```ruby
+verdict_assert_instance_of?(id, cls, obj, msg = nil)
+va_instance_of?(id, cls, obj, msg = nil)
+```
+
+Fails unless ```obj``` is an instance of ```cls```.
+
+```verdict_assert_instance_of.rb```:
+```ruby
+require 'minitest_log'
+class Example < Minitest::Test
+  def test_demo_verdict
+    MinitestLog.new('verdict_assert_instance_of.xml') do |log|
+      log.verdict_assert_instance_of?(:one_id, String, 'my_string', 'One message')
+      log.verdict_assert_instance_of?(:another_id, Integer, 'my_string', 'another message')
+    end
+  end
+end
+```
+
+```verdict_assert_instance_of.xml```:
+```xml
+<log>
+  <verdict_ method='verdict_assert_instance_of?' outcome='passed' id='one_id' message='One message'>
+    <expected_ class='Class' value='String'/>
+    <actual_ class='String' value='&quot;my_string&quot;'/>
+  </verdict_>
+  <verdict_ method='verdict_assert_instance_of?' outcome='failed' id='another_id' message='another message'>
+    <expected_ class='Class' value='Integer'/>
+    <actual_ class='String' value='&quot;my_string&quot;'/>
+    <exception_ class='Minitest::Assertion' message='Expected # encoding: UTF-8'>
+      <backtrace_>
+        <level_0_ location='verdict_assert_instance_of.rb:6:in `block in test_demo_verdict&apos;'/>
+        <level_1_ location='verdict_assert_instance_of.rb:4:in `new&apos;'/>
+        <level_2_ location='verdict_assert_instance_of.rb:4:in `test_demo_verdict&apos;'/>
+      </backtrace_>
+    </exception_>
+  </verdict_>
+</log>
+```
+
+#### verdict_assert_kind_of?
+
+```ruby
+verdict_assert_kind_of?(id, cls, obj, msg = nil)
+va_kind_of?(id, cls, obj, msg = nil)
+```
+
+Fails unless ```obj``` is a kind of ```cls```.
+
+```verdict_assert_kind_of.rb```:
+```ruby
+require 'minitest_log'
+class Example < Minitest::Test
+  def test_demo_verdict
+    MinitestLog.new('verdict_assert_kind_of.xml') do |log|
+      log.verdict_assert_kind_of?(:one_id, Numeric, 1.0, 'One message')
+      log.verdict_assert_kind_of?(:another_id, String, 1.0, 'Another message')
+    end
+  end
+end
+```
+
+```verdict_assert_kind_of.xml```:
+```xml
+<log>
+  <verdict_ method='verdict_assert_kind_of?' outcome='passed' id='one_id' message='One message'>
+    <expected_ class='Class' value='Numeric'/>
+    <actual_ class='Float' value='1.0'/>
+  </verdict_>
+  <verdict_ method='verdict_assert_kind_of?' outcome='failed' id='another_id' message='Another message'>
+    <expected_ class='Class' value='String'/>
+    <actual_ class='Float' value='1.0'/>
+    <exception_ class='Minitest::Assertion' message='Expected 1.0 to be a kind of String, not Float.'>
+      <backtrace_>
+        <level_0_ location='verdict_assert_kind_of.rb:6:in `block in test_demo_verdict&apos;'/>
+        <level_1_ location='verdict_assert_kind_of.rb:4:in `new&apos;'/>
+        <level_2_ location='verdict_assert_kind_of.rb:4:in `test_demo_verdict&apos;'/>
+      </backtrace_>
+    </exception_>
+  </verdict_>
+</log>
+```
+
+#### verdict_assert_match?
+
+```ruby
+verdict_assert_match?(id, cls, obj, msg = nil)
+va_match?(id, cls, obj, msg = nil)
+```
+
+Fails unless ```matcher =~ obj```.
+
+```verdict_assert_match.rb```:
+```ruby
+require 'minitest_log'
+class Example < Minitest::Test
+  def test_demo_verdict
+    MinitestLog.new('verdict_assert_match.xml') do |log|
+      log.verdict_assert_match?(:one_id, /foo/, 'food', 'One message')
+      log.verdict_assert_match?(:another_id, /foo/, 'feed', 'Another message')
+    end
+  end
+end
+```
+
+```verdict_assert_match.xml```:
+```xml
+<log>
+  <verdict_ method='verdict_assert_match?' outcome='passed' id='one_id' message='One message'>
+    <expected_ class='Regexp' value='/foo/'/>
+    <actual_ class='String' value='&quot;food&quot;'/>
+  </verdict_>
+  <verdict_ method='verdict_assert_match?' outcome='failed' id='another_id' message='Another message'>
+    <expected_ class='Regexp' value='/foo/'/>
+    <actual_ class='String' value='&quot;feed&quot;'/>
+    <exception_ class='Minitest::Assertion' message='Expected /foo/ to match # encoding: UTF-8'>
+      <backtrace_>
+        <level_0_ location='verdict_assert_match.rb:6:in `block in test_demo_verdict&apos;'/>
+        <level_1_ location='verdict_assert_match.rb:4:in `new&apos;'/>
+        <level_2_ location='verdict_assert_match.rb:4:in `test_demo_verdict&apos;'/>
+      </backtrace_>
+    </exception_>
+  </verdict_>
+</log>
+```
+
+#### verdict_assert_nil?
+
+```ruby
+verdict_assert_nil?(id, obj, msg = nil)
+va_nil?(id, obj, msg = nil)
+```
+
+Fails unless ```obj``` is nil.
+
+```verdict_assert_nil.rb```:
+```ruby
+require 'minitest_log'
+class Example < Minitest::Test
+  def test_demo_verdict
+    MinitestLog.new('verdict_assert_nil.xml') do |log|
+      log.verdict_assert_nil?(:one_id, [], 'One message')
+      log.verdict_assert_nil?(:another_id, [:a], 'Another message')
+    end
+  end
+end
+```
+
+```verdict_assert_nil.xml```:
+```xml
+<log>
+  <verdict_ method='verdict_assert_nil?' outcome='failed' id='one_id' message='One message'>
+    <actual_ class='Array' value='[]'/>
+    <exception_ class='Minitest::Assertion' message='Expected [] to be nil.'>
+      <backtrace_>
+        <level_0_ location='verdict_assert_nil.rb:5:in `block in test_demo_verdict&apos;'/>
+        <level_1_ location='verdict_assert_nil.rb:4:in `new&apos;'/>
+        <level_2_ location='verdict_assert_nil.rb:4:in `test_demo_verdict&apos;'/>
+      </backtrace_>
+    </exception_>
+  </verdict_>
+  <verdict_ method='verdict_assert_nil?' outcome='failed' id='another_id' message='Another message'>
+    <actual_ class='Array' value='[:a]'/>
+    <exception_ class='Minitest::Assertion' message='Expected [:a] to be nil.'>
+      <backtrace_>
+        <level_0_ location='verdict_assert_nil.rb:6:in `block in test_demo_verdict&apos;'/>
+        <level_1_ location='verdict_assert_nil.rb:4:in `new&apos;'/>
+        <level_2_ location='verdict_assert_nil.rb:4:in `test_demo_verdict&apos;'/>
+      </backtrace_>
+    </exception_>
+  </verdict_>
+</log>
+```
+
+#### verdict_assert_operator?
+
+```ruby
+verdict_assert_operator?(id, o1, op, o2 = UNDEFINED, msg = nil)
+va_operator?(id, o1, op, o2 = UNDEFINED, msg = nil)
+````
+
+For testing with binary operators.
+
+```verdict_assert_operator.rb```:
+```ruby
+require 'minitest_log'
+class Example < Minitest::Test
+  def test_demo_verdict
+    MinitestLog.new('verdict_assert_operator.xml') do |log|
+      log.verdict_assert_operator?(:one_id, 3, :<=, 4, 'One message')
+      log.verdict_assert_operator?(:another_id, 5, :<=, 4, 'Another message')
+    end
+  end
+end
+```
+
+```verdict_assert_operator.xml```:
+```xml
+<log>
+  <verdict_ method='verdict_assert_operator?' outcome='passed' id='one_id' message='One message'>
+    <object_1_ class='Integer' value='3'/>
+    <operator_ class='Symbol' value=':&lt;='/>
+    <object_2_ class='Integer' value='4'/>
+  </verdict_>
+  <verdict_ method='verdict_assert_operator?' outcome='failed' id='another_id' message='Another message'>
+    <object_1_ class='Integer' value='5'/>
+    <operator_ class='Symbol' value=':&lt;='/>
+    <object_2_ class='Integer' value='4'/>
+    <exception_ class='Minitest::Assertion' message='Expected 5 to be &lt;= 4.'>
+      <backtrace_>
+        <level_0_ location='verdict_assert_operator.rb:6:in `block in test_demo_verdict&apos;'/>
+        <level_1_ location='verdict_assert_operator.rb:4:in `new&apos;'/>
+        <level_2_ location='verdict_assert_operator.rb:4:in `test_demo_verdict&apos;'/>
+      </backtrace_>
+    </exception_>
+  </verdict_>
+</log>
+```
+
+#### verdict_assert_output?
+
+```ruby
+verdict_assert_output?(id, stdout = nil, stderr = nil) { || ... }
+va_output?(id, stdout = nil, stderr = nil) { || ... }
+```
+
+Fails if stdout or stderr do not output the expected results. Pass in nil if you don't care about that streams output. Pass in '' if you require it to be silent. Pass in a regexp if you want to pattern match.
+
+NOTE: this uses capture_io, not capture_subprocess_io.
+
+```verdict_assert_output.rb```:
+```ruby
+require 'minitest_log'
+class Example < Minitest::Test
+  def test_demo_verdict
+    MinitestLog.new('verdict_assert_output.xml') do |log|
+      log.verdict_assert_output?(:one_id, stdout = 'Foo', stderr = "Bar") do
+        $stdout.write('Foo')
+        $stderr.write('Bar')
+      end
+      log.verdict_assert_output?(:another_id, stdout = 'Bar', stderr = "Foo") do
+        $stdout.write('Foo')
+        $stderr.write('Bar')
+      end
+    end
+  end
+end
+```
+
+```verdict_assert_output.xml```:
+```xml
+<log>
+  <verdict_ method='verdict_assert_output?' outcome='passed' id='one_id'>
+    <stdout_ class='String' value='&quot;Foo&quot;'/>
+    <stderr_ class='String' value='&quot;Bar&quot;'/>
+  </verdict_>
+  <verdict_ method='verdict_assert_output?' outcome='failed' id='another_id'>
+    <stdout_ class='String' value='&quot;Bar&quot;'/>
+    <stderr_ class='String' value='&quot;Foo&quot;'/>
+    <exception_ class='Minitest::Assertion' message='In stderr.'>
+      <backtrace_>
+        <level_0_ location='verdict_assert_output.rb:9:in `block in test_demo_verdict&apos;'/>
+        <level_1_ location='verdict_assert_output.rb:4:in `new&apos;'/>
+        <level_2_ location='verdict_assert_output.rb:4:in `test_demo_verdict&apos;'/>
+      </backtrace_>
+    </exception_>
+  </verdict_>
+</log>
+```
+
+
+### Refute Verdicts
+
+

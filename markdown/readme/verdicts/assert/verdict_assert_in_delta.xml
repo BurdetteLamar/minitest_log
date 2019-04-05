@@ -1,0 +1,12 @@
+<log>
+  <verdict_ method='verdict_assert_in_delta?' outcome='passed' id='one_id' message='One message'>
+    <expected_ class='Integer' value='0'/>
+    <actual_ class='Integer' value='0'/>
+    <delta_ class='Integer' value='1'/>
+  </verdict_>
+  <verdict_ method='verdict_assert_in_delta?' outcome='passed' id='another_id' message='Another message'>
+    <expected_ class='Integer' value='0'/>
+    <actual_ class='Integer' value='1'/>
+    <delta_ class='Integer' value='2'/>
+  </verdict_>
+</log>
