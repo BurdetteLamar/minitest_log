@@ -10,7 +10,7 @@
       Bar
     </data_>
     <data_ name='My time' class='Time' method=':to_s'>
-      2019-04-05 13:21:39 -0500
+      2019-04-05 14:43:25 -0500
     </data_>
     <data_ name='My uri,' class='URI::HTTPS' method=':to_s'>
       https://www.github.com

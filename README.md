@@ -37,7 +37,7 @@ gem install minitest_log
     - [verdict_assert_kind_of?](#verdict_assert_kind_of)
     - [verdict_assert_match?](#verdict_assert_match)
     - [verdict_assert_nil?](#verdict_assert_nil)
-    - [verdictAssert_operator?](#verdictassert_operator)
+    - [verdict_assert_operator?](#verdict_assert_operator)
   - [Refute Verdicts](#refute-verdicts)
 
 ## Logs and Sections
@@ -151,13 +151,13 @@ end
 ```log.xml```:
 ```xml
 <log>
-  <section_ name='My section with timestamp' timestamp='2019-04-05-Fri-13.21.41.578'>
+  <section_ name='My section with timestamp' timestamp='2019-04-05-Fri-14.43.27.632'>
     Section with timestamp.
   </section_>
-  <section_ name='My section with duration' duration_seconds='0.501'>
+  <section_ name='My section with duration' duration_seconds='0.500'>
     Section with duration.
   </section_>
-  <section_ name='My section with both' timestamp='2019-04-05-Fri-13.21.42.080' duration_seconds='0.500'>
+  <section_ name='My section with both' timestamp='2019-04-05-Fri-14.43.28.133' duration_seconds='0.500'>
     Section with both.
   </section_>
 </log>
@@ -227,7 +227,7 @@ end
 ```xml
 <log>
   <section_ name='My unrescued section'>
-    <uncaught_exception_ timestamp='2019-04-05-Fri-13.21.43.070' class='RuntimeError'>
+    <uncaught_exception_ timestamp='2019-04-05-Fri-14.43.29.069' class='RuntimeError'>
       <message_>
         Boo!
       </message_>
@@ -440,7 +440,7 @@ end
       Bar
     </data_>
     <data_ name='My time' class='Time' method=':to_s'>
-      2019-04-05 13:21:39 -0500
+      2019-04-05 14:43:25 -0500
     </data_>
     <data_ name='My uri,' class='URI::HTTPS' method=':to_s'>
       https://www.github.com
@@ -913,9 +913,12 @@ end
 </log>
 ```
 
-#### verdictAssert_operator?
+#### verdict_assert_operator?
 
-```verdict_assert_operator?(id, o1, op, o2 = UNDEFINED, msg = nil)
+```ruby
+verdict_assert_operator?(id, o1, op, o2 = UNDEFINED, msg = nil)
+va_operator?(id, o1, op, o2 = UNDEFINED, msg = nil)
+````
 
 For testing with binary operators.
 
