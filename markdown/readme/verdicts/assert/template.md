@@ -144,3 +144,18 @@ For testing with binary operators.
 
 @[xml](verdict_assert_operator.xml)
 
+#### verdict_assert_output?
+
+```ruby
+verdict_assert_output?(id, stdout = nil, stderr = nil) { || ... }
+va_output?(id, stdout = nil, stderr = nil) { || ... }
+```
+
+Fails if stdout or stderr do not output the expected results. Pass in nil if you don't care about that streams output. Pass in '' if you require it to be silent. Pass in a regexp if you want to pattern match.
+
+NOTE: this uses capture_io, not capture_subprocess_io.
+
+@[ruby](verdict_assert_output.rb)
+
+@[xml](verdict_assert_output.xml)
+

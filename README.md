@@ -38,6 +38,7 @@ gem install minitest_log
     - [verdict_assert_match?](#verdict_assert_match)
     - [verdict_assert_nil?](#verdict_assert_nil)
     - [verdict_assert_operator?](#verdict_assert_operator)
+    - [verdict_assert_output?](#verdict_assert_output)
   - [Refute Verdicts](#refute-verdicts)
 
 ## Logs and Sections
@@ -151,13 +152,13 @@ end
 ```log.xml```:
 ```xml
 <log>
-  <section_ name='My section with timestamp' timestamp='2019-04-05-Fri-14.43.27.632'>
+  <section_ name='My section with timestamp' timestamp='2019-04-05-Fri-15.02.24.020'>
     Section with timestamp.
   </section_>
-  <section_ name='My section with duration' duration_seconds='0.500'>
+  <section_ name='My section with duration' duration_seconds='0.501'>
     Section with duration.
   </section_>
-  <section_ name='My section with both' timestamp='2019-04-05-Fri-14.43.28.133' duration_seconds='0.500'>
+  <section_ name='My section with both' timestamp='2019-04-05-Fri-15.02.24.541' duration_seconds='0.500'>
     Section with both.
   </section_>
 </log>
@@ -227,7 +228,7 @@ end
 ```xml
 <log>
   <section_ name='My unrescued section'>
-    <uncaught_exception_ timestamp='2019-04-05-Fri-14.43.29.069' class='RuntimeError'>
+    <uncaught_exception_ timestamp='2019-04-05-Fri-15.02.25.534' class='RuntimeError'>
       <message_>
         Boo!
       </message_>
@@ -440,7 +441,7 @@ end
       Bar
     </data_>
     <data_ name='My time' class='Time' method=':to_s'>
-      2019-04-05 14:43:25 -0500
+      2019-04-05 15:02:22 -0500
     </data_>
     <data_ name='My uri,' class='URI::HTTPS' method=':to_s'>
       https://www.github.com
@@ -952,6 +953,57 @@ end
         <level_0_ location='verdict_assert_operator.rb:6:in `block in test_demo_verdict&apos;'/>
         <level_1_ location='verdict_assert_operator.rb:4:in `new&apos;'/>
         <level_2_ location='verdict_assert_operator.rb:4:in `test_demo_verdict&apos;'/>
+      </backtrace_>
+    </exception_>
+  </verdict_>
+</log>
+```
+
+#### verdict_assert_output?
+
+```ruby
+verdict_assert_output?(id, stdout = nil, stderr = nil) { || ... }
+va_output?(id, stdout = nil, stderr = nil) { || ... }
+```
+
+Fails if stdout or stderr do not output the expected results. Pass in nil if you don't care about that streams output. Pass in '' if you require it to be silent. Pass in a regexp if you want to pattern match.
+
+NOTE: this uses capture_io, not capture_subprocess_io.
+
+```verdict_assert_output.rb```:
+```ruby
+require 'minitest_log'
+class Example < Minitest::Test
+  def test_demo_verdict
+    MinitestLog.new('verdict_assert_output.xml') do |log|
+      log.verdict_assert_output?(:one_id, stdout = 'Foo', stderr = "Bar") do
+        $stdout.write('Foo')
+        $stderr.write('Bar')
+      end
+      log.verdict_assert_output?(:another_id, stdout = 'Bar', stderr = "Foo") do
+        $stdout.write('Foo')
+        $stderr.write('Bar')
+      end
+    end
+  end
+end
+```
+
+```verdict_assert_output.xml```:
+```xml
+<log>
+  <verdict_ method='verdict_assert_output?' outcome='passed' id='one_id'>
+    <stdout_ class='String' value='&quot;Foo&quot;'/>
+    <stderr_ class='String' value='&quot;Bar&quot;'/>
+  </verdict_>
+  <verdict_ method='verdict_assert_output?' outcome='failed' id='another_id'>
+    <stdout_ class='String' value='&quot;Bar&quot;'/>
+    <stderr_ class='String' value='&quot;Foo&quot;'/>
+    <exception_ class='Minitest::Assertion' message='In stderr.'>
+      <backtrace_>
+        <level_0_ location='verdict_assert_output.rb:9:in `block in test_demo_verdict&apos;'/>
+        <level_1_ location='verdict_assert_output.rb:4:in `new&apos;'/>
+        <level_2_ location='verdict_assert_output.rb:4:in `test_demo_verdict&apos;'/>
       </backtrace_>
     </exception_>
   </verdict_>
