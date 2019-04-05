@@ -131,9 +131,12 @@ Fails unless ```obj``` is nil.
 
 @[xml](verdict_assert_nil.xml)
 
-#### verdictAssert_operator?
+#### verdict_assert_operator?
 
-```verdict_assert_operator?(id, o1, op, o2 = UNDEFINED, msg = nil)
+```ruby
+verdict_assert_operator?(id, o1, op, o2 = UNDEFINED, msg = nil)
+va_operator?(id, o1, op, o2 = UNDEFINED, msg = nil)
+````
 
 For testing with binary operators.
 
