@@ -105,3 +105,16 @@ Fails if ```obj``` is a kind of ```cls```.
 
 @[xml](verdict_refute_kind_of.xml)
 
+#### verdict_refute_match?
+
+```ruby
+verdict_refute_match?(id, matcher, obj, msg = nil)
+vr_match?(id, matcher, obj, msg = nil)
+```
+
+Fails if ```matcher =~ obj```.
+
+@[ruby](verdict_refute_match.rb)
+
+@[xml](verdict_refute_match.xml)
+
