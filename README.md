@@ -41,6 +41,7 @@ gem install minitest_log
     - [verdict_assert_output?](#verdict_assert_output)
     - [verdict_assert_predicate?](#verdict_assert_predicate)
     - [verdict_assert_raises?](#verdict_assert_raises)
+    - [verdict_assert_respond_to?](#verdict_assert_respond_to)
   - [Refute Verdicts](#refute-verdicts)
 
 ## Logs and Sections
@@ -154,13 +155,13 @@ end
 ```log.xml```:
 ```xml
 <log>
-  <section_ name='My section with timestamp' timestamp='2019-04-06-Sat-11.00.51.876'>
+  <section_ name='My section with timestamp' timestamp='2019-04-06-Sat-11.11.44.024'>
     Section with timestamp.
   </section_>
   <section_ name='My section with duration' duration_seconds='0.500'>
     Section with duration.
   </section_>
-  <section_ name='My section with both' timestamp='2019-04-06-Sat-11.00.52.377' duration_seconds='0.500'>
+  <section_ name='My section with both' timestamp='2019-04-06-Sat-11.11.44.525' duration_seconds='0.500'>
     Section with both.
   </section_>
 </log>
@@ -230,7 +231,7 @@ end
 ```xml
 <log>
   <section_ name='My unrescued section'>
-    <uncaught_exception_ timestamp='2019-04-06-Sat-11.00.53.307' class='RuntimeError'>
+    <uncaught_exception_ timestamp='2019-04-06-Sat-11.11.45.456' class='RuntimeError'>
       <message_>
         Boo!
       </message_>
@@ -443,7 +444,7 @@ end
       Bar
     </data_>
     <data_ name='My time' class='Time' method=':to_s'>
-      2019-04-06 11:00:50 -0500
+      2019-04-06 11:11:42 -0500
     </data_>
     <data_ name='My uri,' class='URI::HTTPS' method=':to_s'>
       https://www.github.com
@@ -1062,7 +1063,7 @@ verdict_assert_raises?(id, *exp) { || ... }
 va_raises?(id, *exp) { || ... }
 ```
 
-Fails unless the block raises one of ```exp```. Returns the exception matched so you can check the message, attributes, etc.```
+Fails unless the block raises one of ```exp```. Returns the exception matched so you can check the message, attributes, etc.
 
 ```verdict_assert_raises.rb```:
 ```ruby
@@ -1094,6 +1095,49 @@ end
         <level_0_ location='verdict_assert_raises.rb:8:in `block in test_demo_verdict&apos;'/>
         <level_1_ location='verdict_assert_raises.rb:4:in `new&apos;'/>
         <level_2_ location='verdict_assert_raises.rb:4:in `test_demo_verdict&apos;'/>
+      </backtrace_>
+    </exception_>
+  </verdict_>
+</log>
+```
+
+#### verdict_assert_respond_to?
+
+```ruby
+verdict_assert_respond_to?(id, obj, meth, msg = nil)
+va_respond_to?(id, obj, meth, msg = nil)
+```
+
+Fails unless ```obj``` responds to ```meth```.
+
+```verdict_assert_respond_to.rb```:
+```ruby
+require 'minitest_log'
+class Example < Minitest::Test
+  def test_demo_verdict
+    MinitestLog.new('verdict_assert_respond_to.xml') do |log|
+      log.verdict_assert_respond_to?(:one_id, 0, :succ, 'One message')
+      log.verdict_assert_respond_to?(:another_id, 0, :empty?, 'Another message')
+    end
+  end
+end
+```
+
+```verdict_assert_respond_to.xml```:
+```xml
+<log>
+  <verdict_ method='verdict_assert_respond_to?' outcome='passed' id='one_id' message='One message'>
+    <object_ class='Integer' value='0'/>
+    <method_ class='Symbol' value=':succ'/>
+  </verdict_>
+  <verdict_ method='verdict_assert_respond_to?' outcome='failed' id='another_id' message='Another message'>
+    <object_ class='Integer' value='0'/>
+    <method_ class='Symbol' value=':empty?'/>
+    <exception_ class='Minitest::Assertion' message='Expected 0 (Integer) to respond to #empty?.'>
+      <backtrace_>
+        <level_0_ location='verdict_assert_respond_to.rb:6:in `block in test_demo_verdict&apos;'/>
+        <level_1_ location='verdict_assert_respond_to.rb:4:in `new&apos;'/>
+        <level_2_ location='verdict_assert_respond_to.rb:4:in `test_demo_verdict&apos;'/>
       </backtrace_>
     </exception_>
   </verdict_>

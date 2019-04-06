@@ -179,9 +179,22 @@ verdict_assert_raises?(id, *exp) { || ... }
 va_raises?(id, *exp) { || ... }
 ```
 
-Fails unless the block raises one of ```exp```. Returns the exception matched so you can check the message, attributes, etc.```
+Fails unless the block raises one of ```exp```. Returns the exception matched so you can check the message, attributes, etc.
 
 @[ruby](verdict_assert_raises.rb)
 
 @[xml](verdict_assert_raises.xml)
+
+#### verdict_assert_respond_to?
+
+```ruby
+verdict_assert_respond_to?(id, obj, meth, msg = nil)
+va_respond_to?(id, obj, meth, msg = nil)
+```
+
+Fails unless ```obj``` responds to ```meth```.
+
+@[ruby](verdict_assert_respond_to.rb)
+
+@[xml](verdict_assert_respond_to.xml)
 
