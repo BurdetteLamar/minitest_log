@@ -13,3 +13,16 @@ Fails if ```test``` is a true value.
 
 @[xml](verdict_refute.xml)
 
+#### verdict_refute_empty?
+
+```ruby
+verdict_refute_empty?(id, obj, msg = nil)
+vr_empty?(id, obj, msg = nil)
+```
+
+Fails if ```obj``` is empty.
+
+@[ruby](verdict_refute_empty.rb)
+
+@[xml](verdict_refute_empty.xml)
+

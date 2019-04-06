@@ -47,6 +47,7 @@ gem install minitest_log
     - [verdict_assert_throws?](#verdict_assert_throws)
   - [Refute Verdicts](#refute-verdicts)
     - [verdict_refute?](#verdict_refute)
+    - [verdict_refute_empty?](#verdict_refute_empty)
 
 ## Logs and Sections
 
@@ -159,13 +160,13 @@ end
 ```log.xml```:
 ```xml
 <log>
-  <section_ name='My section with timestamp' timestamp='2019-04-06-Sat-12.25.07.767'>
+  <section_ name='My section with timestamp' timestamp='2019-04-06-Sat-15.18.19.242'>
     Section with timestamp.
   </section_>
   <section_ name='My section with duration' duration_seconds='0.501'>
     Section with duration.
   </section_>
-  <section_ name='My section with both' timestamp='2019-04-06-Sat-12.25.08.268' duration_seconds='0.500'>
+  <section_ name='My section with both' timestamp='2019-04-06-Sat-15.18.19.743' duration_seconds='0.500'>
     Section with both.
   </section_>
 </log>
@@ -235,7 +236,7 @@ end
 ```xml
 <log>
   <section_ name='My unrescued section'>
-    <uncaught_exception_ timestamp='2019-04-06-Sat-12.25.09.131' class='RuntimeError'>
+    <uncaught_exception_ timestamp='2019-04-06-Sat-15.18.20.647' class='RuntimeError'>
       <message_>
         Boo!
       </message_>
@@ -448,7 +449,7 @@ end
       Bar
     </data_>
     <data_ name='My time' class='Time' method=':to_s'>
-      2019-04-06 12:25:06 -0500
+      2019-04-06 15:18:17 -0500
     </data_>
     <data_ name='My uri,' class='URI::HTTPS' method=':to_s'>
       https://www.github.com
@@ -1315,6 +1316,47 @@ end
         <level_0_ location='verdict_refute.rb:6:in `block in test_demo_verdict&apos;'/>
         <level_1_ location='verdict_refute.rb:4:in `new&apos;'/>
         <level_2_ location='verdict_refute.rb:4:in `test_demo_verdict&apos;'/>
+      </backtrace_>
+    </exception_>
+  </verdict_>
+</log>
+```
+
+#### verdict_refute_empty?
+
+```ruby
+verdict_refute_empty?(id, obj, msg = nil)
+vr_empty?(id, obj, msg = nil)
+```
+
+Fails if ```obj``` is empty.
+
+```verdict_refute_empty.rb```:
+```ruby
+require 'minitest_log'
+class Example < Minitest::Test
+  def test_demo_verdict
+    MinitestLog.new('verdict_refute_empty.xml') do |log|
+      log.verdict_refute_empty?(:one_id, [:a], 'One message')
+      log.verdict_refute_empty?(:another_id, [], 'Another message')
+    end
+  end
+end
+```
+
+```verdict_refute_empty.xml```:
+```xml
+<log>
+  <verdict_ method='verdict_refute_empty?' outcome='passed' id='one_id' message='One message'>
+    <actual_ class='Array' value='[:a]'/>
+  </verdict_>
+  <verdict_ method='verdict_refute_empty?' outcome='failed' id='another_id' message='Another message'>
+    <actual_ class='Array' value='[]'/>
+    <exception_ class='Minitest::Assertion' message='Expected [] to not be empty.'>
+      <backtrace_>
+        <level_0_ location='verdict_refute_empty.rb:6:in `block in test_demo_verdict&apos;'/>
+        <level_1_ location='verdict_refute_empty.rb:4:in `new&apos;'/>
+        <level_2_ location='verdict_refute_empty.rb:4:in `test_demo_verdict&apos;'/>
       </backtrace_>
     </exception_>
   </verdict_>
