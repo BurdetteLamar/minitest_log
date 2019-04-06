@@ -49,6 +49,7 @@ gem install minitest_log
     - [verdict_refute?](#verdict_refute)
     - [verdict_refute_empty?](#verdict_refute_empty)
     - [verdict_refute_equal?](#verdict_refute_equal)
+    - [verdict_refute_in_delta?](#verdict_refute_in_delta)
 
 ## Logs and Sections
 
@@ -161,13 +162,13 @@ end
 ```log.xml```:
 ```xml
 <log>
-  <section_ name='My section with timestamp' timestamp='2019-04-06-Sat-15.23.50.905'>
+  <section_ name='My section with timestamp' timestamp='2019-04-06-Sat-15.34.54.406'>
     Section with timestamp.
   </section_>
   <section_ name='My section with duration' duration_seconds='0.500'>
     Section with duration.
   </section_>
-  <section_ name='My section with both' timestamp='2019-04-06-Sat-15.23.51.406' duration_seconds='0.501'>
+  <section_ name='My section with both' timestamp='2019-04-06-Sat-15.34.54.907' duration_seconds='0.500'>
     Section with both.
   </section_>
 </log>
@@ -237,7 +238,7 @@ end
 ```xml
 <log>
   <section_ name='My unrescued section'>
-    <uncaught_exception_ timestamp='2019-04-06-Sat-15.23.52.283' class='RuntimeError'>
+    <uncaught_exception_ timestamp='2019-04-06-Sat-15.34.55.814' class='RuntimeError'>
       <message_>
         Boo!
       </message_>
@@ -450,7 +451,7 @@ end
       Bar
     </data_>
     <data_ name='My time' class='Time' method=':to_s'>
-      2019-04-06 15:23:49 -0500
+      2019-04-06 15:34:52 -0500
     </data_>
     <data_ name='My uri,' class='URI::HTTPS' method=':to_s'>
       https://www.github.com
@@ -636,7 +637,7 @@ class Example < Minitest::Test
   def test_demo_verdict
     MinitestLog.new('verdict_assert_in_delta.xml') do |log|
       log.verdict_assert_in_delta?(:one_id, 0, 0, 1, 'One message')
-      log.verdict_assert_in_delta?(:another_id, 0, 1, 2, 'Another message')
+      log.verdict_assert_in_delta?(:another_id, 0, 2, 1, 'Another message')
     end
   end
 end
@@ -650,10 +651,17 @@ end
     <actual_ class='Integer' value='0'/>
     <delta_ class='Integer' value='1'/>
   </verdict_>
-  <verdict_ method='verdict_assert_in_delta?' outcome='passed' id='another_id' message='Another message'>
+  <verdict_ method='verdict_assert_in_delta?' outcome='failed' id='another_id' message='Another message'>
     <expected_ class='Integer' value='0'/>
-    <actual_ class='Integer' value='1'/>
-    <delta_ class='Integer' value='2'/>
+    <actual_ class='Integer' value='2'/>
+    <delta_ class='Integer' value='1'/>
+    <exception_ class='Minitest::Assertion' message='Expected |0 - 2| (2) to be &lt;= 1.'>
+      <backtrace_>
+        <level_0_ location='verdict_assert_in_delta.rb:6:in `block in test_demo_verdict&apos;'/>
+        <level_1_ location='verdict_assert_in_delta.rb:4:in `new&apos;'/>
+        <level_2_ location='verdict_assert_in_delta.rb:4:in `test_demo_verdict&apos;'/>
+      </backtrace_>
+    </exception_>
   </verdict_>
 </log>
 ```
@@ -1368,7 +1376,7 @@ end
 
 ```ruby
 verdict_refute_equal?(id, exp, act, msg = nil)
-va_equal?(id, exp, act, msg = nil)
+vr_equal?(id, exp, act, msg = nil)
 ```
 Fails if ```exp == act```.
 
@@ -1402,6 +1410,51 @@ end
         <level_0_ location='verdict_refute_equal.rb:6:in `block in test_demo_verdict&apos;'/>
         <level_1_ location='verdict_refute_equal.rb:4:in `new&apos;'/>
         <level_2_ location='verdict_refute_equal.rb:4:in `test_demo_verdict&apos;'/>
+      </backtrace_>
+    </exception_>
+  </verdict_>
+</log>
+```
+
+#### verdict_refute_in_delta?
+
+```ruby
+verdict_refute_in_delta?(id, exp, act, delta = 0.001, msg = nil)
+vr_in_delta?(id, exp, act, delta = 0.001, msg = nil)
+````
+
+For comparing Floats. Fails if ```exp``` is within ```delta``` of ```act```.
+
+```verdict_refute_in_delta.rb```:
+```ruby
+require 'minitest_log'
+class Example < Minitest::Test
+  def test_demo_verdict
+    MinitestLog.new('verdict_refute_in_delta.xml') do |log|
+      log.verdict_refute_in_delta?(:one_id, 0, 2, 1, 'One message')
+      log.verdict_refute_in_delta?(:another_id, 0, 0, 1, 'Another message')
+    end
+  end
+end
+```
+
+```verdict_refute_in_delta.xml```:
+```xml
+<log>
+  <verdict_ method='verdict_refute_in_delta?' outcome='passed' id='one_id' message='One message'>
+    <expected_ class='Integer' value='0'/>
+    <actual_ class='Integer' value='2'/>
+    <delta_ class='Integer' value='1'/>
+  </verdict_>
+  <verdict_ method='verdict_refute_in_delta?' outcome='failed' id='another_id' message='Another message'>
+    <expected_ class='Integer' value='0'/>
+    <actual_ class='Integer' value='0'/>
+    <delta_ class='Integer' value='1'/>
+    <exception_ class='Minitest::Assertion' message='Expected |0 - 0| (0) to not be &lt;= 1.'>
+      <backtrace_>
+        <level_0_ location='verdict_refute_in_delta.rb:6:in `block in test_demo_verdict&apos;'/>
+        <level_1_ location='verdict_refute_in_delta.rb:4:in `new&apos;'/>
+        <level_2_ location='verdict_refute_in_delta.rb:4:in `test_demo_verdict&apos;'/>
       </backtrace_>
     </exception_>
   </verdict_>

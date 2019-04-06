@@ -30,7 +30,7 @@ Fails if ```obj``` is empty.
 
 ```ruby
 verdict_refute_equal?(id, exp, act, msg = nil)
-va_equal?(id, exp, act, msg = nil)
+vr_equal?(id, exp, act, msg = nil)
 ```
 Fails if ```exp == act```.
 
@@ -39,4 +39,17 @@ For floats use verdict_refute_in_delta?.
 @[ruby](verdict_refute_equal.rb)
 
 @[xml](verdict_refute_equal.xml)
+
+#### verdict_refute_in_delta?
+
+```ruby
+verdict_refute_in_delta?(id, exp, act, delta = 0.001, msg = nil)
+vr_in_delta?(id, exp, act, delta = 0.001, msg = nil)
+````
+
+For comparing Floats. Fails if ```exp``` is within ```delta``` of ```act```.
+
+@[ruby](verdict_refute_in_delta.rb)
+
+@[xml](verdict_refute_in_delta.xml)
 
