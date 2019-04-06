@@ -118,3 +118,16 @@ Fails if ```matcher =~ obj```.
 
 @[xml](verdict_refute_match.xml)
 
+#### verdict_refute_nil?
+
+```ruby
+verdict_refute_nil?(id, obj, msg = nil)
+vr_nil?(id, obj, msg = nil)
+```
+
+Fails if ```obj``` is nil.
+
+@[ruby](verdict_refute_nil.rb)
+
+@[xml](verdict_refute_nil.xml)
+

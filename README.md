@@ -55,6 +55,7 @@ gem install minitest_log
     - [verdict_refute_instance_of?](#verdict_refute_instance_of)
     - [verdict_refute_kind_of?](#verdict_refute_kind_of)
     - [verdict_refute_match?](#verdict_refute_match)
+    - [verdict_refute_nil?](#verdict_refute_nil)
 
 ## Logs and Sections
 
@@ -167,13 +168,13 @@ end
 ```log.xml```:
 ```xml
 <log>
-  <section_ name='My section with timestamp' timestamp='2019-04-06-Sat-16.47.17.375'>
+  <section_ name='My section with timestamp' timestamp='2019-04-06-Sat-16.54.59.145'>
     Section with timestamp.
   </section_>
   <section_ name='My section with duration' duration_seconds='0.500'>
     Section with duration.
   </section_>
-  <section_ name='My section with both' timestamp='2019-04-06-Sat-16.47.17.876' duration_seconds='0.500'>
+  <section_ name='My section with both' timestamp='2019-04-06-Sat-16.54.59.646' duration_seconds='0.500'>
     Section with both.
   </section_>
 </log>
@@ -243,7 +244,7 @@ end
 ```xml
 <log>
   <section_ name='My unrescued section'>
-    <uncaught_exception_ timestamp='2019-04-06-Sat-16.47.18.748' class='RuntimeError'>
+    <uncaught_exception_ timestamp='2019-04-06-Sat-16.55.00.577' class='RuntimeError'>
       <message_>
         Boo!
       </message_>
@@ -456,7 +457,7 @@ end
       Bar
     </data_>
     <data_ name='My time' class='Time' method=':to_s'>
-      2019-04-06 16:47:15 -0500
+      2019-04-06 16:54:57 -0500
     </data_>
     <data_ name='My uri,' class='URI::HTTPS' method=':to_s'>
       https://www.github.com
@@ -903,8 +904,8 @@ require 'minitest_log'
 class Example < Minitest::Test
   def test_demo_verdict
     MinitestLog.new('verdict_assert_nil.xml') do |log|
-      log.verdict_assert_nil?(:one_id, [], 'One message')
-      log.verdict_assert_nil?(:another_id, [:a], 'Another message')
+      log.verdict_assert_nil?(:one_id, nil, 'One message')
+      log.verdict_assert_nil?(:another_id, :a, 'Another message')
     end
   end
 end
@@ -913,19 +914,12 @@ end
 ```verdict_assert_nil.xml```:
 ```xml
 <log>
-  <verdict_ method='verdict_assert_nil?' outcome='failed' id='one_id' message='One message'>
-    <actual_ class='Array' value='[]'/>
-    <exception_ class='Minitest::Assertion' message='Expected [] to be nil.'>
-      <backtrace_>
-        <level_0_ location='verdict_assert_nil.rb:5:in `block in test_demo_verdict&apos;'/>
-        <level_1_ location='verdict_assert_nil.rb:4:in `new&apos;'/>
-        <level_2_ location='verdict_assert_nil.rb:4:in `test_demo_verdict&apos;'/>
-      </backtrace_>
-    </exception_>
+  <verdict_ method='verdict_assert_nil?' outcome='passed' id='one_id' message='One message'>
+    <actual_ class='NilClass' value='nil'/>
   </verdict_>
   <verdict_ method='verdict_assert_nil?' outcome='failed' id='another_id' message='Another message'>
-    <actual_ class='Array' value='[:a]'/>
-    <exception_ class='Minitest::Assertion' message='Expected [:a] to be nil.'>
+    <actual_ class='Symbol' value=':a'/>
+    <exception_ class='Minitest::Assertion' message='Expected :a to be nil.'>
       <backtrace_>
         <level_0_ location='verdict_assert_nil.rb:6:in `block in test_demo_verdict&apos;'/>
         <level_1_ location='verdict_assert_nil.rb:4:in `new&apos;'/>
@@ -1677,6 +1671,47 @@ end
         <level_0_ location='verdict_refute_match.rb:6:in `block in test_demo_verdict&apos;'/>
         <level_1_ location='verdict_refute_match.rb:4:in `new&apos;'/>
         <level_2_ location='verdict_refute_match.rb:4:in `test_demo_verdict&apos;'/>
+      </backtrace_>
+    </exception_>
+  </verdict_>
+</log>
+```
+
+#### verdict_refute_nil?
+
+```ruby
+verdict_refute_nil?(id, obj, msg = nil)
+vr_nil?(id, obj, msg = nil)
+```
+
+Fails if ```obj``` is nil.
+
+```verdict_refute_nil.rb```:
+```ruby
+require 'minitest_log'
+class Example < Minitest::Test
+  def test_demo_verdict
+    MinitestLog.new('verdict_refute_nil.xml') do |log|
+      log.verdict_refute_nil?(:one_id, :a, 'One message')
+      log.verdict_refute_nil?(:another_id, nil, 'Another message')
+    end
+  end
+end
+```
+
+```verdict_refute_nil.xml```:
+```xml
+<log>
+  <verdict_ method='verdict_refute_nil?' outcome='passed' id='one_id' message='One message'>
+    <actual_ class='Symbol' value=':a'/>
+  </verdict_>
+  <verdict_ method='verdict_refute_nil?' outcome='failed' id='another_id' message='Another message'>
+    <actual_ class='NilClass' value='nil'/>
+    <exception_ class='Minitest::Assertion' message='Expected nil to not be nil.'>
+      <backtrace_>
+        <level_0_ location='verdict_refute_nil.rb:6:in `block in test_demo_verdict&apos;'/>
+        <level_1_ location='verdict_refute_nil.rb:4:in `new&apos;'/>
+        <level_2_ location='verdict_refute_nil.rb:4:in `test_demo_verdict&apos;'/>
       </backtrace_>
     </exception_>
   </verdict_>
