@@ -79,3 +79,16 @@ Fails if ```collection``` includes ```obj```.
 
 @[xml](verdict_refute_includes.xml)
 
+#### verdict_refute_instance_of?
+
+```ruby
+verdict_refute_instance_of?(id, cls, obj, msg = nil)
+vr_instance_of?(id, cls, obj, msg = nil)
+```
+
+Fails if ```obj``` is an instance of ```cls```.
+
+@[ruby](verdict_refute_instance_of.rb)
+
+@[xml](verdict_refute_instance_of.xml)
+
