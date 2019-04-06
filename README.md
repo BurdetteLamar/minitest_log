@@ -154,13 +154,13 @@ end
 ```log.xml```:
 ```xml
 <log>
-  <section_ name='My section with timestamp' timestamp='2019-04-06-Sat-10.58.05.185'>
+  <section_ name='My section with timestamp' timestamp='2019-04-06-Sat-11.00.51.876'>
     Section with timestamp.
   </section_>
-  <section_ name='My section with duration' duration_seconds='0.501'>
+  <section_ name='My section with duration' duration_seconds='0.500'>
     Section with duration.
   </section_>
-  <section_ name='My section with both' timestamp='2019-04-06-Sat-10.58.05.687' duration_seconds='0.501'>
+  <section_ name='My section with both' timestamp='2019-04-06-Sat-11.00.52.377' duration_seconds='0.500'>
     Section with both.
   </section_>
 </log>
@@ -230,7 +230,7 @@ end
 ```xml
 <log>
   <section_ name='My unrescued section'>
-    <uncaught_exception_ timestamp='2019-04-06-Sat-10.58.06.609' class='RuntimeError'>
+    <uncaught_exception_ timestamp='2019-04-06-Sat-11.00.53.307' class='RuntimeError'>
       <message_>
         Boo!
       </message_>
@@ -443,7 +443,7 @@ end
       Bar
     </data_>
     <data_ name='My time' class='Time' method=':to_s'>
-      2019-04-06 10:58:03 -0500
+      2019-04-06 11:00:50 -0500
     </data_>
     <data_ name='My uri,' class='URI::HTTPS' method=':to_s'>
       https://www.github.com
@@ -1055,7 +1055,6 @@ end
 </log>
 ```
 
-
 #### verdict_assert_raises?
 
 ```ruby
@@ -1064,6 +1063,42 @@ va_raises?(id, *exp) { || ... }
 ```
 
 Fails unless the block raises one of ```exp```. Returns the exception matched so you can check the message, attributes, etc.```
+
+```verdict_assert_raises.rb```:
+```ruby
+require 'minitest_log'
+class Example < Minitest::Test
+  def test_demo_verdict
+    MinitestLog.new('verdict_assert_raises.xml') do |log|
+      log.verdict_assert_raises?(:one_id, RuntimeError, 'One message') do
+        raise RuntimeError.new('Boo!')
+      end
+      log.verdict_assert_raises?(:another_id, RuntimeError, 'Another message') do
+        raise Exception.new('Boo!')
+      end
+    end
+  end
+end
+```
+
+```verdict_assert_raises.xml```:
+```xml
+<log>
+  <verdict_ method='verdict_assert_raises?' outcome='passed' id='one_id' message='One message'>
+    <error_class_ class='Class' value='RuntimeError'/>
+  </verdict_>
+  <verdict_ method='verdict_assert_raises?' outcome='failed' id='another_id' message='Another message'>
+    <error_class_ class='Class' value='RuntimeError'/>
+    <exception_ class='Minitest::Assertion' message='[RuntimeError] exception expected, not'>
+      <backtrace_>
+        <level_0_ location='verdict_assert_raises.rb:8:in `block in test_demo_verdict&apos;'/>
+        <level_1_ location='verdict_assert_raises.rb:4:in `new&apos;'/>
+        <level_2_ location='verdict_assert_raises.rb:4:in `test_demo_verdict&apos;'/>
+      </backtrace_>
+    </exception_>
+  </verdict_>
+</log>
+```
 
 
 ### Refute Verdicts

@@ -172,7 +172,6 @@ For testing with predicates.
 
 @[xml](verdict_assert_predicate.xml)
 
-
 #### verdict_assert_raises?
 
 ```ruby
@@ -181,4 +180,8 @@ va_raises?(id, *exp) { || ... }
 ```
 
 Fails unless the block raises one of ```exp```. Returns the exception matched so you can check the message, attributes, etc.```
+
+@[ruby](verdict_assert_raises.rb)
+
+@[xml](verdict_assert_raises.xml)
 
