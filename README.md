@@ -42,6 +42,7 @@ gem install minitest_log
     - [verdict_assert_predicate?](#verdict_assert_predicate)
     - [verdict_assert_raises?](#verdict_assert_raises)
     - [verdict_assert_respond_to?](#verdict_assert_respond_to)
+    - [verdict_assert_same?](#verdict_assert_same)
   - [Refute Verdicts](#refute-verdicts)
 
 ## Logs and Sections
@@ -155,13 +156,13 @@ end
 ```log.xml```:
 ```xml
 <log>
-  <section_ name='My section with timestamp' timestamp='2019-04-06-Sat-11.11.44.024'>
+  <section_ name='My section with timestamp' timestamp='2019-04-06-Sat-11.19.34.729'>
     Section with timestamp.
   </section_>
-  <section_ name='My section with duration' duration_seconds='0.500'>
+  <section_ name='My section with duration' duration_seconds='0.501'>
     Section with duration.
   </section_>
-  <section_ name='My section with both' timestamp='2019-04-06-Sat-11.11.44.525' duration_seconds='0.500'>
+  <section_ name='My section with both' timestamp='2019-04-06-Sat-11.19.35.230' duration_seconds='0.500'>
     Section with both.
   </section_>
 </log>
@@ -231,7 +232,7 @@ end
 ```xml
 <log>
   <section_ name='My unrescued section'>
-    <uncaught_exception_ timestamp='2019-04-06-Sat-11.11.45.456' class='RuntimeError'>
+    <uncaught_exception_ timestamp='2019-04-06-Sat-11.19.36.134' class='RuntimeError'>
       <message_>
         Boo!
       </message_>
@@ -444,7 +445,7 @@ end
       Bar
     </data_>
     <data_ name='My time' class='Time' method=':to_s'>
-      2019-04-06 11:11:42 -0500
+      2019-04-06 11:19:33 -0500
     </data_>
     <data_ name='My uri,' class='URI::HTTPS' method=':to_s'>
       https://www.github.com
@@ -1138,6 +1139,49 @@ end
         <level_0_ location='verdict_assert_respond_to.rb:6:in `block in test_demo_verdict&apos;'/>
         <level_1_ location='verdict_assert_respond_to.rb:4:in `new&apos;'/>
         <level_2_ location='verdict_assert_respond_to.rb:4:in `test_demo_verdict&apos;'/>
+      </backtrace_>
+    </exception_>
+  </verdict_>
+</log>
+```
+
+#### verdict_assert_same?
+
+```ruby
+verdict_assert_same?(id, exp, act, msg = nil)
+va_same?(id, exp, act, msg = nil)
+```
+
+Fails unless ```exp``` and ```act``` are ```equal?```.
+
+```verdict_assert_same.rb```:
+```ruby
+require 'minitest_log'
+class Example < Minitest::Test
+  def test_demo_verdict
+    MinitestLog.new('verdict_assert_same.xml') do |log|
+      log.verdict_assert_same?(:one_id, :foo, :foo, 'One message')
+      log.verdict_assert_same?(:another_id, 'foo', 'foo', 'Another message')
+    end
+  end
+end
+```
+
+```verdict_assert_same.xml```:
+```xml
+<log>
+  <verdict_ method='verdict_assert_same?' outcome='passed' id='one_id' message='One message'>
+    <expected_ class='Symbol' value=':foo'/>
+    <actual_ class='Symbol' value=':foo'/>
+  </verdict_>
+  <verdict_ method='verdict_assert_same?' outcome='failed' id='another_id' message='Another message'>
+    <expected_ class='String' value='&quot;foo&quot;'/>
+    <actual_ class='String' value='&quot;foo&quot;'/>
+    <exception_ class='Minitest::Assertion' message='Expected # encoding: UTF-8'>
+      <backtrace_>
+        <level_0_ location='verdict_assert_same.rb:6:in `block in test_demo_verdict&apos;'/>
+        <level_1_ location='verdict_assert_same.rb:4:in `new&apos;'/>
+        <level_2_ location='verdict_assert_same.rb:4:in `test_demo_verdict&apos;'/>
       </backtrace_>
     </exception_>
   </verdict_>

@@ -198,3 +198,16 @@ Fails unless ```obj``` responds to ```meth```.
 
 @[xml](verdict_assert_respond_to.xml)
 
+#### verdict_assert_same?
+
+```ruby
+verdict_assert_same?(id, exp, act, msg = nil)
+va_same?(id, exp, act, msg = nil)
+```
+
+Fails unless ```exp``` and ```act``` are ```equal?```.
+
+@[ruby](verdict_assert_same.rb)
+
+@[xml](verdict_assert_same.xml)
+
