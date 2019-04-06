@@ -162,13 +162,13 @@ end
 ```log.xml```:
 ```xml
 <log>
-  <section_ name='My section with timestamp' timestamp='2019-04-06-Sat-15.34.54.406'>
+  <section_ name='My section with timestamp' timestamp='2019-04-06-Sat-15.40.05.770'>
     Section with timestamp.
   </section_>
   <section_ name='My section with duration' duration_seconds='0.500'>
     Section with duration.
   </section_>
-  <section_ name='My section with both' timestamp='2019-04-06-Sat-15.34.54.907' duration_seconds='0.500'>
+  <section_ name='My section with both' timestamp='2019-04-06-Sat-15.40.06.271' duration_seconds='0.500'>
     Section with both.
   </section_>
 </log>
@@ -238,7 +238,7 @@ end
 ```xml
 <log>
   <section_ name='My unrescued section'>
-    <uncaught_exception_ timestamp='2019-04-06-Sat-15.34.55.814' class='RuntimeError'>
+    <uncaught_exception_ timestamp='2019-04-06-Sat-15.40.07.176' class='RuntimeError'>
       <message_>
         Boo!
       </message_>
@@ -451,7 +451,7 @@ end
       Bar
     </data_>
     <data_ name='My time' class='Time' method=':to_s'>
-      2019-04-06 15:34:52 -0500
+      2019-04-06 15:40:04 -0500
     </data_>
     <data_ name='My uri,' class='URI::HTTPS' method=':to_s'>
       https://www.github.com
