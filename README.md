@@ -40,6 +40,7 @@ gem install minitest_log
     - [verdict_assert_operator?](#verdict_assert_operator)
     - [verdict_assert_output?](#verdict_assert_output)
     - [verdict_assert_predicate?](#verdict_assert_predicate)
+    - [verdict_assert_raises?](#verdict_assert_raises)
   - [Refute Verdicts](#refute-verdicts)
 
 ## Logs and Sections
@@ -153,13 +154,13 @@ end
 ```log.xml```:
 ```xml
 <log>
-  <section_ name='My section with timestamp' timestamp='2019-04-06-Sat-10.45.29.979'>
+  <section_ name='My section with timestamp' timestamp='2019-04-06-Sat-10.58.05.185'>
     Section with timestamp.
   </section_>
-  <section_ name='My section with duration' duration_seconds='0.500'>
+  <section_ name='My section with duration' duration_seconds='0.501'>
     Section with duration.
   </section_>
-  <section_ name='My section with both' timestamp='2019-04-06-Sat-10.45.30.480' duration_seconds='0.500'>
+  <section_ name='My section with both' timestamp='2019-04-06-Sat-10.58.05.687' duration_seconds='0.501'>
     Section with both.
   </section_>
 </log>
@@ -229,7 +230,7 @@ end
 ```xml
 <log>
   <section_ name='My unrescued section'>
-    <uncaught_exception_ timestamp='2019-04-06-Sat-10.45.31.417' class='RuntimeError'>
+    <uncaught_exception_ timestamp='2019-04-06-Sat-10.58.06.609' class='RuntimeError'>
       <message_>
         Boo!
       </message_>
@@ -442,7 +443,7 @@ end
       Bar
     </data_>
     <data_ name='My time' class='Time' method=':to_s'>
-      2019-04-06 10:45:28 -0500
+      2019-04-06 10:58:03 -0500
     </data_>
     <data_ name='My uri,' class='URI::HTTPS' method=':to_s'>
       https://www.github.com
@@ -967,7 +968,7 @@ verdict_assert_output?(id, stdout = nil, stderr = nil) { || ... }
 va_output?(id, stdout = nil, stderr = nil) { || ... }
 ```
 
-Fails if stdout or stderr do not output the expected results. Pass in nil if you don't care about that streams output. Pass in '' if you require it to be silent. Pass in a regexp if you want to pattern match.
+Fails if ```stdout``` or ```stderr``` do not output the expected results. Pass in ```nil``` if you don't care about that streams output. Pass in ```''``` if you require it to be silent. Pass in a regexp if you want to pattern match.
 
 NOTE: this uses capture_io, not capture_subprocess_io.
 
@@ -977,11 +978,11 @@ require 'minitest_log'
 class Example < Minitest::Test
   def test_demo_verdict
     MinitestLog.new('verdict_assert_output.xml') do |log|
-      log.verdict_assert_output?(:one_id, stdout = 'Foo', stderr = "Bar") do
+      log.verdict_assert_output?(:one_id, stdout = 'Foo', stderr = 'Bar') do
         $stdout.write('Foo')
         $stderr.write('Bar')
       end
-      log.verdict_assert_output?(:another_id, stdout = 'Bar', stderr = "Foo") do
+      log.verdict_assert_output?(:another_id, stdout = 'Bar', stderr = 'Foo') do
         $stdout.write('Foo')
         $stderr.write('Bar')
       end
@@ -1018,7 +1019,7 @@ verdict_assert_predicate?(id, o1, op, msg = nil)
 va_predicate?(id, o1, op, msg = nil)
 ```
 
-Fails if stdout or stderr do not output the expected results. Pass in nil if you don't care about For testing with predicates.
+For testing with predicates.
 
 ```verdict_assert_predicate.rb```:
 ```ruby
@@ -1053,6 +1054,16 @@ end
   </verdict_>
 </log>
 ```
+
+
+#### verdict_assert_raises?
+
+```ruby
+verdict_assert_raises?(id, *exp) { || ... }
+va_raises?(id, *exp) { || ... }
+```
+
+Fails unless the block raises one of ```exp```. Returns the exception matched so you can check the message, attributes, etc.```
 
 
 ### Refute Verdicts
