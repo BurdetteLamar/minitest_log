@@ -53,6 +53,7 @@ gem install minitest_log
     - [verdict_refute_in_epsilon?](#verdict_refute_in_epsilon)
     - [verdict_refute_includes?](#verdict_refute_includes)
     - [verdict_refute_instance_of?](#verdict_refute_instance_of)
+    - [verdict_refute_kind_of?](#verdict_refute_kind_of)
 
 ## Logs and Sections
 
@@ -165,13 +166,13 @@ end
 ```log.xml```:
 ```xml
 <log>
-  <section_ name='My section with timestamp' timestamp='2019-04-06-Sat-16.35.40.003'>
+  <section_ name='My section with timestamp' timestamp='2019-04-06-Sat-16.40.50.933'>
     Section with timestamp.
   </section_>
   <section_ name='My section with duration' duration_seconds='0.500'>
     Section with duration.
   </section_>
-  <section_ name='My section with both' timestamp='2019-04-06-Sat-16.35.40.504' duration_seconds='0.500'>
+  <section_ name='My section with both' timestamp='2019-04-06-Sat-16.40.51.433' duration_seconds='0.500'>
     Section with both.
   </section_>
 </log>
@@ -241,7 +242,7 @@ end
 ```xml
 <log>
   <section_ name='My unrescued section'>
-    <uncaught_exception_ timestamp='2019-04-06-Sat-16.35.41.413' class='RuntimeError'>
+    <uncaught_exception_ timestamp='2019-04-06-Sat-16.40.52.291' class='RuntimeError'>
       <message_>
         Boo!
       </message_>
@@ -454,7 +455,7 @@ end
       Bar
     </data_>
     <data_ name='My time' class='Time' method=':to_s'>
-      2019-04-06 16:35:38 -0500
+      2019-04-06 16:40:49 -0500
     </data_>
     <data_ name='My uri,' class='URI::HTTPS' method=':to_s'>
       https://www.github.com
@@ -1589,6 +1590,49 @@ end
         <level_0_ location='verdict_refute_instance_of.rb:6:in `block in test_demo_verdict&apos;'/>
         <level_1_ location='verdict_refute_instance_of.rb:4:in `new&apos;'/>
         <level_2_ location='verdict_refute_instance_of.rb:4:in `test_demo_verdict&apos;'/>
+      </backtrace_>
+    </exception_>
+  </verdict_>
+</log>
+```
+
+#### verdict_refute_kind_of?
+
+```ruby
+verdict_refute_kind_of?(id, cls, obj, msg = nil)
+vr_kind_of?(id, cls, obj, msg = nil)
+```
+
+Fails if ```obj``` is a kind of ```cls```.
+
+```verdict_refute_kind_of.rb```:
+```ruby
+require 'minitest_log'
+class Example < Minitest::Test
+  def test_demo_verdict
+    MinitestLog.new('verdict_refute_kind_of.xml') do |log|
+      log.verdict_refute_kind_of?(:one_id, String, 1.0, 'One message')
+      log.verdict_refute_kind_of?(:another_id, Numeric, 1.0, 'Another message')
+    end
+  end
+end
+```
+
+```verdict_refute_kind_of.xml```:
+```xml
+<log>
+  <verdict_ method='verdict_refute_kind_of?' outcome='passed' id='one_id' message='One message'>
+    <expected_ class='Class' value='String'/>
+    <actual_ class='Float' value='1.0'/>
+  </verdict_>
+  <verdict_ method='verdict_refute_kind_of?' outcome='failed' id='another_id' message='Another message'>
+    <expected_ class='Class' value='Numeric'/>
+    <actual_ class='Float' value='1.0'/>
+    <exception_ class='Minitest::Assertion' message='Expected 1.0 to not be a kind of Numeric.'>
+      <backtrace_>
+        <level_0_ location='verdict_refute_kind_of.rb:6:in `block in test_demo_verdict&apos;'/>
+        <level_1_ location='verdict_refute_kind_of.rb:4:in `new&apos;'/>
+        <level_2_ location='verdict_refute_kind_of.rb:4:in `test_demo_verdict&apos;'/>
       </backtrace_>
     </exception_>
   </verdict_>

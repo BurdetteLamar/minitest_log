@@ -92,3 +92,16 @@ Fails if ```obj``` is an instance of ```cls```.
 
 @[xml](verdict_refute_instance_of.xml)
 
+#### verdict_refute_kind_of?
+
+```ruby
+verdict_refute_kind_of?(id, cls, obj, msg = nil)
+vr_kind_of?(id, cls, obj, msg = nil)
+```
+
+Fails if ```obj``` is a kind of ```cls```.
+
+@[ruby](verdict_refute_kind_of.rb)
+
+@[xml](verdict_refute_kind_of.xml)
+
