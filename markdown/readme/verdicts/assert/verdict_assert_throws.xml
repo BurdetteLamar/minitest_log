@@ -1,0 +1,15 @@
+<log>
+  <verdict_ method='verdict_assert_throws?' outcome='passed' id='one_id' message='One message'>
+    <error_class_ class='Symbol' value=':foo'/>
+  </verdict_>
+  <verdict_ method='verdict_assert_throws?' outcome='failed' id='another_id' message='Another message'>
+    <error_class_ class='Symbol' value=':foo'/>
+    <exception_ class='Minitest::Assertion' message='Expected :foo to have been thrown, not :bar.'>
+      <backtrace_>
+        <level_0_ location='verdict_assert_throws.rb:8:in `block in test_demo_verdict&apos;'/>
+        <level_1_ location='verdict_assert_throws.rb:4:in `new&apos;'/>
+        <level_2_ location='verdict_assert_throws.rb:4:in `test_demo_verdict&apos;'/>
+      </backtrace_>
+    </exception_>
+  </verdict_>
+</log>

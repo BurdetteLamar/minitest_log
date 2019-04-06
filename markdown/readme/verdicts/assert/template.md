@@ -224,3 +224,16 @@ Fails if the block outputs anything to ```stderr``` or ```stdout```.
 
 @[xml](verdict_assert_silent.xml)
 
+#### verdict_assert_throws?
+
+```ruby
+verdict_assert_throws?(id, sym, msg = nil) { || ... } 
+va_throws?(id, sym, msg = nil) { || ... } 
+```
+
+Fails unless the block throws ```sym```.
+
+@[ruby](verdict_assert_throws.rb)
+
+@[xml](verdict_assert_throws.xml)
+
