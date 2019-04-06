@@ -131,3 +131,16 @@ Fails if ```obj``` is nil.
 
 @[xml](verdict_refute_nil.xml)
 
+#### verdict_refute_operator?
+
+```ruby
+verdict_refute_operator?(id, o1, op, o2 = UNDEFINED, msg = nil)
+vr_operator?(id, o1, op, o2 = UNDEFINED, msg = nil)
+````
+
+Fails if ```o1``` is not ```op``` ```o2```.
+
+@[ruby](verdict_refute_operator.rb)
+
+@[xml](verdict_refute_operator.xml)
+
