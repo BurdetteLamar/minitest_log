@@ -419,22 +419,22 @@ class VerdictTest < MiniTest::Test
   def test_verdict_assert_throws
     method, abbrev_method = methods_for_test(__method__)
     [method, abbrev_method].each do |_method|
-    name = _test_name(method, 'pass')
-    with_verdict_test_log(name) do |log|
-      log.send(_method, '0', Exception) do
-        throw Exception
+      name = _test_name(method, 'pass')
+      with_verdict_test_log(name) do |log|
+        log.send(_method, '0', :foo) do
+          throw :foo
+        end
+      end
+      name = _test_name(method, 'fail')
+      with_verdict_test_log(name) do |log|
+        log.send(_method, '1', :foo) do
+        end
+      end
+      name = _test_name(method, 'error')
+      with_verdict_test_log(name) do |log|
+        log.send(_method, '2')
       end
     end
-    name = _test_name(method, 'fail')
-    with_verdict_test_log(name) do |log|
-      log.send(_method, '1', RuntimeError) do
-      end
-    end
-    name = _test_name(method, 'error')
-    with_verdict_test_log(name) do |log|
-      log.send(_method, '2')
-    end
-      end
   end
 
 end

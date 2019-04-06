@@ -151,11 +151,89 @@ verdict_assert_output?(id, stdout = nil, stderr = nil) { || ... }
 va_output?(id, stdout = nil, stderr = nil) { || ... }
 ```
 
-Fails if stdout or stderr do not output the expected results. Pass in nil if you don't care about that streams output. Pass in '' if you require it to be silent. Pass in a regexp if you want to pattern match.
+Fails if ```stdout``` or ```stderr``` do not output the expected results. Pass in ```nil``` if you don't care about that streams output. Pass in ```''``` if you require it to be silent. Pass in a regexp if you want to pattern match.
 
 NOTE: this uses capture_io, not capture_subprocess_io.
 
 @[ruby](verdict_assert_output.rb)
 
 @[xml](verdict_assert_output.xml)
+
+#### verdict_assert_predicate?
+
+```ruby
+verdict_assert_predicate?(id, o1, op, msg = nil)
+va_predicate?(id, o1, op, msg = nil)
+```
+
+For testing with predicates.
+
+@[ruby](verdict_assert_predicate.rb)
+
+@[xml](verdict_assert_predicate.xml)
+
+#### verdict_assert_raises?
+
+```ruby
+verdict_assert_raises?(id, *exp) { || ... }
+va_raises?(id, *exp) { || ... }
+```
+
+Fails unless the block raises one of ```exp```. Returns the exception matched so you can check the message, attributes, etc.
+
+@[ruby](verdict_assert_raises.rb)
+
+@[xml](verdict_assert_raises.xml)
+
+#### verdict_assert_respond_to?
+
+```ruby
+verdict_assert_respond_to?(id, obj, meth, msg = nil)
+va_respond_to?(id, obj, meth, msg = nil)
+```
+
+Fails unless ```obj``` responds to ```meth```.
+
+@[ruby](verdict_assert_respond_to.rb)
+
+@[xml](verdict_assert_respond_to.xml)
+
+#### verdict_assert_same?
+
+```ruby
+verdict_assert_same?(id, exp, act, msg = nil)
+va_same?(id, exp, act, msg = nil)
+```
+
+Fails unless ```exp``` and ```act``` are ```equal?```.
+
+@[ruby](verdict_assert_same.rb)
+
+@[xml](verdict_assert_same.xml)
+
+#### verdict_assert_silent?
+
+```ruby
+verdict_assert_silent?(id) { || ... }
+va_silent?(id) { || ... }
+```
+
+Fails if the block outputs anything to ```stderr``` or ```stdout```.
+
+@[ruby](verdict_assert_silent.rb)
+
+@[xml](verdict_assert_silent.xml)
+
+#### verdict_assert_throws?
+
+```ruby
+verdict_assert_throws?(id, sym, msg = nil) { || ... } 
+va_throws?(id, sym, msg = nil) { || ... } 
+```
+
+Fails unless the block throws ```sym```.
+
+@[ruby](verdict_assert_throws.rb)
+
+@[xml](verdict_assert_throws.xml)
 
