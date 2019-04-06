@@ -43,6 +43,7 @@ gem install minitest_log
     - [verdict_assert_raises?](#verdict_assert_raises)
     - [verdict_assert_respond_to?](#verdict_assert_respond_to)
     - [verdict_assert_same?](#verdict_assert_same)
+    - [verdict_assert_silent?](#verdict_assert_silent)
   - [Refute Verdicts](#refute-verdicts)
 
 ## Logs and Sections
@@ -156,13 +157,13 @@ end
 ```log.xml```:
 ```xml
 <log>
-  <section_ name='My section with timestamp' timestamp='2019-04-06-Sat-11.19.34.729'>
+  <section_ name='My section with timestamp' timestamp='2019-04-06-Sat-11.29.33.947'>
     Section with timestamp.
   </section_>
-  <section_ name='My section with duration' duration_seconds='0.501'>
+  <section_ name='My section with duration' duration_seconds='0.500'>
     Section with duration.
   </section_>
-  <section_ name='My section with both' timestamp='2019-04-06-Sat-11.19.35.230' duration_seconds='0.500'>
+  <section_ name='My section with both' timestamp='2019-04-06-Sat-11.29.34.448' duration_seconds='0.500'>
     Section with both.
   </section_>
 </log>
@@ -232,7 +233,7 @@ end
 ```xml
 <log>
   <section_ name='My unrescued section'>
-    <uncaught_exception_ timestamp='2019-04-06-Sat-11.19.36.134' class='RuntimeError'>
+    <uncaught_exception_ timestamp='2019-04-06-Sat-11.29.35.350' class='RuntimeError'>
       <message_>
         Boo!
       </message_>
@@ -445,7 +446,7 @@ end
       Bar
     </data_>
     <data_ name='My time' class='Time' method=':to_s'>
-      2019-04-06 11:19:33 -0500
+      2019-04-06 11:29:32 -0500
     </data_>
     <data_ name='My uri,' class='URI::HTTPS' method=':to_s'>
       https://www.github.com
@@ -1182,6 +1183,47 @@ end
         <level_0_ location='verdict_assert_same.rb:6:in `block in test_demo_verdict&apos;'/>
         <level_1_ location='verdict_assert_same.rb:4:in `new&apos;'/>
         <level_2_ location='verdict_assert_same.rb:4:in `test_demo_verdict&apos;'/>
+      </backtrace_>
+    </exception_>
+  </verdict_>
+</log>
+```
+
+#### verdict_assert_silent?
+
+```ruby
+verdict_assert_silent?(id) { || ... }
+va_silent?(id) { || ... }
+```
+
+Fails if the block outputs anything to ```stderr``` or ```stdout```.
+
+```verdict_assert_silent.rb```:
+```ruby
+require 'minitest_log'
+class Example < Minitest::Test
+  def test_demo_verdict
+    MinitestLog.new('verdict_assert_silent.xml') do |log|
+      log.verdict_assert_silent?(:one_id) do
+      end
+      log.verdict_assert_silent?(:another_id) do
+        $stdout.write('Foo')
+      end
+    end
+  end
+end
+```
+
+```verdict_assert_silent.xml```:
+```xml
+<log>
+  <verdict_ method='verdict_assert_silent?' outcome='passed' id='one_id'/>
+  <verdict_ method='verdict_assert_silent?' outcome='failed' id='another_id'>
+    <exception_ class='Minitest::Assertion' message='In stdout.'>
+      <backtrace_>
+        <level_0_ location='verdict_assert_silent.rb:7:in `block in test_demo_verdict&apos;'/>
+        <level_1_ location='verdict_assert_silent.rb:4:in `new&apos;'/>
+        <level_2_ location='verdict_assert_silent.rb:4:in `test_demo_verdict&apos;'/>
       </backtrace_>
     </exception_>
   </verdict_>

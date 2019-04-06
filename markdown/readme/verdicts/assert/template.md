@@ -211,3 +211,16 @@ Fails unless ```exp``` and ```act``` are ```equal?```.
 
 @[xml](verdict_assert_same.xml)
 
+#### verdict_assert_silent?
+
+```ruby
+verdict_assert_silent?(id) { || ... }
+va_silent?(id) { || ... }
+```
+
+Fails if the block outputs anything to ```stderr``` or ```stdout```.
+
+@[ruby](verdict_assert_silent.rb)
+
+@[xml](verdict_assert_silent.xml)
+
