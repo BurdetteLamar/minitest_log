@@ -50,6 +50,7 @@ gem install minitest_log
     - [verdict_refute_empty?](#verdict_refute_empty)
     - [verdict_refute_equal?](#verdict_refute_equal)
     - [verdict_refute_in_delta?](#verdict_refute_in_delta)
+    - [verdict_refute_in_epsilon?](#verdict_refute_in_epsilon)
 
 ## Logs and Sections
 
@@ -162,13 +163,13 @@ end
 ```log.xml```:
 ```xml
 <log>
-  <section_ name='My section with timestamp' timestamp='2019-04-06-Sat-15.40.05.770'>
+  <section_ name='My section with timestamp' timestamp='2019-04-06-Sat-16.26.04.847'>
     Section with timestamp.
   </section_>
   <section_ name='My section with duration' duration_seconds='0.500'>
     Section with duration.
   </section_>
-  <section_ name='My section with both' timestamp='2019-04-06-Sat-15.40.06.271' duration_seconds='0.500'>
+  <section_ name='My section with both' timestamp='2019-04-06-Sat-16.26.05.347' duration_seconds='0.500'>
     Section with both.
   </section_>
 </log>
@@ -238,7 +239,7 @@ end
 ```xml
 <log>
   <section_ name='My unrescued section'>
-    <uncaught_exception_ timestamp='2019-04-06-Sat-15.40.07.176' class='RuntimeError'>
+    <uncaught_exception_ timestamp='2019-04-06-Sat-16.26.06.210' class='RuntimeError'>
       <message_>
         Boo!
       </message_>
@@ -451,7 +452,7 @@ end
       Bar
     </data_>
     <data_ name='My time' class='Time' method=':to_s'>
-      2019-04-06 15:40:04 -0500
+      2019-04-06 16:26:03 -0500
     </data_>
     <data_ name='My uri,' class='URI::HTTPS' method=':to_s'>
       https://www.github.com
@@ -1455,6 +1456,51 @@ end
         <level_0_ location='verdict_refute_in_delta.rb:6:in `block in test_demo_verdict&apos;'/>
         <level_1_ location='verdict_refute_in_delta.rb:4:in `new&apos;'/>
         <level_2_ location='verdict_refute_in_delta.rb:4:in `test_demo_verdict&apos;'/>
+      </backtrace_>
+    </exception_>
+  </verdict_>
+</log>
+```
+
+#### verdict_refute_in_epsilon?
+
+```ruby
+verdict_ refute_in_epsilon?(id, a, b, epsilon = 0.001, msg = nil) 
+vr_in_epsilon?(id, a, b, epsilon = 0.001, msg = nil) 
+```
+
+For comparing Floats. Fails if ```exp``` and ```act``` have a relative error less than ```epsilon```.
+
+```verdict_refute_in_epsilon.rb```:
+```ruby
+require 'minitest_log'
+class Example < Minitest::Test
+  def test_demo_verrdict
+    MinitestLog.new('verdict_refute_in_epsilon.xml') do |log|
+      log.verdict_refute_in_epsilon?(:one_id, 3, 2, 0, 'One message')
+      log.verdict_refute_in_epsilon?(:another_id, 3, 2, 1, 'Another message')
+    end
+  end
+end
+```
+
+```verdict_refute_in_epsilon.xml```:
+```xml
+<log>
+  <verdict_ method='verdict_refute_in_epsilon?' outcome='passed' id='one_id' message='One message'>
+    <expected_ class='Integer' value='3'/>
+    <actual_ class='Integer' value='2'/>
+    <epsilon_ class='Integer' value='0'/>
+  </verdict_>
+  <verdict_ method='verdict_refute_in_epsilon?' outcome='failed' id='another_id' message='Another message'>
+    <expected_ class='Integer' value='3'/>
+    <actual_ class='Integer' value='2'/>
+    <epsilon_ class='Integer' value='1'/>
+    <exception_ class='Minitest::Assertion' message='Expected |3 - 2| (1) to not be &lt;= 3.'>
+      <backtrace_>
+        <level_0_ location='verdict_refute_in_epsilon.rb:6:in `block in test_demo_verrdict&apos;'/>
+        <level_1_ location='verdict_refute_in_epsilon.rb:4:in `new&apos;'/>
+        <level_2_ location='verdict_refute_in_epsilon.rb:4:in `test_demo_verrdict&apos;'/>
       </backtrace_>
     </exception_>
   </verdict_>

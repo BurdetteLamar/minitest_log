@@ -53,3 +53,16 @@ For comparing Floats. Fails if ```exp``` is within ```delta``` of ```act```.
 
 @[xml](verdict_refute_in_delta.xml)
 
+#### verdict_refute_in_epsilon?
+
+```ruby
+verdict_ refute_in_epsilon?(id, a, b, epsilon = 0.001, msg = nil) 
+vr_in_epsilon?(id, a, b, epsilon = 0.001, msg = nil) 
+```
+
+For comparing Floats. Fails if ```exp``` and ```act``` have a relative error less than ```epsilon```.
+
+@[ruby](verdict_refute_in_epsilon.rb)
+
+@[xml](verdict_refute_in_epsilon.xml)
+
