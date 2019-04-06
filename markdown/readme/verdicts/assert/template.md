@@ -159,3 +159,16 @@ NOTE: this uses capture_io, not capture_subprocess_io.
 
 @[xml](verdict_assert_output.xml)
 
+#### verdict_assert_predicate?
+
+```ruby
+verdict_assert_predicate?(id, o1, op, msg = nil)
+va_predicate?(id, o1, op, msg = nil)
+```
+
+Fails if stdout or stderr do not output the expected results. Pass in nil if you don't care about For testing with predicates.
+
+@[ruby](verdict_assert_predicate.rb)
+
+@[xml](verdict_assert_predicate.xml)
+
