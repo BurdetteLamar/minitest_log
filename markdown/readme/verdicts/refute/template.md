@@ -66,3 +66,16 @@ For comparing Floats. Fails if ```exp``` and ```act``` have a relative error les
 
 @[xml](verdict_refute_in_epsilon.xml)
 
+#### verdict_refute_includes?
+
+```ruby
+verdict_refute_includes?(id, collection, obj, msg = nil) 
+vr_includes?(id, collection, obj, msg = nil) 
+```
+
+Fails if ```collection``` includes ```obj```.
+
+@[ruby](verdict_refute_includes.rb)
+
+@[xml](verdict_refute_includes.xml)
+
