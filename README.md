@@ -46,6 +46,7 @@ gem install minitest_log
     - [verdict_assert_silent?](#verdict_assert_silent)
     - [verdict_assert_throws?](#verdict_assert_throws)
   - [Refute Verdicts](#refute-verdicts)
+    - [verdict_refute?](#verdict_refute)
 
 ## Logs and Sections
 
@@ -158,13 +159,13 @@ end
 ```log.xml```:
 ```xml
 <log>
-  <section_ name='My section with timestamp' timestamp='2019-04-06-Sat-12.11.42.694'>
+  <section_ name='My section with timestamp' timestamp='2019-04-06-Sat-12.25.07.767'>
     Section with timestamp.
   </section_>
-  <section_ name='My section with duration' duration_seconds='0.500'>
+  <section_ name='My section with duration' duration_seconds='0.501'>
     Section with duration.
   </section_>
-  <section_ name='My section with both' timestamp='2019-04-06-Sat-12.11.43.194' duration_seconds='0.500'>
+  <section_ name='My section with both' timestamp='2019-04-06-Sat-12.25.08.268' duration_seconds='0.500'>
     Section with both.
   </section_>
 </log>
@@ -234,7 +235,7 @@ end
 ```xml
 <log>
   <section_ name='My unrescued section'>
-    <uncaught_exception_ timestamp='2019-04-06-Sat-12.11.44.116' class='RuntimeError'>
+    <uncaught_exception_ timestamp='2019-04-06-Sat-12.25.09.131' class='RuntimeError'>
       <message_>
         Boo!
       </message_>
@@ -447,7 +448,7 @@ end
       Bar
     </data_>
     <data_ name='My time' class='Time' method=':to_s'>
-      2019-04-06 12:11:41 -0500
+      2019-04-06 12:25:06 -0500
     </data_>
     <data_ name='My uri,' class='URI::HTTPS' method=':to_s'>
       https://www.github.com
@@ -494,11 +495,11 @@ Verdict methods are described below.  For each, the following is given:
 #### verdict_assert?
 
 ```ruby
-verdict_assert?(id, obj, msg = nil)
-va?(id, obj, msg = nil)
+verdict_assert?(id, test, msg = nil)
+va?(id, test, msg = nil)
 ```
 
-Fails unless ```obj``` is truthy.
+Fails unless ```test``` is a true value.
 
 ```verdict_assert.rb```:
 ```ruby
@@ -1278,5 +1279,46 @@ end
 
 
 ### Refute Verdicts
+
+#### verdict_refute?
+
+```ruby
+verdict_refute?(id, test, msg = nil)
+vr?(id, test, msg = nil)
+```
+
+Fails if ```test``` is a true value.
+
+```verdict_refute.rb```:
+```ruby
+require 'minitest_log'
+class Example < Minitest::Test
+  def test_demo_verdict
+    MinitestLog.new('verdict_refute.xml') do |log|
+      log.verdict_refute?(:one_id, false, 'One message')
+      log.verdict_refute?(:another_id, true, 'Another message')
+    end
+  end
+end
+```
+
+```verdict_refute.xml```:
+```xml
+<log>
+  <verdict_ method='verdict_refute?' outcome='passed' id='one_id' message='One message'>
+    <actual_ class='FalseClass' value='false'/>
+  </verdict_>
+  <verdict_ method='verdict_refute?' outcome='failed' id='another_id' message='Another message'>
+    <actual_ class='TrueClass' value='true'/>
+    <exception_ class='Minitest::Assertion' message='Expected true to not be truthy.'>
+      <backtrace_>
+        <level_0_ location='verdict_refute.rb:6:in `block in test_demo_verdict&apos;'/>
+        <level_1_ location='verdict_refute.rb:4:in `new&apos;'/>
+        <level_2_ location='verdict_refute.rb:4:in `test_demo_verdict&apos;'/>
+      </backtrace_>
+    </exception_>
+  </verdict_>
+</log>
+```
 
 

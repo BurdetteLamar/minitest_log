@@ -3,11 +3,11 @@
 #### verdict_assert?
 
 ```ruby
-verdict_assert?(id, obj, msg = nil)
-va?(id, obj, msg = nil)
+verdict_assert?(id, test, msg = nil)
+va?(id, test, msg = nil)
 ```
 
-Fails unless ```obj``` is truthy.
+Fails unless ```test``` is a true value.
 
 @[ruby](verdict_assert.rb)
 
