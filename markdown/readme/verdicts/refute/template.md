@@ -144,3 +144,16 @@ Fails if ```o1``` is not ```op``` ```o2```.
 
 @[xml](verdict_refute_operator.xml)
 
+#### verdict_refute_predicate?
+
+```ruby
+verdict_refute_predicate?(id, o1, op, msg = nil)
+vr_predicate?(id, o1, op, msg = nil)
+```
+
+For testing with predicates.
+
+@[ruby](verdict_refute_predicate.rb)
+
+@[xml](verdict_refute_predicate.xml)
+

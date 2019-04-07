@@ -57,6 +57,7 @@ gem install minitest_log
     - [verdict_refute_match?](#verdict_refute_match)
     - [verdict_refute_nil?](#verdict_refute_nil)
     - [verdict_refute_operator?](#verdict_refute_operator)
+    - [verdict_refute_predicate?](#verdict_refute_predicate)
 
 ## Logs and Sections
 
@@ -169,13 +170,13 @@ end
 ```log.xml```:
 ```xml
 <log>
-  <section_ name='My section with timestamp' timestamp='2019-04-06-Sat-17.03.45.157'>
+  <section_ name='My section with timestamp' timestamp='2019-04-07-Sun-14.56.55.647'>
     Section with timestamp.
   </section_>
   <section_ name='My section with duration' duration_seconds='0.500'>
     Section with duration.
   </section_>
-  <section_ name='My section with both' timestamp='2019-04-06-Sat-17.03.45.657' duration_seconds='0.500'>
+  <section_ name='My section with both' timestamp='2019-04-07-Sun-14.56.56.148' duration_seconds='0.500'>
     Section with both.
   </section_>
 </log>
@@ -245,7 +246,7 @@ end
 ```xml
 <log>
   <section_ name='My unrescued section'>
-    <uncaught_exception_ timestamp='2019-04-06-Sat-17.03.46.560' class='RuntimeError'>
+    <uncaught_exception_ timestamp='2019-04-07-Sun-14.56.57.063' class='RuntimeError'>
       <message_>
         Boo!
       </message_>
@@ -458,7 +459,7 @@ end
       Bar
     </data_>
     <data_ name='My time' class='Time' method=':to_s'>
-      2019-04-06 17:03:43 -0500
+      2019-04-07 14:56:54 -0500
     </data_>
     <data_ name='My uri,' class='URI::HTTPS' method=':to_s'>
       https://www.github.com
@@ -1758,6 +1759,49 @@ end
         <level_0_ location='verdict_refute_operator.rb:6:in `block in test_demo_verdict&apos;'/>
         <level_1_ location='verdict_refute_operator.rb:4:in `new&apos;'/>
         <level_2_ location='verdict_refute_operator.rb:4:in `test_demo_verdict&apos;'/>
+      </backtrace_>
+    </exception_>
+  </verdict_>
+</log>
+```
+
+#### verdict_refute_predicate?
+
+```ruby
+verdict_refute_predicate?(id, o1, op, msg = nil)
+vr_predicate?(id, o1, op, msg = nil)
+```
+
+For testing with predicates.
+
+```verdict_refute_predicate.rb```:
+```ruby
+require 'minitest_log'
+class Example < Minitest::Test
+  def test_demo_verdict
+    MinitestLog.new('verdict_refute_predicate.xml') do |log|
+      log.verdict_refute_predicate?(:one_id, 'x', :empty?, 'One message')
+      log.verdict_refute_predicate?(:another_id, '', :empty?, 'Another message')
+    end
+  end
+end
+```
+
+```verdict_refute_predicate.xml```:
+```xml
+<log>
+  <verdict_ method='verdict_refute_predicate?' outcome='passed' id='one_id' message='One message'>
+    <object_ class='String' value='&quot;x&quot;'/>
+    <operator_ class='Symbol' value=':empty?'/>
+  </verdict_>
+  <verdict_ method='verdict_refute_predicate?' outcome='failed' id='another_id' message='Another message'>
+    <object_ class='String' value='&quot;&quot;'/>
+    <operator_ class='Symbol' value=':empty?'/>
+    <exception_ class='Minitest::Assertion' message='Expected # encoding: UTF-8'>
+      <backtrace_>
+        <level_0_ location='verdict_refute_predicate.rb:6:in `block in test_demo_verdict&apos;'/>
+        <level_1_ location='verdict_refute_predicate.rb:4:in `new&apos;'/>
+        <level_2_ location='verdict_refute_predicate.rb:4:in `test_demo_verdict&apos;'/>
       </backtrace_>
     </exception_>
   </verdict_>
