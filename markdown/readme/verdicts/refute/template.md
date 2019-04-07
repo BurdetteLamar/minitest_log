@@ -157,3 +157,16 @@ For testing with predicates.
 
 @[xml](verdict_refute_predicate.xml)
 
+#### verdict_refute_respond_to?
+
+```ruby
+verdict_refute_respond_to?(id, obj, meth, msg = nil)
+vr_respond_to?(id, obj, meth, msg = nil)
+```
+
+Fails if ```obj``` responds to ```meth```.
+
+@[ruby](verdict_refute_respond_to.rb)
+
+@[xml](verdict_refute_respond_to.xml)
+
