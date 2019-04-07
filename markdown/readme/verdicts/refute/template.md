@@ -170,3 +170,16 @@ Fails if ```obj``` responds to ```meth```.
 
 @[xml](verdict_refute_respond_to.xml)
 
+#### verdict_refute_same?
+
+```ruby
+verdict_refute_same?(id, exp, act, msg = nil)
+vr_same?(id, exp, act, msg = nil)
+```
+
+Fails if ```exp``` is the same (by object identity) as ```act```.
+
+@[ruby](verdict_refute_same.rb)
+
+@[xml](verdict_refute_same.xml)
+

@@ -59,6 +59,7 @@ gem install minitest_log
     - [verdict_refute_operator?](#verdict_refute_operator)
     - [verdict_refute_predicate?](#verdict_refute_predicate)
     - [verdict_refute_respond_to?](#verdict_refute_respond_to)
+    - [verdict_refute_same?](#verdict_refute_same)
 
 ## Logs and Sections
 
@@ -171,13 +172,13 @@ end
 ```log.xml```:
 ```xml
 <log>
-  <section_ name='My section with timestamp' timestamp='2019-04-07-Sun-15.02.22.404'>
+  <section_ name='My section with timestamp' timestamp='2019-04-07-Sun-15.07.35.459'>
     Section with timestamp.
   </section_>
   <section_ name='My section with duration' duration_seconds='0.500'>
     Section with duration.
   </section_>
-  <section_ name='My section with both' timestamp='2019-04-07-Sun-15.02.22.905' duration_seconds='0.500'>
+  <section_ name='My section with both' timestamp='2019-04-07-Sun-15.07.37.101' duration_seconds='0.500'>
     Section with both.
   </section_>
 </log>
@@ -247,7 +248,7 @@ end
 ```xml
 <log>
   <section_ name='My unrescued section'>
-    <uncaught_exception_ timestamp='2019-04-07-Sun-15.02.23.809' class='RuntimeError'>
+    <uncaught_exception_ timestamp='2019-04-07-Sun-15.07.37.996' class='RuntimeError'>
       <message_>
         Boo!
       </message_>
@@ -460,7 +461,7 @@ end
       Bar
     </data_>
     <data_ name='My time' class='Time' method=':to_s'>
-      2019-04-07 15:02:20 -0500
+      2019-04-07 15:07:34 -0500
     </data_>
     <data_ name='My uri,' class='URI::HTTPS' method=':to_s'>
       https://www.github.com
@@ -1846,6 +1847,49 @@ end
         <level_0_ location='verdict_refute_respond_to.rb:6:in `block in test_demo_verdict&apos;'/>
         <level_1_ location='verdict_refute_respond_to.rb:4:in `new&apos;'/>
         <level_2_ location='verdict_refute_respond_to.rb:4:in `test_demo_verdict&apos;'/>
+      </backtrace_>
+    </exception_>
+  </verdict_>
+</log>
+```
+
+#### verdict_refute_same?
+
+```ruby
+verdict_refute_same?(id, exp, act, msg = nil)
+vr_same?(id, exp, act, msg = nil)
+```
+
+Fails if ```exp``` is the same (by object identity) as ```act```.
+
+```verdict_refute_same.rb```:
+```ruby
+require 'minitest_log'
+class Example < Minitest::Test
+  def test_demo_verdict
+    MinitestLog.new('verdict_refute_same.xml') do |log|
+      log.verdict_refute_same?(:one_id, 'foo', 'foo', 'One message')
+      log.verdict_refute_same?(:another_id, :foo, :foo, 'Another message')
+    end
+  end
+end
+```
+
+```verdict_refute_same.xml```:
+```xml
+<log>
+  <verdict_ method='verdict_refute_same?' outcome='passed' id='one_id' message='One message'>
+    <expected_ class='String' value='&quot;foo&quot;'/>
+    <actual_ class='String' value='&quot;foo&quot;'/>
+  </verdict_>
+  <verdict_ method='verdict_refute_same?' outcome='failed' id='another_id' message='Another message'>
+    <expected_ class='Symbol' value=':foo'/>
+    <actual_ class='Symbol' value=':foo'/>
+    <exception_ class='Minitest::Assertion' message='Expected :foo (oid=1043228) to not be the same as :foo (oid=1043228).'>
+      <backtrace_>
+        <level_0_ location='verdict_refute_same.rb:6:in `block in test_demo_verdict&apos;'/>
+        <level_1_ location='verdict_refute_same.rb:4:in `new&apos;'/>
+        <level_2_ location='verdict_refute_same.rb:4:in `test_demo_verdict&apos;'/>
       </backtrace_>
     </exception_>
   </verdict_>
