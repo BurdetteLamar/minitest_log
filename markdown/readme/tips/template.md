@@ -16,7 +16,7 @@ if log.verdict_assert_equal?(
   user_name,     # Expected user name.
   user.name,     # Actual user name.
   )
-  log.verdict_assert_match()
+  log.verdict_assert_match
   SomeApi.delete_user(user.id)
 end
 

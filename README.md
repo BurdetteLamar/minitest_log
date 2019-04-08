@@ -172,13 +172,13 @@ end
 ```log.xml```:
 ```xml
 <log>
-  <section_ name='My section with timestamp' timestamp='2019-04-07-Sun-15.07.35.459'>
+  <section_ name='My section with timestamp' timestamp='2019-04-08-Mon-15.37.05.999'>
     Section with timestamp.
   </section_>
   <section_ name='My section with duration' duration_seconds='0.500'>
     Section with duration.
   </section_>
-  <section_ name='My section with both' timestamp='2019-04-07-Sun-15.07.37.101' duration_seconds='0.500'>
+  <section_ name='My section with both' timestamp='2019-04-08-Mon-15.37.06.500' duration_seconds='0.501'>
     Section with both.
   </section_>
 </log>
@@ -248,7 +248,7 @@ end
 ```xml
 <log>
   <section_ name='My unrescued section'>
-    <uncaught_exception_ timestamp='2019-04-07-Sun-15.07.37.996' class='RuntimeError'>
+    <uncaught_exception_ timestamp='2019-04-08-Mon-15.37.07.401' class='RuntimeError'>
       <message_>
         Boo!
       </message_>
@@ -461,7 +461,7 @@ end
       Bar
     </data_>
     <data_ name='My time' class='Time' method=':to_s'>
-      2019-04-07 15:07:34 -0500
+      2019-04-08 15:37:04 -0500
     </data_>
     <data_ name='My uri,' class='URI::HTTPS' method=':to_s'>
       https://www.github.com
@@ -689,7 +689,7 @@ For comparing Floats. Fails unless ```exp``` and ```act``` have a relative error
 ```ruby
 require 'minitest_log'
 class Example < Minitest::Test
-  def test_demo_verrdict
+  def test_demo_verdict
     MinitestLog.new('verdict_assert_in_epsilon.xml') do |log|
       log.verdict_assert_in_epsilon?(:one_id, 3, 2, 1, 'One message')
       log.verdict_assert_in_epsilon?(:another_id, 3, 2, 0, 'Another message')
@@ -712,9 +712,9 @@ end
     <epsilon_ class='Integer' value='0'/>
     <exception_ class='Minitest::Assertion' message='Expected |3 - 2| (1) to be &lt;= 0.'>
       <backtrace_>
-        <level_0_ location='verdict_assert_in_epsilon.rb:6:in `block in test_demo_verrdict&apos;'/>
+        <level_0_ location='verdict_assert_in_epsilon.rb:6:in `block in test_demo_verdict&apos;'/>
         <level_1_ location='verdict_assert_in_epsilon.rb:4:in `new&apos;'/>
-        <level_2_ location='verdict_assert_in_epsilon.rb:4:in `test_demo_verrdict&apos;'/>
+        <level_2_ location='verdict_assert_in_epsilon.rb:4:in `test_demo_verdict&apos;'/>
       </backtrace_>
     </exception_>
   </verdict_>
@@ -1477,7 +1477,7 @@ For comparing Floats. Fails if ```exp``` and ```act``` have a relative error les
 ```ruby
 require 'minitest_log'
 class Example < Minitest::Test
-  def test_demo_verrdict
+  def test_demo_verdict
     MinitestLog.new('verdict_refute_in_epsilon.xml') do |log|
       log.verdict_refute_in_epsilon?(:one_id, 3, 2, 0, 'One message')
       log.verdict_refute_in_epsilon?(:another_id, 3, 2, 1, 'Another message')
@@ -1500,9 +1500,9 @@ end
     <epsilon_ class='Integer' value='1'/>
     <exception_ class='Minitest::Assertion' message='Expected |3 - 2| (1) to not be &lt;= 3.'>
       <backtrace_>
-        <level_0_ location='verdict_refute_in_epsilon.rb:6:in `block in test_demo_verrdict&apos;'/>
+        <level_0_ location='verdict_refute_in_epsilon.rb:6:in `block in test_demo_verdict&apos;'/>
         <level_1_ location='verdict_refute_in_epsilon.rb:4:in `new&apos;'/>
-        <level_2_ location='verdict_refute_in_epsilon.rb:4:in `test_demo_verrdict&apos;'/>
+        <level_2_ location='verdict_refute_in_epsilon.rb:4:in `test_demo_verdict&apos;'/>
       </backtrace_>
     </exception_>
   </verdict_>
