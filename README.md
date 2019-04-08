@@ -60,6 +60,9 @@ gem install minitest_log
     - [verdict_refute_predicate?](#verdict_refute_predicate)
     - [verdict_refute_respond_to?](#verdict_refute_respond_to)
     - [verdict_refute_same?](#verdict_refute_same)
+- [Tips](#tips)
+  - [Use Short Verdict Aliases](#use-short-verdict-aliases)
+  - [Avoid Failure Clutter](#avoid-failure-clutter)
 
 ## Logs and Sections
 
@@ -172,13 +175,13 @@ end
 ```log.xml```:
 ```xml
 <log>
-  <section_ name='My section with timestamp' timestamp='2019-04-08-Mon-15.37.05.999'>
+  <section_ name='My section with timestamp' timestamp='2019-04-08-Mon-16.21.36.811'>
     Section with timestamp.
   </section_>
   <section_ name='My section with duration' duration_seconds='0.500'>
     Section with duration.
   </section_>
-  <section_ name='My section with both' timestamp='2019-04-08-Mon-15.37.06.500' duration_seconds='0.501'>
+  <section_ name='My section with both' timestamp='2019-04-08-Mon-16.21.37.312' duration_seconds='0.500'>
     Section with both.
   </section_>
 </log>
@@ -248,7 +251,7 @@ end
 ```xml
 <log>
   <section_ name='My unrescued section'>
-    <uncaught_exception_ timestamp='2019-04-08-Mon-15.37.07.401' class='RuntimeError'>
+    <uncaught_exception_ timestamp='2019-04-08-Mon-16.21.38.251' class='RuntimeError'>
       <message_>
         Boo!
       </message_>
@@ -461,7 +464,7 @@ end
       Bar
     </data_>
     <data_ name='My time' class='Time' method=':to_s'>
-      2019-04-08 15:37:04 -0500
+      2019-04-08 16:21:35 -0500
     </data_>
     <data_ name='My uri,' class='URI::HTTPS' method=':to_s'>
       https://www.github.com
@@ -1897,3 +1900,39 @@ end
 ```
 
 
+
+## Tips
+
+### Use Short Verdict Aliases
+
+Use the short alias for a verdict method, to:
+
+- Have less source code.
+- Allow code-completion to work *much* better (completion select list gets shorter *much* sooner).
+
+Examples:
+
+- ```log.va_equal?```, not ```log.verdict assert_equal?```.
+- ```log.vr_empty?```, not ```log.verdict_refute_empty?```.
+
+### Avoid Failure Clutter
+
+Use verdict return values to omit verdicts that would definitely fail.  This can greatly simplify your test results.
+
+In the example below, the test attempts to create a user.  If the that succeeds, the test then attempts to further validate the user.
+
+However, if the create fails, there's no point in cluttering the log with more (and redundant) failures, so the test puts code into a conditional:
+
+```ruby
+user_name = 'Bill Jones'
+user = SomeApi.create_user(user_name)
+if log.verdict_assert_equal?(
+  :user_created, # Verdict id.
+  user_name,     # Expected user name.
+  user.name,     # Actual user name.
+  )
+  log.verdict_assert_match
+  SomeApi.delete_user(user.id)
+end
+
+```
