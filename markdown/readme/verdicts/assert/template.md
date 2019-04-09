@@ -3,11 +3,11 @@
 #### verdict_assert?
 
 ```ruby
-verdict_assert?(id, obj, msg = nil)
-va?(id, obj, msg = nil)
+verdict_assert?(id, test, msg = nil)
+va?(id, test, msg = nil)
 ```
 
-Fails unless ```obj``` is truthy.
+Fails unless ```test``` is a true value.
 
 @[ruby](verdict_assert.rb)
 
@@ -108,8 +108,8 @@ Fails unless ```obj``` is a kind of ```cls```.
 #### verdict_assert_match?
 
 ```ruby
-verdict_assert_match?(id, cls, obj, msg = nil)
-va_match?(id, cls, obj, msg = nil)
+verdict_assert_match?(id, matcher, obj, msg = nil)
+va_match?(id, matcher, obj, msg = nil)
 ```
 
 Fails unless ```matcher =~ obj```.

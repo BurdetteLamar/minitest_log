@@ -256,6 +256,10 @@ class MinitestLog
     put_element('data',  obj.inspect, :name => name, :class => obj.class, :method => ':inspect')
   end
 
+  def put_id(name, obj)
+    put_element('data', :name => name, :class => obj.class, :id => obj.__id__)
+  end
+
   def put_data(name, obj)
     case
     when obj.kind_of?(String)
@@ -274,6 +278,7 @@ class MinitestLog
       put_id(name, obj)
     else
       message = "Object does not respond to method :__id__: name=#{name}, obj=#{obj}"
+      raise ArgumentError.new(message)
     end
   end
 

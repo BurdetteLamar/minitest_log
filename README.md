@@ -46,6 +46,23 @@ gem install minitest_log
     - [verdict_assert_silent?](#verdict_assert_silent)
     - [verdict_assert_throws?](#verdict_assert_throws)
   - [Refute Verdicts](#refute-verdicts)
+    - [verdict_refute?](#verdict_refute)
+    - [verdict_refute_empty?](#verdict_refute_empty)
+    - [verdict_refute_equal?](#verdict_refute_equal)
+    - [verdict_refute_in_delta?](#verdict_refute_in_delta)
+    - [verdict_refute_in_epsilon?](#verdict_refute_in_epsilon)
+    - [verdict_refute_includes?](#verdict_refute_includes)
+    - [verdict_refute_instance_of?](#verdict_refute_instance_of)
+    - [verdict_refute_kind_of?](#verdict_refute_kind_of)
+    - [verdict_refute_match?](#verdict_refute_match)
+    - [verdict_refute_nil?](#verdict_refute_nil)
+    - [verdict_refute_operator?](#verdict_refute_operator)
+    - [verdict_refute_predicate?](#verdict_refute_predicate)
+    - [verdict_refute_respond_to?](#verdict_refute_respond_to)
+    - [verdict_refute_same?](#verdict_refute_same)
+- [Tips](#tips)
+  - [Use Short Verdict Aliases](#use-short-verdict-aliases)
+  - [Avoid Failure Clutter](#avoid-failure-clutter)
 
 ## Logs and Sections
 
@@ -158,13 +175,13 @@ end
 ```log.xml```:
 ```xml
 <log>
-  <section_ name='My section with timestamp' timestamp='2019-04-06-Sat-12.11.42.694'>
+  <section_ name='My section with timestamp' timestamp='2019-04-08-Mon-16.21.36.811'>
     Section with timestamp.
   </section_>
   <section_ name='My section with duration' duration_seconds='0.500'>
     Section with duration.
   </section_>
-  <section_ name='My section with both' timestamp='2019-04-06-Sat-12.11.43.194' duration_seconds='0.500'>
+  <section_ name='My section with both' timestamp='2019-04-08-Mon-16.21.37.312' duration_seconds='0.500'>
     Section with both.
   </section_>
 </log>
@@ -234,7 +251,7 @@ end
 ```xml
 <log>
   <section_ name='My unrescued section'>
-    <uncaught_exception_ timestamp='2019-04-06-Sat-12.11.44.116' class='RuntimeError'>
+    <uncaught_exception_ timestamp='2019-04-08-Mon-16.21.38.251' class='RuntimeError'>
       <message_>
         Boo!
       </message_>
@@ -447,7 +464,7 @@ end
       Bar
     </data_>
     <data_ name='My time' class='Time' method=':to_s'>
-      2019-04-06 12:11:41 -0500
+      2019-04-08 16:21:35 -0500
     </data_>
     <data_ name='My uri,' class='URI::HTTPS' method=':to_s'>
       https://www.github.com
@@ -494,11 +511,11 @@ Verdict methods are described below.  For each, the following is given:
 #### verdict_assert?
 
 ```ruby
-verdict_assert?(id, obj, msg = nil)
-va?(id, obj, msg = nil)
+verdict_assert?(id, test, msg = nil)
+va?(id, test, msg = nil)
 ```
 
-Fails unless ```obj``` is truthy.
+Fails unless ```test``` is a true value.
 
 ```verdict_assert.rb```:
 ```ruby
@@ -633,7 +650,7 @@ class Example < Minitest::Test
   def test_demo_verdict
     MinitestLog.new('verdict_assert_in_delta.xml') do |log|
       log.verdict_assert_in_delta?(:one_id, 0, 0, 1, 'One message')
-      log.verdict_assert_in_delta?(:another_id, 0, 1, 2, 'Another message')
+      log.verdict_assert_in_delta?(:another_id, 0, 2, 1, 'Another message')
     end
   end
 end
@@ -647,10 +664,17 @@ end
     <actual_ class='Integer' value='0'/>
     <delta_ class='Integer' value='1'/>
   </verdict_>
-  <verdict_ method='verdict_assert_in_delta?' outcome='passed' id='another_id' message='Another message'>
+  <verdict_ method='verdict_assert_in_delta?' outcome='failed' id='another_id' message='Another message'>
     <expected_ class='Integer' value='0'/>
-    <actual_ class='Integer' value='1'/>
-    <delta_ class='Integer' value='2'/>
+    <actual_ class='Integer' value='2'/>
+    <delta_ class='Integer' value='1'/>
+    <exception_ class='Minitest::Assertion' message='Expected |0 - 2| (2) to be &lt;= 1.'>
+      <backtrace_>
+        <level_0_ location='verdict_assert_in_delta.rb:6:in `block in test_demo_verdict&apos;'/>
+        <level_1_ location='verdict_assert_in_delta.rb:4:in `new&apos;'/>
+        <level_2_ location='verdict_assert_in_delta.rb:4:in `test_demo_verdict&apos;'/>
+      </backtrace_>
+    </exception_>
   </verdict_>
 </log>
 ```
@@ -668,7 +692,7 @@ For comparing Floats. Fails unless ```exp``` and ```act``` have a relative error
 ```ruby
 require 'minitest_log'
 class Example < Minitest::Test
-  def test_demo_verrdict
+  def test_demo_verdict
     MinitestLog.new('verdict_assert_in_epsilon.xml') do |log|
       log.verdict_assert_in_epsilon?(:one_id, 3, 2, 1, 'One message')
       log.verdict_assert_in_epsilon?(:another_id, 3, 2, 0, 'Another message')
@@ -691,9 +715,9 @@ end
     <epsilon_ class='Integer' value='0'/>
     <exception_ class='Minitest::Assertion' message='Expected |3 - 2| (1) to be &lt;= 0.'>
       <backtrace_>
-        <level_0_ location='verdict_assert_in_epsilon.rb:6:in `block in test_demo_verrdict&apos;'/>
+        <level_0_ location='verdict_assert_in_epsilon.rb:6:in `block in test_demo_verdict&apos;'/>
         <level_1_ location='verdict_assert_in_epsilon.rb:4:in `new&apos;'/>
-        <level_2_ location='verdict_assert_in_epsilon.rb:4:in `test_demo_verrdict&apos;'/>
+        <level_2_ location='verdict_assert_in_epsilon.rb:4:in `test_demo_verdict&apos;'/>
       </backtrace_>
     </exception_>
   </verdict_>
@@ -832,8 +856,8 @@ end
 #### verdict_assert_match?
 
 ```ruby
-verdict_assert_match?(id, cls, obj, msg = nil)
-va_match?(id, cls, obj, msg = nil)
+verdict_assert_match?(id, matcher, obj, msg = nil)
+va_match?(id, matcher, obj, msg = nil)
 ```
 
 Fails unless ```matcher =~ obj```.
@@ -887,8 +911,8 @@ require 'minitest_log'
 class Example < Minitest::Test
   def test_demo_verdict
     MinitestLog.new('verdict_assert_nil.xml') do |log|
-      log.verdict_assert_nil?(:one_id, [], 'One message')
-      log.verdict_assert_nil?(:another_id, [:a], 'Another message')
+      log.verdict_assert_nil?(:one_id, nil, 'One message')
+      log.verdict_assert_nil?(:another_id, :a, 'Another message')
     end
   end
 end
@@ -897,19 +921,12 @@ end
 ```verdict_assert_nil.xml```:
 ```xml
 <log>
-  <verdict_ method='verdict_assert_nil?' outcome='failed' id='one_id' message='One message'>
-    <actual_ class='Array' value='[]'/>
-    <exception_ class='Minitest::Assertion' message='Expected [] to be nil.'>
-      <backtrace_>
-        <level_0_ location='verdict_assert_nil.rb:5:in `block in test_demo_verdict&apos;'/>
-        <level_1_ location='verdict_assert_nil.rb:4:in `new&apos;'/>
-        <level_2_ location='verdict_assert_nil.rb:4:in `test_demo_verdict&apos;'/>
-      </backtrace_>
-    </exception_>
+  <verdict_ method='verdict_assert_nil?' outcome='passed' id='one_id' message='One message'>
+    <actual_ class='NilClass' value='nil'/>
   </verdict_>
   <verdict_ method='verdict_assert_nil?' outcome='failed' id='another_id' message='Another message'>
-    <actual_ class='Array' value='[:a]'/>
-    <exception_ class='Minitest::Assertion' message='Expected [:a] to be nil.'>
+    <actual_ class='Symbol' value=':a'/>
+    <exception_ class='Minitest::Assertion' message='Expected :a to be nil.'>
       <backtrace_>
         <level_0_ location='verdict_assert_nil.rb:6:in `block in test_demo_verdict&apos;'/>
         <level_1_ location='verdict_assert_nil.rb:4:in `new&apos;'/>
@@ -1279,4 +1296,643 @@ end
 
 ### Refute Verdicts
 
+#### verdict_refute?
 
+```ruby
+verdict_refute?(id, test, msg = nil)
+vr?(id, test, msg = nil)
+```
+
+Fails if ```test``` is a true value.
+
+```verdict_refute.rb```:
+```ruby
+require 'minitest_log'
+class Example < Minitest::Test
+  def test_demo_verdict
+    MinitestLog.new('verdict_refute.xml') do |log|
+      log.verdict_refute?(:one_id, false, 'One message')
+      log.verdict_refute?(:another_id, true, 'Another message')
+    end
+  end
+end
+```
+
+```verdict_refute.xml```:
+```xml
+<log>
+  <verdict_ method='verdict_refute?' outcome='passed' id='one_id' message='One message'>
+    <actual_ class='FalseClass' value='false'/>
+  </verdict_>
+  <verdict_ method='verdict_refute?' outcome='failed' id='another_id' message='Another message'>
+    <actual_ class='TrueClass' value='true'/>
+    <exception_ class='Minitest::Assertion' message='Expected true to not be truthy.'>
+      <backtrace_>
+        <level_0_ location='verdict_refute.rb:6:in `block in test_demo_verdict&apos;'/>
+        <level_1_ location='verdict_refute.rb:4:in `new&apos;'/>
+        <level_2_ location='verdict_refute.rb:4:in `test_demo_verdict&apos;'/>
+      </backtrace_>
+    </exception_>
+  </verdict_>
+</log>
+```
+
+#### verdict_refute_empty?
+
+```ruby
+verdict_refute_empty?(id, obj, msg = nil)
+vr_empty?(id, obj, msg = nil)
+```
+
+Fails if ```obj``` is empty.
+
+```verdict_refute_empty.rb```:
+```ruby
+require 'minitest_log'
+class Example < Minitest::Test
+  def test_demo_verdict
+    MinitestLog.new('verdict_refute_empty.xml') do |log|
+      log.verdict_refute_empty?(:one_id, [:a], 'One message')
+      log.verdict_refute_empty?(:another_id, [], 'Another message')
+    end
+  end
+end
+```
+
+```verdict_refute_empty.xml```:
+```xml
+<log>
+  <verdict_ method='verdict_refute_empty?' outcome='passed' id='one_id' message='One message'>
+    <actual_ class='Array' value='[:a]'/>
+  </verdict_>
+  <verdict_ method='verdict_refute_empty?' outcome='failed' id='another_id' message='Another message'>
+    <actual_ class='Array' value='[]'/>
+    <exception_ class='Minitest::Assertion' message='Expected [] to not be empty.'>
+      <backtrace_>
+        <level_0_ location='verdict_refute_empty.rb:6:in `block in test_demo_verdict&apos;'/>
+        <level_1_ location='verdict_refute_empty.rb:4:in `new&apos;'/>
+        <level_2_ location='verdict_refute_empty.rb:4:in `test_demo_verdict&apos;'/>
+      </backtrace_>
+    </exception_>
+  </verdict_>
+</log>
+```
+
+#### verdict_refute_equal?
+
+```ruby
+verdict_refute_equal?(id, exp, act, msg = nil)
+vr_equal?(id, exp, act, msg = nil)
+```
+Fails if ```exp == act```.
+
+For floats use verdict_refute_in_delta?.
+
+```verdict_refute_equal.rb```:
+```ruby
+require 'minitest_log'
+class Example < Minitest::Test
+  def test_demo_verdict
+    MinitestLog.new('verdict_refute_equal.xml') do |log|
+      log.verdict_refute_equal?(:one_id, 0, 1, 'One message')
+      log.verdict_refute_equal?(:another_id, 0, 0, 'Another message')
+    end
+  end
+end
+```
+
+```verdict_refute_equal.xml```:
+```xml
+<log>
+  <verdict_ method='verdict_refute_equal?' outcome='passed' id='one_id' message='One message'>
+    <expected_ class='Integer' value='0'/>
+    <actual_ class='Integer' value='1'/>
+  </verdict_>
+  <verdict_ method='verdict_refute_equal?' outcome='failed' id='another_id' message='Another message'>
+    <expected_ class='Integer' value='0'/>
+    <actual_ class='Integer' value='0'/>
+    <exception_ class='Minitest::Assertion' message='Expected 0 to not be equal to 0.'>
+      <backtrace_>
+        <level_0_ location='verdict_refute_equal.rb:6:in `block in test_demo_verdict&apos;'/>
+        <level_1_ location='verdict_refute_equal.rb:4:in `new&apos;'/>
+        <level_2_ location='verdict_refute_equal.rb:4:in `test_demo_verdict&apos;'/>
+      </backtrace_>
+    </exception_>
+  </verdict_>
+</log>
+```
+
+#### verdict_refute_in_delta?
+
+```ruby
+verdict_refute_in_delta?(id, exp, act, delta = 0.001, msg = nil)
+vr_in_delta?(id, exp, act, delta = 0.001, msg = nil)
+````
+
+For comparing Floats. Fails if ```exp``` is within ```delta``` of ```act```.
+
+```verdict_refute_in_delta.rb```:
+```ruby
+require 'minitest_log'
+class Example < Minitest::Test
+  def test_demo_verdict
+    MinitestLog.new('verdict_refute_in_delta.xml') do |log|
+      log.verdict_refute_in_delta?(:one_id, 0, 2, 1, 'One message')
+      log.verdict_refute_in_delta?(:another_id, 0, 0, 1, 'Another message')
+    end
+  end
+end
+```
+
+```verdict_refute_in_delta.xml```:
+```xml
+<log>
+  <verdict_ method='verdict_refute_in_delta?' outcome='passed' id='one_id' message='One message'>
+    <expected_ class='Integer' value='0'/>
+    <actual_ class='Integer' value='2'/>
+    <delta_ class='Integer' value='1'/>
+  </verdict_>
+  <verdict_ method='verdict_refute_in_delta?' outcome='failed' id='another_id' message='Another message'>
+    <expected_ class='Integer' value='0'/>
+    <actual_ class='Integer' value='0'/>
+    <delta_ class='Integer' value='1'/>
+    <exception_ class='Minitest::Assertion' message='Expected |0 - 0| (0) to not be &lt;= 1.'>
+      <backtrace_>
+        <level_0_ location='verdict_refute_in_delta.rb:6:in `block in test_demo_verdict&apos;'/>
+        <level_1_ location='verdict_refute_in_delta.rb:4:in `new&apos;'/>
+        <level_2_ location='verdict_refute_in_delta.rb:4:in `test_demo_verdict&apos;'/>
+      </backtrace_>
+    </exception_>
+  </verdict_>
+</log>
+```
+
+#### verdict_refute_in_epsilon?
+
+```ruby
+verdict_ refute_in_epsilon?(id, a, b, epsilon = 0.001, msg = nil) 
+vr_in_epsilon?(id, a, b, epsilon = 0.001, msg = nil) 
+```
+
+For comparing Floats. Fails if ```exp``` and ```act``` have a relative error less than ```epsilon```.
+
+```verdict_refute_in_epsilon.rb```:
+```ruby
+require 'minitest_log'
+class Example < Minitest::Test
+  def test_demo_verdict
+    MinitestLog.new('verdict_refute_in_epsilon.xml') do |log|
+      log.verdict_refute_in_epsilon?(:one_id, 3, 2, 0, 'One message')
+      log.verdict_refute_in_epsilon?(:another_id, 3, 2, 1, 'Another message')
+    end
+  end
+end
+```
+
+```verdict_refute_in_epsilon.xml```:
+```xml
+<log>
+  <verdict_ method='verdict_refute_in_epsilon?' outcome='passed' id='one_id' message='One message'>
+    <expected_ class='Integer' value='3'/>
+    <actual_ class='Integer' value='2'/>
+    <epsilon_ class='Integer' value='0'/>
+  </verdict_>
+  <verdict_ method='verdict_refute_in_epsilon?' outcome='failed' id='another_id' message='Another message'>
+    <expected_ class='Integer' value='3'/>
+    <actual_ class='Integer' value='2'/>
+    <epsilon_ class='Integer' value='1'/>
+    <exception_ class='Minitest::Assertion' message='Expected |3 - 2| (1) to not be &lt;= 3.'>
+      <backtrace_>
+        <level_0_ location='verdict_refute_in_epsilon.rb:6:in `block in test_demo_verdict&apos;'/>
+        <level_1_ location='verdict_refute_in_epsilon.rb:4:in `new&apos;'/>
+        <level_2_ location='verdict_refute_in_epsilon.rb:4:in `test_demo_verdict&apos;'/>
+      </backtrace_>
+    </exception_>
+  </verdict_>
+</log>
+```
+
+#### verdict_refute_includes?
+
+```ruby
+verdict_refute_includes?(id, collection, obj, msg = nil) 
+vr_includes?(id, collection, obj, msg = nil) 
+```
+
+Fails if ```collection``` includes ```obj```.
+
+```verdict_refute_includes.rb```:
+```ruby
+require 'minitest_log'
+class Example < Minitest::Test
+  def test_demo_verdict
+    MinitestLog.new('verdict_refute_includes.xml') do |log|
+      log.verdict_refute_includes?(:one_id, [:a, :b, :c], :d, 'One message')
+      log.verdict_refute_includes?(:another_id, [:a, :b, :c], :b, 'Another message')
+    end
+  end
+end
+```
+
+```verdict_refute_includes.xml```:
+```xml
+<log>
+  <verdict_ method='verdict_refute_includes?' outcome='passed' id='one_id' message='One message'>
+    <expected_ class='Array' value='[:a, :b, :c]'/>
+    <actual_ class='Symbol' value=':d'/>
+  </verdict_>
+  <verdict_ method='verdict_refute_includes?' outcome='failed' id='another_id' message='Another message'>
+    <expected_ class='Array' value='[:a, :b, :c]'/>
+    <actual_ class='Symbol' value=':b'/>
+    <exception_ class='Minitest::Assertion' message='Expected [:a, :b, :c] to not include :b.'>
+      <backtrace_>
+        <level_0_ location='verdict_refute_includes.rb:6:in `block in test_demo_verdict&apos;'/>
+        <level_1_ location='verdict_refute_includes.rb:4:in `new&apos;'/>
+        <level_2_ location='verdict_refute_includes.rb:4:in `test_demo_verdict&apos;'/>
+      </backtrace_>
+    </exception_>
+  </verdict_>
+</log>
+```
+
+#### verdict_refute_instance_of?
+
+```ruby
+verdict_refute_instance_of?(id, cls, obj, msg = nil)
+vr_instance_of?(id, cls, obj, msg = nil)
+```
+
+Fails if ```obj``` is an instance of ```cls```.
+
+```verdict_refute_instance_of.rb```:
+```ruby
+require 'minitest_log'
+class Example < Minitest::Test
+  def test_demo_verdict
+    MinitestLog.new('verdict_refute_instance_of.xml') do |log|
+      log.verdict_refute_instance_of?(:one_id, Integer, 'my_string', 'One message')
+      log.verdict_refute_instance_of?(:another_id, String, 'my_string', 'another message')
+    end
+  end
+end
+```
+
+```verdict_refute_instance_of.xml```:
+```xml
+<log>
+  <verdict_ method='verdict_refute_instance_of?' outcome='passed' id='one_id' message='One message'>
+    <expected_ class='Class' value='Integer'/>
+    <actual_ class='String' value='&quot;my_string&quot;'/>
+  </verdict_>
+  <verdict_ method='verdict_refute_instance_of?' outcome='failed' id='another_id' message='another message'>
+    <expected_ class='Class' value='String'/>
+    <actual_ class='String' value='&quot;my_string&quot;'/>
+    <exception_ class='Minitest::Assertion' message='Expected # encoding: UTF-8'>
+      <backtrace_>
+        <level_0_ location='verdict_refute_instance_of.rb:6:in `block in test_demo_verdict&apos;'/>
+        <level_1_ location='verdict_refute_instance_of.rb:4:in `new&apos;'/>
+        <level_2_ location='verdict_refute_instance_of.rb:4:in `test_demo_verdict&apos;'/>
+      </backtrace_>
+    </exception_>
+  </verdict_>
+</log>
+```
+
+#### verdict_refute_kind_of?
+
+```ruby
+verdict_refute_kind_of?(id, cls, obj, msg = nil)
+vr_kind_of?(id, cls, obj, msg = nil)
+```
+
+Fails if ```obj``` is a kind of ```cls```.
+
+```verdict_refute_kind_of.rb```:
+```ruby
+require 'minitest_log'
+class Example < Minitest::Test
+  def test_demo_verdict
+    MinitestLog.new('verdict_refute_kind_of.xml') do |log|
+      log.verdict_refute_kind_of?(:one_id, String, 1.0, 'One message')
+      log.verdict_refute_kind_of?(:another_id, Numeric, 1.0, 'Another message')
+    end
+  end
+end
+```
+
+```verdict_refute_kind_of.xml```:
+```xml
+<log>
+  <verdict_ method='verdict_refute_kind_of?' outcome='passed' id='one_id' message='One message'>
+    <expected_ class='Class' value='String'/>
+    <actual_ class='Float' value='1.0'/>
+  </verdict_>
+  <verdict_ method='verdict_refute_kind_of?' outcome='failed' id='another_id' message='Another message'>
+    <expected_ class='Class' value='Numeric'/>
+    <actual_ class='Float' value='1.0'/>
+    <exception_ class='Minitest::Assertion' message='Expected 1.0 to not be a kind of Numeric.'>
+      <backtrace_>
+        <level_0_ location='verdict_refute_kind_of.rb:6:in `block in test_demo_verdict&apos;'/>
+        <level_1_ location='verdict_refute_kind_of.rb:4:in `new&apos;'/>
+        <level_2_ location='verdict_refute_kind_of.rb:4:in `test_demo_verdict&apos;'/>
+      </backtrace_>
+    </exception_>
+  </verdict_>
+</log>
+```
+
+#### verdict_refute_match?
+
+```ruby
+verdict_refute_match?(id, matcher, obj, msg = nil)
+vr_match?(id, matcher, obj, msg = nil)
+```
+
+Fails if ```matcher =~ obj```.
+
+```verdict_refute_match.rb```:
+```ruby
+require 'minitest_log'
+class Example < Minitest::Test
+  def test_demo_verdict
+    MinitestLog.new('verdict_refute_match.xml') do |log|
+      log.verdict_refute_match?(:one_id, /foo/, 'feed', 'One message')
+      log.verdict_refute_match?(:another_id, /foo/, 'food', 'Another message')
+    end
+  end
+end
+```
+
+```verdict_refute_match.xml```:
+```xml
+<log>
+  <verdict_ method='verdict_refute_match?' outcome='passed' id='one_id' message='One message'>
+    <expected_ class='Regexp' value='/foo/'/>
+    <actual_ class='String' value='&quot;feed&quot;'/>
+  </verdict_>
+  <verdict_ method='verdict_refute_match?' outcome='failed' id='another_id' message='Another message'>
+    <expected_ class='Regexp' value='/foo/'/>
+    <actual_ class='String' value='&quot;food&quot;'/>
+    <exception_ class='Minitest::Assertion' message='Expected /foo/ to not match # encoding: UTF-8'>
+      <backtrace_>
+        <level_0_ location='verdict_refute_match.rb:6:in `block in test_demo_verdict&apos;'/>
+        <level_1_ location='verdict_refute_match.rb:4:in `new&apos;'/>
+        <level_2_ location='verdict_refute_match.rb:4:in `test_demo_verdict&apos;'/>
+      </backtrace_>
+    </exception_>
+  </verdict_>
+</log>
+```
+
+#### verdict_refute_nil?
+
+```ruby
+verdict_refute_nil?(id, obj, msg = nil)
+vr_nil?(id, obj, msg = nil)
+```
+
+Fails if ```obj``` is nil.
+
+```verdict_refute_nil.rb```:
+```ruby
+require 'minitest_log'
+class Example < Minitest::Test
+  def test_demo_verdict
+    MinitestLog.new('verdict_refute_nil.xml') do |log|
+      log.verdict_refute_nil?(:one_id, :a, 'One message')
+      log.verdict_refute_nil?(:another_id, nil, 'Another message')
+    end
+  end
+end
+```
+
+```verdict_refute_nil.xml```:
+```xml
+<log>
+  <verdict_ method='verdict_refute_nil?' outcome='passed' id='one_id' message='One message'>
+    <actual_ class='Symbol' value=':a'/>
+  </verdict_>
+  <verdict_ method='verdict_refute_nil?' outcome='failed' id='another_id' message='Another message'>
+    <actual_ class='NilClass' value='nil'/>
+    <exception_ class='Minitest::Assertion' message='Expected nil to not be nil.'>
+      <backtrace_>
+        <level_0_ location='verdict_refute_nil.rb:6:in `block in test_demo_verdict&apos;'/>
+        <level_1_ location='verdict_refute_nil.rb:4:in `new&apos;'/>
+        <level_2_ location='verdict_refute_nil.rb:4:in `test_demo_verdict&apos;'/>
+      </backtrace_>
+    </exception_>
+  </verdict_>
+</log>
+```
+
+#### verdict_refute_operator?
+
+```ruby
+verdict_refute_operator?(id, o1, op, o2 = UNDEFINED, msg = nil)
+vr_operator?(id, o1, op, o2 = UNDEFINED, msg = nil)
+````
+
+Fails if ```o1``` is not ```op``` ```o2```.
+
+```verdict_refute_operator.rb```:
+```ruby
+require 'minitest_log'
+class Example < Minitest::Test
+  def test_demo_verdict
+    MinitestLog.new('verdict_refute_operator.xml') do |log|
+      log.verdict_refute_operator?(:one_id, 5, :<=, 4, 'One message')
+      log.verdict_refute_operator?(:another_id, 3, :<=, 4, 'Another message')
+    end
+  end
+end
+```
+
+```verdict_refute_operator.xml```:
+```xml
+<log>
+  <verdict_ method='verdict_refute_operator?' outcome='passed' id='one_id' message='One message'>
+    <object_1_ class='Integer' value='5'/>
+    <operator_ class='Symbol' value=':&lt;='/>
+    <object_2_ class='Integer' value='4'/>
+  </verdict_>
+  <verdict_ method='verdict_refute_operator?' outcome='failed' id='another_id' message='Another message'>
+    <object_1_ class='Integer' value='3'/>
+    <operator_ class='Symbol' value=':&lt;='/>
+    <object_2_ class='Integer' value='4'/>
+    <exception_ class='Minitest::Assertion' message='Expected 3 to not be &lt;= 4.'>
+      <backtrace_>
+        <level_0_ location='verdict_refute_operator.rb:6:in `block in test_demo_verdict&apos;'/>
+        <level_1_ location='verdict_refute_operator.rb:4:in `new&apos;'/>
+        <level_2_ location='verdict_refute_operator.rb:4:in `test_demo_verdict&apos;'/>
+      </backtrace_>
+    </exception_>
+  </verdict_>
+</log>
+```
+
+#### verdict_refute_predicate?
+
+```ruby
+verdict_refute_predicate?(id, o1, op, msg = nil)
+vr_predicate?(id, o1, op, msg = nil)
+```
+
+For testing with predicates.
+
+```verdict_refute_predicate.rb```:
+```ruby
+require 'minitest_log'
+class Example < Minitest::Test
+  def test_demo_verdict
+    MinitestLog.new('verdict_refute_predicate.xml') do |log|
+      log.verdict_refute_predicate?(:one_id, 'x', :empty?, 'One message')
+      log.verdict_refute_predicate?(:another_id, '', :empty?, 'Another message')
+    end
+  end
+end
+```
+
+```verdict_refute_predicate.xml```:
+```xml
+<log>
+  <verdict_ method='verdict_refute_predicate?' outcome='passed' id='one_id' message='One message'>
+    <object_ class='String' value='&quot;x&quot;'/>
+    <operator_ class='Symbol' value=':empty?'/>
+  </verdict_>
+  <verdict_ method='verdict_refute_predicate?' outcome='failed' id='another_id' message='Another message'>
+    <object_ class='String' value='&quot;&quot;'/>
+    <operator_ class='Symbol' value=':empty?'/>
+    <exception_ class='Minitest::Assertion' message='Expected # encoding: UTF-8'>
+      <backtrace_>
+        <level_0_ location='verdict_refute_predicate.rb:6:in `block in test_demo_verdict&apos;'/>
+        <level_1_ location='verdict_refute_predicate.rb:4:in `new&apos;'/>
+        <level_2_ location='verdict_refute_predicate.rb:4:in `test_demo_verdict&apos;'/>
+      </backtrace_>
+    </exception_>
+  </verdict_>
+</log>
+```
+
+#### verdict_refute_respond_to?
+
+```ruby
+verdict_refute_respond_to?(id, obj, meth, msg = nil)
+vr_respond_to?(id, obj, meth, msg = nil)
+```
+
+Fails if ```obj``` responds to ```meth```.
+
+```verdict_refute_respond_to.rb```:
+```ruby
+require 'minitest_log'
+class Example < Minitest::Test
+  def test_demo_verdict
+    MinitestLog.new('verdict_refute_respond_to.xml') do |log|
+      log.verdict_refute_respond_to?(:one_id, 0, :empty?, 'One message')
+      log.verdict_refute_respond_to?(:another_id, 0, :succ, 'Another message')
+    end
+  end
+end
+```
+
+```verdict_refute_respond_to.xml```:
+```xml
+<log>
+  <verdict_ method='verdict_refute_respond_to?' outcome='passed' id='one_id' message='One message'>
+    <object_ class='Integer' value='0'/>
+    <method_ class='Symbol' value=':empty?'/>
+  </verdict_>
+  <verdict_ method='verdict_refute_respond_to?' outcome='failed' id='another_id' message='Another message'>
+    <object_ class='Integer' value='0'/>
+    <method_ class='Symbol' value=':succ'/>
+    <exception_ class='Minitest::Assertion' message='Expected 0 to not respond to succ.'>
+      <backtrace_>
+        <level_0_ location='verdict_refute_respond_to.rb:6:in `block in test_demo_verdict&apos;'/>
+        <level_1_ location='verdict_refute_respond_to.rb:4:in `new&apos;'/>
+        <level_2_ location='verdict_refute_respond_to.rb:4:in `test_demo_verdict&apos;'/>
+      </backtrace_>
+    </exception_>
+  </verdict_>
+</log>
+```
+
+#### verdict_refute_same?
+
+```ruby
+verdict_refute_same?(id, exp, act, msg = nil)
+vr_same?(id, exp, act, msg = nil)
+```
+
+Fails if ```exp``` is the same (by object identity) as ```act```.
+
+```verdict_refute_same.rb```:
+```ruby
+require 'minitest_log'
+class Example < Minitest::Test
+  def test_demo_verdict
+    MinitestLog.new('verdict_refute_same.xml') do |log|
+      log.verdict_refute_same?(:one_id, 'foo', 'foo', 'One message')
+      log.verdict_refute_same?(:another_id, :foo, :foo, 'Another message')
+    end
+  end
+end
+```
+
+```verdict_refute_same.xml```:
+```xml
+<log>
+  <verdict_ method='verdict_refute_same?' outcome='passed' id='one_id' message='One message'>
+    <expected_ class='String' value='&quot;foo&quot;'/>
+    <actual_ class='String' value='&quot;foo&quot;'/>
+  </verdict_>
+  <verdict_ method='verdict_refute_same?' outcome='failed' id='another_id' message='Another message'>
+    <expected_ class='Symbol' value=':foo'/>
+    <actual_ class='Symbol' value=':foo'/>
+    <exception_ class='Minitest::Assertion' message='Expected :foo (oid=1043228) to not be the same as :foo (oid=1043228).'>
+      <backtrace_>
+        <level_0_ location='verdict_refute_same.rb:6:in `block in test_demo_verdict&apos;'/>
+        <level_1_ location='verdict_refute_same.rb:4:in `new&apos;'/>
+        <level_2_ location='verdict_refute_same.rb:4:in `test_demo_verdict&apos;'/>
+      </backtrace_>
+    </exception_>
+  </verdict_>
+</log>
+```
+
+
+
+## Tips
+
+### Use Short Verdict Aliases
+
+Use the short alias for a verdict method, to:
+
+- Have less source code.
+- Allow code-completion to work *much* better (completion select list gets shorter *much* sooner).
+
+Examples:
+
+- ```log.va_equal?```, not ```log.verdict assert_equal?```.
+- ```log.vr_empty?```, not ```log.verdict_refute_empty?```.
+
+### Avoid Failure Clutter
+
+Use verdict return values to omit verdicts that would definitely fail.  This can greatly simplify your test results.
+
+In the example below, the test attempts to create a user.  If the that succeeds, the test then attempts to further validate the user.
+
+However, if the create fails, there's no point in cluttering the log with more (and redundant) failures, so the test puts code into a conditional:
+
+```ruby
+user_name = 'Bill Jones'
+user = SomeApi.create_user(user_name)
+if log.verdict_assert_equal?(
+  :user_created, # Verdict id.
+  user_name,     # Expected user name.
+  user.name,     # Actual user name.
+  )
+  log.verdict_assert_match
+  SomeApi.delete_user(user.id)
+end
+
+```
