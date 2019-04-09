@@ -175,13 +175,13 @@ end
 ```log.xml```:
 ```xml
 <log>
-  <section_ name='My section with timestamp' timestamp='2019-04-08-Mon-16.21.36.811'>
+  <section_ name='My section with timestamp' timestamp='2019-04-09-Tue-06.02.10.644'>
     Section with timestamp.
   </section_>
-  <section_ name='My section with duration' duration_seconds='0.500'>
+  <section_ name='My section with duration' duration_seconds='0.501'>
     Section with duration.
   </section_>
-  <section_ name='My section with both' timestamp='2019-04-08-Mon-16.21.37.312' duration_seconds='0.500'>
+  <section_ name='My section with both' timestamp='2019-04-09-Tue-06.02.11.145' duration_seconds='0.500'>
     Section with both.
   </section_>
 </log>
@@ -251,7 +251,7 @@ end
 ```xml
 <log>
   <section_ name='My unrescued section'>
-    <uncaught_exception_ timestamp='2019-04-08-Mon-16.21.38.251' class='RuntimeError'>
+    <uncaught_exception_ timestamp='2019-04-09-Tue-06.02.12.054' class='RuntimeError'>
       <message_>
         Boo!
       </message_>
@@ -464,7 +464,7 @@ end
       Bar
     </data_>
     <data_ name='My time' class='Time' method=':to_s'>
-      2019-04-08 16:21:35 -0500
+      2019-04-09 06:02:09 -0500
     </data_>
     <data_ name='My uri,' class='URI::HTTPS' method=':to_s'>
       https://www.github.com
@@ -1917,21 +1917,17 @@ Examples:
 
 ### Avoid Failure Clutter
 
-Use verdict return values to omit verdicts that would definitely fail.  This can greatly simplify your test results.
+Use verdict return values (```true```/```false```) to omit verdicts that would definitely fail.  This can greatly simplify your test results.
 
-In the example below, the test attempts to create a user.  If the that succeeds, the test then attempts to further validate the user.
+In the example below, the test attempts to create a user.  If the that succeeds, the test then further validates, then deletes the user.
 
 However, if the create fails, there's no point in cluttering the log with more (and redundant) failures, so the test puts code into a conditional:
 
 ```ruby
 user_name = 'Bill Jones'
 user = SomeApi.create_user(user_name)
-if log.verdict_assert_equal?(
-  :user_created, # Verdict id.
-  user_name,     # Expected user name.
-  user.name,     # Actual user name.
-  )
-  log.verdict_assert_match
+if log.verdict_refute_nil?(:user_created, user)
+  log.verdict_assert_equal?(:user_name, user_name, user.name)
   SomeApi.delete_user(user.id)
 end
 
