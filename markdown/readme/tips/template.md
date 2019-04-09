@@ -16,9 +16,11 @@ Examples:
 
 Use verdict return values (```true```/```false```) to omit verdicts that would definitely fail.  This can greatly simplify your test results.
 
-In the example below, the test attempts to create a user.  If the that succeeds, the test then further validates, then deletes the user.
+In the example below, the test attempts to create a user.  If the create succeeds, the test further validates, then deletes the user.
 
-However, if the create fails, there's no point in cluttering the log with more (and redundant) failures, so the test puts code into a conditional:
+However, if the create fails, the test does not attempt to validate or delete the user (which attempts would fail, and might raise exceptions).
+
+Thus:
 
 ```ruby
 user_name = 'Bill Jones'

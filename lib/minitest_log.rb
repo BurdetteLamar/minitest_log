@@ -445,19 +445,6 @@ class MinitestLog
     end
   end
 
-  def cdata(text)
-    # Guard against using a terminator that's a substring of the cdata.
-    s = 'EOT'
-    terminator = s
-    while text.match(terminator) do
-      terminator += s
-    end
-    log_puts("CDATA\t<<#{terminator}")
-    log_puts(text)
-    log_puts(terminator)
-    nil
-  end
-
   # Filters lines that are from ruby or log, to make the backtrace more readable.
   def filter_backtrace(lines)
     filtered = []
