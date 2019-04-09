@@ -175,13 +175,13 @@ end
 ```log.xml```:
 ```xml
 <log>
-  <section_ name='My section with timestamp' timestamp='2019-04-09-Tue-06.02.10.644'>
+  <section_ name='My section with timestamp' timestamp='2019-04-09-Tue-06.17.37.990'>
     Section with timestamp.
   </section_>
-  <section_ name='My section with duration' duration_seconds='0.501'>
+  <section_ name='My section with duration' duration_seconds='0.500'>
     Section with duration.
   </section_>
-  <section_ name='My section with both' timestamp='2019-04-09-Tue-06.02.11.145' duration_seconds='0.500'>
+  <section_ name='My section with both' timestamp='2019-04-09-Tue-06.17.38.492' duration_seconds='0.500'>
     Section with both.
   </section_>
 </log>
@@ -251,7 +251,7 @@ end
 ```xml
 <log>
   <section_ name='My unrescued section'>
-    <uncaught_exception_ timestamp='2019-04-09-Tue-06.02.12.054' class='RuntimeError'>
+    <uncaught_exception_ timestamp='2019-04-09-Tue-06.17.39.364' class='RuntimeError'>
       <message_>
         Boo!
       </message_>
@@ -464,7 +464,7 @@ end
       Bar
     </data_>
     <data_ name='My time' class='Time' method=':to_s'>
-      2019-04-09 06:02:09 -0500
+      2019-04-09 06:17:36 -0500
     </data_>
     <data_ name='My uri,' class='URI::HTTPS' method=':to_s'>
       https://www.github.com
@@ -1919,9 +1919,11 @@ Examples:
 
 Use verdict return values (```true```/```false```) to omit verdicts that would definitely fail.  This can greatly simplify your test results.
 
-In the example below, the test attempts to create a user.  If the that succeeds, the test then further validates, then deletes the user.
+In the example below, the test attempts to create a user.  If the create succeeds, the test further validates, then deletes the user.
 
-However, if the create fails, there's no point in cluttering the log with more (and redundant) failures, so the test puts code into a conditional:
+However, if the create fails, the test does not attempt to validate or delete the user (which attempts would fail, and might raise exceptions).
+
+Thus:
 
 ```ruby
 user_name = 'Bill Jones'
