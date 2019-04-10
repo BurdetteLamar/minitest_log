@@ -68,7 +68,7 @@ class MinitestLog
         put_element('message', x.message)
         put_element('backtrace') do
           backtrace = filter_backtrace(x.backtrace)
-          put_cdata(backtrace.join("\n"))
+          put_pre(backtrace.join("\n"))
         end
       end
     end
@@ -176,8 +176,6 @@ class MinitestLog
     obj.each_with_index do |item, i|
       lines.push(format('%d: %s', i, item.to_s))
     end
-    lines.push('')
-    lines.push('')
     attrs = {
         :name => name,
         :class => obj.class,
@@ -185,7 +183,7 @@ class MinitestLog
     }
     add_attr_if(attrs, obj, :size)
     put_element('data', attrs) do
-      put_cdata(lines.join("\n"))
+      put_pre(lines.join("\n"))
     end
     nil
   end
@@ -197,8 +195,6 @@ class MinitestLog
     obj.each do |item|
       lines.push(item)
     end
-    lines.push('')
-    lines.push('')
     attrs = {
         :name => name,
         :class => obj.class,
@@ -206,7 +202,7 @@ class MinitestLog
     }
     add_attr_if(attrs, obj, :size)
     put_element('data', attrs) do
-      put_cdata(lines.join("\n"))
+      put_pre(lines.join("\n"))
     end
     nil
   end
@@ -216,8 +212,6 @@ class MinitestLog
     obj.each_pair do |key, value|
       lines.push(format('%s => %s', key, value))
     end
-    lines.push('')
-    lines.push('')
     attrs = {
         :name => name,
         :class => obj.class,
@@ -225,7 +219,7 @@ class MinitestLog
     }
     add_attr_if(attrs, obj, :size)
     put_element('data', attrs) do
-      put_cdata(lines.join("\n"))
+      put_pre(lines.join("\n"))
     end
     nil
   end

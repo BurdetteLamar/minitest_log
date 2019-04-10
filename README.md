@@ -275,13 +275,13 @@ end
 ```log.xml```:
 ```xml
 <log>
-  <section_ name='My section with timestamp' timestamp='2019-04-10-Wed-16.28.06.118'>
+  <section_ name='My section with timestamp' timestamp='2019-04-10-Wed-16.36.34.356'>
     Section with timestamp.
   </section_>
   <section_ name='My section with duration' duration_seconds='0.500'>
     Section with duration.
   </section_>
-  <section_ name='My section with both' timestamp='2019-04-10-Wed-16.28.06.619' duration_seconds='0.500'>
+  <section_ name='My section with both' timestamp='2019-04-10-Wed-16.36.34.857' duration_seconds='0.500'>
     Section with both.
   </section_>
 </log>
@@ -351,15 +351,17 @@ end
 ```xml
 <log>
   <section_ name='My unrescued section'>
-    <uncaught_exception_ timestamp='2019-04-10-Wed-16.28.07.500' class='RuntimeError'>
+    <uncaught_exception_ timestamp='2019-04-10-Wed-16.36.35.750' class='RuntimeError'>
       <message_>
         Boo!
       </message_>
       <backtrace_>
-        <![CDATA[example.rb:6:in `block (2 levels) in test_example'
+        <![CDATA[
+example.rb:6:in `block (2 levels) in test_example'
 example.rb:5:in `block in test_example'
 example.rb:4:in `new'
-example.rb:4:in `test_example']]>
+example.rb:4:in `test_example'
+]]>
       </backtrace_>
     </uncaught_exception_>
   </section_>
@@ -406,7 +408,7 @@ end
 ```log.xml```:
 ```xml
 <log>
-  <section_ name='Section with pot pourri of arguments' a='0' b='1' timestamp='2019-04-10-Wed-16.28.04.584' c='2' d='3' duration_seconds='0.502'>
+  <section_ name='Section with pot pourri of arguments' a='0' b='1' timestamp='2019-04-10-Wed-16.36.32.804' c='2' d='3' duration_seconds='0.502'>
     Word More words
     <rescued_exception_ class='Exception' message='Boo!'>
       <backtrace_>
@@ -620,7 +622,7 @@ end
       (?-mix:Bar)
     </data_>
     <data_ name='My time' class='Time' method=':to_s'>
-      2019-04-10 16:28:03 -0500
+      2019-04-10 16:36:31 -0500
     </data_>
     <data_ name='My uri,' class='URI::HTTPS' method=':to_s'>
       https://www.github.com
