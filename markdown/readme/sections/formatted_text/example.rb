@@ -14,11 +14,17 @@ class Example < MiniTest::Test
 
   def test_example
     MinitestLog.new('log.xml') do |log|
-      log.section('My section') do
-        log.put_cdata(some_text_to_put)
+      log.section('Text with leading and trailiing whitespace') do
+        log.put_cdata('  Text.  ')
       end
-      log.section('Another section', 'Adding my own whitespace to separate first and last lines from enclosing square brackets.') do
-        log.put_cdata("\n#{some_text_to_put}\n")
+      log.section('Multiline text') do
+        text = <<EOT
+Text
+and
+more
+text.
+EOT
+        log.put_cdata(text)
       end
     end
   end

@@ -29,5 +29,17 @@ if log.verdict_refute_nil?(:user_created, user)
   log.verdict_assert_equal?(:user_name, user_name, user.name)
   SomeApi.delete_user(user.id)
 end
-
 ```
+
+### Surround Pre-Formatted Text With Newlines
+
+Method ```put_cdata``` puts pre-formatted text, adding nothing and omitting nothing.
+
+Therefore, the text in the log abuts the enclosing square brackets at the beginning and end.
+
+Add an extra newline at the beginning and end, to make the text in the log "free standing."
+
+@[ruby](pre_format_text.rb)
+
+@[xml](pre_format_text.xml)
+

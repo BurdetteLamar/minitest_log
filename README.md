@@ -65,6 +65,7 @@ gem install minitest_log
 - [Tips](#tips)
   - [Use Short Verdict Aliases](#use-short-verdict-aliases)
   - [Avoid Failure Clutter](#avoid-failure-clutter)
+  - [Surround Pre-Formatted Text With Newlines](#surround-pre-formatted-text-with-newlines)
 
 ## Logs and Sections
 
@@ -175,11 +176,17 @@ class Example < MiniTest::Test
 
   def test_example
     MinitestLog.new('log.xml') do |log|
-      log.section('My section') do
-        log.put_cdata(some_text_to_put)
+      log.section('Text with leading and trailiing whitespace') do
+        log.put_cdata('  Text.  ')
       end
-      log.section('Another section', 'Adding my own whitespace to separate first and last lines from enclosing square brackets.') do
-        log.put_cdata("\n#{some_text_to_put}\n")
+      log.section('Multiline text') do
+        text = <<EOT
+Text
+and
+more
+text.
+EOT
+        log.put_cdata(text)
       end
     end
   end
@@ -189,24 +196,14 @@ end
 ```log.xml```:
 ```xml
 <log>
-  <section_ name='My section'>
-    <![CDATA[  This line has leading whitespace that is preserved.
-
-The empty line above is preserved.
-  
-The whitespace-only line above is preserved.
-This line has trailing whitespace that is preserved.  ]]>
+  <section_ name='Text with leading and trailiing whitespace'>
+    <![CDATA[  Text.  ]]>
   </section_>
-  <section_ name='Another section'>
-    Adding my own whitespace to separate first and last lines from enclosing
-    square brackets.
-    <![CDATA[
-  This line has leading whitespace that is preserved.
-
-The empty line above is preserved.
-  
-The whitespace-only line above is preserved.
-This line has trailing whitespace that is preserved.  ]]>
+  <section_ name='Multiline text'>
+    <![CDATA[Text
+and
+more
+text.]]>
   </section_>
 </log>
 ```
@@ -272,13 +269,13 @@ end
 ```log.xml```:
 ```xml
 <log>
-  <section_ name='My section with timestamp' timestamp='2019-04-10-Wed-04.44.54.251'>
+  <section_ name='My section with timestamp' timestamp='2019-04-10-Wed-05.51.04.312'>
     Section with timestamp.
   </section_>
-  <section_ name='My section with duration' duration_seconds='0.500'>
+  <section_ name='My section with duration' duration_seconds='0.501'>
     Section with duration.
   </section_>
-  <section_ name='My section with both' timestamp='2019-04-10-Wed-04.44.54.752' duration_seconds='0.500'>
+  <section_ name='My section with both' timestamp='2019-04-10-Wed-05.51.04.814' duration_seconds='0.500'>
     Section with both.
   </section_>
 </log>
@@ -348,7 +345,7 @@ end
 ```xml
 <log>
   <section_ name='My unrescued section'>
-    <uncaught_exception_ timestamp='2019-04-10-Wed-04.44.55.619' class='RuntimeError'>
+    <uncaught_exception_ timestamp='2019-04-10-Wed-05.51.05.737' class='RuntimeError'>
       <message_>
         Boo!
       </message_>
@@ -561,7 +558,7 @@ end
       (?-mix:Bar)
     </data_>
     <data_ name='My time' class='Time' method=':to_s'>
-      2019-04-10 04:44:52 -0500
+      2019-04-10 05:51:02 -0500
     </data_>
     <data_ name='My uri,' class='URI::HTTPS' method=':to_s'>
       https://www.github.com
@@ -2029,5 +2026,62 @@ if log.verdict_refute_nil?(:user_created, user)
   log.verdict_assert_equal?(:user_name, user_name, user.name)
   SomeApi.delete_user(user.id)
 end
-
 ```
+
+### Surround Pre-Formatted Text With Newlines
+
+Method ```put_cdata``` puts pre-formatted text, adding nothing and omitting nothing.
+
+Therefore, the text in the log abuts the enclosing square brackets at the beginning and end.
+
+Add an extra newline at the beginning and end, to make the text in the log "free standing."
+
+```pre_format_text.rb```:
+```ruby
+require 'minitest_log'
+class Test < Minitest::Test
+  def test_demo
+    MinitestLog.new('pre_format_text.xml') do |log|
+      log.section('My section', 'Pre-formatted text without surrounding newlines.  Not so pretty.') do
+        text = <<EOT
+This is a multi-line, pre-formatted text passage.
+Here, we have added no extra newlines,
+so the text is not separated from the enclosing square brackets.
+EOT
+        log.put_cdata(text)
+      end
+      log.section('Another section', 'Pre-formatted text with surrounding newlines.  Prettier.') do
+        text = <<EOT
+
+This is a multi-line, pre-formatted text passage.
+Here, we have added newlines at the beginning and end,
+so the text is separated from the enclosing square brackets.
+
+EOT
+        log.put_cdata(text)
+      end
+    end
+  end
+end
+```
+
+```pre_format_text.xml```:
+```xml
+<log>
+  <section_ name='My section'>
+    Pre-formatted text without surrounding newlines. Not so pretty.
+    <![CDATA[This is a multi-line, pre-formatted text passage.
+Here, we have added no extra newlines,
+so the text is not separated from the enclosing square brackets.]]>
+  </section_>
+  <section_ name='Another section'>
+    Pre-formatted text with surrounding newlines. Prettier.
+    <![CDATA[
+This is a multi-line, pre-formatted text passage.
+Here, we have added newlines at the beginning and end,
+so the text is separated from the enclosing square brackets.
+]]>
+  </section_>
+</log>
+```
+

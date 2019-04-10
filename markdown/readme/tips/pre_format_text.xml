@@ -1,7 +1,16 @@
 <log>
-  <![CDATA[      
-This is a multi-line, pre-formatted text passage
-  that has some unusual whitespace.   
-(The preceding line has both leading and trailing whitespace.)
+  <section_ name='My section'>
+    Pre-formatted text without surrounding newlines. Not so pretty.
+    <![CDATA[This is a multi-line, pre-formatted text passage.
+Here, we have added no extra newlines,
+so the text is not separated from the enclosing square brackets.]]>
+  </section_>
+  <section_ name='Another section'>
+    Pre-formatted text with surrounding newlines. Prettier.
+    <![CDATA[
+This is a multi-line, pre-formatted text passage.
+Here, we have added newlines at the beginning and end,
+so the text is separated from the enclosing square brackets.
 ]]>
+  </section_>
 </log>
