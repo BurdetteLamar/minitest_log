@@ -7,4 +7,12 @@ data.
 Include
   leading and trailing spaces.  
 ]]>
+  <![CDATA[
+Log
+some
+multi-line
+data.
+Include
+  leading and trailing spaces.  
+]]>
 </log>

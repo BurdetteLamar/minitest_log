@@ -3,17 +3,20 @@ class Example < MiniTest::Test
 
   def test_example
     MinitestLog.new('log.xml') do |log|
-      log.section('Text with leading and trailiing whitespace') do
-        log.put_cdata('  Text.  ')
+      log.section('Text with leading and trailing whitespace') do
+        log.put_pre('  Text.  ')
       end
-      log.section('Multiline text') do
-        text = <<EOT
+      text = <<EOT
 Text
 and
 more
 text.
 EOT
-        log.put_cdata(text)
+      log.section('Multiline text with surrounding newlines') do
+        log.put_pre(text)
+      end
+      log.section('Multiline text without surrounding newlines') do
+        log.put_pre(text, verbatim = true)
       end
     end
   end

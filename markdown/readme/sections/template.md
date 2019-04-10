@@ -13,3 +13,6 @@
 @[:markdown](rescue/template.md)
 
 @[:markdown](unrescued/template.md)
+
+@[:markdown](potpourri/template.md)
+

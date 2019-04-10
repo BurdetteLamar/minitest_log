@@ -1,16 +1,17 @@
 <log>
   <section_ name='My section'>
     Pre-formatted text without surrounding newlines. Not so pretty.
-    <![CDATA[This is a multi-line, pre-formatted text passage.
-Here, we have added no extra newlines,
-so the text is not separated from the enclosing square brackets.]]>
-  </section_>
-  <section_ name='Another section'>
-    Pre-formatted text with surrounding newlines. Prettier.
-    <![CDATA[
-This is a multi-line, pre-formatted text passage.
-Here, we have added newlines at the beginning and end,
-so the text is separated from the enclosing square brackets.
-]]>
+    <uncaught_exception_ timestamp='2019-04-10-Wed-15.52.28.467' class='NoMethodError'>
+      <message_>
+        private method `put_cdata&apos; called for
+        #&lt;MinitestLog:0x000000000353d290&gt;
+      </message_>
+      <backtrace_>
+        <![CDATA[pre_format_text.rb:11:in `block (2 levels) in test_demo'
+pre_format_text.rb:5:in `block in test_demo'
+pre_format_text.rb:4:in `new'
+pre_format_text.rb:4:in `test_demo']]>
+      </backtrace_>
+    </uncaught_exception_>
   </section_>
 </log>

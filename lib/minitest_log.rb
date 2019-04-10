@@ -76,19 +76,6 @@ class MinitestLog
     nil
   end
 
-  def put_cdata(text)
-    # Guard against using a terminator that's a substring of the cdata.
-    s = 'EOT'
-    terminator = s
-    while text.match(terminator) do
-      terminator += s
-    end
-    log_puts("CDATA\t<<#{terminator}")
-    log_puts(text)
-    log_puts(terminator)
-    nil
-  end
-
   def section(name, *args)
     put_element('section', {:name => name}, *args) do
       yield if block_given?
@@ -282,6 +269,17 @@ class MinitestLog
     end
   end
 
+  def put_pre(text, verbatim = false)
+    if verbatim
+      put_cdata(text)
+    else
+      t = text.clone
+      t = "\n" + t unless t.start_with?("\n")
+      t = t  + "\n" unless t.end_with?("\n")
+      put_cdata(t)
+    end
+  end
+
   private
 
   def dispose
@@ -425,6 +423,19 @@ class MinitestLog
       raise DuplicateVerdictIdError.new(message)
     end
     self.verdict_ids.add(verdict_id)
+    nil
+  end
+
+  def put_cdata(text)
+    # Guard against using a terminator that's a substring of the cdata.
+    s = 'EOT'
+    terminator = s
+    while text.match(terminator) do
+      terminator += s
+    end
+    log_puts("CDATA\t<<#{terminator}")
+    log_puts(text)
+    log_puts(terminator)
     nil
   end
 

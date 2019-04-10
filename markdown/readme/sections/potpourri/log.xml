@@ -1,0 +1,13 @@
+<log>
+  <section_ name='Section with pot pourri of arguments' a='0' b='1' timestamp='2019-04-10-Wed-15.52.25.172' c='2' d='3' duration_seconds='0.502'>
+    Word More words
+    <rescued_exception_ class='Exception' message='Boo!'>
+      <backtrace_>
+        <level_0_ location='example.rb:17:in `block (2 levels) in test_demo&apos;'/>
+        <level_1_ location='example.rb:5:in `block in test_demo&apos;'/>
+        <level_2_ location='example.rb:4:in `new&apos;'/>
+        <level_3_ location='example.rb:4:in `test_demo&apos;'/>
+      </backtrace_>
+    </rescued_exception_>
+  </section_>
+</log>

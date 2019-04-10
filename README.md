@@ -22,6 +22,7 @@ gem install minitest_log
   - [Timestamps and Durations](#timestamps-and-durations)
   - [Rescue](#rescue)
   - [Unrescued Exception](#unrescued-exception)
+  - [Pot Pourri](#pot-pourri)
 - [Data](#data)
   - [Strings](#strings)
   - [Hash-Like Objects](#hash-like-objects)
@@ -154,9 +155,13 @@ end
 
 ### Formatted Text
 
-Put formatted text onto a section by calling method ```put_cdata```.
+Put formatted text onto a section by calling method ```put_pre```.
 
 Whitespace, including newlines, is preserved.
+
+By default, the method adds leading and trailing newlines, if they're not already there, to improve readability.
+
+You can specify ```verbatim = true``` to suppress that behavior.
 
 ```example.rb```:
 ```ruby
@@ -165,17 +170,20 @@ class Example < MiniTest::Test
 
   def test_example
     MinitestLog.new('log.xml') do |log|
-      log.section('Text with leading and trailiing whitespace') do
-        log.put_cdata('  Text.  ')
+      log.section('Text with leading and trailing whitespace') do
+        log.put_pre('  Text.  ')
       end
-      log.section('Multiline text') do
-        text = <<EOT
+      text = <<EOT
 Text
 and
 more
 text.
 EOT
-        log.put_cdata(text)
+      log.section('Multiline text with surrounding newlines') do
+        log.put_pre(text)
+      end
+      log.section('Multiline text without surrounding newlines') do
+        log.put_pre(text, verbatim = true)
       end
     end
   end
@@ -185,10 +193,18 @@ end
 ```log.xml```:
 ```xml
 <log>
-  <section_ name='Text with leading and trailiing whitespace'>
-    <![CDATA[  Text.  ]]>
+  <section_ name='Text with leading and trailing whitespace'>
+    <![CDATA[
+  Text.  ]]>
   </section_>
-  <section_ name='Multiline text'>
+  <section_ name='Multiline text with surrounding newlines'>
+    <![CDATA[
+Text
+and
+more
+text.]]>
+  </section_>
+  <section_ name='Multiline text without surrounding newlines'>
     <![CDATA[Text
 and
 more
@@ -258,13 +274,13 @@ end
 ```log.xml```:
 ```xml
 <log>
-  <section_ name='My section with timestamp' timestamp='2019-04-10-Wed-06.04.32.995'>
+  <section_ name='My section with timestamp' timestamp='2019-04-10-Wed-15.52.26.745'>
     Section with timestamp.
   </section_>
-  <section_ name='My section with duration' duration_seconds='0.501'>
+  <section_ name='My section with duration' duration_seconds='0.500'>
     Section with duration.
   </section_>
-  <section_ name='My section with both' timestamp='2019-04-10-Wed-06.04.33.497' duration_seconds='0.500'>
+  <section_ name='My section with both' timestamp='2019-04-10-Wed-15.52.27.246' duration_seconds='0.500'>
     Section with both.
   </section_>
 </log>
@@ -334,7 +350,7 @@ end
 ```xml
 <log>
   <section_ name='My unrescued section'>
-    <uncaught_exception_ timestamp='2019-04-10-Wed-06.04.34.373' class='RuntimeError'>
+    <uncaught_exception_ timestamp='2019-04-10-Wed-15.52.28.136' class='RuntimeError'>
       <message_>
         Boo!
       </message_>
@@ -348,6 +364,61 @@ example.rb:4:in `test_example']]>
   </section_>
 </log>
 ```
+
+### Pot Pourri
+
+So far, examples for method ```section``` have emphasized one thing at a time.
+
+A call to method ```section``` begins always with the section name, but after that it can have any number and any types of arguments.
+
+Note that:
+
+- Multiple string arguments are concatentated, left to right, to form one string in the log.
+- Multiple hash arguments are merged, left to right, to form attributes in the log.
+- Symbols ```:timestamp```, ```:duration```, and ```:rescue``` may appear anywhere among the arguments.  Duplicates are ignored.
+
+```example.rb```:
+```ruby
+require 'minitest_log'
+class Test < Minitest::Test
+  def test_demo
+    MinitestLog.new('log.xml') do |log|
+      log.section(
+          'Section with pot pourri of arguments',
+          # Not that you would ever want to do this. :-)
+          :duration,
+          'Word',
+          {:a => 0, :b => 1},
+          :timestamp,
+          ' More words',
+          {:c => 2, :d => 3},
+          :rescue,
+      ) do
+        sleep(0.5)
+        raise Exception.new('Boo!')
+      end
+    end
+  end
+end```
+
+```log.xml```:
+```xml
+<log>
+  <section_ name='Section with pot pourri of arguments' a='0' b='1' timestamp='2019-04-10-Wed-15.52.25.172' c='2' d='3' duration_seconds='0.502'>
+    Word More words
+    <rescued_exception_ class='Exception' message='Boo!'>
+      <backtrace_>
+        <level_0_ location='example.rb:17:in `block (2 levels) in test_demo&apos;'/>
+        <level_1_ location='example.rb:5:in `block in test_demo&apos;'/>
+        <level_2_ location='example.rb:4:in `new&apos;'/>
+        <level_3_ location='example.rb:4:in `test_demo&apos;'/>
+      </backtrace_>
+    </rescued_exception_>
+  </section_>
+</log>
+```
+
+
 
 ## Data
 
@@ -547,7 +618,7 @@ end
       (?-mix:Bar)
     </data_>
     <data_ name='My time' class='Time' method=':to_s'>
-      2019-04-10 06:04:31 -0500
+      2019-04-10 15:52:23 -0500
     </data_>
     <data_ name='My uri,' class='URI::HTTPS' method=':to_s'>
       https://www.github.com
@@ -2059,17 +2130,18 @@ end
 <log>
   <section_ name='My section'>
     Pre-formatted text without surrounding newlines. Not so pretty.
-    <![CDATA[This is a multi-line, pre-formatted text passage.
-Here, we have added no extra newlines,
-so the text is not separated from the enclosing square brackets.]]>
-  </section_>
-  <section_ name='Another section'>
-    Pre-formatted text with surrounding newlines. Prettier.
-    <![CDATA[
-This is a multi-line, pre-formatted text passage.
-Here, we have added newlines at the beginning and end,
-so the text is separated from the enclosing square brackets.
-]]>
+    <uncaught_exception_ timestamp='2019-04-10-Wed-15.52.28.467' class='NoMethodError'>
+      <message_>
+        private method `put_cdata&apos; called for
+        #&lt;MinitestLog:0x000000000353d290&gt;
+      </message_>
+      <backtrace_>
+        <![CDATA[pre_format_text.rb:11:in `block (2 levels) in test_demo'
+pre_format_text.rb:5:in `block in test_demo'
+pre_format_text.rb:4:in `new'
+pre_format_text.rb:4:in `test_demo']]>
+      </backtrace_>
+    </uncaught_exception_>
   </section_>
 </log>
 ```

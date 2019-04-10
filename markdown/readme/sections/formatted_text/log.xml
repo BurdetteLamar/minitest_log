@@ -1,8 +1,16 @@
 <log>
-  <section_ name='Text with leading and trailiing whitespace'>
-    <![CDATA[  Text.  ]]>
+  <section_ name='Text with leading and trailing whitespace'>
+    <![CDATA[
+  Text.  ]]>
   </section_>
-  <section_ name='Multiline text'>
+  <section_ name='Multiline text with surrounding newlines'>
+    <![CDATA[
+Text
+and
+more
+text.]]>
+  </section_>
+  <section_ name='Multiline text without surrounding newlines'>
     <![CDATA[Text
 and
 more
