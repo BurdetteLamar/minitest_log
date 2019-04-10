@@ -214,14 +214,12 @@ class LogTest < Minitest::Test
   def test_put_pre
     with_test_log('put_pre') do |log|
       data = <<EOT
-
 Log
 some
 multi-line
 data.
 Include
-  leading and trailing spaces.  
-
+  leading and trailing spaces.
 EOT
       log.put_pre(data)
       log.put_pre(data, verbatim = true)

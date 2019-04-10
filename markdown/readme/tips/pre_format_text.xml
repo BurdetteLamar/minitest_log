@@ -1,10 +1,10 @@
 <log>
   <section_ name='My section'>
     Pre-formatted text without surrounding newlines. Not so pretty.
-    <uncaught_exception_ timestamp='2019-04-10-Wed-15.52.28.467' class='NoMethodError'>
+    <uncaught_exception_ timestamp='2019-04-10-Wed-16.20.28.579' class='NoMethodError'>
       <message_>
         private method `put_cdata&apos; called for
-        #&lt;MinitestLog:0x000000000353d290&gt;
+        #&lt;MinitestLog:0x0000000003575208&gt;
       </message_>
       <backtrace_>
         <![CDATA[pre_format_text.rb:11:in `block (2 levels) in test_demo'

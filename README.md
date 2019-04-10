@@ -159,9 +159,9 @@ Put formatted text onto a section by calling method ```put_pre```.
 
 Whitespace, including newlines, is preserved.
 
-By default, the method adds leading and trailing newlines, if they're not already there, to improve readability.
+The formatted text in the log is more readable if it begins and ends with suitable whitespace, so by default the method displays the text with enhanced whitespace if needed.
 
-You can specify ```verbatim = true``` to suppress that behavior.
+You can specify ```verbatim = true``` to suppress the enhancement.
 
 ```example.rb```:
 ```ruby
@@ -170,7 +170,7 @@ class Example < MiniTest::Test
 
   def test_example
     MinitestLog.new('log.xml') do |log|
-      log.section('Text with leading and trailing whitespace') do
+      log.section('Line of text with leading and trailing whitespace') do
         log.put_pre('  Text.  ')
       end
       text = <<EOT
@@ -179,10 +179,10 @@ and
 more
 text.
 EOT
-      log.section('Multiline text with surrounding newlines') do
+      log.section('Multiline text with enhanced whitespace') do
         log.put_pre(text)
       end
-      log.section('Multiline text without surrounding newlines') do
+      log.section('Multiline text without without enhanced whitespace') do
         log.put_pre(text, verbatim = true)
       end
     end
@@ -193,18 +193,20 @@ end
 ```log.xml```:
 ```xml
 <log>
-  <section_ name='Text with leading and trailing whitespace'>
+  <section_ name='Line of text with leading and trailing whitespace'>
     <![CDATA[
-  Text.  ]]>
+  Text.  
+]]>
   </section_>
-  <section_ name='Multiline text with surrounding newlines'>
+  <section_ name='Multiline text with enhanced whitespace'>
     <![CDATA[
 Text
 and
 more
-text.]]>
+text.
+]]>
   </section_>
-  <section_ name='Multiline text without surrounding newlines'>
+  <section_ name='Multiline text without without enhanced whitespace'>
     <![CDATA[Text
 and
 more
@@ -274,13 +276,13 @@ end
 ```log.xml```:
 ```xml
 <log>
-  <section_ name='My section with timestamp' timestamp='2019-04-10-Wed-15.52.26.745'>
+  <section_ name='My section with timestamp' timestamp='2019-04-10-Wed-16.20.26.829'>
     Section with timestamp.
   </section_>
   <section_ name='My section with duration' duration_seconds='0.500'>
     Section with duration.
   </section_>
-  <section_ name='My section with both' timestamp='2019-04-10-Wed-15.52.27.246' duration_seconds='0.500'>
+  <section_ name='My section with both' timestamp='2019-04-10-Wed-16.20.27.331' duration_seconds='0.500'>
     Section with both.
   </section_>
 </log>
@@ -350,7 +352,7 @@ end
 ```xml
 <log>
   <section_ name='My unrescued section'>
-    <uncaught_exception_ timestamp='2019-04-10-Wed-15.52.28.136' class='RuntimeError'>
+    <uncaught_exception_ timestamp='2019-04-10-Wed-16.20.28.201' class='RuntimeError'>
       <message_>
         Boo!
       </message_>
@@ -373,8 +375,8 @@ A call to method ```section``` begins always with the section name, but after th
 
 Note that:
 
-- Multiple string arguments are concatentated, left to right, to form one string in the log.
-- Multiple hash arguments are merged, left to right, to form attributes in the log.
+- Multiple string arguments are concatenated, left to right, to form one string in the log.
+- Each hash argument's name/value pairs are used to form attributes in the log.
 - Symbols ```:timestamp```, ```:duration```, and ```:rescue``` may appear anywhere among the arguments.  Duplicates are ignored.
 
 ```example.rb```:
@@ -399,12 +401,13 @@ class Test < Minitest::Test
       end
     end
   end
-end```
+end
+```
 
 ```log.xml```:
 ```xml
 <log>
-  <section_ name='Section with pot pourri of arguments' a='0' b='1' timestamp='2019-04-10-Wed-15.52.25.172' c='2' d='3' duration_seconds='0.502'>
+  <section_ name='Section with pot pourri of arguments' a='0' b='1' timestamp='2019-04-10-Wed-16.20.25.254' c='2' d='3' duration_seconds='0.502'>
     Word More words
     <rescued_exception_ class='Exception' message='Boo!'>
       <backtrace_>
@@ -618,7 +621,7 @@ end
       (?-mix:Bar)
     </data_>
     <data_ name='My time' class='Time' method=':to_s'>
-      2019-04-10 15:52:23 -0500
+      2019-04-10 16:20:23 -0500
     </data_>
     <data_ name='My uri,' class='URI::HTTPS' method=':to_s'>
       https://www.github.com
@@ -2130,10 +2133,10 @@ end
 <log>
   <section_ name='My section'>
     Pre-formatted text without surrounding newlines. Not so pretty.
-    <uncaught_exception_ timestamp='2019-04-10-Wed-15.52.28.467' class='NoMethodError'>
+    <uncaught_exception_ timestamp='2019-04-10-Wed-16.20.28.579' class='NoMethodError'>
       <message_>
         private method `put_cdata&apos; called for
-        #&lt;MinitestLog:0x000000000353d290&gt;
+        #&lt;MinitestLog:0x0000000003575208&gt;
       </message_>
       <backtrace_>
         <![CDATA[pre_format_text.rb:11:in `block (2 levels) in test_demo'

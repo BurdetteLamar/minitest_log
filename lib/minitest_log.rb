@@ -274,8 +274,12 @@ class MinitestLog
       put_cdata(text)
     else
       t = text.clone
-      t = "\n" + t unless t.start_with?("\n")
-      t = t  + "\n" unless t.end_with?("\n")
+      until t.start_with?("\n")
+        t = "\n" + t
+      end
+      until t.end_with?("\n\n")
+        t = t + "\n"
+      end
       put_cdata(t)
     end
   end
