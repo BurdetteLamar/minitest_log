@@ -16,6 +16,7 @@ gem install minitest_log
 ## Contents
 - [Logs and Sections](#logs-and-sections)
   - [Nested Sections](#nested-sections)
+  - [Text](#text)
   - [Attributes](#attributes)
   - [About Time](#about-time)
   - [Rescue](#rescue)
@@ -68,9 +69,9 @@ gem install minitest_log
 
 ### Nested Sections
 
-Give structure to your log by nesting sections.
+Use nested sections to give your test (and the resulting log) structure.
 
-The first argument is always the section name.  Additional string arguments become text (PCDATA).
+In calling method ```section```, the first argument is the section name.  Any following string arguments become text.
 
 ```example.rb```:
 ```ruby
@@ -78,12 +79,12 @@ require 'minitest_log'
 class Example < MiniTest::Test
   def test_example
     MinitestLog.new('log.xml') do |log|
-      log.section('My section name', 'The first argument becomes the section name.')
-      log.section('Another section name', 'After the section name, any string argument becomes text.')
       log.section('My nested sections', 'Sections can nest.') do
         log.section('Outer', 'Outer section.') do
-          log.section('Inner', 'Inner section.')
-          log.section('Another','Another.')
+          log.section('Mid', 'Mid-level section') do
+            log.section('Inner', 'Inner section.')
+            log.section('Another','Another inner section.')
+          end
         end
       end
     end
@@ -94,22 +95,53 @@ end
 ```log.xml```:
 ```xml
 <log>
-  <section_ name='My section name'>
-    The first argument becomes the section name.
-  </section_>
-  <section_ name='Another section name'>
-    After the section name, any string argument becomes text.
-  </section_>
   <section_ name='My nested sections'>
     Sections can nest.
     <section_ name='Outer'>
       Outer section.
-      <section_ name='Inner'>
-        Inner section.
+      <section_ name='Mid'>
+        Mid-level section
+        <section_ name='Inner'>
+          Inner section.
+        </section_>
+        <section_ name='Another'>
+          Another inner section.
+        </section_>
       </section_>
-      <section_ name='Another'>
-        Another.
-      </section_>
+    </section_>
+  </section_>
+</log>
+```
+
+### Text
+
+Put text onto a section by calling ```section``` with string arguments.
+
+As before, the first argument is the section name; other string arguments become text.
+
+Multiple string arguments are concatenated into the text.
+
+```example.rb```:
+```:ruby
+require 'minitest_log'
+class Example < MiniTest::Test
+  def test_example
+    MinitestLog.new('log.xml') do |log|
+      log.section('My section', 'Text for my section.') do
+        log.section('Another section', 'Text for another section.', ' More text.')
+      end
+    end
+  end
+end
+```
+
+```log.xml```:
+```:xml
+<log>
+  <section_ name='My section'>
+    Text for my section.
+    <section_ name='Another section'>
+      Text for another section. More text.
     </section_>
   </section_>
 </log>
@@ -175,13 +207,13 @@ end
 ```log.xml```:
 ```xml
 <log>
-  <section_ name='My section with timestamp' timestamp='2019-04-09-Tue-06.17.37.990'>
+  <section_ name='My section with timestamp' timestamp='2019-04-10-Wed-03.13.42.290'>
     Section with timestamp.
   </section_>
-  <section_ name='My section with duration' duration_seconds='0.500'>
+  <section_ name='My section with duration' duration_seconds='0.501'>
     Section with duration.
   </section_>
-  <section_ name='My section with both' timestamp='2019-04-09-Tue-06.17.38.492' duration_seconds='0.500'>
+  <section_ name='My section with both' timestamp='2019-04-10-Wed-03.13.42.794' duration_seconds='0.500'>
     Section with both.
   </section_>
 </log>
@@ -251,7 +283,7 @@ end
 ```xml
 <log>
   <section_ name='My unrescued section'>
-    <uncaught_exception_ timestamp='2019-04-09-Tue-06.17.39.364' class='RuntimeError'>
+    <uncaught_exception_ timestamp='2019-04-10-Wed-03.13.43.677' class='RuntimeError'>
       <message_>
         Boo!
       </message_>
@@ -464,7 +496,7 @@ end
       Bar
     </data_>
     <data_ name='My time' class='Time' method=':to_s'>
-      2019-04-09 06:17:36 -0500
+      2019-04-10 03:13:40 -0500
     </data_>
     <data_ name='My uri,' class='URI::HTTPS' method=':to_s'>
       https://www.github.com

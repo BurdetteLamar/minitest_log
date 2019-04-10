@@ -1,8 +1,8 @@
 ### Nested Sections
 
-Give structure to your log by nesting sections.
+Use nested sections to give your test (and the resulting log) structure.
 
-The first argument is always the section name.  Additional string arguments become text (PCDATA).
+In calling method ```section```, the first argument is the section name.  Any following string arguments become text.
 
 @[ruby](example.rb)
 

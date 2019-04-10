@@ -1,0 +1,8 @@
+<log>
+  <section_ name='My section'>
+    Text for my section.
+    <section_ name='Another section'>
+      Text for another section. More text.
+    </section_>
+  </section_>
+</log>

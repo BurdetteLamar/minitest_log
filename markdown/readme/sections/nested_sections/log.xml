@@ -1,19 +1,16 @@
 <log>
-  <section_ name='My section name'>
-    The first argument becomes the section name.
-  </section_>
-  <section_ name='Another section name'>
-    After the section name, any string argument becomes text.
-  </section_>
   <section_ name='My nested sections'>
     Sections can nest.
     <section_ name='Outer'>
       Outer section.
-      <section_ name='Inner'>
-        Inner section.
-      </section_>
-      <section_ name='Another'>
-        Another.
+      <section_ name='Mid'>
+        Mid-level section
+        <section_ name='Inner'>
+          Inner section.
+        </section_>
+        <section_ name='Another'>
+          Another inner section.
+        </section_>
       </section_>
     </section_>
   </section_>
