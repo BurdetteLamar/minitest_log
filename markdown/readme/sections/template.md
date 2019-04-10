@@ -2,6 +2,10 @@
 
 @[:markdown](nested_sections/template.md)
 
+@[:markdown](text/template.md)
+
+@[:markdown](formatted_text/template.md)
+
 @[:markdown](attributes/template.md)
 
 @[:markdown](time/template.md)

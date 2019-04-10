@@ -16,8 +16,10 @@ gem install minitest_log
 ## Contents
 - [Logs and Sections](#logs-and-sections)
   - [Nested Sections](#nested-sections)
+  - [Text](#text)
+  - [Formatted Text](#formatted-text)
   - [Attributes](#attributes)
-  - [About Time](#about-time)
+  - [Timestamps and Durations](#timestamps-and-durations)
   - [Rescue](#rescue)
   - [Unrescued Exception](#unrescued-exception)
 - [Data](#data)
@@ -68,9 +70,9 @@ gem install minitest_log
 
 ### Nested Sections
 
-Give structure to your log by nesting sections.
+Use nested sections to give structure to your test -- and its log.
 
-The first argument is always the section name.  Additional string arguments become text (PCDATA).
+In calling method ```section```, the first argument is the section name.  Any following string arguments become text.
 
 ```example.rb```:
 ```ruby
@@ -78,12 +80,12 @@ require 'minitest_log'
 class Example < MiniTest::Test
   def test_example
     MinitestLog.new('log.xml') do |log|
-      log.section('My section name', 'The first argument becomes the section name.')
-      log.section('Another section name', 'After the section name, any string argument becomes text.')
       log.section('My nested sections', 'Sections can nest.') do
         log.section('Outer', 'Outer section.') do
-          log.section('Inner', 'Inner section.')
-          log.section('Another','Another.')
+          log.section('Mid', 'Mid-level section') do
+            log.section('Inner', 'Inner section.')
+            log.section('Another','Another inner section.')
+          end
         end
       end
     end
@@ -94,34 +96,129 @@ end
 ```log.xml```:
 ```xml
 <log>
-  <section_ name='My section name'>
-    The first argument becomes the section name.
-  </section_>
-  <section_ name='Another section name'>
-    After the section name, any string argument becomes text.
-  </section_>
   <section_ name='My nested sections'>
     Sections can nest.
     <section_ name='Outer'>
       Outer section.
-      <section_ name='Inner'>
-        Inner section.
-      </section_>
-      <section_ name='Another'>
-        Another.
+      <section_ name='Mid'>
+        Mid-level section
+        <section_ name='Inner'>
+          Inner section.
+        </section_>
+        <section_ name='Another'>
+          Another inner section.
+        </section_>
       </section_>
     </section_>
   </section_>
 </log>
 ```
 
+### Text
+
+Put text onto a section by calling method ```section``` with string arguments.
+
+As before, the first argument is the section name; other string arguments become text.
+
+Multiple string arguments are concatenated into the text.
+
+Note that you can also put text onto a section by calling method ```put_data```.  See [Data](#data) below.
+
+```example.rb```:
+```ruby
+require 'minitest_log'
+class Example < MiniTest::Test
+  def test_example
+    MinitestLog.new('log.xml') do |log|
+      log.section('My section', 'Text for my section.') do
+        log.section('Another section', 'Text for another section.', ' More text.')
+      end
+    end
+  end
+end
+```
+
+```log.xml```:
+```xml
+<log>
+  <section_ name='My section'>
+    Text for my section.
+    <section_ name='Another section'>
+      Text for another section. More text.
+    </section_>
+  </section_>
+</log>
+```
+
+
+### Formatted Text
+
+Put formatted text onto a section by calling method ```put_cdata```.
+
+Whitespace, including newlines, is preserved.
+
+```example.rb```:
+```ruby
+require 'minitest_log'
+class Example < MiniTest::Test
+
+  def some_text_to_put
+    [
+        '  This line has leading whitespace that is preserved.',
+        '',
+        'The empty line above is preserved.',
+        '  ',
+        'The whitespace-only line above is preserved.',
+        'This line has trailing whitespace that is preserved.  ',
+    ].join("\n")
+  end
+
+  def test_example
+    MinitestLog.new('log.xml') do |log|
+      log.section('My section') do
+        log.put_cdata(some_text_to_put)
+      end
+      log.section('Another section', 'Adding my own whitespace to separate first and last lines from enclosing square brackets.') do
+        log.put_cdata("\n#{some_text_to_put}\n")
+      end
+    end
+  end
+end
+```
+
+```log.xml```:
+```xml
+<log>
+  <section_ name='My section'>
+    <![CDATA[  This line has leading whitespace that is preserved.
+
+The empty line above is preserved.
+  
+The whitespace-only line above is preserved.
+This line has trailing whitespace that is preserved.  ]]>
+  </section_>
+  <section_ name='Another section'>
+    Adding my own whitespace to separate first and last lines from enclosing
+    square brackets.
+    <![CDATA[
+  This line has leading whitespace that is preserved.
+
+The empty line above is preserved.
+  
+The whitespace-only line above is preserved.
+This line has trailing whitespace that is preserved.  ]]>
+  </section_>
+</log>
+```
+
+
 ### Attributes
 
 Put attributes onto a section by calling ```section``` with hash arguments.
 
-Each name/value pair in the hash becomes an attribute in the log section header.
+Each name/value pair in a hash becomes an attribute in the log section element.
 
-The first argument is always the section name.  Addition hash arguments become attributes.
+The first argument is always the section name.  Following hash arguments become attributes.
 
 ```example.rb```:
 ```ruby
@@ -150,9 +247,9 @@ end
 </log>
 ```
 
-### About Time
+### Timestamps and Durations
 
-Use symbols ```:timestamp``` or ```:duration``` to add a timestamp or a duration to a section.
+Use symbol ```:timestamp``` or ```:duration``` to add a timestamp or a duration to a section.
 
 ```example.rb```:
 ```ruby
@@ -175,13 +272,13 @@ end
 ```log.xml```:
 ```xml
 <log>
-  <section_ name='My section with timestamp' timestamp='2019-04-09-Tue-06.17.37.990'>
+  <section_ name='My section with timestamp' timestamp='2019-04-10-Wed-04.44.54.251'>
     Section with timestamp.
   </section_>
   <section_ name='My section with duration' duration_seconds='0.500'>
     Section with duration.
   </section_>
-  <section_ name='My section with both' timestamp='2019-04-09-Tue-06.17.38.492' duration_seconds='0.500'>
+  <section_ name='My section with both' timestamp='2019-04-10-Wed-04.44.54.752' duration_seconds='0.500'>
     Section with both.
   </section_>
 </log>
@@ -251,7 +348,7 @@ end
 ```xml
 <log>
   <section_ name='My unrescued section'>
-    <uncaught_exception_ timestamp='2019-04-09-Tue-06.17.39.364' class='RuntimeError'>
+    <uncaught_exception_ timestamp='2019-04-10-Wed-04.44.55.619' class='RuntimeError'>
       <message_>
         Boo!
       </message_>
@@ -441,7 +538,7 @@ class Example < MiniTest::Test
       log.section('Objects logged using :to_s') do
         log.put_data('My integer', 0)
         log.put_data('My exception', Exception.new('Boo!'))
-        log.put_data('My regexp', 'Bar')
+        log.put_data('My regexp', /Bar/)
         log.put_data('My time', Time.now)
         log.put_data('My uri,', URI('https://www.github.com'))
       end
@@ -460,11 +557,11 @@ end
     <data_ name='My exception' class='Exception' method=':to_s'>
       Boo!
     </data_>
-    <data_ name='My regexp' class='String' size='3'>
-      Bar
+    <data_ name='My regexp' class='Regexp' method=':to_s'>
+      (?-mix:Bar)
     </data_>
     <data_ name='My time' class='Time' method=':to_s'>
-      2019-04-09 06:17:36 -0500
+      2019-04-10 04:44:52 -0500
     </data_>
     <data_ name='My uri,' class='URI::HTTPS' method=':to_s'>
       https://www.github.com
