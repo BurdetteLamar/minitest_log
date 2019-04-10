@@ -3,7 +3,7 @@
     <![CDATA[  This line has leading whitespace that's preserved.
 
 The empty line above is also preserved.
-This line has trailing whitespace that's preserved.]]>
+This line has trailing whitespace that's preserved.  ]]>
   </section_>
   <section_ name='Another section'>
     Adding my own whitespace to separate first and last lines from enclosing
@@ -12,7 +12,7 @@ This line has trailing whitespace that's preserved.]]>
   This line has leading whitespace that's preserved.
 
 The empty line above is also preserved.
-This line has trailing whitespace that's preserved.
+This line has trailing whitespace that's preserved.  
 ]]>
   </section_>
 </log>

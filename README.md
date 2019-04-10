@@ -161,19 +161,23 @@ Whitespace, including newlines, is preserved.
 ```:ruby
 require 'minitest_log'
 class Example < MiniTest::Test
-  def test_example
-    MinitestLog.new('log.xml') do |log|
-      text = <<EOT
+
+  def some_text_to_put
+    <<EOT
   This line has leading whitespace that's preserved.
 
 The empty line above is also preserved.
-This line has trailing whitespace that's preserved.
+This line has trailing whitespace that's preserved.  
 EOT
+  end
+
+  def test_example
+    MinitestLog.new('log.xml') do |log|
       log.section('My section') do
-        log.put_cdata(text)
+        log.put_cdata(some_text_to_put)
       end
       log.section('Another section', 'Adding my own whitespace to separate first and last lines from enclosing square brackets.') do
-        log.put_cdata("\n#{text}\n")
+        log.put_cdata("\n#{some_text_to_put}\n")
       end
     end
   end
@@ -187,7 +191,7 @@ end
     <![CDATA[  This line has leading whitespace that's preserved.
 
 The empty line above is also preserved.
-This line has trailing whitespace that's preserved.]]>
+This line has trailing whitespace that's preserved.  ]]>
   </section_>
   <section_ name='Another section'>
     Adding my own whitespace to separate first and last lines from enclosing
@@ -196,7 +200,7 @@ This line has trailing whitespace that's preserved.]]>
   This line has leading whitespace that's preserved.
 
 The empty line above is also preserved.
-This line has trailing whitespace that's preserved.
+This line has trailing whitespace that's preserved.  
 ]]>
   </section_>
 </log>
@@ -263,13 +267,13 @@ end
 ```log.xml```:
 ```xml
 <log>
-  <section_ name='My section with timestamp' timestamp='2019-04-10-Wed-03.49.40.143'>
+  <section_ name='My section with timestamp' timestamp='2019-04-10-Wed-03.56.19.714'>
     Section with timestamp.
   </section_>
   <section_ name='My section with duration' duration_seconds='0.500'>
     Section with duration.
   </section_>
-  <section_ name='My section with both' timestamp='2019-04-10-Wed-03.49.40.644' duration_seconds='0.500'>
+  <section_ name='My section with both' timestamp='2019-04-10-Wed-03.56.20.215' duration_seconds='0.500'>
     Section with both.
   </section_>
 </log>
@@ -339,7 +343,7 @@ end
 ```xml
 <log>
   <section_ name='My unrescued section'>
-    <uncaught_exception_ timestamp='2019-04-10-Wed-03.49.41.517' class='RuntimeError'>
+    <uncaught_exception_ timestamp='2019-04-10-Wed-03.56.21.113' class='RuntimeError'>
       <message_>
         Boo!
       </message_>
@@ -552,7 +556,7 @@ end
       Bar
     </data_>
     <data_ name='My time' class='Time' method=':to_s'>
-      2019-04-10 03:49:38 -0500
+      2019-04-10 03:56:17 -0500
     </data_>
     <data_ name='My uri,' class='URI::HTTPS' method=':to_s'>
       https://www.github.com
