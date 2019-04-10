@@ -6,7 +6,7 @@ class Example < MiniTest::Test
   This line has leading whitespace that's preserved.
 
 The empty line above is also preserved.
-This line has trailing whitespace that's preserved.
+This line has trailing whitespace that's preserved.  
 EOT
   end
 

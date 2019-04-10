@@ -167,7 +167,7 @@ class Example < MiniTest::Test
   This line has leading whitespace that's preserved.
 
 The empty line above is also preserved.
-This line has trailing whitespace that's preserved.
+This line has trailing whitespace that's preserved.  
 EOT
   end
 
@@ -191,7 +191,7 @@ end
     <![CDATA[  This line has leading whitespace that's preserved.
 
 The empty line above is also preserved.
-This line has trailing whitespace that's preserved.]]>
+This line has trailing whitespace that's preserved.  ]]>
   </section_>
   <section_ name='Another section'>
     Adding my own whitespace to separate first and last lines from enclosing
@@ -200,7 +200,7 @@ This line has trailing whitespace that's preserved.]]>
   This line has leading whitespace that's preserved.
 
 The empty line above is also preserved.
-This line has trailing whitespace that's preserved.
+This line has trailing whitespace that's preserved.  
 ]]>
   </section_>
 </log>
@@ -267,13 +267,13 @@ end
 ```log.xml```:
 ```xml
 <log>
-  <section_ name='My section with timestamp' timestamp='2019-04-10-Wed-04.05.13.139'>
+  <section_ name='My section with timestamp' timestamp='2019-04-10-Wed-04.07.13.155'>
     Section with timestamp.
   </section_>
-  <section_ name='My section with duration' duration_seconds='0.500'>
+  <section_ name='My section with duration' duration_seconds='0.501'>
     Section with duration.
   </section_>
-  <section_ name='My section with both' timestamp='2019-04-10-Wed-04.05.13.640' duration_seconds='0.500'>
+  <section_ name='My section with both' timestamp='2019-04-10-Wed-04.07.13.657' duration_seconds='0.500'>
     Section with both.
   </section_>
 </log>
@@ -343,7 +343,7 @@ end
 ```xml
 <log>
   <section_ name='My unrescued section'>
-    <uncaught_exception_ timestamp='2019-04-10-Wed-04.05.14.521' class='RuntimeError'>
+    <uncaught_exception_ timestamp='2019-04-10-Wed-04.07.14.528' class='RuntimeError'>
       <message_>
         Boo!
       </message_>
@@ -556,7 +556,7 @@ end
       Bar
     </data_>
     <data_ name='My time' class='Time' method=':to_s'>
-      2019-04-10 04:05:11 -0500
+      2019-04-10 04:07:11 -0500
     </data_>
     <data_ name='My uri,' class='URI::HTTPS' method=':to_s'>
       https://www.github.com
