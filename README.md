@@ -17,6 +17,7 @@ gem install minitest_log
 - [Logs and Sections](#logs-and-sections)
   - [Nested Sections](#nested-sections)
   - [Text](#text)
+  - [Formatted Text](#formatted-text)
   - [Attributes](#attributes)
   - [About Time](#about-time)
   - [Rescue](#rescue)
@@ -69,7 +70,7 @@ gem install minitest_log
 
 ### Nested Sections
 
-Use nested sections to give your test (and the resulting log) structure.
+Use nested sections to give structure to your test -- and its log.
 
 In calling method ```section```, the first argument is the section name.  Any following string arguments become text.
 
@@ -115,11 +116,13 @@ end
 
 ### Text
 
-Put text onto a section by calling ```section``` with string arguments.
+Put text onto a section by calling method ```section``` with string arguments.
 
 As before, the first argument is the section name; other string arguments become text.
 
 Multiple string arguments are concatenated into the text.
+
+Note that you can also put text onto a section by calling method ```put_data```.  See [Data](#data) below.
 
 ```example.rb```:
 ```:ruby
@@ -146,6 +149,59 @@ end
   </section_>
 </log>
 ```
+
+
+### Formatted Text
+
+Put formatted text onto a section by calling method ```put_cdata```.
+
+Whitespace, including newlines, is preserved.
+
+```example.rb```:
+```:ruby
+require 'minitest_log'
+class Example < MiniTest::Test
+  def test_example
+    MinitestLog.new('log.xml') do |log|
+      text = <<EOT
+  This line has leading whitespace that's preserved.
+
+The empty line above is also preserved.
+This line has trailing whitespace that's preserved.
+EOT
+      log.section('My section') do
+        log.put_cdata(text)
+      end
+      log.section('Another section', 'Adding my own whitespace to separate first and last lines from enclosing square brackets.') do
+        log.put_cdata("\n#{text}\n")
+      end
+    end
+  end
+end
+```
+
+```log.xml```:
+```:xml
+<log>
+  <section_ name='My section'>
+    <![CDATA[  This line has leading whitespace that's preserved.
+
+The empty line above is also preserved.
+This line has trailing whitespace that's preserved.]]>
+  </section_>
+  <section_ name='Another section'>
+    Adding my own whitespace to separate first and last lines from enclosing
+    square brackets.
+    <![CDATA[
+  This line has leading whitespace that's preserved.
+
+The empty line above is also preserved.
+This line has trailing whitespace that's preserved.
+]]>
+  </section_>
+</log>
+```
+
 
 ### Attributes
 
@@ -207,13 +263,13 @@ end
 ```log.xml```:
 ```xml
 <log>
-  <section_ name='My section with timestamp' timestamp='2019-04-10-Wed-03.13.42.290'>
+  <section_ name='My section with timestamp' timestamp='2019-04-10-Wed-03.49.40.143'>
     Section with timestamp.
   </section_>
-  <section_ name='My section with duration' duration_seconds='0.501'>
+  <section_ name='My section with duration' duration_seconds='0.500'>
     Section with duration.
   </section_>
-  <section_ name='My section with both' timestamp='2019-04-10-Wed-03.13.42.794' duration_seconds='0.500'>
+  <section_ name='My section with both' timestamp='2019-04-10-Wed-03.49.40.644' duration_seconds='0.500'>
     Section with both.
   </section_>
 </log>
@@ -283,7 +339,7 @@ end
 ```xml
 <log>
   <section_ name='My unrescued section'>
-    <uncaught_exception_ timestamp='2019-04-10-Wed-03.13.43.677' class='RuntimeError'>
+    <uncaught_exception_ timestamp='2019-04-10-Wed-03.49.41.517' class='RuntimeError'>
       <message_>
         Boo!
       </message_>
@@ -496,7 +552,7 @@ end
       Bar
     </data_>
     <data_ name='My time' class='Time' method=':to_s'>
-      2019-04-10 03:13:40 -0500
+      2019-04-10 03:49:38 -0500
     </data_>
     <data_ name='My uri,' class='URI::HTTPS' method=':to_s'>
       https://www.github.com
