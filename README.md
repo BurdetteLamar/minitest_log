@@ -66,7 +66,6 @@ gem install minitest_log
 - [Tips](#tips)
   - [Use Short Verdict Aliases](#use-short-verdict-aliases)
   - [Avoid Failure Clutter](#avoid-failure-clutter)
-  - [Surround Pre-Formatted Text With Newlines](#surround-pre-formatted-text-with-newlines)
 
 ## Logs and Sections
 
@@ -276,13 +275,13 @@ end
 ```log.xml```:
 ```xml
 <log>
-  <section_ name='My section with timestamp' timestamp='2019-04-10-Wed-16.20.26.829'>
+  <section_ name='My section with timestamp' timestamp='2019-04-10-Wed-16.28.06.118'>
     Section with timestamp.
   </section_>
   <section_ name='My section with duration' duration_seconds='0.500'>
     Section with duration.
   </section_>
-  <section_ name='My section with both' timestamp='2019-04-10-Wed-16.20.27.331' duration_seconds='0.500'>
+  <section_ name='My section with both' timestamp='2019-04-10-Wed-16.28.06.619' duration_seconds='0.500'>
     Section with both.
   </section_>
 </log>
@@ -352,7 +351,7 @@ end
 ```xml
 <log>
   <section_ name='My unrescued section'>
-    <uncaught_exception_ timestamp='2019-04-10-Wed-16.20.28.201' class='RuntimeError'>
+    <uncaught_exception_ timestamp='2019-04-10-Wed-16.28.07.500' class='RuntimeError'>
       <message_>
         Boo!
       </message_>
@@ -407,7 +406,7 @@ end
 ```log.xml```:
 ```xml
 <log>
-  <section_ name='Section with pot pourri of arguments' a='0' b='1' timestamp='2019-04-10-Wed-16.20.25.254' c='2' d='3' duration_seconds='0.502'>
+  <section_ name='Section with pot pourri of arguments' a='0' b='1' timestamp='2019-04-10-Wed-16.28.04.584' c='2' d='3' duration_seconds='0.502'>
     Word More words
     <rescued_exception_ class='Exception' message='Boo!'>
       <backtrace_>
@@ -621,7 +620,7 @@ end
       (?-mix:Bar)
     </data_>
     <data_ name='My time' class='Time' method=':to_s'>
-      2019-04-10 16:20:23 -0500
+      2019-04-10 16:28:03 -0500
     </data_>
     <data_ name='My uri,' class='URI::HTTPS' method=':to_s'>
       https://www.github.com
@@ -2089,63 +2088,5 @@ if log.verdict_refute_nil?(:user_created, user)
   log.verdict_assert_equal?(:user_name, user_name, user.name)
   SomeApi.delete_user(user.id)
 end
-```
-
-### Surround Pre-Formatted Text With Newlines
-
-Method ```put_cdata``` puts pre-formatted text, adding nothing and omitting nothing.
-
-Therefore, the text in the log abuts the enclosing square brackets at the beginning and end.
-
-Add an extra newline at the beginning and end, to make the text in the log "free standing."
-
-```pre_format_text.rb```:
-```ruby
-require 'minitest_log'
-class Test < Minitest::Test
-  def test_demo
-    MinitestLog.new('pre_format_text.xml') do |log|
-      log.section('My section', 'Pre-formatted text without surrounding newlines.  Not so pretty.') do
-        text = <<EOT
-This is a multi-line, pre-formatted text passage.
-Here, we have added no extra newlines,
-so the text is not separated from the enclosing square brackets.
-EOT
-        log.put_cdata(text)
-      end
-      log.section('Another section', 'Pre-formatted text with surrounding newlines.  Prettier.') do
-        text = <<EOT
-
-This is a multi-line, pre-formatted text passage.
-Here, we have added newlines at the beginning and end,
-so the text is separated from the enclosing square brackets.
-
-EOT
-        log.put_cdata(text)
-      end
-    end
-  end
-end
-```
-
-```pre_format_text.xml```:
-```xml
-<log>
-  <section_ name='My section'>
-    Pre-formatted text without surrounding newlines. Not so pretty.
-    <uncaught_exception_ timestamp='2019-04-10-Wed-16.20.28.579' class='NoMethodError'>
-      <message_>
-        private method `put_cdata&apos; called for
-        #&lt;MinitestLog:0x0000000003575208&gt;
-      </message_>
-      <backtrace_>
-        <![CDATA[pre_format_text.rb:11:in `block (2 levels) in test_demo'
-pre_format_text.rb:5:in `block in test_demo'
-pre_format_text.rb:4:in `new'
-pre_format_text.rb:4:in `test_demo']]>
-      </backtrace_>
-    </uncaught_exception_>
-  </section_>
-</log>
 ```
 
