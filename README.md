@@ -19,7 +19,7 @@ gem install minitest_log
   - [Text](#text)
   - [Formatted Text](#formatted-text)
   - [Attributes](#attributes)
-  - [About Time](#about-time)
+  - [Timestamps and Durations](#timestamps-and-durations)
   - [Rescue](#rescue)
   - [Unrescued Exception](#unrescued-exception)
 - [Data](#data)
@@ -167,7 +167,7 @@ class Example < MiniTest::Test
   This line has leading whitespace that's preserved.
 
 The empty line above is also preserved.
-This line has trailing whitespace that's preserved.  
+This line has trailing whitespace that's preserved.
 EOT
   end
 
@@ -191,7 +191,7 @@ end
     <![CDATA[  This line has leading whitespace that's preserved.
 
 The empty line above is also preserved.
-This line has trailing whitespace that's preserved.  ]]>
+This line has trailing whitespace that's preserved.]]>
   </section_>
   <section_ name='Another section'>
     Adding my own whitespace to separate first and last lines from enclosing
@@ -200,7 +200,7 @@ This line has trailing whitespace that's preserved.  ]]>
   This line has leading whitespace that's preserved.
 
 The empty line above is also preserved.
-This line has trailing whitespace that's preserved.  
+This line has trailing whitespace that's preserved.
 ]]>
   </section_>
 </log>
@@ -211,9 +211,9 @@ This line has trailing whitespace that's preserved.
 
 Put attributes onto a section by calling ```section``` with hash arguments.
 
-Each name/value pair in the hash becomes an attribute in the log section header.
+Each name/value pair in a hash becomes an attribute in the log section element.
 
-The first argument is always the section name.  Addition hash arguments become attributes.
+The first argument is always the section name.  Following hash arguments become attributes.
 
 ```example.rb```:
 ```ruby
@@ -242,7 +242,7 @@ end
 </log>
 ```
 
-### About Time
+### Timestamps and Durations
 
 Use symbols ```:timestamp``` or ```:duration``` to add a timestamp or a duration to a section.
 
@@ -267,13 +267,13 @@ end
 ```log.xml```:
 ```xml
 <log>
-  <section_ name='My section with timestamp' timestamp='2019-04-10-Wed-04.07.13.155'>
+  <section_ name='My section with timestamp' timestamp='2019-04-10-Wed-04.21.55.710'>
     Section with timestamp.
   </section_>
-  <section_ name='My section with duration' duration_seconds='0.501'>
+  <section_ name='My section with duration' duration_seconds='0.500'>
     Section with duration.
   </section_>
-  <section_ name='My section with both' timestamp='2019-04-10-Wed-04.07.13.657' duration_seconds='0.500'>
+  <section_ name='My section with both' timestamp='2019-04-10-Wed-04.21.56.211' duration_seconds='0.500'>
     Section with both.
   </section_>
 </log>
@@ -343,7 +343,7 @@ end
 ```xml
 <log>
   <section_ name='My unrescued section'>
-    <uncaught_exception_ timestamp='2019-04-10-Wed-04.07.14.528' class='RuntimeError'>
+    <uncaught_exception_ timestamp='2019-04-10-Wed-04.21.57.123' class='RuntimeError'>
       <message_>
         Boo!
       </message_>
@@ -533,7 +533,7 @@ class Example < MiniTest::Test
       log.section('Objects logged using :to_s') do
         log.put_data('My integer', 0)
         log.put_data('My exception', Exception.new('Boo!'))
-        log.put_data('My regexp', 'Bar')
+        log.put_data('My regexp', /Bar/)
         log.put_data('My time', Time.now)
         log.put_data('My uri,', URI('https://www.github.com'))
       end
@@ -552,11 +552,11 @@ end
     <data_ name='My exception' class='Exception' method=':to_s'>
       Boo!
     </data_>
-    <data_ name='My regexp' class='String' size='3'>
-      Bar
+    <data_ name='My regexp' class='Regexp' method=':to_s'>
+      (?-mix:Bar)
     </data_>
     <data_ name='My time' class='Time' method=':to_s'>
-      2019-04-10 04:07:11 -0500
+      2019-04-10 04:21:53 -0500
     </data_>
     <data_ name='My uri,' class='URI::HTTPS' method=':to_s'>
       https://www.github.com
