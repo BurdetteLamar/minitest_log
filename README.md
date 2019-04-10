@@ -163,17 +163,6 @@ Whitespace, including newlines, is preserved.
 require 'minitest_log'
 class Example < MiniTest::Test
 
-  def some_text_to_put
-    [
-        '  This line has leading whitespace that is preserved.',
-        '',
-        'The empty line above is preserved.',
-        '  ',
-        'The whitespace-only line above is preserved.',
-        'This line has trailing whitespace that is preserved.  ',
-    ].join("\n")
-  end
-
   def test_example
     MinitestLog.new('log.xml') do |log|
       log.section('Text with leading and trailiing whitespace') do
@@ -269,13 +258,13 @@ end
 ```log.xml```:
 ```xml
 <log>
-  <section_ name='My section with timestamp' timestamp='2019-04-10-Wed-05.51.04.312'>
+  <section_ name='My section with timestamp' timestamp='2019-04-10-Wed-05.56.32.373'>
     Section with timestamp.
   </section_>
-  <section_ name='My section with duration' duration_seconds='0.501'>
+  <section_ name='My section with duration' duration_seconds='0.500'>
     Section with duration.
   </section_>
-  <section_ name='My section with both' timestamp='2019-04-10-Wed-05.51.04.814' duration_seconds='0.500'>
+  <section_ name='My section with both' timestamp='2019-04-10-Wed-05.56.32.874' duration_seconds='0.500'>
     Section with both.
   </section_>
 </log>
@@ -345,7 +334,7 @@ end
 ```xml
 <log>
   <section_ name='My unrescued section'>
-    <uncaught_exception_ timestamp='2019-04-10-Wed-05.51.05.737' class='RuntimeError'>
+    <uncaught_exception_ timestamp='2019-04-10-Wed-05.56.33.752' class='RuntimeError'>
       <message_>
         Boo!
       </message_>
@@ -558,7 +547,7 @@ end
       (?-mix:Bar)
     </data_>
     <data_ name='My time' class='Time' method=':to_s'>
-      2019-04-10 05:51:02 -0500
+      2019-04-10 05:56:30 -0500
     </data_>
     <data_ name='My uri,' class='URI::HTTPS' method=':to_s'>
       https://www.github.com
