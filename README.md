@@ -249,7 +249,7 @@ end
 
 ### Timestamps and Durations
 
-Use symbols ```:timestamp``` or ```:duration``` to add a timestamp or a duration to a section.
+Use symbol ```:timestamp``` or ```:duration``` to add a timestamp or a duration to a section.
 
 ```example.rb```:
 ```ruby
@@ -272,13 +272,13 @@ end
 ```log.xml```:
 ```xml
 <log>
-  <section_ name='My section with timestamp' timestamp='2019-04-10-Wed-04.39.23.337'>
+  <section_ name='My section with timestamp' timestamp='2019-04-10-Wed-04.44.54.251'>
     Section with timestamp.
   </section_>
   <section_ name='My section with duration' duration_seconds='0.500'>
     Section with duration.
   </section_>
-  <section_ name='My section with both' timestamp='2019-04-10-Wed-04.39.23.838' duration_seconds='0.500'>
+  <section_ name='My section with both' timestamp='2019-04-10-Wed-04.44.54.752' duration_seconds='0.500'>
     Section with both.
   </section_>
 </log>
@@ -348,7 +348,7 @@ end
 ```xml
 <log>
   <section_ name='My unrescued section'>
-    <uncaught_exception_ timestamp='2019-04-10-Wed-04.39.24.699' class='RuntimeError'>
+    <uncaught_exception_ timestamp='2019-04-10-Wed-04.44.55.619' class='RuntimeError'>
       <message_>
         Boo!
       </message_>
@@ -561,7 +561,7 @@ end
       (?-mix:Bar)
     </data_>
     <data_ name='My time' class='Time' method=':to_s'>
-      2019-04-10 04:39:21 -0500
+      2019-04-10 04:44:52 -0500
     </data_>
     <data_ name='My uri,' class='URI::HTTPS' method=':to_s'>
       https://www.github.com
