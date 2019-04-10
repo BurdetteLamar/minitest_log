@@ -258,13 +258,13 @@ end
 ```log.xml```:
 ```xml
 <log>
-  <section_ name='My section with timestamp' timestamp='2019-04-10-Wed-05.56.32.373'>
+  <section_ name='My section with timestamp' timestamp='2019-04-10-Wed-06.04.32.995'>
     Section with timestamp.
   </section_>
-  <section_ name='My section with duration' duration_seconds='0.500'>
+  <section_ name='My section with duration' duration_seconds='0.501'>
     Section with duration.
   </section_>
-  <section_ name='My section with both' timestamp='2019-04-10-Wed-05.56.32.874' duration_seconds='0.500'>
+  <section_ name='My section with both' timestamp='2019-04-10-Wed-06.04.33.497' duration_seconds='0.500'>
     Section with both.
   </section_>
 </log>
@@ -334,7 +334,7 @@ end
 ```xml
 <log>
   <section_ name='My unrescued section'>
-    <uncaught_exception_ timestamp='2019-04-10-Wed-05.56.33.752' class='RuntimeError'>
+    <uncaught_exception_ timestamp='2019-04-10-Wed-06.04.34.373' class='RuntimeError'>
       <message_>
         Boo!
       </message_>
@@ -547,7 +547,7 @@ end
       (?-mix:Bar)
     </data_>
     <data_ name='My time' class='Time' method=':to_s'>
-      2019-04-10 05:56:30 -0500
+      2019-04-10 06:04:31 -0500
     </data_>
     <data_ name='My uri,' class='URI::HTTPS' method=':to_s'>
       https://www.github.com
@@ -2006,7 +2006,7 @@ In the example below, the test attempts to create a user.  If the create succeed
 
 However, if the create fails, the test does not attempt to validate or delete the user (which attempts would fail, and might raise exceptions).
 
-Thus:
+Thus, assuming a failed create returns ```nil```:
 
 ```ruby
 user_name = 'Bill Jones'
