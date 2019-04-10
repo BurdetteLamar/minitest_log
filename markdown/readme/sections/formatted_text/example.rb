@@ -2,12 +2,14 @@ require 'minitest_log'
 class Example < MiniTest::Test
 
   def some_text_to_put
-    <<EOT
-  This line has leading whitespace that's preserved.
-
-The empty line above is also preserved.
-This line has trailing whitespace that's preserved.
-EOT
+    [
+        '  This line has leading whitespace that is preserved.',
+        '',
+        'The empty line above is preserved.',
+        '  ',
+        'The whitespace-only line above is preserved.',
+        'This line has trailing whitespace that is preserved.  ',
+    ].join("\n")
   end
 
   def test_example
