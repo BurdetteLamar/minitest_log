@@ -178,8 +178,8 @@ class LogTest < Minitest::Test
     end
   end
 
-  def test_pot_pourri
-    pot_pourri = [
+  def test_potpourri
+    potpourri = [
         'one',
         {:a => 0, :b => 1},
         :timestamp,
@@ -190,9 +190,9 @@ class LogTest < Minitest::Test
         'three',
     ]
     [:section, :put_element].each do |method|
-      name = "#{method}_pot_pourri"
+      name = "#{method}_potpourri"
       with_test_log(name) do |log|
-        log.send(method, 'pot_pourri', *pot_pourri)
+        log.send(method, 'potpourri', *potpourri)
       end
     end
   end

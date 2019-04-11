@@ -1,4 +1,4 @@
-### Pot Pourri
+### Potpourri
 
 So far, examples for method ```section``` have emphasized one thing at a time.
 
