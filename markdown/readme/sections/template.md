@@ -16,3 +16,4 @@
 
 @[:markdown](potpourri/template.md)
 
+@[:markdown](options/template.md)

@@ -10,7 +10,6 @@ class Example < MiniTest::Test
         end
         log.section('Set') do
           set = Set.new(%w/baseball football basketball hockey/)
-          puts set.respond_to?(:each_with_index)
           log.put_data('My set', set)
         end
       end
