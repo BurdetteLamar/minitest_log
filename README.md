@@ -22,7 +22,7 @@ gem install minitest_log
   - [Timestamps and Durations](#timestamps-and-durations)
   - [Rescue](#rescue)
   - [Unrescued Exception](#unrescued-exception)
-  - [Pot Pourri](#pot-pourri)
+  - [Potpourri](#potpourri)
 - [Data](#data)
   - [Strings](#strings)
   - [Hash-Like Objects](#hash-like-objects)
@@ -275,13 +275,13 @@ end
 ```log.xml```:
 ```xml
 <log>
-  <section_ name='My section with timestamp' timestamp='2019-04-10-Wed-16.36.34.356'>
+  <section_ name='My section with timestamp' timestamp='2019-04-11-Thu-08.09.01.457'>
     Section with timestamp.
   </section_>
   <section_ name='My section with duration' duration_seconds='0.500'>
     Section with duration.
   </section_>
-  <section_ name='My section with both' timestamp='2019-04-10-Wed-16.36.34.857' duration_seconds='0.500'>
+  <section_ name='My section with both' timestamp='2019-04-11-Thu-08.09.01.958' duration_seconds='0.500'>
     Section with both.
   </section_>
 </log>
@@ -351,7 +351,7 @@ end
 ```xml
 <log>
   <section_ name='My unrescued section'>
-    <uncaught_exception_ timestamp='2019-04-10-Wed-16.36.35.750' class='RuntimeError'>
+    <uncaught_exception_ timestamp='2019-04-11-Thu-08.09.02.844' class='RuntimeError'>
       <message_>
         Boo!
       </message_>
@@ -368,7 +368,7 @@ example.rb:4:in `test_example'
 </log>
 ```
 
-### Pot Pourri
+### Potpourri
 
 So far, examples for method ```section``` have emphasized one thing at a time.
 
@@ -387,7 +387,7 @@ class Test < Minitest::Test
   def test_demo
     MinitestLog.new('log.xml') do |log|
       log.section(
-          'Section with pot pourri of arguments',
+          'Section with potpourri of arguments',
           # Not that you would ever want to do this. :-)
           :duration,
           'Word',
@@ -408,7 +408,7 @@ end
 ```log.xml```:
 ```xml
 <log>
-  <section_ name='Section with pot pourri of arguments' a='0' b='1' timestamp='2019-04-10-Wed-16.36.32.804' c='2' d='3' duration_seconds='0.502'>
+  <section_ name='Section with potpourri of arguments' a='0' b='1' timestamp='2019-04-11-Thu-08.08.59.792' c='2' d='3' duration_seconds='0.616'>
     Word More words
     <rescued_exception_ class='Exception' message='Boo!'>
       <backtrace_>
@@ -622,7 +622,7 @@ end
       (?-mix:Bar)
     </data_>
     <data_ name='My time' class='Time' method=':to_s'>
-      2019-04-10 16:36:31 -0500
+      2019-04-11 08:08:58 -0500
     </data_>
     <data_ name='My uri,' class='URI::HTTPS' method=':to_s'>
       https://www.github.com

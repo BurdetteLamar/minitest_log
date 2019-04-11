@@ -3,7 +3,7 @@ class Test < Minitest::Test
   def test_demo
     MinitestLog.new('log.xml') do |log|
       log.section(
-          'Section with pot pourri of arguments',
+          'Section with potpourri of arguments',
           # Not that you would ever want to do this. :-)
           :duration,
           'Word',
