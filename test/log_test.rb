@@ -211,21 +211,19 @@ class LogTest < Minitest::Test
     end
   end
 
-  def test_put_cdata
-    with_test_log('cdata') do |log|
+  def test_put_pre
+    with_test_log('put_pre') do |log|
       data = <<EOT
-
 Log
 some
 multi-line
 data.
 Include
-  leading and trailing spaces.  
-
+  leading and trailing spaces.
 EOT
-      log.put_cdata(data)
+      log.put_pre(data)
+      log.put_pre(data, verbatim = true)
     end
-
   end
 
   def test_comment

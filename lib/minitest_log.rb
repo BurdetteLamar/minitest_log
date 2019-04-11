@@ -68,24 +68,11 @@ class MinitestLog
         put_element('message', x.message)
         put_element('backtrace') do
           backtrace = filter_backtrace(x.backtrace)
-          put_cdata(backtrace.join("\n"))
+          put_pre(backtrace.join("\n"))
         end
       end
     end
     dispose
-    nil
-  end
-
-  def put_cdata(text)
-    # Guard against using a terminator that's a substring of the cdata.
-    s = 'EOT'
-    terminator = s
-    while text.match(terminator) do
-      terminator += s
-    end
-    log_puts("CDATA\t<<#{terminator}")
-    log_puts(text)
-    log_puts(terminator)
     nil
   end
 
@@ -189,8 +176,6 @@ class MinitestLog
     obj.each_with_index do |item, i|
       lines.push(format('%d: %s', i, item.to_s))
     end
-    lines.push('')
-    lines.push('')
     attrs = {
         :name => name,
         :class => obj.class,
@@ -198,7 +183,7 @@ class MinitestLog
     }
     add_attr_if(attrs, obj, :size)
     put_element('data', attrs) do
-      put_cdata(lines.join("\n"))
+      put_pre(lines.join("\n"))
     end
     nil
   end
@@ -210,8 +195,6 @@ class MinitestLog
     obj.each do |item|
       lines.push(item)
     end
-    lines.push('')
-    lines.push('')
     attrs = {
         :name => name,
         :class => obj.class,
@@ -219,7 +202,7 @@ class MinitestLog
     }
     add_attr_if(attrs, obj, :size)
     put_element('data', attrs) do
-      put_cdata(lines.join("\n"))
+      put_pre(lines.join("\n"))
     end
     nil
   end
@@ -229,8 +212,6 @@ class MinitestLog
     obj.each_pair do |key, value|
       lines.push(format('%s => %s', key, value))
     end
-    lines.push('')
-    lines.push('')
     attrs = {
         :name => name,
         :class => obj.class,
@@ -238,7 +219,7 @@ class MinitestLog
     }
     add_attr_if(attrs, obj, :size)
     put_element('data', attrs) do
-      put_cdata(lines.join("\n"))
+      put_pre(lines.join("\n"))
     end
     nil
   end
@@ -279,6 +260,21 @@ class MinitestLog
     else
       message = "Object does not respond to method :__id__: name=#{name}, obj=#{obj}"
       raise ArgumentError.new(message)
+    end
+  end
+
+  def put_pre(text, verbatim = false)
+    if verbatim
+      put_cdata(text)
+    else
+      t = text.clone
+      until t.start_with?("\n")
+        t = "\n" + t
+      end
+      until t.end_with?("\n\n")
+        t = t + "\n"
+      end
+      put_cdata(t)
     end
   end
 
@@ -425,6 +421,19 @@ class MinitestLog
       raise DuplicateVerdictIdError.new(message)
     end
     self.verdict_ids.add(verdict_id)
+    nil
+  end
+
+  def put_cdata(text)
+    # Guard against using a terminator that's a substring of the cdata.
+    s = 'EOT'
+    terminator = s
+    while text.match(terminator) do
+      terminator += s
+    end
+    log_puts("CDATA\t<<#{terminator}")
+    log_puts(text)
+    log_puts(terminator)
     nil
   end
 

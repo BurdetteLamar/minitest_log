@@ -1,21 +1,21 @@
 <log>
-  <section_ name='My section'>
-    <![CDATA[  This line has leading whitespace that is preserved.
-
-The empty line above is preserved.
-  
-The whitespace-only line above is preserved.
-This line has trailing whitespace that is preserved.  ]]>
-  </section_>
-  <section_ name='Another section'>
-    Adding my own whitespace to separate first and last lines from enclosing
-    square brackets.
+  <section_ name='Line of text with leading and trailing whitespace'>
     <![CDATA[
-  This line has leading whitespace that is preserved.
-
-The empty line above is preserved.
-  
-The whitespace-only line above is preserved.
-This line has trailing whitespace that is preserved.  ]]>
+  Text.  
+]]>
+  </section_>
+  <section_ name='Multiline text with enhanced whitespace'>
+    <![CDATA[
+Text
+and
+more
+text.
+]]>
+  </section_>
+  <section_ name='Multiline text without without enhanced whitespace'>
+    <![CDATA[Text
+and
+more
+text.]]>
   </section_>
 </log>

@@ -20,7 +20,7 @@ In the example below, the test attempts to create a user.  If the create succeed
 
 However, if the create fails, the test does not attempt to validate or delete the user (which attempts would fail, and might raise exceptions).
 
-Thus:
+Thus, assuming a failed create returns ```nil```:
 
 ```ruby
 user_name = 'Bill Jones'
@@ -29,5 +29,5 @@ if log.verdict_refute_nil?(:user_created, user)
   log.verdict_assert_equal?(:user_name, user_name, user.name)
   SomeApi.delete_user(user.id)
 end
-
 ```
+
