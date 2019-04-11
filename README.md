@@ -281,13 +281,13 @@ end
 ```log.xml```:
 ```xml
 <log>
-  <section_ name='My section with timestamp' timestamp='2019-04-11-Thu-11.08.03.583'>
+  <section_ name='My section with timestamp' timestamp='2019-04-11-Thu-11.14.23.504'>
     Section with timestamp.
   </section_>
   <section_ name='My section with duration' duration_seconds='0.501'>
     Section with duration.
   </section_>
-  <section_ name='My section with both' timestamp='2019-04-11-Thu-11.08.04.085' duration_seconds='0.501'>
+  <section_ name='My section with both' timestamp='2019-04-11-Thu-11.14.24.006' duration_seconds='0.500'>
     Section with both.
   </section_>
 </log>
@@ -357,7 +357,7 @@ end
 ```xml
 <log>
   <section_ name='My unrescued section'>
-    <uncaught_exception_ timestamp='2019-04-11-Thu-11.08.04.976' class='RuntimeError'>
+    <uncaught_exception_ timestamp='2019-04-11-Thu-11.14.24.877' class='RuntimeError'>
       <message_>
         Boo!
       </message_>
@@ -414,7 +414,7 @@ end
 ```log.xml```:
 ```xml
 <log>
-  <section_ name='Section with potpourri of arguments' a='0' b='1' timestamp='2019-04-11-Thu-11.08.02.058' c='2' d='3' duration_seconds='0.501'>
+  <section_ name='Section with potpourri of arguments' a='0' b='1' timestamp='2019-04-11-Thu-11.14.21.926' c='2' d='3' duration_seconds='0.502'>
     Word More words
     <rescued_exception_ class='Exception' message='Boo!'>
       <backtrace_>
@@ -928,7 +928,7 @@ end
       (?-mix:Bar)
     </data_>
     <data_ name='My time' class='Time' method=':to_s'>
-      2019-04-11 11:07:59 -0500
+      2019-04-11 11:14:19 -0500
     </data_>
     <data_ name='My uri,' class='URI::HTTPS' method=':to_s'>
       https://www.github.com
@@ -2402,7 +2402,7 @@ end
 
 If your logs will be parsed in post-processing, you can make that go smoother by creating the logs with certain options:
 
-- ```xml_indentation => -1```:  so that there's no log-generated whitespace.  (But you'll still see the same indented display in your browser.)
+- ```:xml_indentation => -1```:  so that there's no log-generated whitespace.  (But you'll still see the same indented display in your browser.)
 - ```:summary => true```:  so that the counts are already computed.
 - ```:error_verdict => true```: so that a log that has errors will also have at least one failed verdict.
 
