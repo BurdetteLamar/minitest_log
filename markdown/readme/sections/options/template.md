@@ -22,7 +22,7 @@ An indentation value of ```0``` puts each line of the log at the left, with no i
 
 An indentation value of ```-1``` puts the entire log on one line, with no whitespace at all.  This format is best for logs that will be parsed in post-processing.
 
-Note that most XML browsers will ignore the indentation altogether.
+Note that many applications that display XML will ignore the indentation altogether, so in general it matters only when the raw XML is read (by a person) or parsed.
 
 @[ruby](xml_indentation.rb)
 
@@ -36,7 +36,7 @@ Note that most XML browsers will ignore the indentation altogether.
 
 By default, the log does not have a summary: counts of total verdicts, failed verdicts, and errors.
 
-Override that behavior by specifying option ```:summary``` as ```true```.
+Override that behavior by specifying option ```:summary``` as ```true```.  This causes the log to begin with a summary.
 
 @[ruby](summary.rb)
 
@@ -48,7 +48,7 @@ Override that behavior by specifying option ```:summary``` as ```true```.
 
 By default, the log does not have an error verdict: a generated verdict that expects the error count to be 0.
 
-Override that behavior by specifying option ```:error_verdict``` as ```true```.
+Override that behavior by specifying option ```:error_verdict``` as ```true```.  This causes the log to end with an error verdict.
 
 This verdict may be useful when a log has errors, but no failed verdicts.
 

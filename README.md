@@ -71,6 +71,7 @@ gem install minitest_log
 - [Tips](#tips)
   - [Use Short Verdict Aliases](#use-short-verdict-aliases)
   - [Avoid Failure Clutter](#avoid-failure-clutter)
+  - [Facilitate Post-Processing](#facilitate-post-processing)
 
 ## Logs and Sections
 
@@ -280,13 +281,13 @@ end
 ```log.xml```:
 ```xml
 <log>
-  <section_ name='My section with timestamp' timestamp='2019-04-11-Thu-10.42.09.731'>
+  <section_ name='My section with timestamp' timestamp='2019-04-11-Thu-11.08.03.583'>
     Section with timestamp.
   </section_>
-  <section_ name='My section with duration' duration_seconds='0.500'>
+  <section_ name='My section with duration' duration_seconds='0.501'>
     Section with duration.
   </section_>
-  <section_ name='My section with both' timestamp='2019-04-11-Thu-10.42.10.232' duration_seconds='0.500'>
+  <section_ name='My section with both' timestamp='2019-04-11-Thu-11.08.04.085' duration_seconds='0.501'>
     Section with both.
   </section_>
 </log>
@@ -356,7 +357,7 @@ end
 ```xml
 <log>
   <section_ name='My unrescued section'>
-    <uncaught_exception_ timestamp='2019-04-11-Thu-10.42.11.131' class='RuntimeError'>
+    <uncaught_exception_ timestamp='2019-04-11-Thu-11.08.04.976' class='RuntimeError'>
       <message_>
         Boo!
       </message_>
@@ -413,7 +414,7 @@ end
 ```log.xml```:
 ```xml
 <log>
-  <section_ name='Section with potpourri of arguments' a='0' b='1' timestamp='2019-04-11-Thu-10.42.08.135' c='2' d='3' duration_seconds='0.503'>
+  <section_ name='Section with potpourri of arguments' a='0' b='1' timestamp='2019-04-11-Thu-11.08.02.058' c='2' d='3' duration_seconds='0.501'>
     Word More words
     <rescued_exception_ class='Exception' message='Boo!'>
       <backtrace_>
@@ -475,7 +476,7 @@ An indentation value of ```0``` puts each line of the log at the left, with no i
 
 An indentation value of ```-1``` puts the entire log on one line, with no whitespace at all.  This format is best for logs that will be parsed in post-processing.
 
-Note that most XML browsers will ignore the indentation altogether.
+Note that many applications that display XML will ignore the indentation altogether, so in general it matters only when the raw XML is read (by a person) or parsed.
 
 ```xml_indentation.rb```:
 ```ruby
@@ -528,7 +529,7 @@ end
 
 By default, the log does not have a summary: counts of total verdicts, failed verdicts, and errors.
 
-Override that behavior by specifying option ```:summary``` as ```true```.
+Override that behavior by specifying option ```:summary``` as ```true```.  This causes the log to begin with a summary.
 
 ```summary.rb```:
 ```ruby
@@ -625,7 +626,7 @@ end
 
 By default, the log does not have an error verdict: a generated verdict that expects the error count to be 0.
 
-Override that behavior by specifying option ```:error_verdict``` as ```true```.
+Override that behavior by specifying option ```:error_verdict``` as ```true```.  This causes the log to end with an error verdict.
 
 This verdict may be useful when a log has errors, but no failed verdicts.
 
@@ -927,7 +928,7 @@ end
       (?-mix:Bar)
     </data_>
     <data_ name='My time' class='Time' method=':to_s'>
-      2019-04-11 10:42:05 -0500
+      2019-04-11 11:07:59 -0500
     </data_>
     <data_ name='My uri,' class='URI::HTTPS' method=':to_s'>
       https://www.github.com
@@ -2397,3 +2398,12 @@ if log.verdict_refute_nil?(:user_created, user)
 end
 ```
 
+### Facilitate Post-Processing
+
+If your logs will be parsed in post-processing, you can make that go smoother by creating the logs with certain options:
+
+- ```xml_indentation => -1```:  so that there's no log-generated whitespace.  (But you'll still see the same indented display in your browser.)
+- ```:summary => true```:  so that the counts are already computed.
+- ```:error_verdict => true```: so that a log that has errors will also have at least one failed verdict.
+
+See [Options](#options)
