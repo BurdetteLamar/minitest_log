@@ -35,7 +35,7 @@ end
 
 If your logs will be parsed in post-processing, you can make that go smoother by creating the logs with certain options:
 
-- ```xml_indentation => -1```:  so that there's no log-generated whitespace.  (But you'll still see the same indented display in your browser.)
+- ```:xml_indentation => -1```:  so that there's no log-generated whitespace.  (But you'll still see the same indented display in your browser.)
 - ```:summary => true```:  so that the counts are already computed.
 - ```:error_verdict => true```: so that a log that has errors will also have at least one failed verdict.
 
