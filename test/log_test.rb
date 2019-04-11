@@ -35,6 +35,11 @@ class LogTest < Minitest::Test
     end
   end
 
+  def test_open_summary
+    with_test_log('open_summary', :summary => true) do |_|
+    end
+  end
+
   def test_open_xml_indentation
     [-1, 0, 2].each do |indentation|
       with_test_log("open_xml_indentation.#{indentation}", :xml_indentation => indentation) do |log|
