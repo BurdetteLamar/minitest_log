@@ -23,6 +23,11 @@ gem install minitest_log
   - [Rescue](#rescue)
   - [Unrescued Exception](#unrescued-exception)
   - [Potpourri](#potpourri)
+  - [Options](#options)
+    - [Root Name](#root-name)
+    - [XML Indentation](#xml-indentation)
+    - [Summary](#summary)
+    - [Error Verdict](#error-verdict)
 - [Data](#data)
   - [Strings](#strings)
   - [Hash-Like Objects](#hash-like-objects)
@@ -275,13 +280,13 @@ end
 ```log.xml```:
 ```xml
 <log>
-  <section_ name='My section with timestamp' timestamp='2019-04-11-Thu-08.09.01.457'>
+  <section_ name='My section with timestamp' timestamp='2019-04-11-Thu-10.42.09.731'>
     Section with timestamp.
   </section_>
   <section_ name='My section with duration' duration_seconds='0.500'>
     Section with duration.
   </section_>
-  <section_ name='My section with both' timestamp='2019-04-11-Thu-08.09.01.958' duration_seconds='0.500'>
+  <section_ name='My section with both' timestamp='2019-04-11-Thu-10.42.10.232' duration_seconds='0.500'>
     Section with both.
   </section_>
 </log>
@@ -351,7 +356,7 @@ end
 ```xml
 <log>
   <section_ name='My unrescued section'>
-    <uncaught_exception_ timestamp='2019-04-11-Thu-08.09.02.844' class='RuntimeError'>
+    <uncaught_exception_ timestamp='2019-04-11-Thu-10.42.11.131' class='RuntimeError'>
       <message_>
         Boo!
       </message_>
@@ -408,7 +413,7 @@ end
 ```log.xml```:
 ```xml
 <log>
-  <section_ name='Section with potpourri of arguments' a='0' b='1' timestamp='2019-04-11-Thu-08.08.59.792' c='2' d='3' duration_seconds='0.616'>
+  <section_ name='Section with potpourri of arguments' a='0' b='1' timestamp='2019-04-11-Thu-10.42.08.135' c='2' d='3' duration_seconds='0.503'>
     Word More words
     <rescued_exception_ class='Exception' message='Boo!'>
       <backtrace_>
@@ -422,6 +427,307 @@ end
 </log>
 ```
 
+
+### Options
+
+#### Root Name
+
+The default name for the XML root element is ```log```.
+
+Override that name by specifying option ```:root_name```.
+
+```root_name.rb```:
+```ruby
+require 'minitest_log'
+class Test < Minitest::Test
+  def test_demo
+    MinitestLog.new('default_root_name.xml') do |log|
+      log.section('This log has the default root name.')
+    end
+    MinitestLog.new('custom_root_name.xml', :root_name => 'my_root_name') do |log|
+      log.section('This log has a custom root name.')
+    end
+  end
+end
+```
+
+```default_root_name.xml```:
+```xml
+<log>
+  <section_ name='This log has the default root name.'/>
+</log>
+```
+
+```custom_root_name.xml```:
+```xml
+<my_root_name>
+  <section_ name='This log has a custom root name.'/>
+</my_root_name>
+```
+
+#### XML Indentation
+
+The default XML indentation is 2 spaces.
+
+Override that value by specifying option ```xml_indentation```.
+
+An indentation value of ```0``` puts each line of the log at the left, with no indentation.
+
+An indentation value of ```-1``` puts the entire log on one line, with no whitespace at all.  This format is best for logs that will be parsed in post-processing.
+
+Note that most XML browsers will ignore the indentation altogether.
+
+```xml_indentation.rb```:
+```ruby
+require 'minitest_log'
+class Test < Minitest::Test
+  def test_demo
+    MinitestLog.new('default_xml_indentation.xml') do |log|
+      log.section('This log has the default XML indentation (2 spaces).') do
+        log.section('See?')
+      end
+    end
+    MinitestLog.new('xml_indentation_0.xml', :xml_indentation => 0) do |log|
+      log.section('This log has an XML indentation of 0 (no indentation).') do
+        log.section('See?')
+      end
+    end
+    MinitestLog.new('xml_indentation_-1.xml', :xml_indentation => -1) do |log|
+      log.section('This log has an XML indentation of -1 (all on one line).') do
+        log.section('See?')
+      end
+    end
+  end
+end
+```
+
+```default_xml_indentation.xml```:
+```xml
+<log>
+  <section_ name='This log has the default XML indentation (2 spaces).'>
+    <section_ name='See?'/>
+  </section_>
+</log>
+```
+
+```xml_indentation_0.xml```:
+```xml
+<log>
+<section_ name='This log has an XML indentation of 0 (no indentation).'>
+<section_ name='See?'/>
+</section_>
+</log>
+```
+
+```xml_indentation_-1.xml```:
+```xml
+<log><section_ name='This log has an XML indentation of -1 (all on one line).'><section_ name='See?'/></section_></log>
+```
+
+#### Summary
+
+By default, the log does not have a summary: counts of total verdicts, failed verdicts, and errors.
+
+Override that behavior by specifying option ```:summary``` as ```true```.
+
+```summary.rb```:
+```ruby
+require 'minitest_log'
+class Test < Minitest::Test
+  def test_demo
+    MinitestLog.new('no_summary.xml') do |log|
+      log.section('This log has no summary.') do
+        populate_the_log(log)
+      end
+    end
+    MinitestLog.new('summary.xml', :summary => true) do |log|
+      log.section('This log has a summary.') do
+        populate_the_log(log)
+      end
+    end
+  end
+  def populate_the_log(log)
+    log.verdict_assert?(:pass, true)
+    log.verdict_assert?(:fail, false)
+    log.section('My error-producing section', :rescue) do
+      raise Exception.new('Boo!')
+    end
+  end
+end
+```
+
+```no_summary.xml```:
+```xml
+<log>
+  <section_ name='This log has no summary.'>
+    <verdict_ method='verdict_assert?' outcome='passed' id='pass'>
+      <actual_ class='TrueClass' value='true'/>
+    </verdict_>
+    <verdict_ method='verdict_assert?' outcome='failed' id='fail'>
+      <actual_ class='FalseClass' value='false'/>
+      <exception_ class='Minitest::Assertion' message='Expected false to be truthy.'>
+        <backtrace_>
+          <level_0_ location='summary.rb:6:in `block (2 levels) in test_demo&apos;'/>
+          <level_1_ location='summary.rb:5:in `block in test_demo&apos;'/>
+          <level_2_ location='summary.rb:4:in `new&apos;'/>
+          <level_3_ location='summary.rb:4:in `test_demo&apos;'/>
+        </backtrace_>
+      </exception_>
+    </verdict_>
+    <section_ name='My error-producing section'>
+      <rescued_exception_ class='Exception' message='Boo!'>
+        <backtrace_>
+          <level_0_ location='summary.rb:6:in `block (2 levels) in test_demo&apos;'/>
+          <level_1_ location='summary.rb:5:in `block in test_demo&apos;'/>
+          <level_2_ location='summary.rb:4:in `new&apos;'/>
+          <level_3_ location='summary.rb:4:in `test_demo&apos;'/>
+        </backtrace_>
+      </rescued_exception_>
+    </section_>
+  </section_>
+</log>
+```
+
+```summary.xml```:
+```xml
+<log>
+  <summary_ verdicts='2' failures='1' errors='1'/>
+  <section_ name='This log has a summary.'>
+    <verdict_ method='verdict_assert?' outcome='passed' id='pass'>
+      <actual_ class='TrueClass' value='true'/>
+    </verdict_>
+    <verdict_ method='verdict_assert?' outcome='failed' id='fail'>
+      <actual_ class='FalseClass' value='false'/>
+      <exception_ class='Minitest::Assertion' message='Expected false to be truthy.'>
+        <backtrace_>
+          <level_0_ location='summary.rb:11:in `block (2 levels) in test_demo&apos;'/>
+          <level_1_ location='summary.rb:10:in `block in test_demo&apos;'/>
+          <level_2_ location='summary.rb:9:in `new&apos;'/>
+          <level_3_ location='summary.rb:9:in `test_demo&apos;'/>
+        </backtrace_>
+      </exception_>
+    </verdict_>
+    <section_ name='My error-producing section'>
+      <rescued_exception_ class='Exception' message='Boo!'>
+        <backtrace_>
+          <level_0_ location='summary.rb:11:in `block (2 levels) in test_demo&apos;'/>
+          <level_1_ location='summary.rb:10:in `block in test_demo&apos;'/>
+          <level_2_ location='summary.rb:9:in `new&apos;'/>
+          <level_3_ location='summary.rb:9:in `test_demo&apos;'/>
+        </backtrace_>
+      </rescued_exception_>
+    </section_>
+  </section_>
+</log>
+```
+
+#### Error Verdict
+
+By default, the log does not have an error verdict: a generated verdict that expects the error count to be 0.
+
+Override that behavior by specifying option ```:error_verdict``` as ```true```.
+
+This verdict may be useful when a log has errors, but no failed verdicts.
+
+```error_verdict.rb```:
+```ruby
+require 'minitest_log'
+class Test < Minitest::Test
+  def test_demo
+    MinitestLog.new('no_error_verdict.xml') do |log|
+      log.section('This log has no error verdict.') do
+        populate_the_log(log)
+      end
+    end
+    MinitestLog.new('error_verdict.xml', :error_verdict => true) do |log|
+      log.section('This log has an error verdict.') do
+        populate_the_log(log)
+      end
+    end
+  end
+  def populate_the_log(log)
+    log.verdict_assert?(:pass, true)
+    log.verdict_assert?(:fail, false)
+    log.section('My error-producing section', :rescue) do
+      raise Exception.new('Boo!')
+    end
+  end
+end
+```
+
+```no_error_verdict.xml```:
+```xml
+<log>
+  <section_ name='This log has no error verdict.'>
+    <verdict_ method='verdict_assert?' outcome='passed' id='pass'>
+      <actual_ class='TrueClass' value='true'/>
+    </verdict_>
+    <verdict_ method='verdict_assert?' outcome='failed' id='fail'>
+      <actual_ class='FalseClass' value='false'/>
+      <exception_ class='Minitest::Assertion' message='Expected false to be truthy.'>
+        <backtrace_>
+          <level_0_ location='error_verdict.rb:6:in `block (2 levels) in test_demo&apos;'/>
+          <level_1_ location='error_verdict.rb:5:in `block in test_demo&apos;'/>
+          <level_2_ location='error_verdict.rb:4:in `new&apos;'/>
+          <level_3_ location='error_verdict.rb:4:in `test_demo&apos;'/>
+        </backtrace_>
+      </exception_>
+    </verdict_>
+    <section_ name='My error-producing section'>
+      <rescued_exception_ class='Exception' message='Boo!'>
+        <backtrace_>
+          <level_0_ location='error_verdict.rb:6:in `block (2 levels) in test_demo&apos;'/>
+          <level_1_ location='error_verdict.rb:5:in `block in test_demo&apos;'/>
+          <level_2_ location='error_verdict.rb:4:in `new&apos;'/>
+          <level_3_ location='error_verdict.rb:4:in `test_demo&apos;'/>
+        </backtrace_>
+      </rescued_exception_>
+    </section_>
+  </section_>
+</log>
+```
+
+```error_verdict.xml```:
+```xml
+<log>
+  <section_ name='This log has an error verdict.'>
+    <verdict_ method='verdict_assert?' outcome='passed' id='pass'>
+      <actual_ class='TrueClass' value='true'/>
+    </verdict_>
+    <verdict_ method='verdict_assert?' outcome='failed' id='fail'>
+      <actual_ class='FalseClass' value='false'/>
+      <exception_ class='Minitest::Assertion' message='Expected false to be truthy.'>
+        <backtrace_>
+          <level_0_ location='error_verdict.rb:11:in `block (2 levels) in test_demo&apos;'/>
+          <level_1_ location='error_verdict.rb:10:in `block in test_demo&apos;'/>
+          <level_2_ location='error_verdict.rb:9:in `new&apos;'/>
+          <level_3_ location='error_verdict.rb:9:in `test_demo&apos;'/>
+        </backtrace_>
+      </exception_>
+    </verdict_>
+    <section_ name='My error-producing section'>
+      <rescued_exception_ class='Exception' message='Boo!'>
+        <backtrace_>
+          <level_0_ location='error_verdict.rb:11:in `block (2 levels) in test_demo&apos;'/>
+          <level_1_ location='error_verdict.rb:10:in `block in test_demo&apos;'/>
+          <level_2_ location='error_verdict.rb:9:in `new&apos;'/>
+          <level_3_ location='error_verdict.rb:9:in `test_demo&apos;'/>
+        </backtrace_>
+      </rescued_exception_>
+    </section_>
+  </section_>
+  <verdict_ method='verdict_assert_equal?' outcome='failed' id='error_count'>
+    <expected_ class='Integer' value='0'/>
+    <actual_ class='Integer' value='1'/>
+    <exception_ class='Minitest::Assertion' message='Expected: 0'>
+      <backtrace_>
+        <level_0_ location='error_verdict.rb:9:in `new&apos;'/>
+        <level_1_ location='error_verdict.rb:9:in `test_demo&apos;'/>
+      </backtrace_>
+    </exception_>
+  </verdict_>
+</log>
+```
 
 
 ## Data
@@ -543,7 +849,6 @@ class Example < MiniTest::Test
         end
         log.section('Set') do
           set = Set.new(%w/baseball football basketball hockey/)
-          puts set.respond_to?(:each_with_index)
           log.put_data('My set', set)
         end
       end
@@ -622,7 +927,7 @@ end
       (?-mix:Bar)
     </data_>
     <data_ name='My time' class='Time' method=':to_s'>
-      2019-04-11 08:08:58 -0500
+      2019-04-11 10:42:05 -0500
     </data_>
     <data_ name='My uri,' class='URI::HTTPS' method=':to_s'>
       https://www.github.com

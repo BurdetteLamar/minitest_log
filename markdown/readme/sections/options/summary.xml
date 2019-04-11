@@ -1,0 +1,29 @@
+<log>
+  <summary_ verdicts='2' failures='1' errors='1'/>
+  <section_ name='This log has a summary.'>
+    <verdict_ method='verdict_assert?' outcome='passed' id='pass'>
+      <actual_ class='TrueClass' value='true'/>
+    </verdict_>
+    <verdict_ method='verdict_assert?' outcome='failed' id='fail'>
+      <actual_ class='FalseClass' value='false'/>
+      <exception_ class='Minitest::Assertion' message='Expected false to be truthy.'>
+        <backtrace_>
+          <level_0_ location='summary.rb:11:in `block (2 levels) in test_demo&apos;'/>
+          <level_1_ location='summary.rb:10:in `block in test_demo&apos;'/>
+          <level_2_ location='summary.rb:9:in `new&apos;'/>
+          <level_3_ location='summary.rb:9:in `test_demo&apos;'/>
+        </backtrace_>
+      </exception_>
+    </verdict_>
+    <section_ name='My error-producing section'>
+      <rescued_exception_ class='Exception' message='Boo!'>
+        <backtrace_>
+          <level_0_ location='summary.rb:11:in `block (2 levels) in test_demo&apos;'/>
+          <level_1_ location='summary.rb:10:in `block in test_demo&apos;'/>
+          <level_2_ location='summary.rb:9:in `new&apos;'/>
+          <level_3_ location='summary.rb:9:in `test_demo&apos;'/>
+        </backtrace_>
+      </rescued_exception_>
+    </section_>
+  </section_>
+</log>
