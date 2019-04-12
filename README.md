@@ -282,13 +282,13 @@ end
 ```log.xml```:
 ```xml
 <log>
-  <section_ name='My section with timestamp' timestamp='2019-04-12-Fri-15.41.16.311'>
+  <section_ name='My section with timestamp' timestamp='2019-04-12-Fri-15.46.01.519'>
     Section with timestamp.
   </section_>
   <section_ name='My section with duration' duration_seconds='0.501'>
     Section with duration.
   </section_>
-  <section_ name='My section with both' timestamp='2019-04-12-Fri-15.41.16.813' duration_seconds='0.500'>
+  <section_ name='My section with both' timestamp='2019-04-12-Fri-15.46.02.020' duration_seconds='0.501'>
     Section with both.
   </section_>
 </log>
@@ -358,7 +358,7 @@ end
 ```xml
 <log>
   <section_ name='My unrescued section'>
-    <uncaught_exception_ timestamp='2019-04-12-Fri-15.41.17.715' class='RuntimeError'>
+    <uncaught_exception_ timestamp='2019-04-12-Fri-15.46.02.897' class='RuntimeError'>
       <message_>
         Boo!
       </message_>
@@ -415,7 +415,7 @@ end
 ```log.xml```:
 ```xml
 <log>
-  <section_ name='Section with potpourri of arguments' a='0' b='1' timestamp='2019-04-12-Fri-15.41.14.628' c='2' d='3' duration_seconds='0.502'>
+  <section_ name='Section with potpourri of arguments' a='0' b='1' timestamp='2019-04-12-Fri-15.45.59.855' c='2' d='3' duration_seconds='0.501'>
     Word More words
     <rescued_exception_ class='Exception' message='Boo!'>
       <backtrace_>
@@ -450,12 +450,12 @@ require 'minitest_log'
 class Example < Minitest::Test
   def test_example
     MinitestLog.new('log.xml') do |log|
-      log.section('Elements with no children') do
+      log.section('Custom elements with no children') do
         log.put_element('childless_element')
         log.put_element('childless_element_with_text', 'Text for this element.')
         log.put_element('childless_element_with_attributes', {:a => 0, :b => 1})
       end
-      log.section('Elements with children') do
+      log.section('Custom elements with children') do
         log.put_element('parent_element') do
           log.put_element('child_element')
         end
@@ -468,19 +468,20 @@ class Example < Minitest::Test
       end
     end
   end
-end```
+end
+```
 
 ```log.xml```:
 ```xml
 <log>
-  <section_ name='Elements with no children'>
+  <section_ name='Custom elements with no children'>
     <childless_element/>
     <childless_element_with_text>
       Text for this element.
     </childless_element_with_text>
     <childless_element_with_attributes a='0' b='1'/>
   </section_>
-  <section_ name='Elements with children'>
+  <section_ name='Custom elements with children'>
     <parent_element>
       <child_element/>
     </parent_element>
@@ -995,7 +996,7 @@ end
       (?-mix:Bar)
     </data_>
     <data_ name='My time' class='Time' method=':to_s'>
-      2019-04-12 15:41:11 -0500
+      2019-04-12 15:45:56 -0500
     </data_>
     <data_ name='My uri,' class='URI::HTTPS' method=':to_s'>
       https://www.github.com
