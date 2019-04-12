@@ -8,9 +8,11 @@
     <actual_ class='String' value='&quot;my_string&quot;'/>
     <exception_ class='Minitest::Assertion' message='Expected # encoding: UTF-8'>
       <backtrace_>
-        <level_0_ location='verdict_assert_instance_of.rb:6:in `block in test_demo_verdict&apos;'/>
-        <level_1_ location='verdict_assert_instance_of.rb:4:in `new&apos;'/>
-        <level_2_ location='verdict_assert_instance_of.rb:4:in `test_demo_verdict&apos;'/>
+        <![CDATA[
+verdict_assert_instance_of.rb:6:in `block in test_demo_verdict'
+verdict_assert_instance_of.rb:4:in `new'
+verdict_assert_instance_of.rb:4:in `test_demo_verdict'
+]]>
       </backtrace_>
     </exception_>
   </verdict_>

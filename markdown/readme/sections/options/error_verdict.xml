@@ -7,20 +7,24 @@
       <actual_ class='FalseClass' value='false'/>
       <exception_ class='Minitest::Assertion' message='Expected false to be truthy.'>
         <backtrace_>
-          <level_0_ location='error_verdict.rb:11:in `block (2 levels) in test_demo&apos;'/>
-          <level_1_ location='error_verdict.rb:10:in `block in test_demo&apos;'/>
-          <level_2_ location='error_verdict.rb:9:in `new&apos;'/>
-          <level_3_ location='error_verdict.rb:9:in `test_demo&apos;'/>
+          <![CDATA[
+error_verdict.rb:11:in `block (2 levels) in test_demo'
+error_verdict.rb:10:in `block in test_demo'
+error_verdict.rb:9:in `new'
+error_verdict.rb:9:in `test_demo'
+]]>
         </backtrace_>
       </exception_>
     </verdict_>
     <section_ name='My error-producing section'>
       <rescued_exception_ class='Exception' message='Boo!'>
         <backtrace_>
-          <level_0_ location='error_verdict.rb:11:in `block (2 levels) in test_demo&apos;'/>
-          <level_1_ location='error_verdict.rb:10:in `block in test_demo&apos;'/>
-          <level_2_ location='error_verdict.rb:9:in `new&apos;'/>
-          <level_3_ location='error_verdict.rb:9:in `test_demo&apos;'/>
+          <![CDATA[
+error_verdict.rb:11:in `block (2 levels) in test_demo'
+error_verdict.rb:10:in `block in test_demo'
+error_verdict.rb:9:in `new'
+error_verdict.rb:9:in `test_demo'
+]]>
         </backtrace_>
       </rescued_exception_>
     </section_>
@@ -30,8 +34,10 @@
     <actual_ class='Integer' value='1'/>
     <exception_ class='Minitest::Assertion' message='Expected: 0'>
       <backtrace_>
-        <level_0_ location='error_verdict.rb:9:in `new&apos;'/>
-        <level_1_ location='error_verdict.rb:9:in `test_demo&apos;'/>
+        <![CDATA[
+error_verdict.rb:9:in `new'
+error_verdict.rb:9:in `test_demo'
+]]>
       </backtrace_>
     </exception_>
   </verdict_>

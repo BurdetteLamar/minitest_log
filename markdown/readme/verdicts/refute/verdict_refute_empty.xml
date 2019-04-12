@@ -6,9 +6,11 @@
     <actual_ class='Array' value='[]'/>
     <exception_ class='Minitest::Assertion' message='Expected [] to not be empty.'>
       <backtrace_>
-        <level_0_ location='verdict_refute_empty.rb:6:in `block in test_demo_verdict&apos;'/>
-        <level_1_ location='verdict_refute_empty.rb:4:in `new&apos;'/>
-        <level_2_ location='verdict_refute_empty.rb:4:in `test_demo_verdict&apos;'/>
+        <![CDATA[
+verdict_refute_empty.rb:6:in `block in test_demo_verdict'
+verdict_refute_empty.rb:4:in `new'
+verdict_refute_empty.rb:4:in `test_demo_verdict'
+]]>
       </backtrace_>
     </exception_>
   </verdict_>

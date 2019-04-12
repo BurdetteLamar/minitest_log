@@ -150,9 +150,8 @@ class MinitestLog
         rescue Exception => x
           put_element('rescued_exception', {:class => x.class, :message => x.message}) do
             put_element('backtrace') do
-              filter_backtrace(x.backtrace).each_with_index do |location, i|
-                put_element("level_#{i}", {:location => location})
-              end
+              backtrace = filter_backtrace(x.backtrace)
+              put_pre(backtrace.join("\n"))
             end
           end
           self.counts[:error] += 1
@@ -383,9 +382,8 @@ class MinitestLog
         self.counts[:failure] += 1
         put_element('exception', {:class => exception.class, :message => exception.message}) do
           put_element('backtrace') do
-            filter_backtrace(exception.backtrace).each_with_index do |location, i|
-              put_element("level_#{i}", {:location => location})
-            end
+            backtrace = filter_backtrace(exception.backtrace)
+            put_pre(backtrace.join("\n"))
           end
         end
       end
