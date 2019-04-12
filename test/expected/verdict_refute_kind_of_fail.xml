@@ -6,7 +6,8 @@
         <expected_ class='Class' value='Exception'/>
         <actual_ class='ArgumentError' value='#&lt;ArgumentError: ArgumentError&gt;'/>
         <exception_ class='Minitest::Assertion' message='Expected #&lt;ArgumentError: ArgumentError&gt; to not be a kind of Exception.'>
-          <backtrace_/>
+          <backtrace_>
+          </backtrace_>
         </exception_>
       </verdict_>
     </section_>
@@ -15,7 +16,8 @@
         <expected_ class='Class' value='Numeric'/>
         <actual_ class='Integer' value='0'/>
         <exception_ class='Minitest::Assertion' message='Expected 0 to not be a kind of Numeric.'>
-          <backtrace_/>
+          <backtrace_>
+          </backtrace_>
         </exception_>
       </verdict_>
     </section_>

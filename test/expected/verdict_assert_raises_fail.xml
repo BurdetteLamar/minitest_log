@@ -3,7 +3,8 @@
   <verdict_ method='verdict_assert_raises?' outcome='failed' id='1'>
     <error_class_ class='Class' value='RuntimeError'/>
     <exception_ class='Minitest::Assertion' message='RuntimeError expected but nothing was raised.'>
-      <backtrace_/>
+      <backtrace_>
+      </backtrace_>
     </exception_>
   </verdict_>
   <verdict_ method='verdict_assert_equal?' outcome='passed' id='error_count'>

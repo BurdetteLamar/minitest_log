@@ -5,7 +5,8 @@
       <verdict_ method='verdict_assert?' outcome='failed' id='0' message='Message 0'>
         <actual_ class='FalseClass' value='false'/>
         <exception_ class='Minitest::Assertion' message='Expected false to be truthy.'>
-          <backtrace_/>
+          <backtrace_>
+          </backtrace_>
         </exception_>
       </verdict_>
     </section_>
@@ -13,7 +14,8 @@
       <verdict_ method='verdict_assert?' outcome='failed' id='1' message='Message 1'>
         <actual_ class='NilClass' value='nil'/>
         <exception_ class='Minitest::Assertion' message='Expected nil to be truthy.'>
-          <backtrace_/>
+          <backtrace_>
+          </backtrace_>
         </exception_>
       </verdict_>
     </section_>

@@ -7,7 +7,8 @@
         <operator_ class='Symbol' value=':=='/>
         <object_2_ class='Integer' value='1'/>
         <exception_ class='Minitest::Assertion' message='Expected 0 to be == 1.'>
-          <backtrace_/>
+          <backtrace_>
+          </backtrace_>
         </exception_>
       </verdict_>
     </section_>
@@ -17,7 +18,8 @@
         <operator_ class='Symbol' value=':=='/>
         <object_2_ class='TrueClass' value='true'/>
         <exception_ class='Minitest::Assertion' message='Expected false to be == true.'>
-          <backtrace_/>
+          <backtrace_>
+          </backtrace_>
         </exception_>
       </verdict_>
     </section_>

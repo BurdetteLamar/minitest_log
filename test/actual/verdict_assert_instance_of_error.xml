@@ -18,7 +18,8 @@
     <expected_ class='Integer' value='0'/>
     <actual_ class='Integer' value='2'/>
     <exception_ class='Minitest::Assertion' message='Expected: 0'>
-      <backtrace_/>
+      <backtrace_>
+      </backtrace_>
     </exception_>
   </verdict_>
 </log>

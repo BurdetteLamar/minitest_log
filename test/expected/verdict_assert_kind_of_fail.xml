@@ -6,7 +6,8 @@
         <expected_ class='Class' value='Array'/>
         <actual_ class='Hash' value='{}'/>
         <exception_ class='Minitest::Assertion' message='Expected {} to be a kind of Array, not Hash.'>
-          <backtrace_/>
+          <backtrace_>
+          </backtrace_>
         </exception_>
       </verdict_>
     </section_>
@@ -15,7 +16,8 @@
         <expected_ class='Class' value='Hash'/>
         <actual_ class='Array' value='[]'/>
         <exception_ class='Minitest::Assertion' message='Expected [] to be a kind of Hash, not Array.'>
-          <backtrace_/>
+          <backtrace_>
+          </backtrace_>
         </exception_>
       </verdict_>
     </section_>

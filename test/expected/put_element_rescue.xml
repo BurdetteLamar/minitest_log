@@ -1,7 +1,8 @@
 <log>
   <rescue>
     <rescued_exception_ class='RuntimeError' message='Rescued!'>
-      <backtrace_/>
+      <backtrace_>
+      </backtrace_>
     </rescued_exception_>
   </rescue>
   <no_rescue>
