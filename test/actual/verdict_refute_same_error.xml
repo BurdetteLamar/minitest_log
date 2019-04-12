@@ -3,12 +3,14 @@
   <section_ name='Test' method='verdict_refute_same?' type='error'>
     <section_ name='Args=[]'>
       <rescued_exception_ class='ArgumentError' message='wrong number of arguments (given 1, expected 3..4)'>
-        <backtrace_/>
+        <backtrace_>
+        </backtrace_>
       </rescued_exception_>
     </section_>
     <section_ name='Args=[nil, nil, nil, &quot;Message 1&quot;]'>
       <rescued_exception_ class='ArgumentError' message='wrong number of arguments (given 5, expected 3..4)'>
-        <backtrace_/>
+        <backtrace_>
+        </backtrace_>
       </rescued_exception_>
     </section_>
   </section_>

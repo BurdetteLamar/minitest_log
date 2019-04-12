@@ -8,9 +8,11 @@
     <actual_ class='Float' value='1.0'/>
     <exception_ class='Minitest::Assertion' message='Expected 1.0 to be a kind of String, not Float.'>
       <backtrace_>
-        <level_0_ location='verdict_assert_kind_of.rb:6:in `block in test_demo_verdict&apos;'/>
-        <level_1_ location='verdict_assert_kind_of.rb:4:in `new&apos;'/>
-        <level_2_ location='verdict_assert_kind_of.rb:4:in `test_demo_verdict&apos;'/>
+        <![CDATA[
+verdict_assert_kind_of.rb:6:in `block in test_demo_verdict'
+verdict_assert_kind_of.rb:4:in `new'
+verdict_assert_kind_of.rb:4:in `test_demo_verdict'
+]]>
       </backtrace_>
     </exception_>
   </verdict_>

@@ -6,7 +6,8 @@
         <object_ class='String' value='&quot;&quot;'/>
         <method_ class='Symbol' value=':size'/>
         <exception_ class='Minitest::Assertion' message='Expected # encoding: UTF-8'>
-          <backtrace_/>
+          <backtrace_>
+          </backtrace_>
         </exception_>
       </verdict_>
     </section_>
@@ -15,7 +16,8 @@
         <object_ class='NilClass' value='nil'/>
         <method_ class='Symbol' value=':class'/>
         <exception_ class='Minitest::Assertion' message='Expected nil to not respond to class.'>
-          <backtrace_/>
+          <backtrace_>
+          </backtrace_>
         </exception_>
       </verdict_>
     </section_>

@@ -3,12 +3,14 @@
   <section_ name='Test' method='verdict_assert_in_epsilon?' type='error'>
     <section_ name='Args=[]'>
       <rescued_exception_ class='ArgumentError' message='wrong number of arguments (given 1, expected 4..5)'>
-        <backtrace_/>
+        <backtrace_>
+        </backtrace_>
       </rescued_exception_>
     </section_>
     <section_ name='Args=[nil, nil, nil, nil, &quot;Message 1&quot;]'>
       <rescued_exception_ class='ArgumentError' message='wrong number of arguments (given 6, expected 4..5)'>
-        <backtrace_/>
+        <backtrace_>
+        </backtrace_>
       </rescued_exception_>
     </section_>
   </section_>

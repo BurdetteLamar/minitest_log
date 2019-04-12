@@ -6,7 +6,8 @@
         <expected_ class='Regexp' value='/b/'/>
         <actual_ class='String' value='&quot;abc&quot;'/>
         <exception_ class='Minitest::Assertion' message='Expected /b/ to not match # encoding: UTF-8'>
-          <backtrace_/>
+          <backtrace_>
+          </backtrace_>
         </exception_>
       </verdict_>
     </section_>
@@ -15,7 +16,8 @@
         <expected_ class='Regexp' value='/./'/>
         <actual_ class='String' value='&quot;a&quot;'/>
         <exception_ class='Minitest::Assertion' message='Expected /./ to not match # encoding: UTF-8'>
-          <backtrace_/>
+          <backtrace_>
+          </backtrace_>
         </exception_>
       </verdict_>
     </section_>

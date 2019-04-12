@@ -6,7 +6,8 @@
         <expected_ class='Integer' value='0'/>
         <actual_ class='Integer' value='0'/>
         <exception_ class='Minitest::Assertion' message='Expected 0 to not be equal to 0.'>
-          <backtrace_/>
+          <backtrace_>
+          </backtrace_>
         </exception_>
       </verdict_>
     </section_>
@@ -15,7 +16,8 @@
         <expected_ class='Symbol' value=':a'/>
         <actual_ class='Symbol' value=':a'/>
         <exception_ class='Minitest::Assertion' message='Expected :a to not be equal to :a.'>
-          <backtrace_/>
+          <backtrace_>
+          </backtrace_>
         </exception_>
       </verdict_>
     </section_>

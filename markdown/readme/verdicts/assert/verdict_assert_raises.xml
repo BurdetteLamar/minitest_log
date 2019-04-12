@@ -6,9 +6,11 @@
     <error_class_ class='Class' value='RuntimeError'/>
     <exception_ class='Minitest::Assertion' message='[RuntimeError] exception expected, not'>
       <backtrace_>
-        <level_0_ location='verdict_assert_raises.rb:8:in `block in test_demo_verdict&apos;'/>
-        <level_1_ location='verdict_assert_raises.rb:4:in `new&apos;'/>
-        <level_2_ location='verdict_assert_raises.rb:4:in `test_demo_verdict&apos;'/>
+        <![CDATA[
+verdict_assert_raises.rb:8:in `block in test_demo_verdict'
+verdict_assert_raises.rb:4:in `new'
+verdict_assert_raises.rb:4:in `test_demo_verdict'
+]]>
       </backtrace_>
     </exception_>
   </verdict_>

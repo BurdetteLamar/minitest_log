@@ -7,7 +7,8 @@
         <actual_ class='Integer' value='2'/>
         <epsilon_ class='Integer' value='0'/>
         <exception_ class='Minitest::Assertion' message='Expected |3 - 2| (1) to be &lt;= 0.'>
-          <backtrace_/>
+          <backtrace_>
+          </backtrace_>
         </exception_>
       </verdict_>
     </section_>
@@ -17,7 +18,8 @@
         <actual_ class='Integer' value='3'/>
         <epsilon_ class='Integer' value='0'/>
         <exception_ class='Minitest::Assertion' message='Expected |4 - 3| (1) to be &lt;= 0.'>
-          <backtrace_/>
+          <backtrace_>
+          </backtrace_>
         </exception_>
       </verdict_>
     </section_>

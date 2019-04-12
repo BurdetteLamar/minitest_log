@@ -282,13 +282,13 @@ end
 ```log.xml```:
 ```xml
 <log>
-  <section_ name='My section with timestamp' timestamp='2019-04-12-Fri-15.46.01.519'>
+  <section_ name='My section with timestamp' timestamp='2019-04-12-Fri-16.20.53.991'>
     Section with timestamp.
   </section_>
-  <section_ name='My section with duration' duration_seconds='0.501'>
+  <section_ name='My section with duration' duration_seconds='0.500'>
     Section with duration.
   </section_>
-  <section_ name='My section with both' timestamp='2019-04-12-Fri-15.46.02.020' duration_seconds='0.501'>
+  <section_ name='My section with both' timestamp='2019-04-12-Fri-16.20.54.492' duration_seconds='0.500'>
     Section with both.
   </section_>
 </log>
@@ -322,10 +322,12 @@ end
   <section_ name='My rescued section'>
     <rescued_exception_ class='RuntimeError' message='Boo!'>
       <backtrace_>
-        <level_0_ location='example.rb:6:in `block (2 levels) in test_example&apos;'/>
-        <level_1_ location='example.rb:5:in `block in test_example&apos;'/>
-        <level_2_ location='example.rb:4:in `new&apos;'/>
-        <level_3_ location='example.rb:4:in `test_example&apos;'/>
+        <![CDATA[
+example.rb:6:in `block (2 levels) in test_example'
+example.rb:5:in `block in test_example'
+example.rb:4:in `new'
+example.rb:4:in `test_example'
+]]>
       </backtrace_>
     </rescued_exception_>
   </section_>
@@ -358,7 +360,7 @@ end
 ```xml
 <log>
   <section_ name='My unrescued section'>
-    <uncaught_exception_ timestamp='2019-04-12-Fri-15.46.02.897' class='RuntimeError'>
+    <uncaught_exception_ timestamp='2019-04-12-Fri-16.20.55.416' class='RuntimeError'>
       <message_>
         Boo!
       </message_>
@@ -415,14 +417,16 @@ end
 ```log.xml```:
 ```xml
 <log>
-  <section_ name='Section with potpourri of arguments' a='0' b='1' timestamp='2019-04-12-Fri-15.45.59.855' c='2' d='3' duration_seconds='0.501'>
+  <section_ name='Section with potpourri of arguments' a='0' b='1' timestamp='2019-04-12-Fri-16.20.52.330' c='2' d='3' duration_seconds='0.501'>
     Word More words
     <rescued_exception_ class='Exception' message='Boo!'>
       <backtrace_>
-        <level_0_ location='example.rb:17:in `block (2 levels) in test_demo&apos;'/>
-        <level_1_ location='example.rb:5:in `block in test_demo&apos;'/>
-        <level_2_ location='example.rb:4:in `new&apos;'/>
-        <level_3_ location='example.rb:4:in `test_demo&apos;'/>
+        <![CDATA[
+example.rb:17:in `block (2 levels) in test_demo'
+example.rb:5:in `block in test_demo'
+example.rb:4:in `new'
+example.rb:4:in `test_demo'
+]]>
       </backtrace_>
     </rescued_exception_>
   </section_>
@@ -636,20 +640,24 @@ end
       <actual_ class='FalseClass' value='false'/>
       <exception_ class='Minitest::Assertion' message='Expected false to be truthy.'>
         <backtrace_>
-          <level_0_ location='summary.rb:6:in `block (2 levels) in test_demo&apos;'/>
-          <level_1_ location='summary.rb:5:in `block in test_demo&apos;'/>
-          <level_2_ location='summary.rb:4:in `new&apos;'/>
-          <level_3_ location='summary.rb:4:in `test_demo&apos;'/>
+          <![CDATA[
+summary.rb:6:in `block (2 levels) in test_demo'
+summary.rb:5:in `block in test_demo'
+summary.rb:4:in `new'
+summary.rb:4:in `test_demo'
+]]>
         </backtrace_>
       </exception_>
     </verdict_>
     <section_ name='My error-producing section'>
       <rescued_exception_ class='Exception' message='Boo!'>
         <backtrace_>
-          <level_0_ location='summary.rb:6:in `block (2 levels) in test_demo&apos;'/>
-          <level_1_ location='summary.rb:5:in `block in test_demo&apos;'/>
-          <level_2_ location='summary.rb:4:in `new&apos;'/>
-          <level_3_ location='summary.rb:4:in `test_demo&apos;'/>
+          <![CDATA[
+summary.rb:6:in `block (2 levels) in test_demo'
+summary.rb:5:in `block in test_demo'
+summary.rb:4:in `new'
+summary.rb:4:in `test_demo'
+]]>
         </backtrace_>
       </rescued_exception_>
     </section_>
@@ -669,20 +677,24 @@ end
       <actual_ class='FalseClass' value='false'/>
       <exception_ class='Minitest::Assertion' message='Expected false to be truthy.'>
         <backtrace_>
-          <level_0_ location='summary.rb:11:in `block (2 levels) in test_demo&apos;'/>
-          <level_1_ location='summary.rb:10:in `block in test_demo&apos;'/>
-          <level_2_ location='summary.rb:9:in `new&apos;'/>
-          <level_3_ location='summary.rb:9:in `test_demo&apos;'/>
+          <![CDATA[
+summary.rb:11:in `block (2 levels) in test_demo'
+summary.rb:10:in `block in test_demo'
+summary.rb:9:in `new'
+summary.rb:9:in `test_demo'
+]]>
         </backtrace_>
       </exception_>
     </verdict_>
     <section_ name='My error-producing section'>
       <rescued_exception_ class='Exception' message='Boo!'>
         <backtrace_>
-          <level_0_ location='summary.rb:11:in `block (2 levels) in test_demo&apos;'/>
-          <level_1_ location='summary.rb:10:in `block in test_demo&apos;'/>
-          <level_2_ location='summary.rb:9:in `new&apos;'/>
-          <level_3_ location='summary.rb:9:in `test_demo&apos;'/>
+          <![CDATA[
+summary.rb:11:in `block (2 levels) in test_demo'
+summary.rb:10:in `block in test_demo'
+summary.rb:9:in `new'
+summary.rb:9:in `test_demo'
+]]>
         </backtrace_>
       </rescued_exception_>
     </section_>
@@ -735,20 +747,24 @@ end
       <actual_ class='FalseClass' value='false'/>
       <exception_ class='Minitest::Assertion' message='Expected false to be truthy.'>
         <backtrace_>
-          <level_0_ location='error_verdict.rb:6:in `block (2 levels) in test_demo&apos;'/>
-          <level_1_ location='error_verdict.rb:5:in `block in test_demo&apos;'/>
-          <level_2_ location='error_verdict.rb:4:in `new&apos;'/>
-          <level_3_ location='error_verdict.rb:4:in `test_demo&apos;'/>
+          <![CDATA[
+error_verdict.rb:6:in `block (2 levels) in test_demo'
+error_verdict.rb:5:in `block in test_demo'
+error_verdict.rb:4:in `new'
+error_verdict.rb:4:in `test_demo'
+]]>
         </backtrace_>
       </exception_>
     </verdict_>
     <section_ name='My error-producing section'>
       <rescued_exception_ class='Exception' message='Boo!'>
         <backtrace_>
-          <level_0_ location='error_verdict.rb:6:in `block (2 levels) in test_demo&apos;'/>
-          <level_1_ location='error_verdict.rb:5:in `block in test_demo&apos;'/>
-          <level_2_ location='error_verdict.rb:4:in `new&apos;'/>
-          <level_3_ location='error_verdict.rb:4:in `test_demo&apos;'/>
+          <![CDATA[
+error_verdict.rb:6:in `block (2 levels) in test_demo'
+error_verdict.rb:5:in `block in test_demo'
+error_verdict.rb:4:in `new'
+error_verdict.rb:4:in `test_demo'
+]]>
         </backtrace_>
       </rescued_exception_>
     </section_>
@@ -767,20 +783,24 @@ end
       <actual_ class='FalseClass' value='false'/>
       <exception_ class='Minitest::Assertion' message='Expected false to be truthy.'>
         <backtrace_>
-          <level_0_ location='error_verdict.rb:11:in `block (2 levels) in test_demo&apos;'/>
-          <level_1_ location='error_verdict.rb:10:in `block in test_demo&apos;'/>
-          <level_2_ location='error_verdict.rb:9:in `new&apos;'/>
-          <level_3_ location='error_verdict.rb:9:in `test_demo&apos;'/>
+          <![CDATA[
+error_verdict.rb:11:in `block (2 levels) in test_demo'
+error_verdict.rb:10:in `block in test_demo'
+error_verdict.rb:9:in `new'
+error_verdict.rb:9:in `test_demo'
+]]>
         </backtrace_>
       </exception_>
     </verdict_>
     <section_ name='My error-producing section'>
       <rescued_exception_ class='Exception' message='Boo!'>
         <backtrace_>
-          <level_0_ location='error_verdict.rb:11:in `block (2 levels) in test_demo&apos;'/>
-          <level_1_ location='error_verdict.rb:10:in `block in test_demo&apos;'/>
-          <level_2_ location='error_verdict.rb:9:in `new&apos;'/>
-          <level_3_ location='error_verdict.rb:9:in `test_demo&apos;'/>
+          <![CDATA[
+error_verdict.rb:11:in `block (2 levels) in test_demo'
+error_verdict.rb:10:in `block in test_demo'
+error_verdict.rb:9:in `new'
+error_verdict.rb:9:in `test_demo'
+]]>
         </backtrace_>
       </rescued_exception_>
     </section_>
@@ -790,8 +810,10 @@ end
     <actual_ class='Integer' value='1'/>
     <exception_ class='Minitest::Assertion' message='Expected: 0'>
       <backtrace_>
-        <level_0_ location='error_verdict.rb:9:in `new&apos;'/>
-        <level_1_ location='error_verdict.rb:9:in `test_demo&apos;'/>
+        <![CDATA[
+error_verdict.rb:9:in `new'
+error_verdict.rb:9:in `test_demo'
+]]>
       </backtrace_>
     </exception_>
   </verdict_>
@@ -996,7 +1018,7 @@ end
       (?-mix:Bar)
     </data_>
     <data_ name='My time' class='Time' method=':to_s'>
-      2019-04-12 15:45:56 -0500
+      2019-04-12 16:20:48 -0500
     </data_>
     <data_ name='My uri,' class='URI::HTTPS' method=':to_s'>
       https://www.github.com
@@ -1072,9 +1094,11 @@ end
     <actual_ class='FalseClass' value='false'/>
     <exception_ class='Minitest::Assertion' message='Expected false to be truthy.'>
       <backtrace_>
-        <level_0_ location='verdict_assert.rb:6:in `block in test_demo_verdict&apos;'/>
-        <level_1_ location='verdict_assert.rb:4:in `new&apos;'/>
-        <level_2_ location='verdict_assert.rb:4:in `test_demo_verdict&apos;'/>
+        <![CDATA[
+verdict_assert.rb:6:in `block in test_demo_verdict'
+verdict_assert.rb:4:in `new'
+verdict_assert.rb:4:in `test_demo_verdict'
+]]>
       </backtrace_>
     </exception_>
   </verdict_>
@@ -1113,9 +1137,11 @@ end
     <actual_ class='Array' value='[:a]'/>
     <exception_ class='Minitest::Assertion' message='Expected [:a] to be empty.'>
       <backtrace_>
-        <level_0_ location='verdict_assert_empty.rb:6:in `block in test_demo_verdict&apos;'/>
-        <level_1_ location='verdict_assert_empty.rb:4:in `new&apos;'/>
-        <level_2_ location='verdict_assert_empty.rb:4:in `test_demo_verdict&apos;'/>
+        <![CDATA[
+verdict_assert_empty.rb:6:in `block in test_demo_verdict'
+verdict_assert_empty.rb:4:in `new'
+verdict_assert_empty.rb:4:in `test_demo_verdict'
+]]>
       </backtrace_>
     </exception_>
   </verdict_>
@@ -1157,9 +1183,11 @@ end
     <actual_ class='Integer' value='1'/>
     <exception_ class='Minitest::Assertion' message='Expected: 0'>
       <backtrace_>
-        <level_0_ location='verdict_assert_equal.rb:6:in `block in test_demo_verdict&apos;'/>
-        <level_1_ location='verdict_assert_equal.rb:4:in `new&apos;'/>
-        <level_2_ location='verdict_assert_equal.rb:4:in `test_demo_verdict&apos;'/>
+        <![CDATA[
+verdict_assert_equal.rb:6:in `block in test_demo_verdict'
+verdict_assert_equal.rb:4:in `new'
+verdict_assert_equal.rb:4:in `test_demo_verdict'
+]]>
       </backtrace_>
     </exception_>
   </verdict_>
@@ -1202,9 +1230,11 @@ end
     <delta_ class='Integer' value='1'/>
     <exception_ class='Minitest::Assertion' message='Expected |0 - 2| (2) to be &lt;= 1.'>
       <backtrace_>
-        <level_0_ location='verdict_assert_in_delta.rb:6:in `block in test_demo_verdict&apos;'/>
-        <level_1_ location='verdict_assert_in_delta.rb:4:in `new&apos;'/>
-        <level_2_ location='verdict_assert_in_delta.rb:4:in `test_demo_verdict&apos;'/>
+        <![CDATA[
+verdict_assert_in_delta.rb:6:in `block in test_demo_verdict'
+verdict_assert_in_delta.rb:4:in `new'
+verdict_assert_in_delta.rb:4:in `test_demo_verdict'
+]]>
       </backtrace_>
     </exception_>
   </verdict_>
@@ -1247,9 +1277,11 @@ end
     <epsilon_ class='Integer' value='0'/>
     <exception_ class='Minitest::Assertion' message='Expected |3 - 2| (1) to be &lt;= 0.'>
       <backtrace_>
-        <level_0_ location='verdict_assert_in_epsilon.rb:6:in `block in test_demo_verdict&apos;'/>
-        <level_1_ location='verdict_assert_in_epsilon.rb:4:in `new&apos;'/>
-        <level_2_ location='verdict_assert_in_epsilon.rb:4:in `test_demo_verdict&apos;'/>
+        <![CDATA[
+verdict_assert_in_epsilon.rb:6:in `block in test_demo_verdict'
+verdict_assert_in_epsilon.rb:4:in `new'
+verdict_assert_in_epsilon.rb:4:in `test_demo_verdict'
+]]>
       </backtrace_>
     </exception_>
   </verdict_>
@@ -1290,9 +1322,11 @@ end
     <actual_ class='Symbol' value=':d'/>
     <exception_ class='Minitest::Assertion' message='Expected [:a, :b, :c] to include :d.'>
       <backtrace_>
-        <level_0_ location='verdict_assert_includes.rb:6:in `block in test_demo_verdict&apos;'/>
-        <level_1_ location='verdict_assert_includes.rb:4:in `new&apos;'/>
-        <level_2_ location='verdict_assert_includes.rb:4:in `test_demo_verdict&apos;'/>
+        <![CDATA[
+verdict_assert_includes.rb:6:in `block in test_demo_verdict'
+verdict_assert_includes.rb:4:in `new'
+verdict_assert_includes.rb:4:in `test_demo_verdict'
+]]>
       </backtrace_>
     </exception_>
   </verdict_>
@@ -1333,9 +1367,11 @@ end
     <actual_ class='String' value='&quot;my_string&quot;'/>
     <exception_ class='Minitest::Assertion' message='Expected # encoding: UTF-8'>
       <backtrace_>
-        <level_0_ location='verdict_assert_instance_of.rb:6:in `block in test_demo_verdict&apos;'/>
-        <level_1_ location='verdict_assert_instance_of.rb:4:in `new&apos;'/>
-        <level_2_ location='verdict_assert_instance_of.rb:4:in `test_demo_verdict&apos;'/>
+        <![CDATA[
+verdict_assert_instance_of.rb:6:in `block in test_demo_verdict'
+verdict_assert_instance_of.rb:4:in `new'
+verdict_assert_instance_of.rb:4:in `test_demo_verdict'
+]]>
       </backtrace_>
     </exception_>
   </verdict_>
@@ -1376,9 +1412,11 @@ end
     <actual_ class='Float' value='1.0'/>
     <exception_ class='Minitest::Assertion' message='Expected 1.0 to be a kind of String, not Float.'>
       <backtrace_>
-        <level_0_ location='verdict_assert_kind_of.rb:6:in `block in test_demo_verdict&apos;'/>
-        <level_1_ location='verdict_assert_kind_of.rb:4:in `new&apos;'/>
-        <level_2_ location='verdict_assert_kind_of.rb:4:in `test_demo_verdict&apos;'/>
+        <![CDATA[
+verdict_assert_kind_of.rb:6:in `block in test_demo_verdict'
+verdict_assert_kind_of.rb:4:in `new'
+verdict_assert_kind_of.rb:4:in `test_demo_verdict'
+]]>
       </backtrace_>
     </exception_>
   </verdict_>
@@ -1419,9 +1457,11 @@ end
     <actual_ class='String' value='&quot;feed&quot;'/>
     <exception_ class='Minitest::Assertion' message='Expected /foo/ to match # encoding: UTF-8'>
       <backtrace_>
-        <level_0_ location='verdict_assert_match.rb:6:in `block in test_demo_verdict&apos;'/>
-        <level_1_ location='verdict_assert_match.rb:4:in `new&apos;'/>
-        <level_2_ location='verdict_assert_match.rb:4:in `test_demo_verdict&apos;'/>
+        <![CDATA[
+verdict_assert_match.rb:6:in `block in test_demo_verdict'
+verdict_assert_match.rb:4:in `new'
+verdict_assert_match.rb:4:in `test_demo_verdict'
+]]>
       </backtrace_>
     </exception_>
   </verdict_>
@@ -1460,9 +1500,11 @@ end
     <actual_ class='Symbol' value=':a'/>
     <exception_ class='Minitest::Assertion' message='Expected :a to be nil.'>
       <backtrace_>
-        <level_0_ location='verdict_assert_nil.rb:6:in `block in test_demo_verdict&apos;'/>
-        <level_1_ location='verdict_assert_nil.rb:4:in `new&apos;'/>
-        <level_2_ location='verdict_assert_nil.rb:4:in `test_demo_verdict&apos;'/>
+        <![CDATA[
+verdict_assert_nil.rb:6:in `block in test_demo_verdict'
+verdict_assert_nil.rb:4:in `new'
+verdict_assert_nil.rb:4:in `test_demo_verdict'
+]]>
       </backtrace_>
     </exception_>
   </verdict_>
@@ -1505,9 +1547,11 @@ end
     <object_2_ class='Integer' value='4'/>
     <exception_ class='Minitest::Assertion' message='Expected 5 to be &lt;= 4.'>
       <backtrace_>
-        <level_0_ location='verdict_assert_operator.rb:6:in `block in test_demo_verdict&apos;'/>
-        <level_1_ location='verdict_assert_operator.rb:4:in `new&apos;'/>
-        <level_2_ location='verdict_assert_operator.rb:4:in `test_demo_verdict&apos;'/>
+        <![CDATA[
+verdict_assert_operator.rb:6:in `block in test_demo_verdict'
+verdict_assert_operator.rb:4:in `new'
+verdict_assert_operator.rb:4:in `test_demo_verdict'
+]]>
       </backtrace_>
     </exception_>
   </verdict_>
@@ -1556,9 +1600,11 @@ end
     <stderr_ class='String' value='&quot;Foo&quot;'/>
     <exception_ class='Minitest::Assertion' message='In stderr.'>
       <backtrace_>
-        <level_0_ location='verdict_assert_output.rb:9:in `block in test_demo_verdict&apos;'/>
-        <level_1_ location='verdict_assert_output.rb:4:in `new&apos;'/>
-        <level_2_ location='verdict_assert_output.rb:4:in `test_demo_verdict&apos;'/>
+        <![CDATA[
+verdict_assert_output.rb:9:in `block in test_demo_verdict'
+verdict_assert_output.rb:4:in `new'
+verdict_assert_output.rb:4:in `test_demo_verdict'
+]]>
       </backtrace_>
     </exception_>
   </verdict_>
@@ -1599,9 +1645,11 @@ end
     <operator_ class='Symbol' value=':empty?'/>
     <exception_ class='Minitest::Assertion' message='Expected # encoding: UTF-8'>
       <backtrace_>
-        <level_0_ location='verdict_assert_predicate.rb:6:in `block in test_demo_verdict&apos;'/>
-        <level_1_ location='verdict_assert_predicate.rb:4:in `new&apos;'/>
-        <level_2_ location='verdict_assert_predicate.rb:4:in `test_demo_verdict&apos;'/>
+        <![CDATA[
+verdict_assert_predicate.rb:6:in `block in test_demo_verdict'
+verdict_assert_predicate.rb:4:in `new'
+verdict_assert_predicate.rb:4:in `test_demo_verdict'
+]]>
       </backtrace_>
     </exception_>
   </verdict_>
@@ -1644,9 +1692,11 @@ end
     <error_class_ class='Class' value='RuntimeError'/>
     <exception_ class='Minitest::Assertion' message='[RuntimeError] exception expected, not'>
       <backtrace_>
-        <level_0_ location='verdict_assert_raises.rb:8:in `block in test_demo_verdict&apos;'/>
-        <level_1_ location='verdict_assert_raises.rb:4:in `new&apos;'/>
-        <level_2_ location='verdict_assert_raises.rb:4:in `test_demo_verdict&apos;'/>
+        <![CDATA[
+verdict_assert_raises.rb:8:in `block in test_demo_verdict'
+verdict_assert_raises.rb:4:in `new'
+verdict_assert_raises.rb:4:in `test_demo_verdict'
+]]>
       </backtrace_>
     </exception_>
   </verdict_>
@@ -1687,9 +1737,11 @@ end
     <method_ class='Symbol' value=':empty?'/>
     <exception_ class='Minitest::Assertion' message='Expected 0 (Integer) to respond to #empty?.'>
       <backtrace_>
-        <level_0_ location='verdict_assert_respond_to.rb:6:in `block in test_demo_verdict&apos;'/>
-        <level_1_ location='verdict_assert_respond_to.rb:4:in `new&apos;'/>
-        <level_2_ location='verdict_assert_respond_to.rb:4:in `test_demo_verdict&apos;'/>
+        <![CDATA[
+verdict_assert_respond_to.rb:6:in `block in test_demo_verdict'
+verdict_assert_respond_to.rb:4:in `new'
+verdict_assert_respond_to.rb:4:in `test_demo_verdict'
+]]>
       </backtrace_>
     </exception_>
   </verdict_>
@@ -1730,9 +1782,11 @@ end
     <actual_ class='String' value='&quot;foo&quot;'/>
     <exception_ class='Minitest::Assertion' message='Expected # encoding: UTF-8'>
       <backtrace_>
-        <level_0_ location='verdict_assert_same.rb:6:in `block in test_demo_verdict&apos;'/>
-        <level_1_ location='verdict_assert_same.rb:4:in `new&apos;'/>
-        <level_2_ location='verdict_assert_same.rb:4:in `test_demo_verdict&apos;'/>
+        <![CDATA[
+verdict_assert_same.rb:6:in `block in test_demo_verdict'
+verdict_assert_same.rb:4:in `new'
+verdict_assert_same.rb:4:in `test_demo_verdict'
+]]>
       </backtrace_>
     </exception_>
   </verdict_>
@@ -1771,9 +1825,11 @@ end
   <verdict_ method='verdict_assert_silent?' outcome='failed' id='another_id'>
     <exception_ class='Minitest::Assertion' message='In stdout.'>
       <backtrace_>
-        <level_0_ location='verdict_assert_silent.rb:7:in `block in test_demo_verdict&apos;'/>
-        <level_1_ location='verdict_assert_silent.rb:4:in `new&apos;'/>
-        <level_2_ location='verdict_assert_silent.rb:4:in `test_demo_verdict&apos;'/>
+        <![CDATA[
+verdict_assert_silent.rb:7:in `block in test_demo_verdict'
+verdict_assert_silent.rb:4:in `new'
+verdict_assert_silent.rb:4:in `test_demo_verdict'
+]]>
       </backtrace_>
     </exception_>
   </verdict_>
@@ -1816,9 +1872,11 @@ end
     <error_class_ class='Symbol' value=':foo'/>
     <exception_ class='Minitest::Assertion' message='Expected :foo to have been thrown, not :bar.'>
       <backtrace_>
-        <level_0_ location='verdict_assert_throws.rb:8:in `block in test_demo_verdict&apos;'/>
-        <level_1_ location='verdict_assert_throws.rb:4:in `new&apos;'/>
-        <level_2_ location='verdict_assert_throws.rb:4:in `test_demo_verdict&apos;'/>
+        <![CDATA[
+verdict_assert_throws.rb:8:in `block in test_demo_verdict'
+verdict_assert_throws.rb:4:in `new'
+verdict_assert_throws.rb:4:in `test_demo_verdict'
+]]>
       </backtrace_>
     </exception_>
   </verdict_>
@@ -1860,9 +1918,11 @@ end
     <actual_ class='TrueClass' value='true'/>
     <exception_ class='Minitest::Assertion' message='Expected true to not be truthy.'>
       <backtrace_>
-        <level_0_ location='verdict_refute.rb:6:in `block in test_demo_verdict&apos;'/>
-        <level_1_ location='verdict_refute.rb:4:in `new&apos;'/>
-        <level_2_ location='verdict_refute.rb:4:in `test_demo_verdict&apos;'/>
+        <![CDATA[
+verdict_refute.rb:6:in `block in test_demo_verdict'
+verdict_refute.rb:4:in `new'
+verdict_refute.rb:4:in `test_demo_verdict'
+]]>
       </backtrace_>
     </exception_>
   </verdict_>
@@ -1901,9 +1961,11 @@ end
     <actual_ class='Array' value='[]'/>
     <exception_ class='Minitest::Assertion' message='Expected [] to not be empty.'>
       <backtrace_>
-        <level_0_ location='verdict_refute_empty.rb:6:in `block in test_demo_verdict&apos;'/>
-        <level_1_ location='verdict_refute_empty.rb:4:in `new&apos;'/>
-        <level_2_ location='verdict_refute_empty.rb:4:in `test_demo_verdict&apos;'/>
+        <![CDATA[
+verdict_refute_empty.rb:6:in `block in test_demo_verdict'
+verdict_refute_empty.rb:4:in `new'
+verdict_refute_empty.rb:4:in `test_demo_verdict'
+]]>
       </backtrace_>
     </exception_>
   </verdict_>
@@ -1945,9 +2007,11 @@ end
     <actual_ class='Integer' value='0'/>
     <exception_ class='Minitest::Assertion' message='Expected 0 to not be equal to 0.'>
       <backtrace_>
-        <level_0_ location='verdict_refute_equal.rb:6:in `block in test_demo_verdict&apos;'/>
-        <level_1_ location='verdict_refute_equal.rb:4:in `new&apos;'/>
-        <level_2_ location='verdict_refute_equal.rb:4:in `test_demo_verdict&apos;'/>
+        <![CDATA[
+verdict_refute_equal.rb:6:in `block in test_demo_verdict'
+verdict_refute_equal.rb:4:in `new'
+verdict_refute_equal.rb:4:in `test_demo_verdict'
+]]>
       </backtrace_>
     </exception_>
   </verdict_>
@@ -1990,9 +2054,11 @@ end
     <delta_ class='Integer' value='1'/>
     <exception_ class='Minitest::Assertion' message='Expected |0 - 0| (0) to not be &lt;= 1.'>
       <backtrace_>
-        <level_0_ location='verdict_refute_in_delta.rb:6:in `block in test_demo_verdict&apos;'/>
-        <level_1_ location='verdict_refute_in_delta.rb:4:in `new&apos;'/>
-        <level_2_ location='verdict_refute_in_delta.rb:4:in `test_demo_verdict&apos;'/>
+        <![CDATA[
+verdict_refute_in_delta.rb:6:in `block in test_demo_verdict'
+verdict_refute_in_delta.rb:4:in `new'
+verdict_refute_in_delta.rb:4:in `test_demo_verdict'
+]]>
       </backtrace_>
     </exception_>
   </verdict_>
@@ -2035,9 +2101,11 @@ end
     <epsilon_ class='Integer' value='1'/>
     <exception_ class='Minitest::Assertion' message='Expected |3 - 2| (1) to not be &lt;= 3.'>
       <backtrace_>
-        <level_0_ location='verdict_refute_in_epsilon.rb:6:in `block in test_demo_verdict&apos;'/>
-        <level_1_ location='verdict_refute_in_epsilon.rb:4:in `new&apos;'/>
-        <level_2_ location='verdict_refute_in_epsilon.rb:4:in `test_demo_verdict&apos;'/>
+        <![CDATA[
+verdict_refute_in_epsilon.rb:6:in `block in test_demo_verdict'
+verdict_refute_in_epsilon.rb:4:in `new'
+verdict_refute_in_epsilon.rb:4:in `test_demo_verdict'
+]]>
       </backtrace_>
     </exception_>
   </verdict_>
@@ -2078,9 +2146,11 @@ end
     <actual_ class='Symbol' value=':b'/>
     <exception_ class='Minitest::Assertion' message='Expected [:a, :b, :c] to not include :b.'>
       <backtrace_>
-        <level_0_ location='verdict_refute_includes.rb:6:in `block in test_demo_verdict&apos;'/>
-        <level_1_ location='verdict_refute_includes.rb:4:in `new&apos;'/>
-        <level_2_ location='verdict_refute_includes.rb:4:in `test_demo_verdict&apos;'/>
+        <![CDATA[
+verdict_refute_includes.rb:6:in `block in test_demo_verdict'
+verdict_refute_includes.rb:4:in `new'
+verdict_refute_includes.rb:4:in `test_demo_verdict'
+]]>
       </backtrace_>
     </exception_>
   </verdict_>
@@ -2121,9 +2191,11 @@ end
     <actual_ class='String' value='&quot;my_string&quot;'/>
     <exception_ class='Minitest::Assertion' message='Expected # encoding: UTF-8'>
       <backtrace_>
-        <level_0_ location='verdict_refute_instance_of.rb:6:in `block in test_demo_verdict&apos;'/>
-        <level_1_ location='verdict_refute_instance_of.rb:4:in `new&apos;'/>
-        <level_2_ location='verdict_refute_instance_of.rb:4:in `test_demo_verdict&apos;'/>
+        <![CDATA[
+verdict_refute_instance_of.rb:6:in `block in test_demo_verdict'
+verdict_refute_instance_of.rb:4:in `new'
+verdict_refute_instance_of.rb:4:in `test_demo_verdict'
+]]>
       </backtrace_>
     </exception_>
   </verdict_>
@@ -2164,9 +2236,11 @@ end
     <actual_ class='Float' value='1.0'/>
     <exception_ class='Minitest::Assertion' message='Expected 1.0 to not be a kind of Numeric.'>
       <backtrace_>
-        <level_0_ location='verdict_refute_kind_of.rb:6:in `block in test_demo_verdict&apos;'/>
-        <level_1_ location='verdict_refute_kind_of.rb:4:in `new&apos;'/>
-        <level_2_ location='verdict_refute_kind_of.rb:4:in `test_demo_verdict&apos;'/>
+        <![CDATA[
+verdict_refute_kind_of.rb:6:in `block in test_demo_verdict'
+verdict_refute_kind_of.rb:4:in `new'
+verdict_refute_kind_of.rb:4:in `test_demo_verdict'
+]]>
       </backtrace_>
     </exception_>
   </verdict_>
@@ -2207,9 +2281,11 @@ end
     <actual_ class='String' value='&quot;food&quot;'/>
     <exception_ class='Minitest::Assertion' message='Expected /foo/ to not match # encoding: UTF-8'>
       <backtrace_>
-        <level_0_ location='verdict_refute_match.rb:6:in `block in test_demo_verdict&apos;'/>
-        <level_1_ location='verdict_refute_match.rb:4:in `new&apos;'/>
-        <level_2_ location='verdict_refute_match.rb:4:in `test_demo_verdict&apos;'/>
+        <![CDATA[
+verdict_refute_match.rb:6:in `block in test_demo_verdict'
+verdict_refute_match.rb:4:in `new'
+verdict_refute_match.rb:4:in `test_demo_verdict'
+]]>
       </backtrace_>
     </exception_>
   </verdict_>
@@ -2248,9 +2324,11 @@ end
     <actual_ class='NilClass' value='nil'/>
     <exception_ class='Minitest::Assertion' message='Expected nil to not be nil.'>
       <backtrace_>
-        <level_0_ location='verdict_refute_nil.rb:6:in `block in test_demo_verdict&apos;'/>
-        <level_1_ location='verdict_refute_nil.rb:4:in `new&apos;'/>
-        <level_2_ location='verdict_refute_nil.rb:4:in `test_demo_verdict&apos;'/>
+        <![CDATA[
+verdict_refute_nil.rb:6:in `block in test_demo_verdict'
+verdict_refute_nil.rb:4:in `new'
+verdict_refute_nil.rb:4:in `test_demo_verdict'
+]]>
       </backtrace_>
     </exception_>
   </verdict_>
@@ -2293,9 +2371,11 @@ end
     <object_2_ class='Integer' value='4'/>
     <exception_ class='Minitest::Assertion' message='Expected 3 to not be &lt;= 4.'>
       <backtrace_>
-        <level_0_ location='verdict_refute_operator.rb:6:in `block in test_demo_verdict&apos;'/>
-        <level_1_ location='verdict_refute_operator.rb:4:in `new&apos;'/>
-        <level_2_ location='verdict_refute_operator.rb:4:in `test_demo_verdict&apos;'/>
+        <![CDATA[
+verdict_refute_operator.rb:6:in `block in test_demo_verdict'
+verdict_refute_operator.rb:4:in `new'
+verdict_refute_operator.rb:4:in `test_demo_verdict'
+]]>
       </backtrace_>
     </exception_>
   </verdict_>
@@ -2336,9 +2416,11 @@ end
     <operator_ class='Symbol' value=':empty?'/>
     <exception_ class='Minitest::Assertion' message='Expected # encoding: UTF-8'>
       <backtrace_>
-        <level_0_ location='verdict_refute_predicate.rb:6:in `block in test_demo_verdict&apos;'/>
-        <level_1_ location='verdict_refute_predicate.rb:4:in `new&apos;'/>
-        <level_2_ location='verdict_refute_predicate.rb:4:in `test_demo_verdict&apos;'/>
+        <![CDATA[
+verdict_refute_predicate.rb:6:in `block in test_demo_verdict'
+verdict_refute_predicate.rb:4:in `new'
+verdict_refute_predicate.rb:4:in `test_demo_verdict'
+]]>
       </backtrace_>
     </exception_>
   </verdict_>
@@ -2379,9 +2461,11 @@ end
     <method_ class='Symbol' value=':succ'/>
     <exception_ class='Minitest::Assertion' message='Expected 0 to not respond to succ.'>
       <backtrace_>
-        <level_0_ location='verdict_refute_respond_to.rb:6:in `block in test_demo_verdict&apos;'/>
-        <level_1_ location='verdict_refute_respond_to.rb:4:in `new&apos;'/>
-        <level_2_ location='verdict_refute_respond_to.rb:4:in `test_demo_verdict&apos;'/>
+        <![CDATA[
+verdict_refute_respond_to.rb:6:in `block in test_demo_verdict'
+verdict_refute_respond_to.rb:4:in `new'
+verdict_refute_respond_to.rb:4:in `test_demo_verdict'
+]]>
       </backtrace_>
     </exception_>
   </verdict_>
@@ -2422,9 +2506,11 @@ end
     <actual_ class='Symbol' value=':foo'/>
     <exception_ class='Minitest::Assertion' message='Expected :foo (oid=1043228) to not be the same as :foo (oid=1043228).'>
       <backtrace_>
-        <level_0_ location='verdict_refute_same.rb:6:in `block in test_demo_verdict&apos;'/>
-        <level_1_ location='verdict_refute_same.rb:4:in `new&apos;'/>
-        <level_2_ location='verdict_refute_same.rb:4:in `test_demo_verdict&apos;'/>
+        <![CDATA[
+verdict_refute_same.rb:6:in `block in test_demo_verdict'
+verdict_refute_same.rb:4:in `new'
+verdict_refute_same.rb:4:in `test_demo_verdict'
+]]>
       </backtrace_>
     </exception_>
   </verdict_>
