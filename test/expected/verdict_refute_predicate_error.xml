@@ -3,12 +3,14 @@
   <section_ name='Test' method='verdict_refute_predicate?' type='error'>
     <section_ name='Args=[]'>
       <rescued_exception_ class='ArgumentError' message='wrong number of arguments (given 1, expected 3..4)'>
-        <backtrace_/>
+        <backtrace_>
+        </backtrace_>
       </rescued_exception_>
     </section_>
     <section_ name='Args=[nil, nil, nil, &quot;Message 1&quot;]'>
       <rescued_exception_ class='ArgumentError' message='wrong number of arguments (given 5, expected 3..4)'>
-        <backtrace_/>
+        <backtrace_>
+        </backtrace_>
       </rescued_exception_>
     </section_>
   </section_>
@@ -16,7 +18,8 @@
     <expected_ class='Integer' value='0'/>
     <actual_ class='Integer' value='2'/>
     <exception_ class='Minitest::Assertion' message='Expected: 0'>
-      <backtrace_/>
+      <backtrace_>
+      </backtrace_>
     </exception_>
   </verdict_>
 </log>

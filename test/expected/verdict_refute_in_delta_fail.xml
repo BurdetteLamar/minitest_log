@@ -7,7 +7,8 @@
         <actual_ class='Integer' value='0'/>
         <delta_ class='Integer' value='1'/>
         <exception_ class='Minitest::Assertion' message='Expected |0 - 0| (0) to not be &lt;= 1.'>
-          <backtrace_/>
+          <backtrace_>
+          </backtrace_>
         </exception_>
       </verdict_>
     </section_>
@@ -17,7 +18,8 @@
         <actual_ class='Integer' value='1'/>
         <delta_ class='Integer' value='1'/>
         <exception_ class='Minitest::Assertion' message='Expected |1 - 1| (0) to not be &lt;= 1.'>
-          <backtrace_/>
+          <backtrace_>
+          </backtrace_>
         </exception_>
       </verdict_>
     </section_>

@@ -6,7 +6,8 @@
         <expected_ class='Array' value='[0]'/>
         <actual_ class='Integer' value='1'/>
         <exception_ class='Minitest::Assertion' message='Expected [0] to include 1.'>
-          <backtrace_/>
+          <backtrace_>
+          </backtrace_>
         </exception_>
       </verdict_>
     </section_>
@@ -15,7 +16,8 @@
         <expected_ class='Array' value='[:a]'/>
         <actual_ class='Symbol' value=':b'/>
         <exception_ class='Minitest::Assertion' message='Expected [:a] to include :b.'>
-          <backtrace_/>
+          <backtrace_>
+          </backtrace_>
         </exception_>
       </verdict_>
     </section_>

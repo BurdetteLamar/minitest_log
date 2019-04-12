@@ -5,7 +5,8 @@
       <verdict_ method='verdict_assert_empty?' outcome='failed' id='0' message='Message 0'>
         <actual_ class='Array' value='[0]'/>
         <exception_ class='Minitest::Assertion' message='Expected [0] to be empty.'>
-          <backtrace_/>
+          <backtrace_>
+          </backtrace_>
         </exception_>
       </verdict_>
     </section_>
@@ -13,7 +14,8 @@
       <verdict_ method='verdict_assert_empty?' outcome='failed' id='1' message='Message 1'>
         <actual_ class='String' value='&quot;not_empty&quot;'/>
         <exception_ class='Minitest::Assertion' message='Expected # encoding: UTF-8'>
-          <backtrace_/>
+          <backtrace_>
+          </backtrace_>
         </exception_>
       </verdict_>
     </section_>

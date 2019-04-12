@@ -5,7 +5,8 @@
       <verdict_ method='verdict_refute_nil?' outcome='failed' id='0' message='Message 0'>
         <actual_ class='NilClass' value='nil'/>
         <exception_ class='Minitest::Assertion' message='Expected nil to not be nil.'>
-          <backtrace_/>
+          <backtrace_>
+          </backtrace_>
         </exception_>
       </verdict_>
     </section_>
@@ -13,7 +14,8 @@
       <verdict_ method='verdict_refute_nil?' outcome='failed' id='1' message='Message 1'>
         <actual_ class='NilClass' value='nil'/>
         <exception_ class='Minitest::Assertion' message='Expected nil to not be nil.'>
-          <backtrace_/>
+          <backtrace_>
+          </backtrace_>
         </exception_>
       </verdict_>
     </section_>

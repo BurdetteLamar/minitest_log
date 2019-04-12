@@ -2,7 +2,8 @@
   <summary_ verdicts='2' failures='1' errors='0'/>
   <verdict_ method='verdict_assert_silent?' outcome='failed' id='1'>
     <exception_ class='Minitest::Assertion' message='In stderr.'>
-      <backtrace_/>
+      <backtrace_>
+      </backtrace_>
     </exception_>
   </verdict_>
   <verdict_ method='verdict_assert_equal?' outcome='passed' id='error_count'>
