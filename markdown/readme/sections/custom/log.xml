@@ -1,0 +1,21 @@
+<log>
+  <section_ name='Custom elements with no children'>
+    <childless_element/>
+    <childless_element_with_text>
+      Text for this element.
+    </childless_element_with_text>
+    <childless_element_with_attributes a='0' b='1'/>
+  </section_>
+  <section_ name='Custom elements with children'>
+    <parent_element>
+      <child_element/>
+    </parent_element>
+    <parent_element_with_text>
+      Text for this element.
+      <child_element/>
+    </parent_element_with_text>
+    <parent_element_with_attributes a='0' b='1'>
+      <child_element/>
+    </parent_element_with_attributes>
+  </section_>
+</log>
