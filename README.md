@@ -1,5 +1,7 @@
 # MinitestLog
 
+Coming soon:  The gem.
+
 
 ```MinitestLog``` gives you three things:
 
