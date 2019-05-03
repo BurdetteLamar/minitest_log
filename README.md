@@ -1,7 +1,5 @@
 # MinitestLog
 
-Coming soon:  The gem.
-
 
 ```MinitestLog``` gives you three things:
 
@@ -278,13 +276,13 @@ end
 ```log.xml```:
 ```xml
 <log>
-  <section_ name='My section with timestamp' timestamp='2019-04-12-Fri-16.51.27.737'>
+  <section_ name='My section with timestamp' timestamp='2019-05-03-Fri-11.07.36.903'>
     Section with timestamp.
   </section_>
-  <section_ name='My section with duration' duration_seconds='0.501'>
+  <section_ name='My section with duration' duration_seconds='0.500'>
     Section with duration.
   </section_>
-  <section_ name='My section with both' timestamp='2019-04-12-Fri-16.51.28.238' duration_seconds='0.500'>
+  <section_ name='My section with both' timestamp='2019-05-03-Fri-11.07.37.404' duration_seconds='0.500'>
     Section with both.
   </section_>
 </log>
@@ -356,7 +354,7 @@ end
 ```xml
 <log>
   <section_ name='My unrescued section'>
-    <uncaught_exception_ timestamp='2019-04-12-Fri-16.51.29.124' class='RuntimeError'>
+    <uncaught_exception_ timestamp='2019-05-03-Fri-11.07.38.295' class='RuntimeError'>
       <message_>
         Boo!
       </message_>
@@ -413,7 +411,7 @@ end
 ```log.xml```:
 ```xml
 <log>
-  <section_ name='Section with potpourri of arguments' a='0' b='1' timestamp='2019-04-12-Fri-16.51.26.075' c='2' d='3' duration_seconds='0.502'>
+  <section_ name='Section with potpourri of arguments' a='0' b='1' timestamp='2019-05-03-Fri-11.07.35.247' c='2' d='3' duration_seconds='0.501'>
     Word More words
     <rescued_exception_ class='Exception' message='Boo!'>
       <backtrace_>
@@ -865,7 +863,7 @@ Otherwise, an object that ```respond_to?(:each_pair)``` is logged as name-value 
 ```each_pair.rb```:
 ```ruby
 require 'minitest_log'
-class Example < MiniTest::Test
+class Example < Minitest::Test
   def test_example
     MinitestLog.new('each_pair.xml') do |log|
       log.section('Objects logged using :each_pair') do
@@ -1014,7 +1012,7 @@ end
       (?-mix:Bar)
     </data_>
     <data_ name='My time' class='Time' method=':to_s'>
-      2019-04-12 16:51:22 -0500
+      2019-05-03 11:07:31 -0500
     </data_>
     <data_ name='My uri,' class='URI::HTTPS' method=':to_s'>
       https://www.github.com

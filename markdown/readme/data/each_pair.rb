@@ -1,5 +1,5 @@
 require 'minitest_log'
-class Example < MiniTest::Test
+class Example < Minitest::Test
   def test_example
     MinitestLog.new('each_pair.xml') do |log|
       log.section('Objects logged using :each_pair') do
