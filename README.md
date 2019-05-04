@@ -276,13 +276,13 @@ end
 ```log.xml```:
 ```xml
 <log>
-  <section_ name='My section with timestamp' timestamp='2019-05-04-Sat-07.15.38.846'>
+  <section_ name='My section with timestamp' timestamp='2019-05-04-Sat-07.28.24.797'>
     Section with timestamp.
   </section_>
   <section_ name='My section with duration' duration_seconds='0.500'>
     Section with duration.
   </section_>
-  <section_ name='My section with both' timestamp='2019-05-04-Sat-07.15.39.347' duration_seconds='0.500'>
+  <section_ name='My section with both' timestamp='2019-05-04-Sat-07.28.25.298' duration_seconds='0.500'>
     Section with both.
   </section_>
 </log>
@@ -354,7 +354,7 @@ end
 ```xml
 <log>
   <section_ name='My unrescued section'>
-    <uncaught_exception_ timestamp='2019-05-04-Sat-07.15.40.331' class='RuntimeError'>
+    <uncaught_exception_ timestamp='2019-05-04-Sat-07.28.26.211' class='RuntimeError'>
       <message_>
         Boo!
       </message_>
@@ -411,7 +411,7 @@ end
 ```log.xml```:
 ```xml
 <log>
-  <section_ name='Section with potpourri of arguments' a='0' b='1' timestamp='2019-05-04-Sat-07.15.37.139' c='2' d='3' duration_seconds='0.502'>
+  <section_ name='Section with potpourri of arguments' a='0' b='1' timestamp='2019-05-04-Sat-07.28.23.027' c='2' d='3' duration_seconds='0.502'>
     Word More words
     <rescued_exception_ class='Exception' message='Boo!'>
       <backtrace_>
@@ -1012,7 +1012,7 @@ end
       (?-mix:Bar)
     </data_>
     <data_ name='My time' class='Time' method=':to_s'>
-      2019-05-04 07:15:33 -0500
+      2019-05-04 07:28:19 -0500
     </data_>
     <data_ name='My uri,' class='URI::HTTPS' method=':to_s'>
       https://www.github.com
@@ -1030,6 +1030,8 @@ Each verdict method in ```MinitestLog``` is a wrapper for a corresponding ```Min
 
 An important difference between an assertion and a verdict is that a failed verdict does not exit the test.  Instead, the verdict method logs the details for the assertion, regardless of the outcome, and continues test execution.
 
+The verdict method returns ```true``` or ```false``` to indicate whether the verdict succeeded or failed.
+
 The arguments for the verdict method and its assert method are the same, except that the verdict method adds a leading verdict identifier:
 
 ```ruby
@@ -1038,15 +1040,13 @@ assert_equal(exp, act)
 verdict_assert_equal?('verdict_id', exp, act)
 ```
 
-Each verdict method returns ```true``` or ```false``` to indicate whether the verdict succeeded or failed.
-
 Like an assertion, a verdict also accepts an optional trailing message string.
 
 The verdict identifier:
 - Is commonly a string or a symbol, but may be any object that responds to ```:to_s```.
 - Must be unique among the verdict identifiers in its *test method* (but not necessarily in its *test class*.)
 
-Each verdict method has a shorter alias -- ```va``` substituting for ```verdict_assert```, and ```vr``` substituting for ```verdict_refute```.  (This not only saves keystrokes, but also *really*, *really* helps your editor do code completion.)
+Each verdict method has a shorter alias -- ```va``` substituting for ```verdict_assert```, and ```vr``` substituting for ```verdict_refute```:
 
 Example verdict (long form and alias):
 
@@ -1055,6 +1055,7 @@ log.verdict_assert_equal?(:my_verdict_id, exp, act, 'My message')
 
 log.va_equal?(:my_verdict_id, exp, act, 'My message')
 ```
+The shorter alias not only saves keystrokes, but also *really*, *really* helps your editor do code completion.
 
 Verdict methods are described below.  For each, the following is given:
 
