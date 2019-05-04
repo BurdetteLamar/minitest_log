@@ -3,9 +3,9 @@
 
 ```MinitestLog``` gives you three things:
 
-- **Nested sections:**  Use nested sections to structure your test (and its log), so that it can "tell its story" clearly.
-- **Data explication:**  Use data-logging methods to log objects. Most collections (```Aray```, ```Hash```, etc.) are explicated piece-by-piece.
-- **Verdicts:** Use verdict methods to express assertions. Each verdict method calls a corresponding assertion method (in ```Minitest::Assertions```).  Details for the verdict are logged, whether passed or failed.
+- **Nested sections:**  Use nested sections to structure your test (and, importantly, its log), so that the test can "tell its story" clearly.
+- **Data explication:**  Use data-logging methods to log objects. Most collections (```Aray```, ```Hash```, etc.) are automatically logged in detail.
+- **(And of course) Verdicts:** Use verdict methods to express assertions.  Details for the verdict are logged, whether passed or failed.
 
 ## Contents
 - [Logs and Sections](#logs-and-sections)
@@ -276,13 +276,13 @@ end
 ```log.xml```:
 ```xml
 <log>
-  <section_ name='My section with timestamp' timestamp='2019-05-03-Fri-11.07.36.903'>
+  <section_ name='My section with timestamp' timestamp='2019-05-04-Sat-05.56.29.568'>
     Section with timestamp.
   </section_>
   <section_ name='My section with duration' duration_seconds='0.500'>
     Section with duration.
   </section_>
-  <section_ name='My section with both' timestamp='2019-05-03-Fri-11.07.37.404' duration_seconds='0.500'>
+  <section_ name='My section with both' timestamp='2019-05-04-Sat-05.56.30.069' duration_seconds='0.501'>
     Section with both.
   </section_>
 </log>
@@ -354,7 +354,7 @@ end
 ```xml
 <log>
   <section_ name='My unrescued section'>
-    <uncaught_exception_ timestamp='2019-05-03-Fri-11.07.38.295' class='RuntimeError'>
+    <uncaught_exception_ timestamp='2019-05-04-Sat-05.56.31.042' class='RuntimeError'>
       <message_>
         Boo!
       </message_>
@@ -411,7 +411,7 @@ end
 ```log.xml```:
 ```xml
 <log>
-  <section_ name='Section with potpourri of arguments' a='0' b='1' timestamp='2019-05-03-Fri-11.07.35.247' c='2' d='3' duration_seconds='0.501'>
+  <section_ name='Section with potpourri of arguments' a='0' b='1' timestamp='2019-05-04-Sat-05.56.27.863' c='2' d='3' duration_seconds='0.502'>
     Word More words
     <rescued_exception_ class='Exception' message='Boo!'>
       <backtrace_>
@@ -1012,7 +1012,7 @@ end
       (?-mix:Bar)
     </data_>
     <data_ name='My time' class='Time' method=':to_s'>
-      2019-05-03 11:07:31 -0500
+      2019-05-04 05:56:24 -0500
     </data_>
     <data_ name='My uri,' class='URI::HTTPS' method=':to_s'>
       https://www.github.com
