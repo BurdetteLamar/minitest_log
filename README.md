@@ -276,13 +276,13 @@ end
 ```log.xml```:
 ```xml
 <log>
-  <section_ name='My section with timestamp' timestamp='2019-05-04-Sat-05.56.29.568'>
+  <section_ name='My section with timestamp' timestamp='2019-05-04-Sat-06.11.55.560'>
     Section with timestamp.
   </section_>
   <section_ name='My section with duration' duration_seconds='0.500'>
     Section with duration.
   </section_>
-  <section_ name='My section with both' timestamp='2019-05-04-Sat-05.56.30.069' duration_seconds='0.501'>
+  <section_ name='My section with both' timestamp='2019-05-04-Sat-06.11.56.061' duration_seconds='0.500'>
     Section with both.
   </section_>
 </log>
@@ -354,7 +354,7 @@ end
 ```xml
 <log>
   <section_ name='My unrescued section'>
-    <uncaught_exception_ timestamp='2019-05-04-Sat-05.56.31.042' class='RuntimeError'>
+    <uncaught_exception_ timestamp='2019-05-04-Sat-06.11.57.018' class='RuntimeError'>
       <message_>
         Boo!
       </message_>
@@ -411,7 +411,7 @@ end
 ```log.xml```:
 ```xml
 <log>
-  <section_ name='Section with potpourri of arguments' a='0' b='1' timestamp='2019-05-04-Sat-05.56.27.863' c='2' d='3' duration_seconds='0.502'>
+  <section_ name='Section with potpourri of arguments' a='0' b='1' timestamp='2019-05-04-Sat-06.11.53.815' c='2' d='3' duration_seconds='0.502'>
     Word More words
     <rescued_exception_ class='Exception' message='Boo!'>
       <backtrace_>
@@ -821,9 +821,9 @@ Put data onto the log using method ```:put_data```.
 
 A data object ```obj``` is treated as follows:
 
-- If ```obj.kind_of?(String)```, it is treated as a [string](#strings)
-- Otherwise if ```obj.respond_to?(:each_pair)```, it is treated as [hash-like](#hash-like-objects).
-- Otherwise, it ```obj.respond_to?(:each_with_index```, it is treated as [array-like](#array-like-objects).
+- If ```obj.kind_of?(String)```, it is treated as a [String](#strings)
+- Otherwise if ```obj.respond_to?(:each_pair)```, it is treated as [Hash-like](#hash-like-objects).
+- Otherwise, it ```obj.respond_to?(:each_with_index```, it is treated as [Array-like](#array-like-objects).
 - Otherwise, it is treated as "[other](#other-objects)".
 
 ### Strings
@@ -1012,7 +1012,7 @@ end
       (?-mix:Bar)
     </data_>
     <data_ name='My time' class='Time' method=':to_s'>
-      2019-05-04 05:56:24 -0500
+      2019-05-04 06:11:50 -0500
     </data_>
     <data_ name='My uri,' class='URI::HTTPS' method=':to_s'>
       https://www.github.com
