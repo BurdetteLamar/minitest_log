@@ -4,7 +4,7 @@ Use ```MinitestLog``` verdict methods to log details of ```Minitest``` assertion
 
 Each verdict method in ```MinitestLog``` is a wrapper for a corresponding ```Minitest``` assertion (or refutation).
 
-The verdict method logs all details for the assertion.
+An important difference between an assertion and a verdict is that a failed verdict does not exit the test.  Instead, the verdict method logs the details for the assertion, regardless of the outcome, and continues test execution.
 
 The arguments for the verdict method and its assert method are the same, except that the verdict method adds a leading verdict identifier:
 
