@@ -31,7 +31,7 @@ log.verdict_assert_equal?(:my_verdict_id, exp, act, 'My message')
 
 log.va_equal?(:my_verdict_id, exp, act, 'My message')
 ```
-The shorter alias not only saves keystrokes, but also *really*, *really* helps your editor do code completion.
+The shorter alias not only saves keystrokes, but also *really*, *really* helps your editor with code completion.
 
 Verdict methods are described below.  For each, the following is given:
 

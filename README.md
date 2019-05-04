@@ -276,13 +276,13 @@ end
 ```log.xml```:
 ```xml
 <log>
-  <section_ name='My section with timestamp' timestamp='2019-05-04-Sat-07.28.24.797'>
+  <section_ name='My section with timestamp' timestamp='2019-05-04-Sat-07.37.47.729'>
     Section with timestamp.
   </section_>
-  <section_ name='My section with duration' duration_seconds='0.500'>
+  <section_ name='My section with duration' duration_seconds='0.501'>
     Section with duration.
   </section_>
-  <section_ name='My section with both' timestamp='2019-05-04-Sat-07.28.25.298' duration_seconds='0.500'>
+  <section_ name='My section with both' timestamp='2019-05-04-Sat-07.37.48.231' duration_seconds='0.500'>
     Section with both.
   </section_>
 </log>
@@ -354,7 +354,7 @@ end
 ```xml
 <log>
   <section_ name='My unrescued section'>
-    <uncaught_exception_ timestamp='2019-05-04-Sat-07.28.26.211' class='RuntimeError'>
+    <uncaught_exception_ timestamp='2019-05-04-Sat-07.37.49.181' class='RuntimeError'>
       <message_>
         Boo!
       </message_>
@@ -411,7 +411,7 @@ end
 ```log.xml```:
 ```xml
 <log>
-  <section_ name='Section with potpourri of arguments' a='0' b='1' timestamp='2019-05-04-Sat-07.28.23.027' c='2' d='3' duration_seconds='0.502'>
+  <section_ name='Section with potpourri of arguments' a='0' b='1' timestamp='2019-05-04-Sat-07.37.46.028' c='2' d='3' duration_seconds='0.502'>
     Word More words
     <rescued_exception_ class='Exception' message='Boo!'>
       <backtrace_>
@@ -1012,7 +1012,7 @@ end
       (?-mix:Bar)
     </data_>
     <data_ name='My time' class='Time' method=':to_s'>
-      2019-05-04 07:28:19 -0500
+      2019-05-04 07:37:42 -0500
     </data_>
     <data_ name='My uri,' class='URI::HTTPS' method=':to_s'>
       https://www.github.com
@@ -1055,7 +1055,7 @@ log.verdict_assert_equal?(:my_verdict_id, exp, act, 'My message')
 
 log.va_equal?(:my_verdict_id, exp, act, 'My message')
 ```
-The shorter alias not only saves keystrokes, but also *really*, *really* helps your editor do code completion.
+The shorter alias not only saves keystrokes, but also *really*, *really* helps your editor with code completion.
 
 Verdict methods are described below.  For each, the following is given:
 
