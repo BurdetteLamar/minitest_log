@@ -1,14 +1,8 @@
 require 'rexml/document'
 require 'minitest/autorun'
 require 'minitest/assertions'
-
 require 'diff/lcs'
 
-require_relative 'helpers/array_helper'
-require_relative 'helpers/hash_helper'
-require_relative 'helpers/set_helper'
-
-# When adding a module here, be sure to 'include' below.
 require_relative 'verdict_assertion'
 
 class MinitestLog
