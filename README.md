@@ -3,9 +3,9 @@
 
 ```MinitestLog``` gives you three things:
 
-- **Nested sections:**  Use nested sections to structure your test (and its log), so that it can "tell its story" clearly.
-- **Data explication:**  Use data-logging methods to log objects. Most collections (```Aray```, ```Hash```, etc.) are explicated piece-by-piece.
-- **Verdicts:** Use verdict methods to express assertions. Each verdict method calls a corresponding assertion method (in ```Minitest::Assertions```).  Details for the verdict are logged, whether passed or failed.
+- **Nested sections:**  Use nested sections to structure your test (and, importantly, its log), so that the test can "tell its story" clearly.
+- **Data explication:**  Use data-logging methods to log objects. Most collections (```Aray```, ```Hash```, etc.) are automatically logged in detail.
+- **(And of course) Verdicts:** Use verdict methods to express assertions.  Details for the verdict are logged, whether passed or failed.
 
 ## Contents
 - [Logs and Sections](#logs-and-sections)
@@ -276,13 +276,13 @@ end
 ```log.xml```:
 ```xml
 <log>
-  <section_ name='My section with timestamp' timestamp='2019-05-03-Fri-11.07.36.903'>
+  <section_ name='My section with timestamp' timestamp='2019-05-04-Sat-10.25.21.331'>
     Section with timestamp.
   </section_>
   <section_ name='My section with duration' duration_seconds='0.500'>
     Section with duration.
   </section_>
-  <section_ name='My section with both' timestamp='2019-05-03-Fri-11.07.37.404' duration_seconds='0.500'>
+  <section_ name='My section with both' timestamp='2019-05-04-Sat-10.25.21.832' duration_seconds='0.500'>
     Section with both.
   </section_>
 </log>
@@ -354,7 +354,7 @@ end
 ```xml
 <log>
   <section_ name='My unrescued section'>
-    <uncaught_exception_ timestamp='2019-05-03-Fri-11.07.38.295' class='RuntimeError'>
+    <uncaught_exception_ timestamp='2019-05-04-Sat-10.25.22.759' class='RuntimeError'>
       <message_>
         Boo!
       </message_>
@@ -411,7 +411,7 @@ end
 ```log.xml```:
 ```xml
 <log>
-  <section_ name='Section with potpourri of arguments' a='0' b='1' timestamp='2019-05-03-Fri-11.07.35.247' c='2' d='3' duration_seconds='0.501'>
+  <section_ name='Section with potpourri of arguments' a='0' b='1' timestamp='2019-05-04-Sat-10.25.19.651' c='2' d='3' duration_seconds='0.501'>
     Word More words
     <rescued_exception_ class='Exception' message='Boo!'>
       <backtrace_>
@@ -821,9 +821,9 @@ Put data onto the log using method ```:put_data```.
 
 A data object ```obj``` is treated as follows:
 
-- If ```obj.kind_of?(String)```, it is treated as a [string](#strings)
-- Otherwise if ```obj.respond_to?(:each_pair)```, it is treated as [hash-like](#hash-like-objects).
-- Otherwise, it ```obj.respond_to?(:each_with_index```, it is treated as [array-like](#array-like-objects).
+- If ```obj.kind_of?(String)```, it is treated as a [String](#strings)
+- Otherwise if ```obj.respond_to?(:each_pair)```, it is treated as [Hash-like](#hash-like-objects).
+- Otherwise, it ```obj.respond_to?(:each_with_index```, it is treated as [Array-like](#array-like-objects).
 - Otherwise, it is treated as "[other](#other-objects)".
 
 ### Strings
@@ -1012,7 +1012,7 @@ end
       (?-mix:Bar)
     </data_>
     <data_ name='My time' class='Time' method=':to_s'>
-      2019-05-03 11:07:31 -0500
+      2019-05-04 10:25:16 -0500
     </data_>
     <data_ name='My uri,' class='URI::HTTPS' method=':to_s'>
       https://www.github.com
@@ -1028,24 +1028,34 @@ Use ```MinitestLog``` verdict methods to log details of ```Minitest``` assertion
 
 Each verdict method in ```MinitestLog``` is a wrapper for a corresponding ```Minitest``` assertion (or refutation).
 
-The verdict method logs all details for the assertion.
+An important difference between an assertion and a verdict is that a failed verdict does not exit the test.  Instead, the verdict method logs the details for the assertion, regardless of the outcome, and continues test execution.
 
-The arguments for the verdict method and its assert method are the same, except that the verdict method adds a required leading verdict identifier.  (Both allow an optional trailing message string.)
+The verdict method returns ```true``` or ```false``` to indicate whether the verdict succeeded or failed.
+
+The arguments for the verdict method and its assert method are the same, except that the verdict method adds a leading verdict identifier:
+
+```ruby
+assert_equal(exp, act)
+
+verdict_assert_equal?('verdict_id', exp, act)
+```
+
+Like an assertion, a verdict also accepts an optional trailing message string.
 
 The verdict identifier:
 - Is commonly a string or a symbol, but may be any object that responds to ```:to_s```.
 - Must be unique among the verdict identifiers in its *test method* (but not necessarily in its *test class*.)
 
-Each verdict method returns ```true``` or ```false``` to indicate whether the verdict succeeded or failed.
-
-Each verdict method also has a shorter alias -- ```va``` substituting for ```verdict_assert```, and ```vr``` substituting for ```verdict_refute```.  (This not only saves keystrokes, but also *really*, *really* helps your editor do code completion.)
+Each verdict method has a shorter alias -- ```va``` substituting for ```verdict_assert```, and ```vr``` substituting for ```verdict_refute```:
 
 Example verdict (long form and alias):
 
 ```ruby
-log.verdict_assert?(:my_verdict_id, true, 'My message')
-log.va?(:my_verdict_id, true, 'My message')
+log.verdict_assert_equal?(:my_verdict_id, exp, act, 'My message')
+
+log.va_equal?(:my_verdict_id, exp, act, 'My message')
 ```
+The shorter alias not only saves keystrokes, but also *really*, *really* helps your editor with code completion.
 
 Verdict methods are described below.  For each, the following is given:
 

@@ -4,24 +4,34 @@ Use ```MinitestLog``` verdict methods to log details of ```Minitest``` assertion
 
 Each verdict method in ```MinitestLog``` is a wrapper for a corresponding ```Minitest``` assertion (or refutation).
 
-The verdict method logs all details for the assertion.
+An important difference between an assertion and a verdict is that a failed verdict does not exit the test.  Instead, the verdict method logs the details for the assertion, regardless of the outcome, and continues test execution.
 
-The arguments for the verdict method and its assert method are the same, except that the verdict method adds a required leading verdict identifier.  (Both allow an optional trailing message string.)
+The verdict method returns ```true``` or ```false``` to indicate whether the verdict succeeded or failed.
+
+The arguments for the verdict method and its assert method are the same, except that the verdict method adds a leading verdict identifier:
+
+```ruby
+assert_equal(exp, act)
+
+verdict_assert_equal?('verdict_id', exp, act)
+```
+
+Like an assertion, a verdict also accepts an optional trailing message string.
 
 The verdict identifier:
 - Is commonly a string or a symbol, but may be any object that responds to ```:to_s```.
 - Must be unique among the verdict identifiers in its *test method* (but not necessarily in its *test class*.)
 
-Each verdict method returns ```true``` or ```false``` to indicate whether the verdict succeeded or failed.
-
-Each verdict method also has a shorter alias -- ```va``` substituting for ```verdict_assert```, and ```vr``` substituting for ```verdict_refute```.  (This not only saves keystrokes, but also *really*, *really* helps your editor do code completion.)
+Each verdict method has a shorter alias -- ```va``` substituting for ```verdict_assert```, and ```vr``` substituting for ```verdict_refute```:
 
 Example verdict (long form and alias):
 
 ```ruby
-log.verdict_assert?(:my_verdict_id, true, 'My message')
-log.va?(:my_verdict_id, true, 'My message')
+log.verdict_assert_equal?(:my_verdict_id, exp, act, 'My message')
+
+log.va_equal?(:my_verdict_id, exp, act, 'My message')
 ```
+The shorter alias not only saves keystrokes, but also *really*, *really* helps your editor with code completion.
 
 Verdict methods are described below.  For each, the following is given:
 
