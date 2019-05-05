@@ -5,7 +5,7 @@
       <verdict_ method='verdict_assert_same?' outcome='failed' id='0' message='Message 0'>
         <expected_ class='String' value='&quot;foo&quot;'/>
         <actual_ class='String' value='&quot;foo&quot;'/>
-        <exception_ class='Minitest::Assertion' message='Expected # encoding: UTF-8'>
+        <exception_ class='Minitest::Assertion' message='Expected &quot;foo&quot; oid=(00000000) to be the same as &quot;foo&quot; oid=(00000000).'>
           <backtrace_>
           </backtrace_>
         </exception_>

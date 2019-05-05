@@ -45,7 +45,7 @@ class MinitestLog
     self.xml_indentation = options[:xml_indentation]
     self.summary = options[:summary]
     self.error_verdict = options[:error_verdict] || false
-    self.backtrace_filter = options[:backtrace_filter] || /log|ruby/
+    self.backtrace_filter = options[:backtrace_filter] || /log|minitest/
     self.file = File.open(self.file_path, 'w')
     log_puts("REMARK\tThis text log is the precursor for an XML log.")
     log_puts("REMARK\tIf the logged process completes, this text will be converted to XML.")
@@ -374,7 +374,10 @@ class MinitestLog
       end
       if exception
         self.counts[:failure] += 1
-        put_element('exception', {:class => exception.class, :message => exception.message}) do
+        # If the encoding is not UTF-8, a string will have been added.
+        # Remove it, so that the message is the same on all platforms.
+        conditioned_message = exception.message.gsub("# encoding: UTF-8\n", '')
+        put_element('exception', {:class => exception.class, :message => conditioned_message}) do
           put_element('backtrace') do
             backtrace = filter_backtrace(exception.backtrace)
             put_pre(backtrace.join("\n"))

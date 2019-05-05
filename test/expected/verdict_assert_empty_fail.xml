@@ -13,7 +13,7 @@
     <section_ name='Args=[&quot;not_empty&quot;, &quot;Message 1&quot;]'>
       <verdict_ method='verdict_assert_empty?' outcome='failed' id='1' message='Message 1'>
         <actual_ class='String' value='&quot;not_empty&quot;'/>
-        <exception_ class='Minitest::Assertion' message='Expected # encoding: UTF-8'>
+        <exception_ class='Minitest::Assertion' message='Expected &quot;not_empty&quot; to be empty.'>
           <backtrace_>
           </backtrace_>
         </exception_>
