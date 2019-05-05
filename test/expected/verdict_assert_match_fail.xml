@@ -5,7 +5,7 @@
       <verdict_ method='verdict_assert_match?' outcome='failed' id='0' message='Message 0'>
         <expected_ class='Regexp' value='/b/'/>
         <actual_ class='String' value='&quot;xyz&quot;'/>
-        <exception_ class='Minitest::Assertion' message='Expected /b/ to match # encoding: UTF-8'>
+        <exception_ class='Minitest::Assertion' message='Expected /b/ to match &quot;xyz&quot;.'>
           <backtrace_>
           </backtrace_>
         </exception_>
@@ -15,7 +15,7 @@
       <verdict_ method='verdict_assert_match?' outcome='failed' id='1' message='Message 1'>
         <expected_ class='Regexp' value='/./'/>
         <actual_ class='String' value='&quot;&quot;'/>
-        <exception_ class='Minitest::Assertion' message='Expected /./ to match # encoding: UTF-8'>
+        <exception_ class='Minitest::Assertion' message='Expected /./ to match &quot;&quot;.'>
           <backtrace_>
           </backtrace_>
         </exception_>
