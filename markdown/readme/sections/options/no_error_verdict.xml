@@ -8,6 +8,7 @@
       <exception_ class='Minitest::Assertion' message='Expected false to be truthy.'>
         <backtrace_>
           <![CDATA[
+error_verdict.rb:17:in `populate_the_log'
 error_verdict.rb:6:in `block (2 levels) in test_demo'
 error_verdict.rb:5:in `block in test_demo'
 error_verdict.rb:4:in `new'
@@ -20,6 +21,8 @@ error_verdict.rb:4:in `test_demo'
       <rescued_exception_ class='Exception' message='Boo!'>
         <backtrace_>
           <![CDATA[
+error_verdict.rb:19:in `block in populate_the_log'
+error_verdict.rb:18:in `populate_the_log'
 error_verdict.rb:6:in `block (2 levels) in test_demo'
 error_verdict.rb:5:in `block in test_demo'
 error_verdict.rb:4:in `new'
