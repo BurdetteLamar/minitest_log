@@ -1,27 +1,8 @@
 <log>
-  <verdict_ method='verdict_assert?' outcome='passed' id='default_log'>
+  <verdict_ method='verdict_assert?' outcome='passed' id='filter_minitest'>
     <actual_ class='TrueClass' value='true'/>
   </verdict_>
-  <verdict_ method='verdict_assert?' outcome='passed' id='default_minitest'>
-    <actual_ class='TrueClass' value='true'/>
-  </verdict_>
-  <verdict_ method='verdict_assert?' outcome='passed' id='log_log'>
-    <actual_ class='TrueClass' value='true'/>
-  </verdict_>
-  <verdict_ method='verdict_assert?' outcome='passed' id='log_minitest'>
-    <actual_ class='TrueClass' value='true'/>
-  </verdict_>
-  <verdict_ method='verdict_assert?' outcome='failed' id='minitest_log'>
-    <actual_ class='FalseClass' value='false'/>
-    <exception_ class='Minitest::Assertion' message='Expected false to be truthy.'>
-      <backtrace_>
-        <![CDATA[
-C:/Ruby25-x64/lib/ruby/2.5.0/tmpdir.rb:89:in `mktmpdir'
-]]>
-      </backtrace_>
-    </exception_>
-  </verdict_>
-  <verdict_ method='verdict_assert?' outcome='passed' id='minitest_minitest'>
+  <verdict_ method='verdict_assert?' outcome='passed' id='filter_xxx'>
     <actual_ class='TrueClass' value='true'/>
   </verdict_>
 </log>

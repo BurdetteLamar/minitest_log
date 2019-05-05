@@ -55,32 +55,22 @@ class LogTest < Minitest::Test
       Dir.mktmpdir do |dir_path|
         Dir.chdir(dir_path) do
           file_path = nil
-          # Default backtrace filter is /log|minitest/.
+          # Default backtrace filter is /minitest/.
           MinitestLog.new('./log.xml') do |temp_log|
             file_path = temp_log.file_path
             raise 'Boo!'
           end
           content = File.read(file_path)
-          # Default root name is 'log', so 2 of these.
-          log.verdict_assert?('default_log', content.scan(/log/).size == 2)
           # All 'minitest' filtered out.
-          log.verdict_assert?('default_minitest', content.scan(/minitest/).size == 0)
+          log.verdict_assert?('filter_minitest', content.scan(/minitest/).size == 0)
 
-          MinitestLog.new('./log.xml', :backtrace_filter => /log/) do |temp_log|
+          MinitestLog.new('./log.xml', :backtrace_filter => /xxx/) do |temp_log|
             file_path = temp_log.file_path
             raise 'Boo!'
           end
           content = File.read(file_path)
-          log.verdict_assert?('log_log', content.scan(/log/).size == 2)
-          log.verdict_assert?('log_minitest', content.scan(/minitest/).size > 0)
+          log.verdict_assert?('filter_xxx', content.scan(/minitest/).size > 0)
 
-          MinitestLog.new('./log.xml', :backtrace_filter => /minitest/) do |temp_log|
-            file_path = temp_log.file_path
-            raise 'Boo!'
-          end
-          content = File.read(file_path)
-          log.verdict_assert?('minitest_log', content.scan(/log/).size > 2)
-          log.verdict_assert?('minitest_minitest', content.scan(/minitest/).size == 0)
         end
       end
     end

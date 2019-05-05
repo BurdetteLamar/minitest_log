@@ -276,13 +276,13 @@ end
 ```log.xml```:
 ```xml
 <log>
-  <section_ name='My section with timestamp' timestamp='2019-05-05-Sun-09.14.12.427'>
+  <section_ name='My section with timestamp' timestamp='2019-05-05-Sun-14.00.27.776'>
     Section with timestamp.
   </section_>
-  <section_ name='My section with duration' duration_seconds='0.501'>
+  <section_ name='My section with duration' duration_seconds='0.500'>
     Section with duration.
   </section_>
-  <section_ name='My section with both' timestamp='2019-05-05-Sun-09.14.12.929' duration_seconds='0.500'>
+  <section_ name='My section with both' timestamp='2019-05-05-Sun-14.00.28.277' duration_seconds='0.500'>
     Section with both.
   </section_>
 </log>
@@ -354,7 +354,7 @@ end
 ```xml
 <log>
   <section_ name='My unrescued section'>
-    <uncaught_exception_ timestamp='2019-05-05-Sun-09.14.13.845' class='RuntimeError'>
+    <uncaught_exception_ timestamp='2019-05-05-Sun-14.00.29.147' class='RuntimeError'>
       <message_>
         Boo!
       </message_>
@@ -411,7 +411,7 @@ end
 ```log.xml```:
 ```xml
 <log>
-  <section_ name='Section with potpourri of arguments' a='0' b='1' timestamp='2019-05-05-Sun-09.14.10.786' c='2' d='3' duration_seconds='0.500'>
+  <section_ name='Section with potpourri of arguments' a='0' b='1' timestamp='2019-05-05-Sun-14.00.26.096' c='2' d='3' duration_seconds='0.502'>
     Word More words
     <rescued_exception_ class='Exception' message='Boo!'>
       <backtrace_>
@@ -635,6 +635,7 @@ end
       <exception_ class='Minitest::Assertion' message='Expected false to be truthy.'>
         <backtrace_>
           <![CDATA[
+summary.rb:17:in `populate_the_log'
 summary.rb:6:in `block (2 levels) in test_demo'
 summary.rb:5:in `block in test_demo'
 summary.rb:4:in `new'
@@ -647,6 +648,8 @@ summary.rb:4:in `test_demo'
       <rescued_exception_ class='Exception' message='Boo!'>
         <backtrace_>
           <![CDATA[
+summary.rb:19:in `block in populate_the_log'
+summary.rb:18:in `populate_the_log'
 summary.rb:6:in `block (2 levels) in test_demo'
 summary.rb:5:in `block in test_demo'
 summary.rb:4:in `new'
@@ -672,6 +675,7 @@ summary.rb:4:in `test_demo'
       <exception_ class='Minitest::Assertion' message='Expected false to be truthy.'>
         <backtrace_>
           <![CDATA[
+summary.rb:17:in `populate_the_log'
 summary.rb:11:in `block (2 levels) in test_demo'
 summary.rb:10:in `block in test_demo'
 summary.rb:9:in `new'
@@ -684,6 +688,8 @@ summary.rb:9:in `test_demo'
       <rescued_exception_ class='Exception' message='Boo!'>
         <backtrace_>
           <![CDATA[
+summary.rb:19:in `block in populate_the_log'
+summary.rb:18:in `populate_the_log'
 summary.rb:11:in `block (2 levels) in test_demo'
 summary.rb:10:in `block in test_demo'
 summary.rb:9:in `new'
@@ -742,6 +748,7 @@ end
       <exception_ class='Minitest::Assertion' message='Expected false to be truthy.'>
         <backtrace_>
           <![CDATA[
+error_verdict.rb:17:in `populate_the_log'
 error_verdict.rb:6:in `block (2 levels) in test_demo'
 error_verdict.rb:5:in `block in test_demo'
 error_verdict.rb:4:in `new'
@@ -754,6 +761,8 @@ error_verdict.rb:4:in `test_demo'
       <rescued_exception_ class='Exception' message='Boo!'>
         <backtrace_>
           <![CDATA[
+error_verdict.rb:19:in `block in populate_the_log'
+error_verdict.rb:18:in `populate_the_log'
 error_verdict.rb:6:in `block (2 levels) in test_demo'
 error_verdict.rb:5:in `block in test_demo'
 error_verdict.rb:4:in `new'
@@ -778,6 +787,7 @@ error_verdict.rb:4:in `test_demo'
       <exception_ class='Minitest::Assertion' message='Expected false to be truthy.'>
         <backtrace_>
           <![CDATA[
+error_verdict.rb:17:in `populate_the_log'
 error_verdict.rb:11:in `block (2 levels) in test_demo'
 error_verdict.rb:10:in `block in test_demo'
 error_verdict.rb:9:in `new'
@@ -790,6 +800,8 @@ error_verdict.rb:9:in `test_demo'
       <rescued_exception_ class='Exception' message='Boo!'>
         <backtrace_>
           <![CDATA[
+error_verdict.rb:19:in `block in populate_the_log'
+error_verdict.rb:18:in `populate_the_log'
 error_verdict.rb:11:in `block (2 levels) in test_demo'
 error_verdict.rb:10:in `block in test_demo'
 error_verdict.rb:9:in `new'
@@ -1012,7 +1024,7 @@ end
       (?-mix:Bar)
     </data_>
     <data_ name='My time' class='Time' method=':to_s'>
-      2019-05-05 09:14:07 -0500
+      2019-05-05 14:00:22 -0500
     </data_>
     <data_ name='My uri,' class='URI::HTTPS' method=':to_s'>
       https://www.github.com
@@ -1369,7 +1381,7 @@ end
   <verdict_ method='verdict_assert_instance_of?' outcome='failed' id='another_id' message='another message'>
     <expected_ class='Class' value='Integer'/>
     <actual_ class='String' value='&quot;my_string&quot;'/>
-    <exception_ class='Minitest::Assertion' message='Expected # encoding: UTF-8'>
+    <exception_ class='Minitest::Assertion' message='Expected &quot;my_string&quot; to be an instance of Integer, not String.'>
       <backtrace_>
         <![CDATA[
 verdict_assert_instance_of.rb:6:in `block in test_demo_verdict'
@@ -1459,7 +1471,7 @@ end
   <verdict_ method='verdict_assert_match?' outcome='failed' id='another_id' message='Another message'>
     <expected_ class='Regexp' value='/foo/'/>
     <actual_ class='String' value='&quot;feed&quot;'/>
-    <exception_ class='Minitest::Assertion' message='Expected /foo/ to match # encoding: UTF-8'>
+    <exception_ class='Minitest::Assertion' message='Expected /foo/ to match &quot;feed&quot;.'>
       <backtrace_>
         <![CDATA[
 verdict_assert_match.rb:6:in `block in test_demo_verdict'
@@ -1647,7 +1659,7 @@ end
   <verdict_ method='verdict_assert_predicate?' outcome='failed' id='another_id' message='Another message'>
     <object_ class='String' value='&quot;x&quot;'/>
     <operator_ class='Symbol' value=':empty?'/>
-    <exception_ class='Minitest::Assertion' message='Expected # encoding: UTF-8'>
+    <exception_ class='Minitest::Assertion' message='Expected &quot;x&quot; to be empty?.'>
       <backtrace_>
         <![CDATA[
 verdict_assert_predicate.rb:6:in `block in test_demo_verdict'
@@ -1784,7 +1796,7 @@ end
   <verdict_ method='verdict_assert_same?' outcome='failed' id='another_id' message='Another message'>
     <expected_ class='String' value='&quot;foo&quot;'/>
     <actual_ class='String' value='&quot;foo&quot;'/>
-    <exception_ class='Minitest::Assertion' message='Expected # encoding: UTF-8'>
+    <exception_ class='Minitest::Assertion' message='Expected &quot;foo&quot; (oid=28713420) to be the same as &quot;foo&quot; (oid=28713440).'>
       <backtrace_>
         <![CDATA[
 verdict_assert_same.rb:6:in `block in test_demo_verdict'
@@ -2193,7 +2205,7 @@ end
   <verdict_ method='verdict_refute_instance_of?' outcome='failed' id='another_id' message='another message'>
     <expected_ class='Class' value='String'/>
     <actual_ class='String' value='&quot;my_string&quot;'/>
-    <exception_ class='Minitest::Assertion' message='Expected # encoding: UTF-8'>
+    <exception_ class='Minitest::Assertion' message='Expected &quot;my_string&quot; to not be an instance of String.'>
       <backtrace_>
         <![CDATA[
 verdict_refute_instance_of.rb:6:in `block in test_demo_verdict'
@@ -2283,7 +2295,7 @@ end
   <verdict_ method='verdict_refute_match?' outcome='failed' id='another_id' message='Another message'>
     <expected_ class='Regexp' value='/foo/'/>
     <actual_ class='String' value='&quot;food&quot;'/>
-    <exception_ class='Minitest::Assertion' message='Expected /foo/ to not match # encoding: UTF-8'>
+    <exception_ class='Minitest::Assertion' message='Expected /foo/ to not match &quot;food&quot;.'>
       <backtrace_>
         <![CDATA[
 verdict_refute_match.rb:6:in `block in test_demo_verdict'
@@ -2418,7 +2430,7 @@ end
   <verdict_ method='verdict_refute_predicate?' outcome='failed' id='another_id' message='Another message'>
     <object_ class='String' value='&quot;&quot;'/>
     <operator_ class='Symbol' value=':empty?'/>
-    <exception_ class='Minitest::Assertion' message='Expected # encoding: UTF-8'>
+    <exception_ class='Minitest::Assertion' message='Expected &quot;&quot; to not be empty?.'>
       <backtrace_>
         <![CDATA[
 verdict_refute_predicate.rb:6:in `block in test_demo_verdict'
