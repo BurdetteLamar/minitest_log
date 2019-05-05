@@ -276,13 +276,13 @@ end
 ```log.xml```:
 ```xml
 <log>
-  <section_ name='My section with timestamp' timestamp='2019-05-04-Sat-10.25.21.331'>
+  <section_ name='My section with timestamp' timestamp='2019-05-05-Sun-09.14.12.427'>
     Section with timestamp.
   </section_>
-  <section_ name='My section with duration' duration_seconds='0.500'>
+  <section_ name='My section with duration' duration_seconds='0.501'>
     Section with duration.
   </section_>
-  <section_ name='My section with both' timestamp='2019-05-04-Sat-10.25.21.832' duration_seconds='0.500'>
+  <section_ name='My section with both' timestamp='2019-05-05-Sun-09.14.12.929' duration_seconds='0.500'>
     Section with both.
   </section_>
 </log>
@@ -354,7 +354,7 @@ end
 ```xml
 <log>
   <section_ name='My unrescued section'>
-    <uncaught_exception_ timestamp='2019-05-04-Sat-10.25.22.759' class='RuntimeError'>
+    <uncaught_exception_ timestamp='2019-05-05-Sun-09.14.13.845' class='RuntimeError'>
       <message_>
         Boo!
       </message_>
@@ -411,7 +411,7 @@ end
 ```log.xml```:
 ```xml
 <log>
-  <section_ name='Section with potpourri of arguments' a='0' b='1' timestamp='2019-05-04-Sat-10.25.19.651' c='2' d='3' duration_seconds='0.501'>
+  <section_ name='Section with potpourri of arguments' a='0' b='1' timestamp='2019-05-05-Sun-09.14.10.786' c='2' d='3' duration_seconds='0.500'>
     Word More words
     <rescued_exception_ class='Exception' message='Boo!'>
       <backtrace_>
@@ -1012,7 +1012,7 @@ end
       (?-mix:Bar)
     </data_>
     <data_ name='My time' class='Time' method=':to_s'>
-      2019-05-04 10:25:16 -0500
+      2019-05-05 09:14:07 -0500
     </data_>
     <data_ name='My uri,' class='URI::HTTPS' method=':to_s'>
       https://www.github.com
