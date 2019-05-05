@@ -6,7 +6,7 @@
   <verdict_ method='verdict_refute_predicate?' outcome='failed' id='another_id' message='Another message'>
     <object_ class='String' value='&quot;&quot;'/>
     <operator_ class='Symbol' value=':empty?'/>
-    <exception_ class='Minitest::Assertion' message='Expected # encoding: UTF-8'>
+    <exception_ class='Minitest::Assertion' message='Expected &quot;&quot; to not be empty?.'>
       <backtrace_>
         <![CDATA[
 verdict_refute_predicate.rb:6:in `block in test_demo_verdict'
