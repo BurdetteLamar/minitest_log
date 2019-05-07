@@ -1,3 +1,5 @@
+[![Gem Version](https://badge.fury.io/rb/minitest_log.svg)](https://badge.fury.io/rb/minitest_log)
+
 # MinitestLog
 
 
@@ -276,13 +278,13 @@ end
 ```log.xml```:
 ```xml
 <log>
-  <section_ name='My section with timestamp' timestamp='2019-05-05-Sun-14.00.27.776'>
+  <section_ name='My section with timestamp' timestamp='2019-05-07-Tue-10.58.13.155'>
     Section with timestamp.
   </section_>
-  <section_ name='My section with duration' duration_seconds='0.500'>
+  <section_ name='My section with duration' duration_seconds='0.501'>
     Section with duration.
   </section_>
-  <section_ name='My section with both' timestamp='2019-05-05-Sun-14.00.28.277' duration_seconds='0.500'>
+  <section_ name='My section with both' timestamp='2019-05-07-Tue-10.58.13.656' duration_seconds='0.500'>
     Section with both.
   </section_>
 </log>
@@ -354,7 +356,7 @@ end
 ```xml
 <log>
   <section_ name='My unrescued section'>
-    <uncaught_exception_ timestamp='2019-05-05-Sun-14.00.29.147' class='RuntimeError'>
+    <uncaught_exception_ timestamp='2019-05-07-Tue-10.58.14.602' class='RuntimeError'>
       <message_>
         Boo!
       </message_>
@@ -411,7 +413,7 @@ end
 ```log.xml```:
 ```xml
 <log>
-  <section_ name='Section with potpourri of arguments' a='0' b='1' timestamp='2019-05-05-Sun-14.00.26.096' c='2' d='3' duration_seconds='0.502'>
+  <section_ name='Section with potpourri of arguments' a='0' b='1' timestamp='2019-05-07-Tue-10.58.11.338' c='2' d='3' duration_seconds='0.502'>
     Word More words
     <rescued_exception_ class='Exception' message='Boo!'>
       <backtrace_>
@@ -1024,7 +1026,7 @@ end
       (?-mix:Bar)
     </data_>
     <data_ name='My time' class='Time' method=':to_s'>
-      2019-05-05 14:00:22 -0500
+      2019-05-07 10:58:07 -0500
     </data_>
     <data_ name='My uri,' class='URI::HTTPS' method=':to_s'>
       https://www.github.com
@@ -1796,7 +1798,7 @@ end
   <verdict_ method='verdict_assert_same?' outcome='failed' id='another_id' message='Another message'>
     <expected_ class='String' value='&quot;foo&quot;'/>
     <actual_ class='String' value='&quot;foo&quot;'/>
-    <exception_ class='Minitest::Assertion' message='Expected &quot;foo&quot; (oid=28713420) to be the same as &quot;foo&quot; (oid=28713440).'>
+    <exception_ class='Minitest::Assertion' message='Expected &quot;foo&quot; (oid=27958320) to be the same as &quot;foo&quot; (oid=27958340).'>
       <backtrace_>
         <![CDATA[
 verdict_assert_same.rb:6:in `block in test_demo_verdict'

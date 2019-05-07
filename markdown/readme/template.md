@@ -1,3 +1,5 @@
+[![Gem Version](https://badge.fury.io/rb/minitest_log.svg)](https://badge.fury.io/rb/minitest_log)
+
 # MinitestLog
 
 
