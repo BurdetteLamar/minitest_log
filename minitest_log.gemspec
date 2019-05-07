@@ -12,7 +12,7 @@ Gem::Specification.new do |spec|
   spec.homepage      = "https://github.com/BurdetteLamar/minitest_log"
   spec.license       = 'MIT'
 
-  s.metadata = {
+  spec.metadata = {
       "documentation_uri" => "https://github.com/BurdetteLamar/minitest_log#minitestlog",
   }
 
