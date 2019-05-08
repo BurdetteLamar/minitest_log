@@ -5,10 +5,12 @@ require 'minitest_log/version'
 Gem::Specification.new do |spec|
   spec.name          = 'minitest_log'
   spec.version       = MinitestLog::VERSION
-  spec.authors       = ['burdettelamar']
+  spec.authors       = ['Burdette Lamar']
   spec.email         = ['burdettelamar@yahoo.com']
 
-  spec.summary       = %q{Logging for Ruby-coded testing}
+  spec.summary       = %q{Logging for testing with Minitest}
+  spec.description   = "Gem minitest_log uses Minitest, adding structured loging, data explication, and verdicts."
+EOT
   spec.homepage      = "https://github.com/BurdetteLamar/minitest_log"
   spec.license       = 'MIT'
 
