@@ -8,6 +8,12 @@
 - **Data explication:**  Use data-logging methods to log objects. Most collections (```Aray```, ```Hash```, etc.) are automatically logged in detail.
 - **(And of course) Verdicts:** Use verdict methods to express assertions.  Details for the verdict are logged, whether passed or failed.
 
+## Installation
+
+```sh
+gem install minitest_log
+```
+
 @[:page_toc](## Contents)
 
 @[:markdown](sections/template.md)
