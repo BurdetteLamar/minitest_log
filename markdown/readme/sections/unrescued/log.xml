@@ -1,6 +1,6 @@
 <log>
   <section_ name='My unrescued section'>
-    <uncaught_exception_ timestamp='2019-05-08-Wed-07.27.12.683' class='RuntimeError'>
+    <uncaught_exception_ timestamp='2019-05-08-Wed-07.38.29.897' class='RuntimeError'>
       <message_>
         Boo!
       </message_>
