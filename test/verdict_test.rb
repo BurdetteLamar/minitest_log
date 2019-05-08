@@ -1,6 +1,6 @@
 require 'set'
 
-require_relative 'common_requires'
+require_relative 'test_helper'
 
 class VerdictTest < MiniTest::Test
 
@@ -12,7 +12,7 @@ class VerdictTest < MiniTest::Test
       self.args = args
     end
   end
-  
+
   def with_verdict_test_log(name, options = {})
     verdict_options = options.merge(
                                :error_verdict => true,
