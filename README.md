@@ -278,13 +278,13 @@ end
 ```log.xml```:
 ```xml
 <log>
-  <section_ name='My section with timestamp' timestamp='2019-05-08-Wed-07.38.28.463'>
+  <section_ name='My section with timestamp' timestamp='2019-05-08-Wed-08.58.03.236'>
     Section with timestamp.
   </section_>
-  <section_ name='My section with duration' duration_seconds='0.500'>
+  <section_ name='My section with duration' duration_seconds='0.501'>
     Section with duration.
   </section_>
-  <section_ name='My section with both' timestamp='2019-05-08-Wed-07.38.28.964' duration_seconds='0.500'>
+  <section_ name='My section with both' timestamp='2019-05-08-Wed-08.58.03.738' duration_seconds='0.500'>
     Section with both.
   </section_>
 </log>
@@ -356,7 +356,7 @@ end
 ```xml
 <log>
   <section_ name='My unrescued section'>
-    <uncaught_exception_ timestamp='2019-05-08-Wed-07.38.29.897' class='RuntimeError'>
+    <uncaught_exception_ timestamp='2019-05-08-Wed-08.58.04.614' class='RuntimeError'>
       <message_>
         Boo!
       </message_>
@@ -413,7 +413,7 @@ end
 ```log.xml```:
 ```xml
 <log>
-  <section_ name='Section with potpourri of arguments' a='0' b='1' timestamp='2019-05-08-Wed-07.38.26.830' c='2' d='3' duration_seconds='0.501'>
+  <section_ name='Section with potpourri of arguments' a='0' b='1' timestamp='2019-05-08-Wed-08.58.01.590' c='2' d='3' duration_seconds='0.501'>
     Word More words
     <rescued_exception_ class='Exception' message='Boo!'>
       <backtrace_>
@@ -1026,7 +1026,7 @@ end
       (?-mix:Bar)
     </data_>
     <data_ name='My time' class='Time' method=':to_s'>
-      2019-05-08 07:38:23 -0500
+      2019-05-08 08:57:58 -0500
     </data_>
     <data_ name='My uri,' class='URI::HTTPS' method=':to_s'>
       https://www.github.com
@@ -1798,7 +1798,7 @@ end
   <verdict_ method='verdict_assert_same?' outcome='failed' id='another_id' message='Another message'>
     <expected_ class='String' value='&quot;foo&quot;'/>
     <actual_ class='String' value='&quot;foo&quot;'/>
-    <exception_ class='Minitest::Assertion' message='Expected &quot;foo&quot; (oid=28262460) to be the same as &quot;foo&quot; (oid=28262480).'>
+    <exception_ class='Minitest::Assertion' message='Expected &quot;foo&quot; (oid=27983180) to be the same as &quot;foo&quot; (oid=27983200).'>
       <backtrace_>
         <![CDATA[
 verdict_assert_same.rb:6:in `block in test_demo_verdict'
