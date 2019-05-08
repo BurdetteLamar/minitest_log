@@ -13,6 +13,7 @@ class VerdictTest < MiniTest::Test
     end
   end
 
+  # Yield a test log, with certain options.
   def with_verdict_test_log(name, options = {})
     verdict_options = options.merge(
                                :error_verdict => true,
@@ -23,17 +24,25 @@ class VerdictTest < MiniTest::Test
     end
   end
 
+  # Return a verdict method and its alias.
   def methods_for_test(test_method)
     method_s = "#{test_method.to_s.sub('test_', '')}?"
     abbrev_s = method_s.sub('verdict_', 'v').sub('assert', 'a').sub('refute', 'r')
     [method_s.to_sym, abbrev_s.to_sym]
   end
 
+  # Return the name for a test.
   def _test_name(method, type)
     "#{method.to_s.sub('?', '')}_#{type}"
   end
 
-  def _test_verdict(test_method:, arg_count_range:, pass_cases: [], fail_cases: [])
+  # Test a verdict method.
+  def _test_verdict(
+      test_method:,
+      arg_count_range:,
+      pass_cases: [],
+      fail_cases: []
+  )
     method, abbrev_method = methods_for_test(test_method)
     error_cases = [
         # Too few arguments.
