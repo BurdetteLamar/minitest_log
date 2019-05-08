@@ -58,3 +58,15 @@ This verdict may be useful when a log has errors, but no failed verdicts.
 
 @[xml](error_verdict.xml)
 
+## Backtrace Filter
+
+By default, a backtrace omits entries containing the token ```minitest```.  This keeps the backtrace focussed on your code instead of the gems' code.
+
+Override that behavior by specifying ioption ```:backtrace_filter``` with a ```Regexp``` object.  Entries matching that pattern will be omitted from the backtrace.
+
+@[ruby](backtrace_filter.rb)
+
+@[xml](default_backtrace_filter.xml)
+
+@[xml](custom_backtrace_filter.xml)
+

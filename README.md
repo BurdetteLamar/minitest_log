@@ -30,6 +30,7 @@ gem install minitest_log
     - [XML Indentation](#xml-indentation)
     - [Summary](#summary)
     - [Error Verdict](#error-verdict)
+- [Backtrace Filter](#backtrace-filter)
 - [Data](#data)
   - [Strings](#strings)
   - [Hash-Like Objects](#hash-like-objects)
@@ -284,13 +285,13 @@ end
 ```log.xml```:
 ```xml
 <log>
-  <section_ name='My section with timestamp' timestamp='2019-05-08-Wed-14.40.40.179'>
+  <section_ name='My section with timestamp' timestamp='2019-05-08-Wed-15.59.45.482'>
     Section with timestamp.
   </section_>
-  <section_ name='My section with duration' duration_seconds='0.501'>
+  <section_ name='My section with duration' duration_seconds='0.500'>
     Section with duration.
   </section_>
-  <section_ name='My section with both' timestamp='2019-05-08-Wed-14.40.40.681' duration_seconds='0.500'>
+  <section_ name='My section with both' timestamp='2019-05-08-Wed-15.59.45.982' duration_seconds='0.500'>
     Section with both.
   </section_>
 </log>
@@ -362,7 +363,7 @@ end
 ```xml
 <log>
   <section_ name='My unrescued section'>
-    <uncaught_exception_ timestamp='2019-05-08-Wed-14.40.41.571' class='RuntimeError'>
+    <uncaught_exception_ timestamp='2019-05-08-Wed-15.59.46.856' class='RuntimeError'>
       <message_>
         Boo!
       </message_>
@@ -419,7 +420,7 @@ end
 ```log.xml```:
 ```xml
 <log>
-  <section_ name='Section with potpourri of arguments' a='0' b='1' timestamp='2019-05-08-Wed-14.40.38.538' c='2' d='3' duration_seconds='0.501'>
+  <section_ name='Section with potpourri of arguments' a='0' b='1' timestamp='2019-05-08-Wed-15.59.43.857' c='2' d='3' duration_seconds='0.501'>
     Word More words
     <rescued_exception_ class='Exception' message='Boo!'>
       <backtrace_>
@@ -834,6 +835,85 @@ error_verdict.rb:9:in `test_demo'
 </log>
 ```
 
+## Backtrace Filter
+
+By default, a backtrace omits entries containing the token ```minitest```.  This keeps the backtrace focussed on your code instead of the gems' code.
+
+Override that behavior by specifying ioption ```:backtrace_filter``` with a ```Regexp``` object.  Entries matching that pattern will be omitted from the backtrace.
+
+```backtrace_filter.rb```:
+```ruby
+require 'minitest_log'
+class Test < Minitest::Test
+  def test_demo
+    MinitestLog.new('default_backtrace_filter.xml') do |log|
+      fail 'Boo!'
+    end
+    MinitestLog.new('custom_backtrace_filter.xml', :backtrace_filter => /xxx/) do |log|
+      fail 'Boo!'
+    end
+  end
+end
+```
+
+```default_backtrace_filter.xml```:
+```xml
+<log>
+  <uncaught_exception_ timestamp='2019-05-08-Wed-15.59.41.980' class='RuntimeError'>
+    <message_>
+      Boo!
+    </message_>
+    <backtrace_>
+      <![CDATA[
+backtrace_filter.rb:5:in `block in test_demo'
+backtrace_filter.rb:4:in `new'
+backtrace_filter.rb:4:in `test_demo'
+]]>
+    </backtrace_>
+  </uncaught_exception_>
+</log>
+```
+
+```custom_backtrace_filter.xml```:
+```xml
+<log>
+  <uncaught_exception_ timestamp='2019-05-08-Wed-15.59.41.982' class='RuntimeError'>
+    <message_>
+      Boo!
+    </message_>
+    <backtrace_>
+      <![CDATA[
+backtrace_filter.rb:8:in `block in test_demo'
+C:/Ruby25-x64/lib/ruby/gems/2.5.0/gems/minitest_log-0.2.0/lib/minitest_log.rb:59:in `initialize'
+backtrace_filter.rb:7:in `new'
+backtrace_filter.rb:7:in `test_demo'
+C:/Ruby25-x64/lib/ruby/gems/2.5.0/gems/minitest-5.11.3/lib/minitest/test.rb:98:in `block (3 levels) in run'
+C:/Ruby25-x64/lib/ruby/gems/2.5.0/gems/minitest-5.11.3/lib/minitest/test.rb:195:in `capture_exceptions'
+C:/Ruby25-x64/lib/ruby/gems/2.5.0/gems/minitest-5.11.3/lib/minitest/test.rb:95:in `block (2 levels) in run'
+C:/Ruby25-x64/lib/ruby/gems/2.5.0/gems/minitest-5.11.3/lib/minitest.rb:265:in `time_it'
+C:/Ruby25-x64/lib/ruby/gems/2.5.0/gems/minitest-5.11.3/lib/minitest/test.rb:94:in `block in run'
+C:/Ruby25-x64/lib/ruby/gems/2.5.0/gems/minitest-5.11.3/lib/minitest.rb:360:in `on_signal'
+C:/Ruby25-x64/lib/ruby/gems/2.5.0/gems/minitest-5.11.3/lib/minitest/test.rb:211:in `with_info_handler'
+C:/Ruby25-x64/lib/ruby/gems/2.5.0/gems/minitest-5.11.3/lib/minitest/test.rb:93:in `run'
+C:/Ruby25-x64/lib/ruby/gems/2.5.0/gems/minitest-5.11.3/lib/minitest.rb:960:in `run_one_method'
+C:/Ruby25-x64/lib/ruby/gems/2.5.0/gems/minitest-5.11.3/lib/minitest.rb:334:in `run_one_method'
+C:/Ruby25-x64/lib/ruby/gems/2.5.0/gems/minitest-5.11.3/lib/minitest.rb:321:in `block (2 levels) in run'
+C:/Ruby25-x64/lib/ruby/gems/2.5.0/gems/minitest-5.11.3/lib/minitest.rb:320:in `each'
+C:/Ruby25-x64/lib/ruby/gems/2.5.0/gems/minitest-5.11.3/lib/minitest.rb:320:in `block in run'
+C:/Ruby25-x64/lib/ruby/gems/2.5.0/gems/minitest-5.11.3/lib/minitest.rb:360:in `on_signal'
+C:/Ruby25-x64/lib/ruby/gems/2.5.0/gems/minitest-5.11.3/lib/minitest.rb:347:in `with_info_handler'
+C:/Ruby25-x64/lib/ruby/gems/2.5.0/gems/minitest-5.11.3/lib/minitest.rb:319:in `run'
+C:/Ruby25-x64/lib/ruby/gems/2.5.0/gems/minitest-5.11.3/lib/minitest.rb:159:in `block in __run'
+C:/Ruby25-x64/lib/ruby/gems/2.5.0/gems/minitest-5.11.3/lib/minitest.rb:159:in `map'
+C:/Ruby25-x64/lib/ruby/gems/2.5.0/gems/minitest-5.11.3/lib/minitest.rb:159:in `__run'
+C:/Ruby25-x64/lib/ruby/gems/2.5.0/gems/minitest-5.11.3/lib/minitest.rb:136:in `run'
+C:/Ruby25-x64/lib/ruby/gems/2.5.0/gems/minitest-5.11.3/lib/minitest.rb:63:in `block in autorun'
+]]>
+    </backtrace_>
+  </uncaught_exception_>
+</log>
+```
+
 
 ## Data
 
@@ -1032,7 +1112,7 @@ end
       (?-mix:Bar)
     </data_>
     <data_ name='My time' class='Time' method=':to_s'>
-      2019-05-08 14:40:35 -0500
+      2019-05-08 15:59:40 -0500
     </data_>
     <data_ name='My uri,' class='URI::HTTPS' method=':to_s'>
       https://www.github.com
@@ -1804,7 +1884,7 @@ end
   <verdict_ method='verdict_assert_same?' outcome='failed' id='another_id' message='Another message'>
     <expected_ class='String' value='&quot;foo&quot;'/>
     <actual_ class='String' value='&quot;foo&quot;'/>
-    <exception_ class='Minitest::Assertion' message='Expected &quot;foo&quot; (oid=28367600) to be the same as &quot;foo&quot; (oid=28367620).'>
+    <exception_ class='Minitest::Assertion' message='Expected &quot;foo&quot; (oid=28074080) to be the same as &quot;foo&quot; (oid=28074100).'>
       <backtrace_>
         <![CDATA[
 verdict_assert_same.rb:6:in `block in test_demo_verdict'

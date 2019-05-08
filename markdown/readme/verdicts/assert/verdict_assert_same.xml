@@ -6,7 +6,7 @@
   <verdict_ method='verdict_assert_same?' outcome='failed' id='another_id' message='Another message'>
     <expected_ class='String' value='&quot;foo&quot;'/>
     <actual_ class='String' value='&quot;foo&quot;'/>
-    <exception_ class='Minitest::Assertion' message='Expected &quot;foo&quot; (oid=28367600) to be the same as &quot;foo&quot; (oid=28367620).'>
+    <exception_ class='Minitest::Assertion' message='Expected &quot;foo&quot; (oid=28074080) to be the same as &quot;foo&quot; (oid=28074100).'>
       <backtrace_>
         <![CDATA[
 verdict_assert_same.rb:6:in `block in test_demo_verdict'

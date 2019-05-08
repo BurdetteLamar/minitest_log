@@ -1,0 +1,36 @@
+<log>
+  <uncaught_exception_ timestamp='2019-05-08-Wed-15.59.41.982' class='RuntimeError'>
+    <message_>
+      Boo!
+    </message_>
+    <backtrace_>
+      <![CDATA[
+backtrace_filter.rb:8:in `block in test_demo'
+C:/Ruby25-x64/lib/ruby/gems/2.5.0/gems/minitest_log-0.2.0/lib/minitest_log.rb:59:in `initialize'
+backtrace_filter.rb:7:in `new'
+backtrace_filter.rb:7:in `test_demo'
+C:/Ruby25-x64/lib/ruby/gems/2.5.0/gems/minitest-5.11.3/lib/minitest/test.rb:98:in `block (3 levels) in run'
+C:/Ruby25-x64/lib/ruby/gems/2.5.0/gems/minitest-5.11.3/lib/minitest/test.rb:195:in `capture_exceptions'
+C:/Ruby25-x64/lib/ruby/gems/2.5.0/gems/minitest-5.11.3/lib/minitest/test.rb:95:in `block (2 levels) in run'
+C:/Ruby25-x64/lib/ruby/gems/2.5.0/gems/minitest-5.11.3/lib/minitest.rb:265:in `time_it'
+C:/Ruby25-x64/lib/ruby/gems/2.5.0/gems/minitest-5.11.3/lib/minitest/test.rb:94:in `block in run'
+C:/Ruby25-x64/lib/ruby/gems/2.5.0/gems/minitest-5.11.3/lib/minitest.rb:360:in `on_signal'
+C:/Ruby25-x64/lib/ruby/gems/2.5.0/gems/minitest-5.11.3/lib/minitest/test.rb:211:in `with_info_handler'
+C:/Ruby25-x64/lib/ruby/gems/2.5.0/gems/minitest-5.11.3/lib/minitest/test.rb:93:in `run'
+C:/Ruby25-x64/lib/ruby/gems/2.5.0/gems/minitest-5.11.3/lib/minitest.rb:960:in `run_one_method'
+C:/Ruby25-x64/lib/ruby/gems/2.5.0/gems/minitest-5.11.3/lib/minitest.rb:334:in `run_one_method'
+C:/Ruby25-x64/lib/ruby/gems/2.5.0/gems/minitest-5.11.3/lib/minitest.rb:321:in `block (2 levels) in run'
+C:/Ruby25-x64/lib/ruby/gems/2.5.0/gems/minitest-5.11.3/lib/minitest.rb:320:in `each'
+C:/Ruby25-x64/lib/ruby/gems/2.5.0/gems/minitest-5.11.3/lib/minitest.rb:320:in `block in run'
+C:/Ruby25-x64/lib/ruby/gems/2.5.0/gems/minitest-5.11.3/lib/minitest.rb:360:in `on_signal'
+C:/Ruby25-x64/lib/ruby/gems/2.5.0/gems/minitest-5.11.3/lib/minitest.rb:347:in `with_info_handler'
+C:/Ruby25-x64/lib/ruby/gems/2.5.0/gems/minitest-5.11.3/lib/minitest.rb:319:in `run'
+C:/Ruby25-x64/lib/ruby/gems/2.5.0/gems/minitest-5.11.3/lib/minitest.rb:159:in `block in __run'
+C:/Ruby25-x64/lib/ruby/gems/2.5.0/gems/minitest-5.11.3/lib/minitest.rb:159:in `map'
+C:/Ruby25-x64/lib/ruby/gems/2.5.0/gems/minitest-5.11.3/lib/minitest.rb:159:in `__run'
+C:/Ruby25-x64/lib/ruby/gems/2.5.0/gems/minitest-5.11.3/lib/minitest.rb:136:in `run'
+C:/Ruby25-x64/lib/ruby/gems/2.5.0/gems/minitest-5.11.3/lib/minitest.rb:63:in `block in autorun'
+]]>
+    </backtrace_>
+  </uncaught_exception_>
+</log>
