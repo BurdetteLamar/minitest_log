@@ -1,7 +1,6 @@
-[![Gem Version](https://badge.fury.io/rb/minitest_log.svg)](https://badge.fury.io/rb/minitest_log)
-
 # MinitestLog
 
+[![Gem Version](https://badge.fury.io/rb/minitest_log.svg)](https://badge.fury.io/rb/minitest_log)
 
 ```MinitestLog``` gives you three things:
 
@@ -18,3 +17,5 @@
 @[:markdown](verdicts/template.md)
 
 @[:markdown](tips/template.md)
+
+@[:markdown](tests/template.md)
