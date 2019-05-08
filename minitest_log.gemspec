@@ -10,7 +10,6 @@ Gem::Specification.new do |spec|
 
   spec.summary       = %q{Logging for testing with Minitest}
   spec.description   = "Gem minitest_log uses Minitest, adding structured loging, data explication, and verdicts."
-EOT
   spec.homepage      = "https://github.com/BurdetteLamar/minitest_log"
   spec.license       = 'MIT'
 
