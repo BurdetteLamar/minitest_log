@@ -1,0 +1,14 @@
+<log>
+  <uncaught_exception_ timestamp='2019-05-08-Wed-16.03.41.618' class='RuntimeError'>
+    <message_>
+      Boo!
+    </message_>
+    <backtrace_>
+      <![CDATA[
+backtrace_filter.rb:5:in `block in test_demo'
+backtrace_filter.rb:4:in `new'
+backtrace_filter.rb:4:in `test_demo'
+]]>
+    </backtrace_>
+  </uncaught_exception_>
+</log>
