@@ -286,13 +286,13 @@ end
 ```log.xml```:
 ```xml
 <log>
-  <section_ name='My section with timestamp' timestamp='2019-05-09-Thu-09.56.25.192'>
+  <section_ name='My section with timestamp' timestamp='2019-05-09-Thu-10.32.53.066'>
     Section with timestamp.
   </section_>
-  <section_ name='My section with duration' duration_seconds='0.500'>
+  <section_ name='My section with duration' duration_seconds='0.501'>
     Section with duration.
   </section_>
-  <section_ name='My section with both' timestamp='2019-05-09-Thu-09.56.25.692' duration_seconds='0.500'>
+  <section_ name='My section with both' timestamp='2019-05-09-Thu-10.32.53.568' duration_seconds='0.501'>
     Section with both.
   </section_>
 </log>
@@ -364,7 +364,7 @@ end
 ```xml
 <log>
   <section_ name='My unrescued section'>
-    <uncaught_exception_ timestamp='2019-05-09-Thu-09.56.26.579' class='RuntimeError'>
+    <uncaught_exception_ timestamp='2019-05-09-Thu-10.32.54.471' class='RuntimeError'>
       <message_>
         Boo!
       </message_>
@@ -421,7 +421,7 @@ end
 ```log.xml```:
 ```xml
 <log>
-  <section_ name='Section with potpourri of arguments' a='0' b='1' timestamp='2019-05-09-Thu-09.56.23.554' c='2' d='3' duration_seconds='0.501'>
+  <section_ name='Section with potpourri of arguments' a='0' b='1' timestamp='2019-05-09-Thu-10.32.51.426' c='2' d='3' duration_seconds='0.501'>
     Word More words
     <rescued_exception_ class='Exception' message='Boo!'>
       <backtrace_>
@@ -860,7 +860,7 @@ end
 ```default_backtrace_filter.xml```:
 ```xml
 <log>
-  <uncaught_exception_ timestamp='2019-05-09-Thu-09.56.21.736' class='RuntimeError'>
+  <uncaught_exception_ timestamp='2019-05-09-Thu-10.32.49.597' class='RuntimeError'>
     <message_>
       Boo!
     </message_>
@@ -878,7 +878,7 @@ backtrace_filter.rb:4:in `test_demo'
 ```custom_backtrace_filter.xml```:
 ```xml
 <log>
-  <uncaught_exception_ timestamp='2019-05-09-Thu-09.56.21.738' class='RuntimeError'>
+  <uncaught_exception_ timestamp='2019-05-09-Thu-10.32.49.599' class='RuntimeError'>
     <message_>
       Boo!
     </message_>
@@ -1113,7 +1113,7 @@ end
       (?-mix:Bar)
     </data_>
     <data_ name='My time' class='Time' method=':to_s'>
-      2019-05-09 09:56:19 -0500
+      2019-05-09 10:32:47 -0500
     </data_>
     <data_ name='My uri,' class='URI::HTTPS' method=':to_s'>
       https://www.github.com
@@ -1885,7 +1885,7 @@ end
   <verdict_ method='verdict_assert_same?' outcome='failed' id='another_id' message='Another message'>
     <expected_ class='String' value='&quot;foo&quot;'/>
     <actual_ class='String' value='&quot;foo&quot;'/>
-    <exception_ class='Minitest::Assertion' message='Expected &quot;foo&quot; (oid=28507420) to be the same as &quot;foo&quot; (oid=28507440).'>
+    <exception_ class='Minitest::Assertion' message='Expected &quot;foo&quot; (oid=27933780) to be the same as &quot;foo&quot; (oid=27933800).'>
       <backtrace_>
         <![CDATA[
 verdict_assert_same.rb:6:in `block in test_demo_verdict'
@@ -2676,6 +2676,10 @@ This project's tests generate 135 [logs and other output files](../../tree/maste
 
 ## About This README
 
-This README page is kept "green."
+This README page is kept "green" because in addition to the tests, there's a rake task that:
 
-Its [50 example scripts](markdown/readme) are re-run frequently, and the page is re-assembled from the source scripts and their output.
+- Executes the [50 example scripts](markdown/readme), capturing their output.
+- Uses file inclusion to assemble this ```README.md``` file.
+
+Shameless plug:  GitHub flavored markdown does not support file inclusion, but my Ruby gem [markdown_helper](https://rubygems.org/gems/markdown_helper) does.  It's a  [GitHub project](https://github.com/BurdetteLamar/markdown_helper#markdown-helper), too.
+
