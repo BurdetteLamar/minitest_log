@@ -76,6 +76,7 @@ gem install minitest_log
   - [Avoid Failure Clutter](#avoid-failure-clutter)
   - [Facilitate Post-Processing](#facilitate-post-processing)
 - [Oh, and Tests](#oh-and-tests)
+- [About This README](#about-this-readme)
 
 ## Logs and Sections
 
@@ -285,13 +286,13 @@ end
 ```log.xml```:
 ```xml
 <log>
-  <section_ name='My section with timestamp' timestamp='2019-05-09-Thu-09.33.56.076'>
+  <section_ name='My section with timestamp' timestamp='2019-05-09-Thu-09.56.25.192'>
     Section with timestamp.
   </section_>
   <section_ name='My section with duration' duration_seconds='0.500'>
     Section with duration.
   </section_>
-  <section_ name='My section with both' timestamp='2019-05-09-Thu-09.33.56.577' duration_seconds='0.501'>
+  <section_ name='My section with both' timestamp='2019-05-09-Thu-09.56.25.692' duration_seconds='0.500'>
     Section with both.
   </section_>
 </log>
@@ -363,7 +364,7 @@ end
 ```xml
 <log>
   <section_ name='My unrescued section'>
-    <uncaught_exception_ timestamp='2019-05-09-Thu-09.33.57.495' class='RuntimeError'>
+    <uncaught_exception_ timestamp='2019-05-09-Thu-09.56.26.579' class='RuntimeError'>
       <message_>
         Boo!
       </message_>
@@ -420,7 +421,7 @@ end
 ```log.xml```:
 ```xml
 <log>
-  <section_ name='Section with potpourri of arguments' a='0' b='1' timestamp='2019-05-09-Thu-09.33.54.458' c='2' d='3' duration_seconds='0.502'>
+  <section_ name='Section with potpourri of arguments' a='0' b='1' timestamp='2019-05-09-Thu-09.56.23.554' c='2' d='3' duration_seconds='0.501'>
     Word More words
     <rescued_exception_ class='Exception' message='Boo!'>
       <backtrace_>
@@ -859,7 +860,7 @@ end
 ```default_backtrace_filter.xml```:
 ```xml
 <log>
-  <uncaught_exception_ timestamp='2019-05-09-Thu-09.33.52.638' class='RuntimeError'>
+  <uncaught_exception_ timestamp='2019-05-09-Thu-09.56.21.736' class='RuntimeError'>
     <message_>
       Boo!
     </message_>
@@ -877,7 +878,7 @@ backtrace_filter.rb:4:in `test_demo'
 ```custom_backtrace_filter.xml```:
 ```xml
 <log>
-  <uncaught_exception_ timestamp='2019-05-09-Thu-09.33.52.640' class='RuntimeError'>
+  <uncaught_exception_ timestamp='2019-05-09-Thu-09.56.21.738' class='RuntimeError'>
     <message_>
       Boo!
     </message_>
@@ -1112,7 +1113,7 @@ end
       (?-mix:Bar)
     </data_>
     <data_ name='My time' class='Time' method=':to_s'>
-      2019-05-09 09:33:50 -0500
+      2019-05-09 09:56:19 -0500
     </data_>
     <data_ name='My uri,' class='URI::HTTPS' method=':to_s'>
       https://www.github.com
@@ -1884,7 +1885,7 @@ end
   <verdict_ method='verdict_assert_same?' outcome='failed' id='another_id' message='Another message'>
     <expected_ class='String' value='&quot;foo&quot;'/>
     <actual_ class='String' value='&quot;foo&quot;'/>
-    <exception_ class='Minitest::Assertion' message='Expected &quot;foo&quot; (oid=27804000) to be the same as &quot;foo&quot; (oid=27804040).'>
+    <exception_ class='Minitest::Assertion' message='Expected &quot;foo&quot; (oid=28507420) to be the same as &quot;foo&quot; (oid=28507440).'>
       <backtrace_>
         <![CDATA[
 verdict_assert_same.rb:6:in `block in test_demo_verdict'
@@ -2672,3 +2673,9 @@ This project's tests generate 135 [logs and other output files](../../tree/maste
 
 - [log_test.rb](../../tree/master/test/log_test.rb)
 - [verdict_test.rb](../../tree/master/test/verdict_test.rb)
+
+## About This README
+
+This README page is kept "green."
+
+Its [50 example scripts](markdown/readme) are re-run frequently, and the page is re-assembled from the source scripts and their output.
