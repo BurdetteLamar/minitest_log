@@ -25,3 +25,6 @@ gem install minitest_log
 @[:markdown](tips/template.md)
 
 @[:markdown](tests/template.md)
+
+@[:markdown](readme/template.md)
+
