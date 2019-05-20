@@ -461,7 +461,7 @@ class MinitestLog
     while usec_s.length < 3 do
       usec_s = '0' + usec_s
     end
-    ts += ".#{usec_s}"
+    "#{ts}.#{usec_s}"
   end
 
   def assertion_method_for(verdict_method)
@@ -485,10 +485,15 @@ class MinitestLog
   end
 
   def condition_element_name(element_name, caller_0)
-    return  element_name += '_' if caller_is_us?(caller_0)
-    return element_name unless element_name.end_with?('_')
-    message = "Element name should not end with underscore: #{element_name}"
-    raise IllegalElementNameError.new(message)
+    if caller_is_us?(caller_0)
+      conditioned_element_name = element_name + '_'
+    elsif element_name.end_with?('_')
+      message = "Element name should not end with underscore: #{element_name}"
+      raise IllegalElementNameError.new(message)
+    else
+      conditioned_element_name = element_name
+    end
+    conditioned_element_name
   end
 
   def caller_is_us?(caller_0)
