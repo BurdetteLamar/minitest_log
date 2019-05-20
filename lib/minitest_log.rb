@@ -32,20 +32,9 @@ class MinitestLog
 
   def initialize(file_path, options=Hash.new)
     raise NoBlockError.new('No block given for MinitestLog#new.') unless (block_given?)
-    default_options = Hash[
-        :root_name => 'log',
-        :xml_indentation => 2,
-        :error_verdict => false,
-        :summary => false
-    ]
-    options = default_options.merge(options)
-    self.assertions = 0
     self.file_path = file_path
-    self.root_name = options[:root_name]
-    self.xml_indentation = options[:xml_indentation]
-    self.summary = options[:summary]
-    self.error_verdict = options[:error_verdict] || false
-    self.backtrace_filter = options[:backtrace_filter] || /minitest/
+    handle_options(options)
+    self.assertions = 0
     self.file = File.open(self.file_path, 'w')
     log_puts("REMARK\tThis text log is the precursor for an XML log.")
     log_puts("REMARK\tIf the logged process completes, this text will be converted to XML.")
@@ -498,6 +487,21 @@ class MinitestLog
 
   def caller_is_us?(caller_0)
     caller_0.match(/minitest_log.rb/) || caller_0.match(/verdict_assertion.rb/)
+  end
+
+  def handle_options(options)
+    default_options = Hash[
+        :root_name => 'log',
+        :xml_indentation => 2,
+        :error_verdict => false,
+        :summary => false
+    ]
+    options = default_options.merge(options)
+    self.root_name = options[:root_name]
+    self.xml_indentation = options[:xml_indentation]
+    self.summary = options[:summary]
+    self.error_verdict = options[:error_verdict] || false
+    self.backtrace_filter = options[:backtrace_filter] || /minitest/
   end
 
 end
