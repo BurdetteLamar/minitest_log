@@ -492,9 +492,7 @@ class MinitestLog
   end
 
   def caller_is_us?(caller_0)
-    false ||
-        caller_0.match(/minitest_log.rb/) ||
-        caller_0.match(/verdict_assertion.rb/)
+    caller_0.match(/minitest_log.rb/) || caller_0.match(/verdict_assertion.rb/)
   end
 
 end
