@@ -90,18 +90,8 @@ class MinitestLog
   end
 
   def put_element(element_name = 'element', *args)
-    if false ||
-        caller[0].match(/minitest_log.rb/) ||
-        caller[0].match(/verdict_assertion.rb/)
-      # Make the element name special.
-      element_name += '_'
-    elsif element_name.end_with?('_')
-      # Don't accept user's special.
-      message = "Element name should not end with underscore: #{element_name}"
-      raise IllegalElementNameError.new(message)
-    else
-      # Ok.
-    end
+    caller_0 = caller[0]
+    element_name = condition_element_name(element_name, caller_0)
     attributes = {}
     pcdata = ''
     start_time = nil
@@ -492,6 +482,19 @@ class MinitestLog
       document = REXML::Document.new(file)
     end
     document
+  end
+
+  def condition_element_name(element_name, caller_0)
+    return  element_name += '_' if caller_is_us?(caller_0)
+    return element_name unless element_name.end_with?('_')
+    message = "Element name should not end with underscore: #{element_name}"
+    raise IllegalElementNameError.new(message)
+  end
+
+  def caller_is_us?(caller_0)
+    false ||
+        caller_0.match(/minitest_log.rb/) ||
+        caller_0.match(/verdict_assertion.rb/)
   end
 
 end
