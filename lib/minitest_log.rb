@@ -471,7 +471,6 @@ class MinitestLog
     while usec_s.length < 3 do
       usec_s = '0' + usec_s
     end
-    # noinspection RubyUnusedLocalVariable
     ts += ".#{usec_s}"
   end
 
