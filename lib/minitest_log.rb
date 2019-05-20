@@ -64,8 +64,7 @@ class MinitestLog
   end
 
   def put_element(element_name = 'element', *args)
-    caller_0 = caller[0]
-    conditioned_element_name = condition_element_name(element_name, caller_0)
+    conditioned_element_name = condition_element_name(element_name, caller[0])
     attributes = {}
     pcdata = ''
     start_time = nil
