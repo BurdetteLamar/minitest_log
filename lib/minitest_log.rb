@@ -34,26 +34,11 @@ class MinitestLog
     raise NoBlockError.new('No block given for MinitestLog#new.') unless (block_given?)
     self.file_path = file_path
     handle_options(options)
-    self.assertions = 0
-    self.file = File.open(self.file_path, 'w')
-    log_puts("REMARK\tThis text log is the precursor for an XML log.")
-    log_puts("REMARK\tIf the logged process completes, this text will be converted to XML.")
-    log_puts("BEGIN\t#{self.root_name}")
-    self.counts = Hash[
-        :verdict => 0,
-        :failure => 0,
-        :error => 0,
-    ]
+    begin_log
     begin
       yield self
     rescue => x
-      put_element('uncaught_exception', :timestamp, :class => x.class) do
-        put_element('message', x.message)
-        put_element('backtrace') do
-          backtrace = filter_backtrace(x.backtrace)
-          put_pre(backtrace.join("\n"))
-        end
-      end
+      handle_exception(x)
     end
     dispose
     nil
@@ -502,6 +487,29 @@ class MinitestLog
     self.summary = options[:summary]
     self.error_verdict = options[:error_verdict] || false
     self.backtrace_filter = options[:backtrace_filter] || /minitest/
+  end
+
+  def begin_log
+    self.counts = Hash[
+        :verdict => 0,
+        :failure => 0,
+        :error => 0,
+    ]
+    self.assertions = 0
+    self.file = File.open(self.file_path, 'w')
+    log_puts("REMARK\tThis text log is the precursor for an XML log.")
+    log_puts("REMARK\tIf the logged process completes, this text will be converted to XML.")
+    log_puts("BEGIN\t#{self.root_name}")
+  end
+
+  def handle_exception(x)
+    put_element('uncaught_exception', :timestamp, :class => x.class) do
+      put_element('message', x.message)
+      put_element('backtrace') do
+        backtrace = filter_backtrace(x.backtrace)
+        put_pre(backtrace.join("\n"))
+      end
+    end
   end
 
 end
