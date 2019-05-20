@@ -65,7 +65,7 @@ class MinitestLog
 
   def put_element(element_name = 'element', *args)
     caller_0 = caller[0]
-    element_name = condition_element_name(element_name, caller_0)
+    conditioned_element_name = condition_element_name(element_name, caller_0)
     attributes = {}
     pcdata = ''
     start_time = nil
@@ -87,7 +87,7 @@ class MinitestLog
         pcdata = pcdata + arg.inspect
       end
     end
-    log_puts("BEGIN\t#{element_name}")
+    log_puts("BEGIN\t#{conditioned_element_name}")
     put_attributes(attributes)
     unless pcdata.empty?
       # Guard against using a terminator that's a substring of pcdata.
@@ -124,7 +124,7 @@ class MinitestLog
       duration_s = format('%.3f', duration_f)
       put_attributes({:duration_seconds => duration_s})
     end
-    log_puts("END\t#{element_name}")
+    log_puts("END\t#{conditioned_element_name}")
     nil
   end
 
