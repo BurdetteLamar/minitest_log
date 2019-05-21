@@ -131,15 +131,7 @@ class MinitestLog
 
     def put_pcdata
       unless pcdata.empty?
-        # Guard against using a terminator that's a substring of pcdata.
-        s = 'EOT'
-        terminator = s
-        while pcdata.match(terminator) do
-          terminator += s
-        end
-        log_puts("PCDATA\t<<#{terminator}")
-        log_puts(pcdata)
-        log_puts(terminator)
+        log.send(:put_pcdata, pcdata)
       end
     end
 
@@ -454,17 +446,25 @@ class MinitestLog
     nil
   end
 
-  def put_cdata(text)
+  def put_cdata_or_pcdata(token, text)
     # Guard against using a terminator that's a substring of the cdata.
     s = 'EOT'
     terminator = s
     while text.match(terminator) do
       terminator += s
     end
-    log_puts("CDATA\t<<#{terminator}")
+    log_puts("#{token}\t<<#{terminator}")
     log_puts(text)
     log_puts(terminator)
     nil
+  end
+
+  def put_cdata(text)
+    put_cdata_or_pcdata('CDATA', text)
+  end
+
+  def put_pcdata(text)
+    put_cdata_or_pcdata('PCDATA', text)
   end
 
   def get_assertion_outcome(verdict_id, assertion_method, *assertion_args)
