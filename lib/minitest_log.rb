@@ -88,13 +88,13 @@ class MinitestLog
       self.start_time = nil
 
       process_args
-      begin_element
-      put_attributes
-      put_pcdata
-      begin_duration
-      do_block(&Proc.new) if block_given?
-      end_duration
-      end_element
+      put_element do
+        put_attributes
+        put_pcdata
+        do_duration do
+          do_block(&Proc.new) if block_given?
+        end
+      end
 
     end
 
@@ -117,11 +117,9 @@ class MinitestLog
       end
     end
 
-    def begin_element
+    def put_element
       log_puts("BEGIN\t#{element_name}")
-    end
-
-    def end_element
+      yield
       log_puts("END\t#{element_name}")
     end
 
@@ -135,11 +133,9 @@ class MinitestLog
       end
     end
 
-    def begin_duration
-      self.start_time = Time.new if duration_to_be_included
-    end
-
-    def end_duration
+    def do_duration
+      self.start_time = Time.new
+      yield
       if duration_to_be_included
         end_time = Time.now
         duration_f = end_time.to_f - start_time.to_f
