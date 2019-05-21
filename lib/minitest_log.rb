@@ -7,6 +7,8 @@ require_relative 'verdict_assertion'
 
 class MinitestLog
 
+  include REXML
+  include Minitest::Assertions
   include VerdictAssertion
 
   attr_accessor \
@@ -20,9 +22,6 @@ class MinitestLog
     :xml_indentation,
     :error_verdict,
     :summary
-
-  include REXML
-  include Minitest::Assertions
 
   class MinitestLogError < Exception; end
   class NoBlockError < MinitestLogError; end
@@ -41,7 +40,7 @@ class MinitestLog
         handle_exception(x)
       end
     end
-    nil
+    create_xml_log
   end
 
   def section(name, *args)
@@ -182,6 +181,12 @@ class MinitestLog
   private
 
   def do_log
+    begin_log
+    yield
+    end_log
+  end
+
+  def begin_log
     self.counts = Hash[
         :verdict => 0,
         :failure => 0,
@@ -192,13 +197,14 @@ class MinitestLog
     log_puts("REMARK\tThis text log is the precursor for an XML log.")
     log_puts("REMARK\tIf the logged process completes, this text will be converted to XML.")
     log_puts("BEGIN\t#{self.root_name}")
-    yield
+  end
+
+  def end_log
     if self.error_verdict
       verdict_assert_equal?('error_count', 0, self.counts[:error])
     end
     log_puts("END\t#{self.root_name}")
     self.file.close
-    create_xml_log
   end
 
   def create_xml_log
