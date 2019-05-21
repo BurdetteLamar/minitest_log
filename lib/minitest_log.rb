@@ -90,17 +90,7 @@ class MinitestLog
       process_args
       begin_element
       put_attributes
-      unless self.pcdata.empty?
-        # Guard against using a terminator that's a substring of pcdata.
-        s = 'EOT'
-        terminator = s
-        while self.pcdata.match(terminator) do
-          terminator += s
-        end
-        log.send(:log_puts, "PCDATA\t<<#{terminator}")
-        log.send(:log_puts, self.pcdata)
-        log.send(:log_puts, terminator)
-      end
+      put_pcdata
       self.start_time = Time.new if self.duration_to_be_included
       if block_given?
         if self.block_to_be_rescued
@@ -154,6 +144,20 @@ class MinitestLog
 
     def put_attributes
       log.send(:put_attributes, attributes)
+    end
+
+    def put_pcdata
+      unless pcdata.empty?
+        # Guard against using a terminator that's a substring of pcdata.
+        s = 'EOT'
+        terminator = s
+        while pcdata.match(terminator) do
+          terminator += s
+        end
+        log.send(:log_puts, "PCDATA\t<<#{terminator}")
+        log.send(:log_puts, pcdata)
+        log.send(:log_puts, terminator)
+      end
     end
 
   end
