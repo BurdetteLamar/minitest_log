@@ -63,68 +63,80 @@ class MinitestLog
     nil
   end
 
+  class Element
+
+    def initialize(log, conditioned_element_name, *args)
+      attributes = {}
+      pcdata = ''
+      start_time = nil
+      duration_to_be_included = false
+      block_to_be_rescued = false
+      args.each do |arg|
+        case
+        when arg.kind_of?(Hash)
+          attributes.merge!(arg)
+        when arg.kind_of?(String)
+          pcdata += arg
+        when arg == :timestamp
+          attributes[:timestamp] = MinitestLog.timestamp
+        when arg == :duration
+          duration_to_be_included = true
+        when arg == :rescue
+          block_to_be_rescued = true
+        else
+          pcdata = pcdata + arg.inspect
+        end
+      end
+      log.send(:log_puts, "BEGIN\t#{conditioned_element_name}")
+      log.send(:put_attributes, attributes)
+      unless pcdata.empty?
+        # Guard against using a terminator that's a substring of pcdata.
+        s = 'EOT'
+        terminator = s
+        while pcdata.match(terminator) do
+          terminator += s
+        end
+        log.send(:log_puts, "PCDATA\t<<#{terminator}")
+        log.send(:log_puts, pcdata)
+        log.send(:log_puts, terminator)
+      end
+      start_time = Time.new if duration_to_be_included
+      if block_given?
+        if block_to_be_rescued
+          begin
+            yield
+          rescue Exception => x
+            log.put_element('rescued_exception', {:class => x.class, :message => x.message}) do
+              log.put_element('backtrace') do
+                backtrace = log.send(:filter_backtrace, x.backtrace)
+                log.put_pre(backtrace.join("\n"))
+              end
+            end
+            log.counts[:error] += 1
+          end
+        else
+          yield
+        end
+      end
+      if start_time
+        end_time = Time.now
+        duration_f = end_time.to_f - start_time.to_f
+        duration_s = format('%.3f', duration_f)
+        log.send(:put_attributes, {:duration_seconds => duration_s})
+      end
+      log.send(:log_puts, "END\t#{conditioned_element_name}")
+      nil
+    end
+
+  end
+
   def put_element(element_name = 'element', *args)
     conditioned_element_name = condition_element_name(element_name, caller[0])
-    attributes = {}
-    pcdata = ''
-    start_time = nil
-    duration_to_be_included = false
-    block_to_be_rescued = false
-    args.each do |arg|
-      case
-      when arg.kind_of?(Hash)
-        attributes.merge!(arg)
-      when arg.kind_of?(String)
-        pcdata += arg
-      when arg == :timestamp
-        attributes[:timestamp] = MinitestLog.timestamp
-      when arg == :duration
-        duration_to_be_included = true
-      when arg == :rescue
-        block_to_be_rescued = true
-      else
-        pcdata = pcdata + arg.inspect
-      end
-    end
-    log_puts("BEGIN\t#{conditioned_element_name}")
-    put_attributes(attributes)
-    unless pcdata.empty?
-      # Guard against using a terminator that's a substring of pcdata.
-      s = 'EOT'
-      terminator = s
-      while pcdata.match(terminator) do
-        terminator += s
-      end
-      log_puts("PCDATA\t<<#{terminator}")
-      log_puts(pcdata)
-      log_puts(terminator)
-    end
-    start_time = Time.new if duration_to_be_included
     if block_given?
-      if block_to_be_rescued
-        begin
-          yield
-        rescue Exception => x
-          put_element('rescued_exception', {:class => x.class, :message => x.message}) do
-            put_element('backtrace') do
-              backtrace = filter_backtrace(x.backtrace)
-              put_pre(backtrace.join("\n"))
-            end
-          end
-          self.counts[:error] += 1
-        end
-      else
-        yield
-      end
+      Element.new(self, conditioned_element_name, *args, &Proc.new)
+    else
+      Element.new(self, conditioned_element_name, *args)
     end
-    if start_time
-      end_time = Time.now
-      duration_f = end_time.to_f - start_time.to_f
-      duration_s = format('%.3f', duration_f)
-      put_attributes({:duration_seconds => duration_s})
-    end
-    log_puts("END\t#{conditioned_element_name}")
-    nil
   end
 
   def put_each_with_index(name, obj)
