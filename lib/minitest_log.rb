@@ -40,7 +40,7 @@ class MinitestLog
     rescue => x
       handle_exception(x)
     end
-    dispose
+    end_log
     nil
   end
 
@@ -175,7 +175,7 @@ class MinitestLog
     end
 
     # The called methods are private.
-    
+
     def log_puts(s)
       log.send(:log_puts, s)
     end
@@ -308,7 +308,7 @@ class MinitestLog
 
   private
 
-  def dispose
+  def end_log
 
     # Add a verdict for the error count, if needed.
     if self.error_verdict
