@@ -69,32 +69,21 @@ class MinitestLog
         :attributes,
         :block_to_be_rescued,
         :duration_to_be_included,
+        :element_name,
+        :log,
         :pcdata,
         :start_time
 
-    def initialize(log, conditioned_element_name, *args)
+    def initialize(log, element_name, *args)
       self.attributes = {}
       self.block_to_be_rescued = false
       self.duration_to_be_included = false
+      self.element_name = element_name
+      self.log = log
       self.pcdata = ''
       self.start_time = nil
-      args.each do |arg|
-        case
-        when arg.kind_of?(Hash)
-          self.attributes.merge!(arg)
-        when arg.kind_of?(String)
-          self.pcdata += arg
-        when arg == :timestamp
-          self.attributes[:timestamp] = MinitestLog.timestamp
-        when arg == :duration
-          self.duration_to_be_included = true
-        when arg == :rescue
-          self.block_to_be_rescued = true
-        else
-          self.pcdata = self.pcdata + arg.inspect
-        end
-      end
-      log.send(:log_puts, "BEGIN\t#{conditioned_element_name}")
+      process_args(*args)
+      begin_element
       log.send(:put_attributes, self.attributes)
       unless self.pcdata.empty?
         # Guard against using a terminator that's a substring of pcdata.
@@ -131,8 +120,31 @@ class MinitestLog
         duration_s = format('%.3f', duration_f)
         log.send(:put_attributes, {:duration_seconds => duration_s})
       end
-      log.send(:log_puts, "END\t#{conditioned_element_name}")
+      log.send(:log_puts, "END\t#{self.element_name}")
       nil
+    end
+
+    def process_args(*args)
+      args.each do |arg|
+        case
+        when arg.kind_of?(Hash)
+          self.attributes.merge!(arg)
+        when arg.kind_of?(String)
+          self.pcdata += arg
+        when arg == :timestamp
+          self.attributes[:timestamp] = MinitestLog.timestamp
+        when arg == :duration
+          self.duration_to_be_included = true
+        when arg == :rescue
+          self.block_to_be_rescued = true
+        else
+          self.pcdata = self.pcdata + arg.inspect
+        end
+      end
+    end
+
+    def begin_element
+      log.send(:log_puts, "BEGIN\t#{element_name}")
     end
 
   end
