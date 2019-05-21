@@ -86,9 +86,10 @@ class MinitestLog
       self.duration_to_be_included = false
       self.pcdata = ''
       self.start_time = nil
+
       process_args
       begin_element
-      log.send(:put_attributes, self.attributes)
+      put_attributes
       unless self.pcdata.empty?
         # Guard against using a terminator that's a substring of pcdata.
         s = 'EOT'
@@ -149,6 +150,10 @@ class MinitestLog
 
     def begin_element
       log.send(:log_puts, "BEGIN\t#{element_name}")
+    end
+
+    def put_attributes
+      log.send(:put_attributes, attributes)
     end
 
   end
