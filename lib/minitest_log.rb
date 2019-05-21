@@ -66,6 +66,7 @@ class MinitestLog
   class Element
 
     attr_accessor \
+        :args,
         :attributes,
         :block_to_be_rescued,
         :duration_to_be_included,
@@ -75,14 +76,17 @@ class MinitestLog
         :start_time
 
     def initialize(log, element_name, *args)
+
+      self.log = log
+      self.element_name = element_name
+      self.args = args
+
       self.attributes = {}
       self.block_to_be_rescued = false
       self.duration_to_be_included = false
-      self.element_name = element_name
-      self.log = log
       self.pcdata = ''
       self.start_time = nil
-      process_args(*args)
+      process_args
       begin_element
       log.send(:put_attributes, self.attributes)
       unless self.pcdata.empty?
@@ -124,7 +128,7 @@ class MinitestLog
       nil
     end
 
-    def process_args(*args)
+    def process_args
       args.each do |arg|
         case
         when arg.kind_of?(Hash)
