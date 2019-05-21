@@ -65,44 +65,51 @@ class MinitestLog
 
   class Element
 
+    attr_accessor \
+        :attributes,
+        :block_to_be_rescued,
+        :duration_to_be_included,
+        :pcdata,
+        :start_time
+
     def initialize(log, conditioned_element_name, *args)
-      attributes = {}
-      pcdata = ''
-      start_time = nil
-      duration_to_be_included = false
-      block_to_be_rescued = false
+      self.attributes = {}
+      self.block_to_be_rescued = false
+      self.duration_to_be_included = false
+      self.pcdata = ''
+      self.start_time = nil
       args.each do |arg|
         case
         when arg.kind_of?(Hash)
-          attributes.merge!(arg)
+          self.attributes.merge!(arg)
         when arg.kind_of?(String)
-          pcdata += arg
+          self.pcdata += arg
         when arg == :timestamp
-          attributes[:timestamp] = MinitestLog.timestamp
+          self.attributes[:timestamp] = MinitestLog.timestamp
         when arg == :duration
-          duration_to_be_included = true
+          self.duration_to_be_included = true
         when arg == :rescue
-          block_to_be_rescued = true
+          self.block_to_be_rescued = true
         else
-          pcdata = pcdata + arg.inspect
+          self.pcdata = self.pcdata + arg.inspect
         end
       end
       log.send(:log_puts, "BEGIN\t#{conditioned_element_name}")
-      log.send(:put_attributes, attributes)
-      unless pcdata.empty?
+      log.send(:put_attributes, self.attributes)
+      unless self.pcdata.empty?
         # Guard against using a terminator that's a substring of pcdata.
         s = 'EOT'
         terminator = s
-        while pcdata.match(terminator) do
+        while self.pcdata.match(terminator) do
           terminator += s
         end
         log.send(:log_puts, "PCDATA\t<<#{terminator}")
-        log.send(:log_puts, pcdata)
+        log.send(:log_puts, self.pcdata)
         log.send(:log_puts, terminator)
       end
-      start_time = Time.new if duration_to_be_included
+      self.start_time = Time.new if self.duration_to_be_included
       if block_given?
-        if block_to_be_rescued
+        if self.block_to_be_rescued
           begin
             yield
           rescue Exception => x
@@ -118,9 +125,9 @@ class MinitestLog
           yield
         end
       end
-      if start_time
+      if self.start_time
         end_time = Time.now
-        duration_f = end_time.to_f - start_time.to_f
+        duration_f = end_time.to_f - self.start_time.to_f
         duration_s = format('%.3f', duration_f)
         log.send(:put_attributes, {:duration_seconds => duration_s})
       end
