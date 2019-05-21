@@ -63,121 +63,6 @@ class MinitestLog
     nil
   end
 
-  class Element
-
-    attr_accessor \
-        :args,
-        :attributes,
-        :block_to_be_rescued,
-        :duration_to_be_included,
-        :element_name,
-        :log,
-        :pcdata,
-        :start_time
-
-    def initialize(log, element_name, *args)
-
-      self.log = log
-      self.element_name = element_name
-      self.args = args
-
-      self.attributes = {}
-      self.block_to_be_rescued = false
-      self.duration_to_be_included = false
-      self.pcdata = ''
-      self.start_time = nil
-
-      process_args
-      put_element do
-        put_attributes
-        put_pcdata
-        do_duration do
-          do_block(&Proc.new) if block_given?
-        end
-      end
-
-    end
-
-    def process_args
-      args.each do |arg|
-        case
-        when arg.kind_of?(Hash)
-          self.attributes.merge!(arg)
-        when arg.kind_of?(String)
-          self.pcdata += arg
-        when arg == :timestamp
-          self.attributes[:timestamp] = MinitestLog.timestamp
-        when arg == :duration
-          self.duration_to_be_included = true
-        when arg == :rescue
-          self.block_to_be_rescued = true
-        else
-          self.pcdata = self.pcdata + arg.inspect
-        end
-      end
-    end
-
-    def put_element
-      log_puts("BEGIN\t#{element_name}")
-      yield
-      log_puts("END\t#{element_name}")
-    end
-
-    def put_attributes
-      log_put_attributes(attributes)
-    end
-
-    def put_pcdata
-      unless pcdata.empty?
-        log.send(:put_pcdata, pcdata)
-      end
-    end
-
-    def do_duration
-      self.start_time = Time.new
-      yield
-      if duration_to_be_included
-        end_time = Time.now
-        duration_f = end_time.to_f - start_time.to_f
-        duration_s = format('%.3f', duration_f)
-        log_put_attributes({:duration_seconds => duration_s})
-      end
-    end
-
-    def do_block
-      if block_to_be_rescued
-        begin
-          yield
-        rescue Exception => x
-          log.put_element('rescued_exception', {:class => x.class, :message => x.message}) do
-            log.put_element('backtrace') do
-              backtrace = log_filter_backtrace(x.backtrace)
-              log.put_pre(backtrace.join("\n"))
-            end
-          end
-          log.counts[:error] += 1
-        end
-      else
-        yield
-      end
-    end
-
-    # The called methods are private.
-
-    def log_puts(s)
-      log.send(:log_puts, s)
-    end
-
-    def log_put_attributes(attributes)
-      log.send(:put_attributes, attributes)
-    end
-
-    def log_filter_backtrace(backtrace)
-      log.send(:filter_backtrace, backtrace)
-    end
-
-  end
-
   def put_element(element_name = 'element', *args)
     conditioned_element_name = condition_element_name(element_name, caller[0])
     if block_given?
@@ -573,6 +458,121 @@ class MinitestLog
         put_pre(backtrace.join("\n"))
       end
     end
+  end
+
+  class Element
+
+    attr_accessor \
+        :args,
+        :attributes,
+        :block_to_be_rescued,
+        :duration_to_be_included,
+        :element_name,
+        :log,
+        :pcdata,
+        :start_time
+
+    def initialize(log, element_name, *args)
+
+      self.log = log
+      self.element_name = element_name
+      self.args = args
+
+      self.attributes = {}
+      self.block_to_be_rescued = false
+      self.duration_to_be_included = false
+      self.pcdata = ''
+      self.start_time = nil
+
+      process_args
+      put_element do
+        put_attributes
+        put_pcdata
+        do_duration do
+          do_block(&Proc.new) if block_given?
+        end
+      end
+
+    end
+
+    def process_args
+      args.each do |arg|
+        case
+        when arg.kind_of?(Hash)
+          self.attributes.merge!(arg)
+        when arg.kind_of?(String)
+          self.pcdata += arg
+        when arg == :timestamp
+          self.attributes[:timestamp] = MinitestLog.timestamp
+        when arg == :duration
+          self.duration_to_be_included = true
+        when arg == :rescue
+          self.block_to_be_rescued = true
+        else
+          self.pcdata = self.pcdata + arg.inspect
+        end
+      end
+    end
+
+    def put_element
+      log_puts("BEGIN\t#{element_name}")
+      yield
+      log_puts("END\t#{element_name}")
+    end
+
+    def put_attributes
+      log_put_attributes(attributes)
+    end
+
+    def put_pcdata
+      unless pcdata.empty?
+        log.send(:put_pcdata, pcdata)
+      end
+    end
+
+    def do_duration
+      self.start_time = Time.new
+      yield
+      if duration_to_be_included
+        end_time = Time.now
+        duration_f = end_time.to_f - start_time.to_f
+        duration_s = format('%.3f', duration_f)
+        log_put_attributes({:duration_seconds => duration_s})
+      end
+    end
+
+    def do_block
+      if block_to_be_rescued
+        begin
+          yield
+        rescue Exception => x
+          log.put_element('rescued_exception', {:class => x.class, :message => x.message}) do
+            log.put_element('backtrace') do
+              backtrace = log_filter_backtrace(x.backtrace)
+              log.put_pre(backtrace.join("\n"))
+            end
+          end
+          log.counts[:error] += 1
+        end
+      else
+        yield
+      end
+    end
+
+    # The called methods are private.
+
+    def log_puts(s)
+      log.send(:log_puts, s)
+    end
+
+    def log_put_attributes(attributes)
+      log.send(:put_attributes, attributes)
+    end
+
+    def log_filter_backtrace(backtrace)
+      log.send(:filter_backtrace, backtrace)
+    end
+
   end
 
 end
