@@ -109,12 +109,7 @@ class MinitestLog
           yield
         end
       end
-      if self.start_time
-        end_time = Time.now
-        duration_f = end_time.to_f - self.start_time.to_f
-        duration_s = format('%.3f', duration_f)
-        log.send(:put_attributes, {:duration_seconds => duration_s})
-      end
+      end_duration
       log.send(:log_puts, "END\t#{self.element_name}")
       nil
     end
@@ -162,6 +157,15 @@ class MinitestLog
 
     def begin_duration
       self.start_time = Time.new if duration_to_be_included
+    end
+
+    def end_duration
+      if duration_to_be_included
+        end_time = Time.now
+        duration_f = end_time.to_f - start_time.to_f
+        duration_s = format('%.3f', duration_f)
+        log.send(:put_attributes, {:duration_seconds => duration_s})
+      end
     end
 
   end
