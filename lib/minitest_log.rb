@@ -118,15 +118,15 @@ class MinitestLog
     end
 
     def begin_element
-      log.send(:log_puts, "BEGIN\t#{element_name}")
+      log_puts("BEGIN\t#{element_name}")
     end
 
     def end_element
-      log.send(:log_puts, "END\t#{element_name}")
+      log_puts("END\t#{element_name}")
     end
 
     def put_attributes
-      log.send(:put_attributes, attributes)
+      log_put_attributes(attributes)
     end
 
     def put_pcdata
@@ -137,9 +137,9 @@ class MinitestLog
         while pcdata.match(terminator) do
           terminator += s
         end
-        log.send(:log_puts, "PCDATA\t<<#{terminator}")
-        log.send(:log_puts, pcdata)
-        log.send(:log_puts, terminator)
+        log_puts("PCDATA\t<<#{terminator}")
+        log_puts(pcdata)
+        log_puts(terminator)
       end
     end
 
@@ -152,7 +152,7 @@ class MinitestLog
         end_time = Time.now
         duration_f = end_time.to_f - start_time.to_f
         duration_s = format('%.3f', duration_f)
-        log.send(:put_attributes, {:duration_seconds => duration_s})
+        log_put_attributes({:duration_seconds => duration_s})
       end
     end
 
@@ -163,7 +163,7 @@ class MinitestLog
         rescue Exception => x
           log.put_element('rescued_exception', {:class => x.class, :message => x.message}) do
             log.put_element('backtrace') do
-              backtrace = log.send(:filter_backtrace, x.backtrace)
+              backtrace = log_filter_backtrace(x.backtrace)
               log.put_pre(backtrace.join("\n"))
             end
           end
@@ -172,6 +172,20 @@ class MinitestLog
       else
         yield
       end
+    end
+
+    # The called methods are private.
+    
+    def log_puts(s)
+      log.send(:log_puts, s)
+    end
+
+    def log_put_attributes(attributes)
+      log.send(:put_attributes, attributes)
+    end
+
+    def log_filter_backtrace(backtrace)
+      log.send(:filter_backtrace, backtrace)
     end
 
   end
