@@ -92,26 +92,10 @@ class MinitestLog
       put_attributes
       put_pcdata
       begin_duration
-      if block_given?
-        if self.block_to_be_rescued
-          begin
-            yield
-          rescue Exception => x
-            log.put_element('rescued_exception', {:class => x.class, :message => x.message}) do
-              log.put_element('backtrace') do
-                backtrace = log.send(:filter_backtrace, x.backtrace)
-                log.put_pre(backtrace.join("\n"))
-              end
-            end
-            log.counts[:error] += 1
-          end
-        else
-          yield
-        end
-      end
+      do_block(&Proc.new) if block_given?
       end_duration
       end_element
-      nil
+
     end
 
     def process_args
@@ -169,6 +153,24 @@ class MinitestLog
         duration_f = end_time.to_f - start_time.to_f
         duration_s = format('%.3f', duration_f)
         log.send(:put_attributes, {:duration_seconds => duration_s})
+      end
+    end
+
+    def do_block
+      if block_to_be_rescued
+        begin
+          yield
+        rescue Exception => x
+          log.put_element('rescued_exception', {:class => x.class, :message => x.message}) do
+            log.put_element('backtrace') do
+              backtrace = log.send(:filter_backtrace, x.backtrace)
+              log.put_pre(backtrace.join("\n"))
+            end
+          end
+          log.counts[:error] += 1
+        end
+      else
+        yield
       end
     end
 
