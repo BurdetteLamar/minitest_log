@@ -34,13 +34,13 @@ class MinitestLog
     raise NoBlockError.new('No block given for MinitestLog#new.') unless (block_given?)
     self.file_path = file_path
     handle_options(options)
-    begin_log
-    begin
-      yield self
-    rescue => x
-      handle_exception(x)
+    do_log do
+      begin
+        yield self
+      rescue => x
+        handle_exception(x)
+      end
     end
-    end_log
     nil
   end
 
@@ -296,18 +296,27 @@ class MinitestLog
 
   private
 
-  def end_log
-
-    # Add a verdict for the error count, if needed.
+  def do_log
+    self.counts = Hash[
+        :verdict => 0,
+        :failure => 0,
+        :error => 0,
+    ]
+    self.assertions = 0
+    self.file = File.open(self.file_path, 'w')
+    log_puts("REMARK\tThis text log is the precursor for an XML log.")
+    log_puts("REMARK\tIf the logged process completes, this text will be converted to XML.")
+    log_puts("BEGIN\t#{self.root_name}")
+    yield
     if self.error_verdict
       verdict_assert_equal?('error_count', 0, self.counts[:error])
     end
-
-    # Close the text log.
     log_puts("END\t#{self.root_name}")
     self.file.close
+    create_xml_log
+  end
 
-    # Create the xml log.
+  def create_xml_log
     document = REXML::Document.new
     File.open(self.file_path, 'r') do |file|
       element = document
@@ -554,19 +563,6 @@ class MinitestLog
     self.summary = options[:summary]
     self.error_verdict = options[:error_verdict] || false
     self.backtrace_filter = options[:backtrace_filter] || /minitest/
-  end
-
-  def begin_log
-    self.counts = Hash[
-        :verdict => 0,
-        :failure => 0,
-        :error => 0,
-    ]
-    self.assertions = 0
-    self.file = File.open(self.file_path, 'w')
-    log_puts("REMARK\tThis text log is the precursor for an XML log.")
-    log_puts("REMARK\tIf the logged process completes, this text will be converted to XML.")
-    log_puts("BEGIN\t#{self.root_name}")
   end
 
   def handle_exception(x)
