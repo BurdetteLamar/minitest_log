@@ -110,7 +110,7 @@ class MinitestLog
         end
       end
       end_duration
-      log.send(:log_puts, "END\t#{self.element_name}")
+      end_element
       nil
     end
 
@@ -135,6 +135,10 @@ class MinitestLog
 
     def begin_element
       log.send(:log_puts, "BEGIN\t#{element_name}")
+    end
+
+    def end_element
+      log.send(:log_puts, "END\t#{element_name}")
     end
 
     def put_attributes
