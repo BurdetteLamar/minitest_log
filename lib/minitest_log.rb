@@ -65,7 +65,7 @@ class MinitestLog
 
   class Element
 
-    def initialize(log, conditioned_element_name, *args)
+    def self.put(log, conditioned_element_name, *args)
       attributes = {}
       pcdata = ''
       start_time = nil
@@ -133,9 +133,9 @@ class MinitestLog
   def put_element(element_name = 'element', *args)
     conditioned_element_name = condition_element_name(element_name, caller[0])
     if block_given?
-      Element.new(self, conditioned_element_name, *args, &Proc.new)
+      Element.put(self, conditioned_element_name, *args, &Proc.new)
     else
-      Element.new(self, conditioned_element_name, *args)
+      Element.put(self, conditioned_element_name, *args)
     end
   end
 
