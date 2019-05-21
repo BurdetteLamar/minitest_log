@@ -91,7 +91,7 @@ class MinitestLog
       begin_element
       put_attributes
       put_pcdata
-      self.start_time = Time.new if self.duration_to_be_included
+      begin_duration
       if block_given?
         if self.block_to_be_rescued
           begin
@@ -158,6 +158,10 @@ class MinitestLog
         log.send(:log_puts, pcdata)
         log.send(:log_puts, terminator)
       end
+    end
+
+    def begin_duration
+      self.start_time = Time.new if duration_to_be_included
     end
 
   end
