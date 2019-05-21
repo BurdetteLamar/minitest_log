@@ -7,6 +7,8 @@ require_relative 'verdict_assertion'
 
 class MinitestLog
 
+  include REXML
+  include Minitest::Assertions
   include VerdictAssertion
 
   attr_accessor \
@@ -21,9 +23,6 @@ class MinitestLog
     :error_verdict,
     :summary
 
-  include REXML
-  include Minitest::Assertions
-
   class MinitestLogError < Exception; end
   class NoBlockError < MinitestLogError; end
   class DuplicateVerdictIdError < MinitestLogError; end
@@ -32,42 +31,16 @@ class MinitestLog
 
   def initialize(file_path, options=Hash.new)
     raise NoBlockError.new('No block given for MinitestLog#new.') unless (block_given?)
-    default_options = Hash[
-        :root_name => 'log',
-        :xml_indentation => 2,
-        :error_verdict => false,
-        :summary => false
-    ]
-    options = default_options.merge(options)
-    self.assertions = 0
     self.file_path = file_path
-    self.root_name = options[:root_name]
-    self.xml_indentation = options[:xml_indentation]
-    self.summary = options[:summary]
-    self.error_verdict = options[:error_verdict] || false
-    self.backtrace_filter = options[:backtrace_filter] || /minitest/
-    self.file = File.open(self.file_path, 'w')
-    log_puts("REMARK\tThis text log is the precursor for an XML log.")
-    log_puts("REMARK\tIf the logged process completes, this text will be converted to XML.")
-    log_puts("BEGIN\t#{self.root_name}")
-    self.counts = Hash[
-        :verdict => 0,
-        :failure => 0,
-        :error => 0,
-    ]
-    begin
-      yield self
-    rescue => x
-      put_element('uncaught_exception', :timestamp, :class => x.class) do
-        put_element('message', x.message)
-        put_element('backtrace') do
-          backtrace = filter_backtrace(x.backtrace)
-          put_pre(backtrace.join("\n"))
-        end
+    handle_options(options)
+    do_log do
+      begin
+        yield self
+      rescue => x
+        handle_exception(x)
       end
     end
-    dispose
-    nil
+    create_xml_log
   end
 
   def section(name, *args)
@@ -90,78 +63,12 @@ class MinitestLog
   end
 
   def put_element(element_name = 'element', *args)
-    if false ||
-        caller[0].match(/minitest_log.rb/) ||
-        caller[0].match(/verdict_assertion.rb/)
-      # Make the element name special.
-      element_name += '_'
-    elsif element_name.end_with?('_')
-      # Don't accept user's special.
-      message = "Element name should not end with underscore: #{element_name}"
-      raise IllegalElementNameError.new(message)
-    else
-      # Ok.
-    end
-    attributes = {}
-    pcdata = ''
-    start_time = nil
-    duration_to_be_included = false
-    block_to_be_rescued = false
-    args.each do |arg|
-      case
-      when arg.kind_of?(Hash)
-        attributes.merge!(arg)
-      when arg.kind_of?(String)
-        pcdata += arg
-      when arg == :timestamp
-        attributes[:timestamp] = MinitestLog.timestamp
-      when arg == :duration
-        duration_to_be_included = true
-      when arg == :rescue
-        block_to_be_rescued = true
-      else
-        pcdata = pcdata + arg.inspect
-      end
-    end
-    log_puts("BEGIN\t#{element_name}")
-    put_attributes(attributes)
-    unless pcdata.empty?
-      # Guard against using a terminator that's a substring of pcdata.
-      s = 'EOT'
-      terminator = s
-      while pcdata.match(terminator) do
-        terminator += s
-      end
-      log_puts("PCDATA\t<<#{terminator}")
-      log_puts(pcdata)
-      log_puts(terminator)
-    end
-    start_time = Time.new if duration_to_be_included
+    conditioned_element_name = condition_element_name(element_name, caller[0])
     if block_given?
-      if block_to_be_rescued
-        begin
-          yield
-        rescue Exception => x
-          put_element('rescued_exception', {:class => x.class, :message => x.message}) do
-            put_element('backtrace') do
-              backtrace = filter_backtrace(x.backtrace)
-              put_pre(backtrace.join("\n"))
-            end
-          end
-          self.counts[:error] += 1
-        end
-      else
-        yield
-      end
+      Element.new(self, conditioned_element_name, *args, &Proc.new)
+    else
+      Element.new(self, conditioned_element_name, *args)
     end
-    if start_time
-      end_time = Time.now
-      duration_f = end_time.to_f - start_time.to_f
-      duration_s = format('%.3f', duration_f)
-      put_attributes({:duration_seconds => duration_s})
-    end
-    log_puts("END\t#{element_name}")
-    nil
   end
 
   def put_each_with_index(name, obj)
@@ -273,18 +180,34 @@ class MinitestLog
 
   private
 
-  def dispose
+  def do_log
+    begin_log
+    yield
+    end_log
+  end
 
-    # Add a verdict for the error count, if needed.
+  def begin_log
+    self.counts = Hash[
+        :verdict => 0,
+        :failure => 0,
+        :error => 0,
+    ]
+    self.assertions = 0
+    self.file = File.open(self.file_path, 'w')
+    log_puts("REMARK\tThis text log is the precursor for an XML log.")
+    log_puts("REMARK\tIf the logged process completes, this text will be converted to XML.")
+    log_puts("BEGIN\t#{self.root_name}")
+  end
+
+  def end_log
     if self.error_verdict
       verdict_assert_equal?('error_count', 0, self.counts[:error])
     end
-
-    # Close the text log.
     log_puts("END\t#{self.root_name}")
     self.file.close
+  end
 
-    # Create the xml log.
+  def create_xml_log
     document = REXML::Document.new
     File.open(self.file_path, 'r') do |file|
       element = document
@@ -419,17 +342,25 @@ class MinitestLog
     nil
   end
 
-  def put_cdata(text)
+  def put_cdata_or_pcdata(token, text)
     # Guard against using a terminator that's a substring of the cdata.
     s = 'EOT'
     terminator = s
     while text.match(terminator) do
       terminator += s
     end
-    log_puts("CDATA\t<<#{terminator}")
+    log_puts("#{token}\t<<#{terminator}")
     log_puts(text)
     log_puts(terminator)
     nil
+  end
+
+  def put_cdata(text)
+    put_cdata_or_pcdata('CDATA', text)
+  end
+
+  def put_pcdata(text)
+    put_cdata_or_pcdata('PCDATA', text)
   end
 
   def get_assertion_outcome(verdict_id, assertion_method, *assertion_args)
@@ -471,8 +402,7 @@ class MinitestLog
     while usec_s.length < 3 do
       usec_s = '0' + usec_s
     end
-    # noinspection RubyUnusedLocalVariable
-    ts += ".#{usec_s}"
+    "#{ts}.#{usec_s}"
   end
 
   def assertion_method_for(verdict_method)
@@ -493,6 +423,162 @@ class MinitestLog
       document = REXML::Document.new(file)
     end
     document
+  end
+
+  def condition_element_name(element_name, caller_0)
+    if caller_is_us?(caller_0)
+      conditioned_element_name = element_name + '_'
+    elsif element_name.end_with?('_')
+      message = "Element name should not end with underscore: #{element_name}"
+      raise IllegalElementNameError.new(message)
+    else
+      conditioned_element_name = element_name
+    end
+    conditioned_element_name
+  end
+
+  def caller_is_us?(caller_0)
+    caller_0.match(/minitest_log.rb/) || caller_0.match(/verdict_assertion.rb/)
+  end
+
+  def handle_options(options)
+    default_options = Hash[
+        :root_name => 'log',
+        :xml_indentation => 2,
+        :error_verdict => false,
+        :summary => false
+    ]
+    options = default_options.merge(options)
+    self.root_name = options[:root_name]
+    self.xml_indentation = options[:xml_indentation]
+    self.summary = options[:summary]
+    self.error_verdict = options[:error_verdict] || false
+    self.backtrace_filter = options[:backtrace_filter] || /minitest/
+  end
+
+  def handle_exception(x)
+    put_element('uncaught_exception', :timestamp, :class => x.class) do
+      put_element('message', x.message)
+      put_element('backtrace') do
+        backtrace = filter_backtrace(x.backtrace)
+        put_pre(backtrace.join("\n"))
+      end
+    end
+  end
+
+  class Element
+
+    attr_accessor \
+        :args,
+        :attributes,
+        :block_to_be_rescued,
+        :duration_to_be_included,
+        :element_name,
+        :log,
+        :pcdata,
+        :start_time
+
+    def initialize(log, element_name, *args)
+
+      self.log = log
+      self.element_name = element_name
+      self.args = args
+
+      self.attributes = {}
+      self.block_to_be_rescued = false
+      self.duration_to_be_included = false
+      self.pcdata = ''
+      self.start_time = nil
+
+      process_args
+      put_element do
+        put_attributes
+        put_pcdata
+        do_duration do
+          do_block(&Proc.new) if block_given?
+        end
+      end
+
+    end
+
+    def process_args
+      args.each do |arg|
+        case
+        when arg.kind_of?(Hash)
+          self.attributes.merge!(arg)
+        when arg.kind_of?(String)
+          self.pcdata += arg
+        when arg == :timestamp
+          self.attributes[:timestamp] = MinitestLog.timestamp
+        when arg == :duration
+          self.duration_to_be_included = true
+        when arg == :rescue
+          self.block_to_be_rescued = true
+        else
+          self.pcdata = self.pcdata + arg.inspect
+        end
+      end
+    end
+
+    def put_element
+      log_puts("BEGIN\t#{element_name}")
+      yield
+      log_puts("END\t#{element_name}")
+    end
+
+    def put_attributes
+      log_put_attributes(attributes)
+    end
+
+    def put_pcdata
+      unless pcdata.empty?
+        log.send(:put_pcdata, pcdata)
+      end
+    end
+
+    def do_duration
+      self.start_time = Time.new
+      yield
+      if duration_to_be_included
+        end_time = Time.now
+        duration_f = end_time.to_f - start_time.to_f
+        duration_s = format('%.3f', duration_f)
+        log_put_attributes({:duration_seconds => duration_s})
+      end
+    end
+
+    def do_block
+      if block_to_be_rescued
+        begin
+          yield
+        rescue Exception => x
+          log.put_element('rescued_exception', {:class => x.class, :message => x.message}) do
+            log.put_element('backtrace') do
+              backtrace = log_filter_backtrace(x.backtrace)
+              log.put_pre(backtrace.join("\n"))
+            end
+          end
+          log.counts[:error] += 1
+        end
+      else
+        yield
+      end
+    end
+
+    # The called methods are private.
+
+    def log_puts(s)
+      log.send(:log_puts, s)
+    end
+
+    def log_put_attributes(attributes)
+      log.send(:put_attributes, attributes)
+    end
+
+    def log_filter_backtrace(backtrace)
+      log.send(:filter_backtrace, backtrace)
+    end
+
   end
 
 end
