@@ -297,10 +297,7 @@ class MinitestLog
       end
       if exception
         self.counts[:failure] += 1
-        # If the encoding is not UTF-8, a string will have been added.
-        # Remove it, so that the message is the same on all platforms.
-        conditioned_message = exception.message.gsub("# encoding: UTF-8\n", '')
-        put_element('exception', {:class => exception.class, :message => conditioned_message}) do
+        put_element('exception', {:class => exception.class, :message => exception.message}) do
           put_element('backtrace') do
             backtrace = filter_backtrace(exception.backtrace)
             put_pre(backtrace.join("\n"))
@@ -315,7 +312,7 @@ class MinitestLog
     attributes.each_pair do |name, value|
       value = case
                 when value.is_a?(String)
-                  value
+                  value.gsub("\n", "\\n")
                 when value.is_a?(Symbol)
                   value.to_s
                 else

@@ -65,6 +65,9 @@ module TestHelper
     oid_dummy = '00000000'
     content.gsub!(oid_regexp, "oid=(#{oid_dummy})")
 
+    # Encoding.
+    content.gsub!("# encoding: UTF-8\\n", '')
+
     File.write(file_path, content)
   end
 
