@@ -1,7 +1,7 @@
 <log>
   <summary_ verdicts='2' failures='1' errors='0'/>
   <verdict_ method='verdict_assert_silent?' outcome='failed' id='1'>
-    <exception_ class='Minitest::Assertion' message='In stderr.\n--- expected\n+++ actual\n@@ -1,2 +1 @@\n--&quot;&quot;\n+&quot;foo&quot;\n'>
+    <exception_ class='Minitest::Assertion' message='In stderr.\n--- expected\n+++ actual\n@@ -1,2 +1 @@\n--&quot;&quot;\n+&quot;foofoofoofoofoofoofoofoofoofoofoofoofoofoofoo&quot;\n'>
       <backtrace_>
       </backtrace_>
     </exception_>
