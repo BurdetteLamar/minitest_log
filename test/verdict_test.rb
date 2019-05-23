@@ -305,8 +305,8 @@ class VerdictTest < MiniTest::Test
       name = _test_name(method, 'fail')
       with_verdict_test_log(name) do |log|
         log.send(_method, '1', 'foo', 'bar') do
-          $stdout.write 'bar'
-          $stderr.write 'foo'
+          $stdout.write 'bar' * 15
+          $stderr.write 'foo' * 15
         end
       end
       name = _test_name(method, 'error')
@@ -411,8 +411,8 @@ class VerdictTest < MiniTest::Test
       name = _test_name(method, 'fail')
       with_verdict_test_log(name) do |log|
         log.send(_method, '1') do
-          $stdout.write 'bar'
-          $stderr.write 'foo'
+          $stdout.write 'bar' * 15
+          $stderr.write 'foo' * 15
         end
       end
       name = _test_name(method, 'error')
