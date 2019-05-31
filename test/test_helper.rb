@@ -62,8 +62,8 @@ module TestHelper
         assert(true)
         return
       end
-      assert(false, "file_name")
     end
+    assert(false, "#{file_name}")
   end
 
   # Handle volatile file elements, so that diff is effective.
