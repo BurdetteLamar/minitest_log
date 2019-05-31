@@ -4,6 +4,7 @@ require 'minitest/assertions'
 require 'diff/lcs'
 
 require_relative 'verdict_assertion'
+require_relative 'minitest_assertions_patch'
 
 class MinitestLog
 
