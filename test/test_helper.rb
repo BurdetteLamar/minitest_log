@@ -24,12 +24,27 @@ module TestHelper
     )
   end
 
-  def expected_file_path(file_name)
-    File.join(
-        'test',
-        'expected',
-        file_name
-    )
+  def expected_file_paths(file_name)
+    # The expected file includes a message from minitest that can be platform-dependent.
+    # Most times the message is the same for all platforms, so there's just one file
+    # containing the expected output.
+    exp_dir_path = File.join('test', 'expected')
+    file_path = File.join(exp_dir_path, file_name)
+    if File.file?(file_path)
+      return [file_path]
+    end
+    # For a very few tests, the message from minitest *is* platform-dependent.
+    # On some platforms, minitest will have performed a line diff.
+    # On others, the expected and actual values are embedded in a 1-line message.
+    # The 'expected' value in that case is not a file, but instead a folder of files.
+    dir_name = File.basename(file_name, '.xml')
+    dir_path = File.join(exp_dir_path, dir_name)
+    file_paths = []
+    Dir.entries(dir_path).each do |entry|
+      next if entry.start_with?('.')
+      file_paths.push(File.join(dir_path, entry))
+    end
+    file_paths
   end
 
   # Store content to actual file, verify against expected file.
@@ -40,10 +55,15 @@ module TestHelper
 
   # Assert actual and expected files do not differ.
   def assert_file(file_name)
-    expected_content = File.readlines(expected_file_path(file_name))
     actual_content = File.readlines(actual_file_path(file_name))
-    diff = Diff::LCS.diff(expected_content, actual_content)
-    assert_empty(diff, "File name: #{file_name}")
+    expected_file_paths(file_name).each do |expected_file_path|
+      expected_content = File.readlines(expected_file_path)
+      if (expected_content == actual_content)
+        assert(true)
+        return
+      end
+      assert(false, "file_name")
+    end
   end
 
   # Handle volatile file elements, so that diff is effective.
