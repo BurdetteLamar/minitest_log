@@ -3,7 +3,7 @@
   <verdict_ method='verdict_assert_output?' outcome='failed' id='1'>
     <stdout_ class='String' value='&quot;foo&quot;'/>
     <stderr_ class='String' value='&quot;bar&quot;'/>
-    <exception_ class='Minitest::Assertion' message='In stderr.\nExpected: &quot;bar&quot;\n  Actual: &quot;foo&quot;'>
+    <exception_ class='Minitest::Assertion' message='In stderr.\n--- expected\n+++ actual\n@@ -1,2 +1 @@\n--&quot;bar&quot;\n+&quot;foo&quot;\n'>
       <backtrace_>
       </backtrace_>
     </exception_>
