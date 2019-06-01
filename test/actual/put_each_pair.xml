@@ -1,8 +1,0 @@
-<log>
-  <data_ name='put_each_pair' class='Hash' method=':each_pair' size='2'>
-    <![CDATA[
-a => 0
-b => 1
-]]>
-  </data_>
-</log>

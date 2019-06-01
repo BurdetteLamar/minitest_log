@@ -1,6 +1,0 @@
-<log>
-  <verdict_ method='verdict_assert_equal?' outcome='passed' id='error_count'>
-    <expected_ class='Integer' value='0'/>
-    <actual_ class='Integer' value='0'/>
-  </verdict_>
-</log>
