@@ -9,7 +9,7 @@ Gem::Specification.new do |spec|
   spec.email         = ['burdettelamar@yahoo.com']
 
   spec.summary       = %q{Logging for testing with Minitest}
-  spec.description   = "Gem minitest_log uses Minitest, adding structured loging, data explication, and verdicts."
+  spec.description   = "Gem minitest_log uses Minitest, adding structured logging, data explication, and verdicts."
   spec.homepage      = "https://github.com/BurdetteLamar/minitest_log"
   spec.license       = 'MIT'
 

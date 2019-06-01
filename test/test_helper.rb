@@ -56,7 +56,7 @@ module TestHelper
     actual_content = File.readlines(actual_file_path(file_name))
     expected_file_paths(file_name).each do |expected_file_path|
       expected_content = File.readlines(expected_file_path)
-      if (expected_content == actual_content)
+      if expected_content == actual_content
         assert(true)
         return
       end
@@ -68,7 +68,7 @@ module TestHelper
   def condition_file(file_path)
     content = File.read(file_path)
 
-    # Timesstamp.
+    # Timestamp.
     timestamp_regexp = /timestamp='\d{4}-\d{2}-\d{2}-\w{3}-\d{2}\.\d{2}\.\d{2}\.\d{3}'/
     timestamp_dummy = '0000-00-00-xxx-00.00.00.000'
     content.gsub!(timestamp_regexp, "timestamp='#{timestamp_dummy}'")
