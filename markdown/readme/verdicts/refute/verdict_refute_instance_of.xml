@@ -6,7 +6,7 @@
   <verdict_ method='verdict_refute_instance_of?' outcome='failed' id='another_id' message='another message'>
     <expected_ class='Class' value='String'/>
     <actual_ class='String' value='&quot;my_string&quot;'/>
-    <exception_ class='Minitest::Assertion' message='Expected # encoding: UTF-8\n&quot;my_string&quot; to not be an instance of String.'>
+    <exception_ class='Minitest::Assertion' message='Expected &quot;my_string&quot; to not be an instance of String.'>
       <backtrace_>
         <![CDATA[
 verdict_refute_instance_of.rb:6:in `block in test_demo_verdict'

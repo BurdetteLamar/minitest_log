@@ -35,7 +35,7 @@ error_verdict.rb:9:in `test_demo'
   <verdict_ method='verdict_assert_equal?' outcome='failed' id='error_count'>
     <expected_ class='Integer' value='0'/>
     <actual_ class='Integer' value='1'/>
-    <exception_ class='Minitest::Assertion' message='Expected: 0\n  Actual: 1'>
+    <exception_ class='Minitest::Assertion' message='Expected: 0'>
       <backtrace_>
         <![CDATA[
 error_verdict.rb:9:in `new'

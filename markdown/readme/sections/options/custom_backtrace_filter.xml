@@ -1,14 +1,12 @@
 <log>
-  <uncaught_exception_ timestamp='2019-06-01-Sat-13.13.11.260' class='RuntimeError'>
+  <uncaught_exception_ timestamp='2019-05-09-Thu-10.32.49.599' class='RuntimeError'>
     <message_>
       Boo!
     </message_>
     <backtrace_>
       <![CDATA[
 backtrace_filter.rb:8:in `block in test_demo'
-C:/Ruby25-x64/lib/ruby/gems/2.5.0/gems/minitest_log-1.0.0/lib/minitest_log.rb:39:in `block in initialize'
-C:/Ruby25-x64/lib/ruby/gems/2.5.0/gems/minitest_log-1.0.0/lib/minitest_log.rb:186:in `do_log'
-C:/Ruby25-x64/lib/ruby/gems/2.5.0/gems/minitest_log-1.0.0/lib/minitest_log.rb:37:in `initialize'
+C:/Ruby25-x64/lib/ruby/gems/2.5.0/gems/minitest_log-0.2.0/lib/minitest_log.rb:59:in `initialize'
 backtrace_filter.rb:7:in `new'
 backtrace_filter.rb:7:in `test_demo'
 C:/Ruby25-x64/lib/ruby/gems/2.5.0/gems/minitest-5.11.3/lib/minitest/test.rb:98:in `block (3 levels) in run'

@@ -4,7 +4,7 @@
   </verdict_>
   <verdict_ method='verdict_assert_raises?' outcome='failed' id='another_id' message='Another message'>
     <error_class_ class='Class' value='RuntimeError'/>
-    <exception_ class='Minitest::Assertion' message='[RuntimeError] exception expected, not\nClass: &lt;Exception&gt;\nMessage: &lt;&quot;Boo!&quot;&gt;\n---Backtrace---\nverdict_assert_raises.rb:9:in `block (2 levels) in test_demo_verdict&apos;\nC:/Ruby25-x64/lib/ruby/gems/2.5.0/gems/minitest_log-1.0.0/lib/verdict_assertion.rb:260:in `block in verdict_assert_raises?&apos;\nC:/Ruby25-x64/lib/ruby/gems/2.5.0/gems/minitest_log-1.0.0/lib/verdict_assertion.rb:272:in `block in _verdict_raises?&apos;\n---------------'>
+    <exception_ class='Minitest::Assertion' message='[RuntimeError] exception expected, not'>
       <backtrace_>
         <![CDATA[
 verdict_assert_raises.rb:8:in `block in test_demo_verdict'

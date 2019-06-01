@@ -2,7 +2,6 @@ require 'rexml/document'
 require 'minitest/autorun'
 require 'minitest/assertions'
 require 'diff/lcs'
-require 'yaml'
 
 require_relative 'verdict_assertion'
 require_relative 'minitest_assertions_patch'
@@ -441,12 +440,6 @@ class MinitestLog
   end
 
   def handle_options(options)
-    config_file_dir = File.join(Dir.home, '.minitest_log')
-    Dir.mkdir(config_file_dir) unless File.exist?(config_file_dir)
-    config_file_path = File.join(config_file_dir, 'config.yaml')
-    unless File.exist?(config_file_path)
-      YAML.p
-    end
     default_options = Hash[
         :root_name => 'log',
         :xml_indentation => 2,
