@@ -1,7 +1,7 @@
 <log>
   <verdict_ method='verdict_assert_silent?' outcome='passed' id='one_id'/>
   <verdict_ method='verdict_assert_silent?' outcome='failed' id='another_id'>
-    <exception_ class='Minitest::Assertion' message='In stdout.\n--- expected\n+++ actual\n@@ -1,2 +1 @@\n-# encoding: UTF-8\n-&quot;&quot;\n+&quot;Foo&quot;\n'>
+    <exception_ class='Minitest::Assertion' message='In stdout.'>
       <backtrace_>
         <![CDATA[
 verdict_assert_silent.rb:7:in `block in test_demo_verdict'
