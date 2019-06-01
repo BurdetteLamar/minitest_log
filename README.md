@@ -286,13 +286,13 @@ end
 ```log.xml```:
 ```xml
 <log>
-  <section_ name='My section with timestamp' timestamp='2019-05-09-Thu-10.32.53.066'>
+  <section_ name='My section with timestamp' timestamp='2019-06-01-Sat-15.07.07.469'>
     Section with timestamp.
   </section_>
-  <section_ name='My section with duration' duration_seconds='0.501'>
+  <section_ name='My section with duration' duration_seconds='0.503'>
     Section with duration.
   </section_>
-  <section_ name='My section with both' timestamp='2019-05-09-Thu-10.32.53.568' duration_seconds='0.501'>
+  <section_ name='My section with both' timestamp='2019-06-01-Sat-15.07.07.974' duration_seconds='0.514'>
     Section with both.
   </section_>
 </log>
@@ -364,7 +364,7 @@ end
 ```xml
 <log>
   <section_ name='My unrescued section'>
-    <uncaught_exception_ timestamp='2019-05-09-Thu-10.32.54.471' class='RuntimeError'>
+    <uncaught_exception_ timestamp='2019-06-01-Sat-15.07.08.960' class='RuntimeError'>
       <message_>
         Boo!
       </message_>
@@ -421,7 +421,7 @@ end
 ```log.xml```:
 ```xml
 <log>
-  <section_ name='Section with potpourri of arguments' a='0' b='1' timestamp='2019-05-09-Thu-10.32.51.426' c='2' d='3' duration_seconds='0.501'>
+  <section_ name='Section with potpourri of arguments' a='0' b='1' timestamp='2019-06-01-Sat-15.07.05.791' c='2' d='3' duration_seconds='0.513'>
     Word More words
     <rescued_exception_ class='Exception' message='Boo!'>
       <backtrace_>
@@ -824,7 +824,7 @@ error_verdict.rb:9:in `test_demo'
   <verdict_ method='verdict_assert_equal?' outcome='failed' id='error_count'>
     <expected_ class='Integer' value='0'/>
     <actual_ class='Integer' value='1'/>
-    <exception_ class='Minitest::Assertion' message='Expected: 0'>
+    <exception_ class='Minitest::Assertion' message='Expected: 0\n  Actual: 1'>
       <backtrace_>
         <![CDATA[
 error_verdict.rb:9:in `new'
@@ -860,7 +860,7 @@ end
 ```default_backtrace_filter.xml```:
 ```xml
 <log>
-  <uncaught_exception_ timestamp='2019-05-09-Thu-10.32.49.597' class='RuntimeError'>
+  <uncaught_exception_ timestamp='2019-06-01-Sat-15.07.03.608' class='RuntimeError'>
     <message_>
       Boo!
     </message_>
@@ -878,14 +878,16 @@ backtrace_filter.rb:4:in `test_demo'
 ```custom_backtrace_filter.xml```:
 ```xml
 <log>
-  <uncaught_exception_ timestamp='2019-05-09-Thu-10.32.49.599' class='RuntimeError'>
+  <uncaught_exception_ timestamp='2019-06-01-Sat-15.07.03.610' class='RuntimeError'>
     <message_>
       Boo!
     </message_>
     <backtrace_>
       <![CDATA[
 backtrace_filter.rb:8:in `block in test_demo'
-C:/Ruby25-x64/lib/ruby/gems/2.5.0/gems/minitest_log-0.2.0/lib/minitest_log.rb:59:in `initialize'
+C:/Ruby25-x64/lib/ruby/gems/2.5.0/gems/minitest_log-1.0.0/lib/minitest_log.rb:39:in `block in initialize'
+C:/Ruby25-x64/lib/ruby/gems/2.5.0/gems/minitest_log-1.0.0/lib/minitest_log.rb:186:in `do_log'
+C:/Ruby25-x64/lib/ruby/gems/2.5.0/gems/minitest_log-1.0.0/lib/minitest_log.rb:37:in `initialize'
 backtrace_filter.rb:7:in `new'
 backtrace_filter.rb:7:in `test_demo'
 C:/Ruby25-x64/lib/ruby/gems/2.5.0/gems/minitest-5.11.3/lib/minitest/test.rb:98:in `block (3 levels) in run'
@@ -1113,7 +1115,7 @@ end
       (?-mix:Bar)
     </data_>
     <data_ name='My time' class='Time' method=':to_s'>
-      2019-05-09 10:32:47 -0500
+      2019-06-01 15:07:01 -0500
     </data_>
     <data_ name='My uri,' class='URI::HTTPS' method=':to_s'>
       https://www.github.com
@@ -1286,7 +1288,7 @@ end
   <verdict_ method='verdict_assert_equal?' outcome='failed' id='another_id' message='Another message'>
     <expected_ class='Integer' value='0'/>
     <actual_ class='Integer' value='1'/>
-    <exception_ class='Minitest::Assertion' message='Expected: 0'>
+    <exception_ class='Minitest::Assertion' message='Expected: 0\n  Actual: 1'>
       <backtrace_>
         <![CDATA[
 verdict_assert_equal.rb:6:in `block in test_demo_verdict'
@@ -1470,7 +1472,7 @@ end
   <verdict_ method='verdict_assert_instance_of?' outcome='failed' id='another_id' message='another message'>
     <expected_ class='Class' value='Integer'/>
     <actual_ class='String' value='&quot;my_string&quot;'/>
-    <exception_ class='Minitest::Assertion' message='Expected &quot;my_string&quot; to be an instance of Integer, not String.'>
+    <exception_ class='Minitest::Assertion' message='Expected # encoding: UTF-8\n&quot;my_string&quot; to be an instance of Integer, not String.'>
       <backtrace_>
         <![CDATA[
 verdict_assert_instance_of.rb:6:in `block in test_demo_verdict'
@@ -1560,7 +1562,7 @@ end
   <verdict_ method='verdict_assert_match?' outcome='failed' id='another_id' message='Another message'>
     <expected_ class='Regexp' value='/foo/'/>
     <actual_ class='String' value='&quot;feed&quot;'/>
-    <exception_ class='Minitest::Assertion' message='Expected /foo/ to match &quot;feed&quot;.'>
+    <exception_ class='Minitest::Assertion' message='Expected /foo/ to match # encoding: UTF-8\n&quot;feed&quot;.'>
       <backtrace_>
         <![CDATA[
 verdict_assert_match.rb:6:in `block in test_demo_verdict'
@@ -1703,7 +1705,7 @@ end
   <verdict_ method='verdict_assert_output?' outcome='failed' id='another_id'>
     <stdout_ class='String' value='&quot;Bar&quot;'/>
     <stderr_ class='String' value='&quot;Foo&quot;'/>
-    <exception_ class='Minitest::Assertion' message='In stderr.'>
+    <exception_ class='Minitest::Assertion' message='In stderr.\n--- expected\n+++ actual\n@@ -1,2 +1 @@\n-# encoding: UTF-8\n-&quot;Foo&quot;\n+&quot;Bar&quot;\n'>
       <backtrace_>
         <![CDATA[
 verdict_assert_output.rb:9:in `block in test_demo_verdict'
@@ -1748,7 +1750,7 @@ end
   <verdict_ method='verdict_assert_predicate?' outcome='failed' id='another_id' message='Another message'>
     <object_ class='String' value='&quot;x&quot;'/>
     <operator_ class='Symbol' value=':empty?'/>
-    <exception_ class='Minitest::Assertion' message='Expected &quot;x&quot; to be empty?.'>
+    <exception_ class='Minitest::Assertion' message='Expected # encoding: UTF-8\n&quot;x&quot; to be empty?.'>
       <backtrace_>
         <![CDATA[
 verdict_assert_predicate.rb:6:in `block in test_demo_verdict'
@@ -1795,7 +1797,7 @@ end
   </verdict_>
   <verdict_ method='verdict_assert_raises?' outcome='failed' id='another_id' message='Another message'>
     <error_class_ class='Class' value='RuntimeError'/>
-    <exception_ class='Minitest::Assertion' message='[RuntimeError] exception expected, not'>
+    <exception_ class='Minitest::Assertion' message='[RuntimeError] exception expected, not\nClass: &lt;Exception&gt;\nMessage: &lt;&quot;Boo!&quot;&gt;\n---Backtrace---\nverdict_assert_raises.rb:9:in `block (2 levels) in test_demo_verdict&apos;\nC:/Ruby25-x64/lib/ruby/gems/2.5.0/gems/minitest_log-1.0.0/lib/verdict_assertion.rb:260:in `block in verdict_assert_raises?&apos;\nC:/Ruby25-x64/lib/ruby/gems/2.5.0/gems/minitest_log-1.0.0/lib/verdict_assertion.rb:272:in `block in _verdict_raises?&apos;\n---------------'>
       <backtrace_>
         <![CDATA[
 verdict_assert_raises.rb:8:in `block in test_demo_verdict'
@@ -1885,7 +1887,7 @@ end
   <verdict_ method='verdict_assert_same?' outcome='failed' id='another_id' message='Another message'>
     <expected_ class='String' value='&quot;foo&quot;'/>
     <actual_ class='String' value='&quot;foo&quot;'/>
-    <exception_ class='Minitest::Assertion' message='Expected &quot;foo&quot; (oid=27933780) to be the same as &quot;foo&quot; (oid=27933800).'>
+    <exception_ class='Minitest::Assertion' message='Expected # encoding: UTF-8\n&quot;foo&quot; (oid=28462120) to be the same as # encoding: UTF-8\n&quot;foo&quot; (oid=28462140).'>
       <backtrace_>
         <![CDATA[
 verdict_assert_same.rb:6:in `block in test_demo_verdict'
@@ -1928,7 +1930,7 @@ end
 <log>
   <verdict_ method='verdict_assert_silent?' outcome='passed' id='one_id'/>
   <verdict_ method='verdict_assert_silent?' outcome='failed' id='another_id'>
-    <exception_ class='Minitest::Assertion' message='In stdout.'>
+    <exception_ class='Minitest::Assertion' message='In stdout.\n--- expected\n+++ actual\n@@ -1,2 +1 @@\n-# encoding: UTF-8\n-&quot;&quot;\n+&quot;Foo&quot;\n'>
       <backtrace_>
         <![CDATA[
 verdict_assert_silent.rb:7:in `block in test_demo_verdict'
@@ -2294,7 +2296,7 @@ end
   <verdict_ method='verdict_refute_instance_of?' outcome='failed' id='another_id' message='another message'>
     <expected_ class='Class' value='String'/>
     <actual_ class='String' value='&quot;my_string&quot;'/>
-    <exception_ class='Minitest::Assertion' message='Expected &quot;my_string&quot; to not be an instance of String.'>
+    <exception_ class='Minitest::Assertion' message='Expected # encoding: UTF-8\n&quot;my_string&quot; to not be an instance of String.'>
       <backtrace_>
         <![CDATA[
 verdict_refute_instance_of.rb:6:in `block in test_demo_verdict'
@@ -2384,7 +2386,7 @@ end
   <verdict_ method='verdict_refute_match?' outcome='failed' id='another_id' message='Another message'>
     <expected_ class='Regexp' value='/foo/'/>
     <actual_ class='String' value='&quot;food&quot;'/>
-    <exception_ class='Minitest::Assertion' message='Expected /foo/ to not match &quot;food&quot;.'>
+    <exception_ class='Minitest::Assertion' message='Expected /foo/ to not match # encoding: UTF-8\n&quot;food&quot;.'>
       <backtrace_>
         <![CDATA[
 verdict_refute_match.rb:6:in `block in test_demo_verdict'
@@ -2519,7 +2521,7 @@ end
   <verdict_ method='verdict_refute_predicate?' outcome='failed' id='another_id' message='Another message'>
     <object_ class='String' value='&quot;&quot;'/>
     <operator_ class='Symbol' value=':empty?'/>
-    <exception_ class='Minitest::Assertion' message='Expected &quot;&quot; to not be empty?.'>
+    <exception_ class='Minitest::Assertion' message='Expected # encoding: UTF-8\n&quot;&quot; to not be empty?.'>
       <backtrace_>
         <![CDATA[
 verdict_refute_predicate.rb:6:in `block in test_demo_verdict'
