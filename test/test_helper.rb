@@ -17,11 +17,9 @@ module TestHelper
   end
 
   def actual_file_path(file_name)
-    File.join(
-        'test',
-        'actual',
-        file_name
-    )
+    dir_path = File.join('test', 'actual')
+    Dir.mkdir(dir_path) unless File.directory?(dir_path)
+    File.join(dir_path, file_name)
   end
 
   def expected_file_paths(file_name)

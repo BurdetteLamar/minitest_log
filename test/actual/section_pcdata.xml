@@ -1,9 +1,0 @@
-<log>
-  <section_ name='no_pcdata'/>
-  <section_ name='one_string'>
-    One
-  </section_>
-  <section_ name='two_strings'>
-    OneTwo
-  </section_>
-</log>

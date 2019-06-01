@@ -1,3 +1,0 @@
-<log>
-  <exception class='MinitestLog::IllegalElementNameError' message='Element name should not end with underscore: section_'/>
-</log>
