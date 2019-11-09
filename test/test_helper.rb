@@ -86,6 +86,9 @@ module TestHelper
     # Encoding.
     content.gsub!("# encoding: UTF-8\\n", '')
 
+    # Windows phrase.
+    content.gsub!('#    valid: true\n', '')
+
     File.write(file_path, content)
   end
 
